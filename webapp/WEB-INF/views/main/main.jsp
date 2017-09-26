@@ -30,42 +30,6 @@
 <script type="text/javascript"
 	src="${pageContext.servletContext.contextPath}/assets/js/ko.js"></script>
 <script src="https://use.fontawesome.com/f8c7f597cb.js"></script>
-<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
-<script type="text/javascript"
-	src="${pageContext.servletContext.contextPath}/assets/js/firebase-messaging-sw.js"></script>
-<script>
-  // Initialize Firebase
-
-$(document).ready(function() {
-	 // Initialize Firebase
-	  var config = {
-	    apiKey: "AIzaSyCnzgyOFukznHOTMMsHbxkCOR6fklCRkIA",
-	    authDomain: "sfaproject-181001.firebaseapp.com",
-	    databaseURL: "https://sfaproject-181001.firebaseio.com",
-	    projectId: "sfaproject-181001",
-	    storageBucket: "",
-	    messagingSenderId: "444706650802",
-	    gcm_sender_id : "921629793050"
-	  };
-	  firebase.initializeApp(config);
-
-	  const messaging = firebase.messaging();
-	  
-		    console.log('Requesting permission...');
-		    messaging.requestPermission()
-		    .then(function() {
-		      console.log('Notification permission granted.');
-		      return messaging.getToken();
-		    }).then(function(token){
-		    	console.log(token)
-		    })
-		    .catch(function(err) {
-		      console.log('Unable to get permission to notify.', err);
-		    });
-	
-});
- 	    
-</script>
 
 </head>
 <body>
@@ -101,9 +65,9 @@ $(document).ready(function() {
 			<div class="container_left">
 				<div class="title">
 					<h4 id="distance_notice">
-						<Strong>목표 주행거리</Strong> :2534<Strong>KM</strong>&nbsp; <Strong>총
-							주행거리</Strong> :2222<Strong>KM</strong>&nbsp; <Strong>일일 주행거리</Strong>
-						:1572<Strong>KM</strong>
+						<Strong>목표 주행거리</Strong> :2534<Strong>KM</strong>&nbsp;
+						<Strong>총 주행거리</Strong> :2222<Strong>KM</strong>&nbsp;
+						<Strong>일일 주행거리</Strong> :1572<Strong>KM</strong>
 					</h4>
 				</div>
 			</div>

@@ -16,8 +16,6 @@
 	href="${pageContext.servletContext.contextPath}/assets/css/main.css">
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap-theme.min.css">
-<link rel='stylesheet'
-	href="${pageContext.servletContext.contextPath}/assets/css/fullcalendar.css" />
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/assets/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css"
@@ -34,24 +32,12 @@
 	src="${pageContext.servletContext.contextPath}/assets/js/bootstrap.min.js"></script>
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/moment.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/fullcalendar.js"></script>
-<script type="text/javascript"
-	src="${pageContext.servletContext.contextPath}/assets/js/ko.js"></script>
-
-
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/froala_editor/css/froala_editor.css">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/froala_editor/css/froala_style.min.css">
-<script type="text/javascript"
-	src="${pageContext.servletContext.contextPath}/assets/froala_editor/js/froala_editor.min.js"></script>
-<script type="text/javascript"
-	src="${pageContext.servletContext.contextPath}/assets/froala_editor/js/plugins/paragraph_format.min.js"></script>
 
 <script type="text/javascript">
 //현재 날짜를 moment.js를 활용하여 "YYYY-MM-DD"형식으로 받아온다.
 var today = moment().format("YYYY-MM-DD");
+
+
 
 $(document).ready(function() {
 	
@@ -60,7 +46,7 @@ $(document).ready(function() {
 	$("#end-date").val(today);
 	
 	//report리스트들의 li 크기를 각각 내용에 따라 맞춰주기
-	var min_parent_height = jQuery("#report-list").height()+"px";
+	var min_parent_height = jQuery(".report-list").height()+"px";
 	jQuery("#report-thumnail").css({'min-height':min_parent_height});
 	
 	$( "#start-date" ).datepicker({
@@ -107,12 +93,50 @@ $(document).ready(function() {
 			 startDate: date1,
 			 endDate: date2
 		    },
-		    function(data, status){
-		        alert("Data: " + data + "\nStatus: " + status);
+		    function(response, status){
+		        console.log(response.data);
+		        $("#content > ul").empty();
+		        $("#search-count").html("조회: "+ response.data.length+" 건");
+		        for(i=0; i<response.data.length;i++){	
+		        	$("#content > ul").append('<li class="report-thumnail"></li>');
+		        	$("#content > ul > li").eq(i).append('<a class="report-detail" href="${pageContext.servletContext.contextPath}/report/search?report_no='+response.data.report_no+'"></a>');		        	
+		        	        	
+		        	if(response.data[i].approval == 0){
+		        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/write.png" alt="레포트 상태 이미지">');		
+		        	}else if(response.data[i].approval == 1){
+		        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/review.png" alt="레포트 상태 이미지">');		
+		        	}else if(response.data[i].approval == 1){
+		        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/approve.png" alt="레포트 상태 이미지">');		
+		        	}else{
+		        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/reject.png" alt="레포트 상태 이미지">');		
+		        	}
+		        	
+		        	var opinion =response.data[i].opinion;
+		        	if(opinion == null){
+		        		opinion ="";		
+		        	}
+		        	$(".report-detail").eq(i).append('<table class="table report-list"><thead><tr><th>보고 일자:'+response.data[i].date+'</th></tr></thead><tbody><tr><td>제목: '+response.data[i].title+'</td></tr><tr><td>작성일자: '+response.data[i].reg_date+'</td></tr><tr><td>팀장의견: '+opinion+'</td></tr></tbody></table>');
+		        	$("#content > ul > li").eq(i).append('<div><button type="button" class="btn btn-default submit-btn">제출</button> <form class="reportnoform" method="post"><input type="hidden" id="report_no" name="report_no" value="'+response.data[i].report_no+'"><input type="hidden" id="approval" name="approval" value=1></form>');	
+		        }
+		        
+		        $(".report-thumnail").css({"border": "1px solid gray","overflow": "hidden"});
+		        $(".report-detail").css({"float": "left", "width": "100%"});
+		        $(".report-state").css({"width": "77px", "float": "left"});
+		        $(".report-list").css({"margin-left": "100px", "width": "auto"});
+		        $(".submit-btn").css({"margin-left": "-100px", "float": "right", "z-index": "100", "margin-top": "25px", "position": "absolute"});
 		    });
-		
 	});
 	
+	$(".submit-btn").click(function(){
+		var form = $(this).next();
+		form.action="submit";
+		form.submit();
+	})
+	$(document).on("click",".submit-btn",function(){
+		var form = $(this).next();
+		form.action="submit";
+		form.submit();
+	})
 });
 </script>
 
@@ -167,7 +191,7 @@ $(document).ready(function() {
 					<li id="report-thumnail" style="border: 1px solid gray;overflow: hidden;">
 					<a href="${pageContext.servletContext.contextPath}/report/search" style="float: left; width: 100%;"> 
 					<img src="${pageContext.servletContext.contextPath}/assets/image/approve.png" alt="승인/미승인 이미지" style="width: 77px; float: left">
-						<table id="report-list" class="table" style="margin-left: 100px; width: auto;">
+						<table class="table report-list" style="margin-left: 100px; width: auto;">
 							<thead>
 								<tr>
 									<th>보고 일자:${dayreportVo.date}</th>
@@ -188,7 +212,11 @@ $(document).ready(function() {
 						</table>
 					</a>
 						<div>
-							<button type="button" class="btn btn-default" value="${dayreportVo.report_no}" style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출</button>
+							<button type="button" class="btn btn-default submit-btn" style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출</button>	
+							<form class="reportnoform" method="post">
+								<input type="hidden" id="report_no" name="report_no" value="${dayreportVo.report_no}">
+								<input type="hidden" id="approval" name="approval" value=1>								
+							</form>
 						</div>
 					</li>
 					</c:forEach>
