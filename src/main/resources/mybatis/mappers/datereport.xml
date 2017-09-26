@@ -58,7 +58,7 @@
 	</update>
 	<select id="getByWeek" parameterType="MAP" resultType="datereportvo">
 	<![CDATA[
-	select report_no,title, report_sale,content,achive_rank,approval,opinion,reg_date,date from day_report where id=#{id} and DATE_SUB(NOW(), INTERVAL 7 day) order by date desc;	
+	select report_no,title, report_sale,content,achive_rank,approval,opinion,reg_date,date from day_report where id=#{id} and DATE_SUB(NOW(), INTERVAL 7 day) order by date,report_no desc;	
 	]]>
 	</select>
 	<select id="getByPeriod" parameterType="MAP" resultType="datereportvo">

@@ -58,7 +58,7 @@ public class DateReportController {
 		model.addAttribute("list", list);
 		return "plan/report_search";
 	}
-
+	
 	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
@@ -141,14 +141,14 @@ public class DateReportController {
 	}
 	
 	@Auth
-	@RequestMapping(value="/submit", method=RequestMethod.POST)
+	@RequestMapping(value="/submit")
 	public String submit(@RequestParam(value = "report_no", required = true, defaultValue = "0") Long report_no,
 			@RequestParam(value = "approval", required = true, defaultValue = "0") Long approval,
 			@AuthUser UserVo authUser)
 	{
 		if(report_no==0)
 		{
-			return "/report/";
+			return "redirect:/report/";
 		}else
 		{
 			int no = dateReprotService.updateApproval(report_no,approval);
@@ -158,7 +158,7 @@ public class DateReportController {
 				return "redirect:/report/";
 			}else
 			{
-				return "/report/";
+				return "redirect:/report/";
 			}
 		}
 	}

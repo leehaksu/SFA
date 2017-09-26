@@ -14,8 +14,7 @@
 	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/main.css">
-<link
-	href="${pageContext.servletContext.contextPath}/assets/css/hover.css"
+<link href="${pageContext.servletContext.contextPath}/assets/css/hover.css"
 	rel="stylesheet" media="all">
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap-theme.min.css">
