@@ -16,8 +16,6 @@
 	href="${pageContext.servletContext.contextPath}/assets/css/main.css">
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap-theme.min.css">
-<link rel='stylesheet'
-	href="${pageContext.servletContext.contextPath}/assets/css/fullcalendar.css" />
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/assets/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css"
@@ -36,10 +34,6 @@
 	src="${pageContext.servletContext.contextPath}/assets/js/bootstrap.min.js"></script>
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/moment.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/fullcalendar.js"></script>
-<script type="text/javascript"
-	src="${pageContext.servletContext.contextPath}/assets/js/ko.js"></script>
 
 
 <link rel="stylesheet"
@@ -50,6 +44,15 @@
 	src="${pageContext.servletContext.contextPath}/assets/froala_editor/js/froala_editor.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.servletContext.contextPath}/assets/froala_editor/js/plugins/paragraph_format.min.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.servletContext.contextPath}/assets/bootstrap-fileinput/css/fileinput.min.css">
+<script
+	src="${pageContext.servletContext.contextPath}/assets/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath}/assets/bootstrap-fileinput/js/locales/kr.js"></script>
+
+
 
 <script type="text/javascript">
 //현재 날짜 변수
@@ -97,7 +100,7 @@ function validateForm(){
 }
 
 $(document).ready(function() {
-	
+	  $("#dayreporttable-files").fileinput({showCaption: false});
 	 $.post("select",
 	    {
  			Date:today
@@ -207,6 +210,7 @@ $(document).ready(function() {
 			dayreportForm.action = "insert"; // action에 해당하는 jsp 경로를 넣어주세요.
 			dayreportForm.submit(); 
 		});
+		
 		
 	});
 </script>
@@ -324,6 +328,9 @@ $(document).ready(function() {
 						</div>
 						<textarea name="content" class="date-textarea"></textarea>	
 					</div>
+					<div class="form-group">
+						<input id="dayreporttable-files" class="form-control" multiple type="file">
+					</div>
 					<div class="panel panel-info" style="clear: both;">
 						<div class="panel-heading">
 							<strong>팀장 의견</strong>
@@ -340,7 +347,7 @@ $(document).ready(function() {
 									<strong>저장하기</strong>
 								</button>
 							</div>
-							<div id="update-btn" class="btn-group" role="group">
+							<!-- <div id="update-btn" class="btn-group" role="group">
 								<button id="dayreport-updatebutton" class="btn btn-info"
 									type="submit">
 									<strong>수정하기</strong>
@@ -351,7 +358,7 @@ $(document).ready(function() {
 									type="submit">
 									<strong>삭제하기</strong>
 								</button>
-							</div>
+							</div> -->
 						</div>
 					</div>				
 					<div class="modal fade" id="myModal" role="dialog" style="z-index:1000000">

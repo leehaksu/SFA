@@ -14,7 +14,9 @@
 	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/main.css">
-<link href="${pageContext.servletContext.contextPath}/assets/css/hover.css" rel="stylesheet" media="all">
+<link
+	href="${pageContext.servletContext.contextPath}/assets/css/hover.css"
+	rel="stylesheet" media="all">
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap-theme.min.css">
 <link rel="stylesheet"
@@ -106,7 +108,7 @@ $(document).ready(function() {
 		        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/write.png" alt="레포트 상태 이미지">');		
 		        	}else if(response.data[i].approval == 1){
 		        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/review.png" alt="레포트 상태 이미지">');		
-// 		        	}else if(response.data[i].approval == 2){
+ 		        	}else if(response.data[i].approval == 2){
 		        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/approve.png" alt="레포트 상태 이미지">');		
 		        	}else{
 		        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/reject.png" alt="레포트 상태 이미지">');		
@@ -117,7 +119,7 @@ $(document).ready(function() {
 		        		opinion ="";		
 		        	}
 		        	$(".report-detail").eq(i).append('<table class="table report-list"><thead><tr><th>보고 일자:'+response.data[i].date+'</th></tr></thead><tbody><tr><td>제목: '+response.data[i].title+'</td></tr><tr><td>작성일자: '+response.data[i].reg_date+'</td></tr><tr><td>팀장의견: '+opinion+'</td></tr></tbody></table>');
-		        	$("#content > ul > li").eq(i).append('<div><button type="button" class="btn btn-default submit-btn">제출</button> <form class="reportnoform" method="POST"><input type="hidden" id="report_no" name="report_no" value="'+response.data[i].report_no+'"><input type="hidden" id="approval" name="approval" value=1></form>');	
+		        	$("#content > ul > li").eq(i).append('<div><button type="button" class="btn btn-default submit-btn hvr-shadow-radial">제출</button> <form class="reportnoform" action="submit" method="POST"><input type="hidden" id="report_no" name="report_no" value="'+response.data[i].report_no+'"><input type="hidden" id="approval" name="approval" value=1></form>');	
 		        }
 		        
 		        $(".report-thumnail").css({"border": "1px solid gray","overflow": "hidden"});
@@ -130,13 +132,13 @@ $(document).ready(function() {
 	
 	$(".submit-btn").click(function(){
 		var form = $(this).next();
-		form.action="submit";
+		console.log(form);
 		form.submit();
 	})
 	$(document).on("click",".submit-btn",function(){
 		var form = $(this).next();
-		form.action="submit";
-		form.submit();
+		console.log(form);
+ 		form.submit();
 	})
 });
 </script>
@@ -159,10 +161,13 @@ $(document).ready(function() {
 		<article>
 			<div style="margin-top: 30px;">
 				<h3 style="display: inline;">영업 보고서 조회</h3>
-				<button type="button" class="btn btn-default" onclick="location.href='insert'" style="float: right;display: inline-block;">보고서 추가</button>								
+				<button type="button" class="btn btn-default"
+					onclick="location.href='insert'"
+					style="float: right; display: inline-block;">보고서 추가</button>
 			</div>
 			<form>
-				<table style="border-spacing: 20px 0;border-collapse: separate;margin-top: 10px;">
+				<table
+					style="border-spacing: 20px 0; border-collapse: separate; margin-top: 10px;">
 					<tr>
 						<td><label for="start-date"></label><input id="start-date"
 							class="form-control"></td>
@@ -176,50 +181,96 @@ $(document).ready(function() {
 								<option>반려</option>
 						</select></td>
 						<td>
-							<button id="search-report"type="button" class="btn btn-default">검색</button>
+							<button id="search-report" type="button" class="btn btn-default">조회</button>
 						</td>
 					</tr>
 				</table>
 			</form>
- 			<p></p>
+			<p></p>
 			<div id="search-count">조회: ${fn:length(list)} 건</div>
 			<hr>
 		</article>
 		<article>
 			<div id="content">
 				<ul>
-					<c:forEach items="${list}"  var="dayreportVo"  varStatus="status">
-					<li id="report-thumnail" style="border: 1px solid gray;overflow: hidden;">
-					<a href="${pageContext.servletContext.contextPath}/report/search" class="hvr-wobble-horizontal" style="float: left; width: 100%;"> 
-					<img src="${pageContext.servletContext.contextPath}/assets/image/approve.png" alt="승인/미승인 이미지" style="width: 77px; float: left">
-						<table class="table report-list" style="margin-left: 100px; width: auto;">
-							<thead>
-								<tr>
-									<th>보고 일자:${dayreportVo.date}</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>제목: ${dayreportVo.title}</td>
-								</tr>
-								<tr>
-									<td>작성일자: ${dayreportVo.reg_date}</td>
-								</tr>
-								<tr>
-									<td>팀장의견: ${dayreportVo.opinion}</td>
-								</tr>
-								<!-- 팀장 페이지에서 조회엔 누가 썻는지 알아야 하므로 부서,이름,직급이 표기 되어야 하기 때문에 tr이 한줄 더 필요하다. -->
-							</tbody>
-						</table>
-					</a>
-						<div>
-							<button type="button" class="btn btn-default submit-btn hvr-shadow-radial" style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출</button>	
-							<form class="reportnoform" method="POST">
-								<input type="hidden" id="report_no" name="report_no" value="${dayreportVo.report_no}">
-								<input type="hidden" id="approval" name="approval" value=1>								
-							</form>
-						</div>
-					</li>
+					<c:forEach items="${list}" var="dayreportVo" varStatus="status">
+						<li id="report-thumnail"
+							style="border: 1px solid gray; overflow: hidden;"><a
+							href="${pageContext.servletContext.contextPath}/report/search"
+							class="hvr-wobble-horizontal" style="float: left; width: 100%;">
+								<c:choose>
+									<c:when test="${dayreportVo.approval == 0}">
+										<img
+											src="${pageContext.servletContext.contextPath}/assets/image/write.png"
+											alt="승인/미승인 이미지" style="width: 77px; float: left">
+									</c:when>
+									<c:when test="${dayreportVo.approval == 1}">
+										<img
+											src="${pageContext.servletContext.contextPath}/assets/image/review.png"
+											alt="승인/미승인 이미지" style="width: 77px; float: left">
+									</c:when>
+									<c:when test="${dayreportVo.approval == 2}">
+										<img
+											src="${pageContext.servletContext.contextPath}/assets/image/approve.png"
+											alt="승인/미승인 이미지" style="width: 77px; float: left">
+									</c:when>
+									<c:otherwise>
+										<img
+											src="${pageContext.servletContext.contextPath}/assets/image/reject.png"
+											alt="승인/미승인 이미지" style="width: 77px; float: left">
+									</c:otherwise>
+								</c:choose>
+								<table class="table report-list" style="margin-left: 100px; width: auto;">
+									<thead>
+										<tr>
+											<th>보고 일자:${dayreportVo.date}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>제목: ${dayreportVo.title}</td>
+										</tr>
+										<tr>
+											<td>작성일자: ${dayreportVo.reg_date}</td>
+										</tr>
+										<tr>
+											<td>팀장의견: ${dayreportVo.opinion}</td>
+										</tr>
+										<!-- 팀장 페이지에서 조회엔 누가 썻는지 알아야 하므로 부서,이름,직급이 표기 되어야 하기 때문에 tr이 한줄 더 필요하다. -->
+									</tbody>
+								</table>
+						</a> <c:choose>
+								<c:when test="${dayreportVo.approval == 0}">
+									<div>
+										<button type="button"
+											class="btn btn-default submit-btn hvr-shadow-radial"
+											style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출</button>
+										<form class="reportnoform" action="submit" method="POST">
+											<input type="hidden" id="report_no" name="report_no"
+												value="${dayreportVo.report_no}"> <input
+												type="hidden" id="approval" name="approval" value=1>
+										</form>
+									</div>
+								</c:when>
+								<c:when test="${dayreportVo.approval == 1}">
+									<div>
+										<div class="btn btn-default"
+											style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출 완료</div>
+									</div>
+								</c:when>
+								<c:when test="${dayreportVo.approval == 2}">
+									<div>
+										<div class="btn btn-default"
+											style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">승인 완료</div>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div>
+										<div class="btn btn-default"
+											style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">반려됨</div>
+									</div>
+								</c:otherwise>
+							</c:choose></li>
 					</c:forEach>
 				</ul>
 			</div>
