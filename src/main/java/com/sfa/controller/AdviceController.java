@@ -75,7 +75,6 @@ public class AdviceController {
 		if (adviceVo == null) {
 			return JSONResult.error("상담일지 내용이 없습니다.");
 		}
-
 		int no = adviceService.delete(adviceVo);
 		if (no == 1) {
 			return JSONResult.success();

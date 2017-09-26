@@ -43,7 +43,7 @@ public class DateReportController {
 			int no = dateReprotService.insert(dateReortVo);
 
 			if (no == 1) {
-				return "redirect:plan/report_search";
+				return "redirect:/report/";
 			} else {
 				return "plan/report";
 			}
