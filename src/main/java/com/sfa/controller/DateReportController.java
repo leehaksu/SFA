@@ -155,10 +155,10 @@ public class DateReportController {
 			
 			if( no==1)
 			{
-				return "redirect:/report?result=success";
+				return "redirect:/report/";
 			}else
 			{
-				return "/report?result=fail";
+				return "/report/";
 			}
 		}
 	}
