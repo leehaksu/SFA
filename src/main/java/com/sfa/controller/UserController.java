@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.sfa.dto.JSONResult;
 import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
@@ -27,14 +26,14 @@ import com.sfa.vo.UserVo;
 public class UserController {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Autowired
-	AffirmationService affirmationService;
+	private AffirmationService affirmationService;
 	
 	@Autowired
-	PushMail pushMail;
-
+	private PushMail pushMail;
+	
 	@RequestMapping(value = { "", "/login" }, method = RequestMethod.GET)
 	public String login(@AuthUser UserVo authUser, Model model) {
 		// login 페이지 forward
@@ -60,7 +59,7 @@ public class UserController {
 
 	@Auth(value = Auth.Role.팀장)
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String join(@ModelAttribute UserVo userVo, Model model,BindingResult result) {
+	public String join(@ModelAttribute UserVo userVo, Model model,BindingResult result,@AuthUser UserVo authUser) {
 		
 		// 정상적인 접근이 아닐 경우
 		if (userVo == null) {
@@ -77,7 +76,12 @@ public class UserController {
 			if (userService.join(userVo) == true) {
 				userVo = userService.getId(userVo.getId());
 				model.addAttribute("userVo", userVo);
-				
+				pushMail.Push(userVo.getId(), userVo.getId()+"회원가입을 축하합니다.", "사원 아이디 : " +userVo.getId()
+				+"사원 이름 : "+userVo.getName()
+				+"사원 부서 : "+userVo.getDept()
+				+"사원 이메일 : " + userVo.getEmail()
+				+ "사원 직급 :" +userVo.getGrade()
+				+ "회원 가입을 진심으로 축하합니다.", authUser.getId());
 				
 				return "user/joinsuccess";
 			} else if (userService.join(userVo) == false) {
