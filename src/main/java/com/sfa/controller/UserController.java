@@ -20,6 +20,7 @@ import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
 import com.sfa.service.AffirmationService;
 import com.sfa.service.UserService;
+import com.sfa.util.PushMail;
 import com.sfa.vo.UserVo;
 
 @Controller
@@ -30,6 +31,9 @@ public class UserController {
 
 	@Autowired
 	AffirmationService affirmationService;
+	
+	@Autowired
+	PushMail pushMail;
 
 	@RequestMapping(value = { "", "/login" }, method = RequestMethod.GET)
 	public String login(@AuthUser UserVo authUser, Model model) {
@@ -58,8 +62,7 @@ public class UserController {
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String join(@ModelAttribute UserVo userVo, Model model,BindingResult result) {
 		
-
-		/*// 정상적인 접근이 아닐 경우
+		// 정상적인 접근이 아닐 경우
 		if (userVo == null) {
 			System.out.println("error_0x1");
 			return "user/join";
@@ -69,18 +72,20 @@ public class UserController {
 				|| userVo.getPasswd() == null) {
 			System.out.println("error_join_0x2");
 			return "user/join";
-		} else {*/
+		} else {
 			// 정상적으로 회원가입 되었을 경우
 			if (userService.join(userVo) == true) {
 				userVo = userService.getId(userVo.getId());
 				model.addAttribute("userVo", userVo);
+				
+				
 				return "user/joinsuccess";
 			} else if (userService.join(userVo) == false) {
 				return "redirect:/join?result=fail";
 			}
 			return "user/join";
 		}
-	/*}*/
+	}
 
 	@Auth(value = Auth.Role.팀장)
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)

@@ -130,12 +130,12 @@ $(document).ready(function() {
 	
 	$(".submit-btn").click(function(){
 		var form = $(this).next();
-		form.action="submit";
+		form.action="/submit";
 		form.submit();
 	})
 	$(document).on("click",".submit-btn",function(){
 		var form = $(this).next();
-		form.action="submit";
+		form.action="/submit";
 		form.submit();
 	})
 });

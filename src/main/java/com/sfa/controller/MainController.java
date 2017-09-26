@@ -9,7 +9,6 @@ import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
 import com.sfa.service.AffirmationService;
 import com.sfa.service.WeekPlanService;
-import com.sfa.util.PushMessage;
 import com.sfa.vo.UserVo;
 import com.sfa.vo.WeekVo;
 
@@ -28,7 +27,6 @@ public class MainController {
 	{
 		String Affirmation = affirmationService.select();
 		System.out.println("Controller"+Affirmation);
-		
 		model.addAttribute("affrimation", Affirmation);
 		
 		//처음 들어왔을 때 화면
