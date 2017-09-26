@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfa.dto.JSONResult;
 import com.sfa.security.Auth;
@@ -59,6 +60,7 @@ public class DateReportController {
 	}
 
 	@Auth
+	@ResponseBody
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public JSONResult select(@AuthUser UserVo authUser,
 			@RequestParam(value = "startDate", required = true, defaultValue = "") String startDate,
@@ -71,6 +73,7 @@ public class DateReportController {
 		}
 	}
 	@Auth
+	@ResponseBody
 	@RequestMapping(value="/select", method=RequestMethod.GET)
 	public JSONResult select(@RequestParam(value="report_no", required=true, defaultValue="") Long report_no,Model model)
 	{
@@ -82,6 +85,7 @@ public class DateReportController {
 	}
 
 	@Auth
+	@ResponseBody
 	@RequestMapping(value="/select", method=RequestMethod.POST)
 	public JSONResult selectVo(@AuthUser UserVo authUser,@RequestParam(value = "Date", required = true, defaultValue = "") String Date)
 	{
