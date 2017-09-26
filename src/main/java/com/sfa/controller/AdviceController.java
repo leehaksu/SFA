@@ -68,7 +68,7 @@ public class AdviceController {
 		}
 
 	}
-
+	//테스트 진행중... 이상 없길 바래
 	@Auth
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public JSONResult deleteAdvice(@AuthUser UserVo authUser, @ModelAttribute AdviceVo adviceVo) {
