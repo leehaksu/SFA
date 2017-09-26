@@ -1,0 +1,92 @@
+package com.sfa.repository;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.sfa.vo.UserVo;
+
+@Repository
+public class UserDao {
+	
+	@Autowired
+	SqlSession sqlSession;
+	
+	public UserVo get(String id, String password) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		System.out.println("[Dao] ID : " + id);
+		System.out.println("[Dao] password : " + password);
+		
+		map.put( "id", id );
+		map.put( "password", password );
+		return sqlSession.selectOne( "user.getByIdAndPassword", map );
+	}
+	
+	public UserVo get(String id) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		System.out.println("[Dao] Check_ID : " + id);
+		
+		map.put( "id", id );
+		return sqlSession.selectOne( "user.getById", map );
+	}
+	public int insert(UserVo userVo) {
+		// TODO Auto-generated method stub
+		System.out.println("[Dao] 회원가입 : " + userVo);
+		
+		return sqlSession.insert("user.insert",userVo);
+	}
+
+	public int modify(UserVo userVo) {
+		// TODO Auto-generated method stub
+		
+		System.out.println(userVo);
+		return sqlSession.update("user.update", userVo);
+	}
+
+	public List<UserVo> getMember(String name,String grade,String dept) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put( "dept", dept );
+		if("".equals(name))
+		{
+			map.put( "grade", grade );
+			return sqlSession.selectList("user.selectMember", map);
+			
+		}else if("전체".equals(grade))
+		{
+			map.put( "name", name );
+			return sqlSession.selectList("user.selectMember", map);
+		}else
+		{
+			map.put( "name", name );
+			map.put( "grade", grade );
+			return sqlSession.selectList("user.selectMember", map);
+		}
+	}
+
+	public List<UserVo> getTotalMember(String dept) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put( "dept", dept );
+		return sqlSession.selectList("user.selectTotalMember", map);
+	}
+	public int delete(UserVo userVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("user.delete",userVo);
+	}
+
+	public UserVo getDept(String id) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put( "id", id );
+		return sqlSession.selectOne("user.selectDept", map);
+	}
+
+
+}

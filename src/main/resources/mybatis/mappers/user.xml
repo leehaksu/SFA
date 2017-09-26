@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+	<insert id="insert" parameterType="userVo">
+		<![CDATA[
+		 insert 
+		   into user 
+		 values( #{id}, password(#{passwd}), #{dept}, #{name},#{email},#{grade},'팀원',now())
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			select
+			last_insert_id()
+		</selectKey>
+	</insert>
+	<select id="getByIdAndPassword" resultType="uservo"
+		parameterType="MAP">
+		<![CDATA[
+		select id,name,dept,email,grade,level
+		  from user 
+		 where id=#{id}
+		   and passwd =password(#{password})
+		]]>
+	</select>
+	<select id="getById" resultType="uservo" parameterType="MAP">
+		<![CDATA[
+		select id,name,dept,email,grade
+		  from user 
+		 where id=#{id}
+		]]>
+	</select>
+	<select id="selectMember" resultType="uservo" parameterType="MAP">
+		<choose>
+			<when test="name == null">
+		<![CDATA[
+		select id,name,dept,email,grade
+		  from user  
+		 where grade=#{grade} and dept=#{dept}
+		]]>
+			</when>
+			<when test="grade ==null">
+		<![CDATA[
+		select id,name,dept,email,grade
+		  from user  
+		 where name=#{name} and dept=#{dept}
+		]]>
+			</when>
+			<otherwise>
+		<![CDATA[
+		select id,name,dept,email,grade
+		  from user  
+		 where name=#{name} and grade=#{grade} and dept=#{dept}
+		]]>
+			</otherwise>
+		</choose>
+	</select>
+	<select id="selectTotalMember" resultType="uservo" parameterType="MAP">
+		<![CDATA[
+		select id,name,dept,email,grade,level
+		  from user 
+		 where dept=#{dept}
+		]]>
+	</select>
+	<select id="selectDept" resultType="uservo" parameterType="MAP">
+		<![CDATA[
+		select dept from user where id=#{id}
+		]]>
+	</select>
+	<update id="update">
+		<choose>
+			<when test="passwd == ''">
+		<![CDATA[
+		update user set name=#{name},dept=#{dept},grade=#{grade} where id=#{id};
+		]]>
+			</when>
+			<when test="passwd != ''">
+		<![CDATA[
+		update user set passwd=password(#{passwd}),name=#{name},dept=#{dept},grade=#{grade} where id=#{id};
+		]]>
+			</when>
+		</choose>
+	</update>
+	<delete id="delete" parameterType="uservo">
+	<![CDATA[
+	delete from user where id=#{id};
+		]]>
+	</delete>
+</mapper>

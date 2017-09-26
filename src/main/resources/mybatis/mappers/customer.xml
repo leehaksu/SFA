@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="customer">
+	<select id="select" resultType="customervo" parameterType="MAP">
+		<![CDATA[
+	select code,name,address from customer where id=#{id};
+	]]>
+	</select>
+	<insert id="insert" parameterType="customervo">
+		<![CDATA[
+		
+		]]>
+	</insert>
+	<update id="update" parameterType="customervo">
+		<![CDATA[
+		
+
+		]]>
+	</update>
+</mapper>

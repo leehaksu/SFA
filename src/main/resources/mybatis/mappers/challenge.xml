@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="challenge">
+	<select id="select" resultType="challengevo">
+	<![CDATA[
+	select challenge_no,content,activity from challenge where dept=#{dept} ;
+	]]>
+	</select>
+	<select id="insert" parameterType="challengevo" resultType="challengevo">
+	<![CDATA[
+	insert into challenge values (null,#{content},#{dept},1);
+	]]>
+	</select>
+		<select id="selectByContent" resultType="int">
+	<![CDATA[
+	select challenge_no from challenge where content=#{content} and dept=#{dept};
+	]]>
+	</select>
+	<update id="deleteByContent" parameterType="challengevo">
+	 update challenge set activity=0 where challenge_no=#{challenge_no}; 
+	</update>
+</mapper>

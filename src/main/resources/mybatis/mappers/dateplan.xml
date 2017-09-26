@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dateplan">
+	<insert id="insert_date" parameterType="datevo">
+		<![CDATA[
+		 insert 
+		   into plan  
+		 values(#{id},#{date},#{title},#{goal_sale},#{opinion},#{content},now(),#{estimate_distance},#{estimate_course},#{challenge_no})
+		]]>
+	</insert>
+	<select id="select_date" parameterType="datevo" resultType="datevo">
+		<![CDATA[
+    select a.title,a.goal_sale,a.opinion,a.content,a.reg_date,a.id,a.date,a.estimate_distance,a.estimate_course,a.challenge_no,b.content as challenge_content from plan as a, challenge as b where  a.challenge_no=b.challenge_no and a.id=#{id} and a.date=#{date};			]]>
+	</select>
+	<update id="update_date" parameterType="datevo">
+		<![CDATA[
+		update plan set title=#{title} ,goal_sale=#{goal_sale},opinion=#{opinion},content=#{content},reg_date=now(),estimate_distance=#{estimate_distance},estimate_course=#{estimate_course},challenge_no=#{challenge_no}
+		where id=#{id} and date=#{date};
+			]]>
+	</update>
+	<delete id="delete_date" parameterType="datevo">
+		<![CDATA[
+		delete from plan where date=#{date} and id=#{id};
+			]]>
+	</delete>
+	<select id="selctSale" parameterType="datereportvo" resultType="datereportvo">
+		<![CDATA[
+		select goal_sale from plan where id=#{id} and date=#{date};	
+		]]>
+	</select>
+		<update id="updateByChallenge" parameterType="MAP">
+	<![CDATA[
+	
+	]]>
+	</update>
+</mapper>

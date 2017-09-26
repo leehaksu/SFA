@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="datereport">
+
+	<insert id="insert" parameterType="datereportvo">
+		<![CDATA[
+	insert into day_report values(null,#{title},#{report_sale},#{content},#{achive_rank},0,#{opinion},#{date},now(),#{id});
+		]]>
+		<selectKey keyProperty="report_no" resultType="long" order="AFTER">
+			select last_insert_id();
+		</selectKey>
+	</insert>
+	<update id="update" parameterType="datereportvo">
+		<![CDATA[
+	update day_report set title=#{title}, report_sale=#{report_sale},content=#{content},achive_rank=#{achive_rank}, approval=#{approval},opinion=#{opinion} where report_no=#{report_no} and date=#{date} and id=#{id};
+		]]>
+	</update>
+	<select id="getById" parameterType="datereportvo" resultType="datereportvo">
+		<![CDATA[
+		select report_no,title, report_sale,content,achive_rank,approval,opinion,reg_date,date from day_report where id=#{id}; 
+		]]>
+	</select>
+	<select id="getByDate" parameterType="datereportvo" resultType="datereportvo">
+		<![CDATA[
+		select report_no,title, report_sale,content,achive_rank,approval,opinion,reg_date,date from day_report where date=#{date} and id=#{id}; 
+		]]>
+	</select>
+	<select id="getByDept" parameterType="datereportvo" resultType="datereportvo">
+		<![CDATA[
+		select report_no,title, report_sale,content,achive_rank,approval,opinion,reg_date,date 
+	from day_report as a, user as b where a.id=b.id and b.dept=#{dept};
+		]]>
+	</select>
+	<delete id="delete" parameterType="datereportvo">
+		delete from day_report where
+		id=#{id} and date=#{date} and approval=0;
+	</delete>
+	<select id="getApproval" parameterType="MAP" resultType="datereportvo">
+		<![CDATA[
+		select report_no from day_report where id=#{id} and date=#{date} and approval=#{approval}; 	
+		]]>
+	</select>
+
+	<update id="updateGuage" parameterType="datereportvo">
+		<choose>
+			<when test="start_gauge == null">
+				<![CDATA[
+			update day_report set end_gauge=#{end_gauge} where id=#{id} and date=#{date};		
+			]]>
+			</when>
+			<otherwise>
+			<![CDATA[
+				update day_report set start_gauge=#{start_gauge} where id=#{id} and date=#{date};
+			]]>
+			</otherwise>
+		</choose>
+	</update>
+	<select id="getByWeek" parameterType="MAP" resultType="datereportvo">
+	<![CDATA[
+	select report_no,title, report_sale,content,achive_rank,approval,opinion,reg_date,date from day_report where id=#{id} and DATE_SUB(NOW(), INTERVAL 7 day) order by date desc;	
+	]]>
+	</select>
+	<select id="getByPeriod" parameterType="MAP" resultType="datereportvo">
+	<![CDATA[
+	select report_no,title, report_sale,content,achive_rank,approval,opinion,reg_date,date from day_report where id=#{id} and date between #{startDate} and #{endDate} order by date desc;	
+	]]>
+	</select>
+	<select id="selectByNo" parameterType="Long" resultType="datereportvo">
+	<![CDATA[
+	select report_no,title, report_sale,content,achive_rank,approval,opinion,reg_date,date from day_report where report_no=#{report_no};
+	]]>
+	</select>
+	<update id="updateApproval" parameterType="MAP">
+	<![CDATA[
+	update day_report set approval=#{approval} where report_no=#{report_no};
+	]]>
+	</update>
+</mapper>

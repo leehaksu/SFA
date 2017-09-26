@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fileupload">
+
+	<insert id="insert" parameterType="MAP">
+	<![CDATA[
+	insert into file values (null,#{originalFileName},#{url},#{report_no}); 
+	]]>
+	</insert>
+	<delete id="delete" parameterType="MAP">
+	delete from file where file_no=#{file_no}; 
+	</delete>
+	<select id="select" parameterType="MAP">
+	select file_no,file_name,path from file where report_no=#{report_no}; 
+	</select>
+</mapper>

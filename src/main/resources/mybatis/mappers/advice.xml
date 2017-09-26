@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="advice">
+
+	<insert id="insert" parameterType="advicevo">
+	<![CDATA[
+	insert into advice values (null,#{title},#{content},now(),#{human_name},#{name},#{id}); 
+	]]>
+	</insert>
+	<update id="update" parameterType="advicevo">
+	<![CDATA[
+	update advice set title=#{title}, content=#{content},reg_date=now(),human_name={human_name},name=#{name} where advice_no=#{advice_no};
+	]]>
+	</update>
+	<delete id="delete" parameterType="advicevo">
+	<![CDATA[
+	delete from advice where advice_no=#{advice_no}; 
+	]]>
+	</delete>
+	<select id="select" parameterType="advicevo" resultType="advicevo">
+	<![CDATA[
+	select advice_no, title,content,reg_date,human_name,name from advice where id=#{id} and date=#{date} ;
+	]]>
+	</select>
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="weekplan">
+	<insert id="insertWeek" parameterType="weekvo">
+		<![CDATA[
+		 insert 
+		   into week_plan  
+		 values( #{week_no}, now(), #{title}, #{target_figure},0,0,#{id})
+		]]>
+	</insert>
+
+	<insert id="insertDay" parameterType="dayvo">
+		<![CDATA[
+		 insert 
+		   into day_plan  
+		 values( null, #{day}, #{content}, #{day_sale},#{date},#{id},#{week_no})
+		]]>
+	</insert>
+	<delete id="deletetotalDay" parameterType="weekvo">
+	<![CDATA[
+		delete from day_plan where week_no=#{week_no} and id=#{id};
+	]]>
+	</delete>
+	<delete id="deleteWeek" parameterType="weekvo">
+	<![CDATA[
+	delete from week_plan where week_no=#{week_no} and id=#{id};
+	]]>
+	</delete>
+	<update id="update" parameterType="dayvo">
+	<![CDATA[
+	update day_plan set content=#{content},day_sale=#{day_sale} where id=#{id} and week_no=#{week_no} and day=#{day}; 
+	]]>
+	</update>
+	
+	<update id="updateMonday" parameterType="weekvo">
+	<![CDATA[
+		update day_plan set content=#{monday} and  day_sale=#{day_sale} where week_no=#{week_no} and id=#{id} and day=#{day}; 
+	]]>
+	</update>
+	<update id="updateTuesday" parameterType="weekvo">
+	<![CDATA[
+		update day_plan set content=#{monday} and  day_sale=#{day_sale} where week_no=#{week_no} and id=#{id} and day=#{day}; 
+	]]>
+	</update>
+	<update id="updateWednesday" parameterType="weekvo">
+	<![CDATA[
+		update day_plan set content=#{monday} and  day_sale=#{day_sale} where week_no=#{week_no} and id=#{id} and day=#{day}; 
+	]]>
+	</update>
+	<update id="updateThursday" parameterType="weekvo">
+	<![CDATA[
+		update day_plan set content=#{monday} and  day_sale=#{day_sale} where week_no=#{week_no} and id=#{id} and day=#{day}; 
+	]]>
+	</update>
+	<update id="updateFriday" parameterType="weekvo">
+	<![CDATA[
+		update day_plan set content=#{monday} and  day_sale=#{day_sale} where week_no=#{week_no} and id=#{id} and day=#{day}; 
+	]]>
+	</update>
+	<select id="getWeek" parameterType="weekvo" resultType="weekvo">
+	<![CDATA[
+	select week_no,reg_date,title,target_figure,week_sale,achive_rank,id from week_plan where week_no=#{week_no} and id=#{id};
+	]]>
+	</select>
+	<select id="getWeek_Day" parameterType="weekvo" resultType="dayvo">
+	<![CDATA[
+	select day_no,day,content,day_sale,date,id,week_no from day_plan where week_no=#{week_no} and id=#{id}; 
+	]]>
+	</select>
+	<update id="updateWeek" parameterType="weekvo">
+	<![CDATA[
+	update week_plan set title=#{title},target_figure=#{target_figure} where week_no=#{week_no} and id=#{id};
+		]]>
+	</update>
+	<select id="selectMonth" parameterType="map" resultType="dayvo">
+	<![CDATA[
+	select * from day_plan where  id=#{id} and (week_no like #{Date1} or week_no like #{Date2} or week_no like #{Date3});
+	]]>
+	</select>
+</mapper>

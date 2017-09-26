@@ -1,0 +1,201 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SaleForceAutomation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet"
+	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.servletContext.contextPath}/assets/css/main.css">
+<link rel="stylesheet"
+	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap-theme.min.css">
+<link rel='stylesheet'
+	href="${pageContext.servletContext.contextPath}/assets/css/fullcalendar.css" />
+<link rel="stylesheet"
+	href="${pageContext.servletContext.contextPath}/assets/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.servletContext.contextPath}/assets/css/jquery-ui.min.css">
+
+
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/jquery-3.2.1.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/jquery-ui.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/bootstrap.min.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/moment.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/fullcalendar.js"></script>
+<script type="text/javascript"
+	src="${pageContext.servletContext.contextPath}/assets/js/ko.js"></script>
+
+
+<link rel="stylesheet"
+	href="${pageContext.servletContext.contextPath}/assets/froala_editor/css/froala_editor.css">
+<link rel="stylesheet"
+	href="${pageContext.servletContext.contextPath}/assets/froala_editor/css/froala_style.min.css">
+<script type="text/javascript"
+	src="${pageContext.servletContext.contextPath}/assets/froala_editor/js/froala_editor.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.servletContext.contextPath}/assets/froala_editor/js/plugins/paragraph_format.min.js"></script>
+
+<script type="text/javascript">
+//현재 날짜를 moment.js를 활용하여 "YYYY-MM-DD"형식으로 받아온다.
+var today = moment().format("YYYY-MM-DD");
+
+$(document).ready(function() {
+	
+	advicecount=0;   //상담일지 개수 확인
+	$("#start-date").val(today);
+	$("#end-date").val(today);
+	
+	//report리스트들의 li 크기를 각각 내용에 따라 맞춰주기
+	var min_parent_height = jQuery("#report-list").height()+"px";
+	jQuery("#report-thumnail").css({'min-height':min_parent_height});
+	
+	$( "#start-date" ).datepicker({
+		defaultDate: null,
+		dateFormat: 'yy-mm-dd', 
+	    beforeShow: function(input, inst) {
+	    	var offset = $(input).offset();
+	        var height = $(input).height();
+	         window.setTimeout(function () {
+	             inst.dpDiv.css({ top: (offset.top + height + 4) + 'px', left: offset.left + 'px' })}, 1);
+	    },
+		onSelect: function(dateText,inst){
+			$("#start-date").val(dateText);
+		}
+	});
+	
+	$( "#end-date" ).datepicker({
+		defaultDate: null,
+		dateFormat: 'yy-mm-dd', 
+	    beforeShow: function(input, inst) {
+	    	var offset = $(input).offset();
+	         var height = $(input).height();
+	         window.setTimeout(function () {
+	             inst.dpDiv.css({ top: (offset.top + height + 4) + 'px', left: offset.left + 'px' })
+	         }, 1);
+	    },
+		onSelect: function(dateText,inst){
+			$("#end-date").val(dateText);
+		}		
+	});
+	
+	$("#search-report").on("click", function(){
+		var date1 = $("#end-date").val();
+		var date2 = $("#start-date").val();
+		
+		if(moment(date2).isBefore(date1)){
+			var temp= date1;
+				date1=date2;
+				date2=temp;
+		}
+		
+		 $.post("search",
+		    {
+			 startDate: date1,
+			 endDate: date2
+		    },
+		    function(data, status){
+		        alert("Data: " + data + "\nStatus: " + status);
+		    });
+		
+	});
+	
+});
+</script>
+
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<c:import url="/WEB-INF/views/include/header.jsp">
+			<c:param name="menu" value="main" />
+		</c:import>
+	</nav>
+	<div class="row" id="wrapper">
+		<div class="col-sm-3" id="sidebar-wrapper">
+			<c:import url="/WEB-INF/views/include/navigator.jsp">
+				<c:param name="menu" value="main" />
+			</c:import>
+		</div>
+
+		<main class="col-sm-9" style="margin-left: 40px;">
+		<article>
+			<div style="margin-top: 30px;">
+				<h3 style="display: inline;">영업 보고서 조회</h3>
+				<button type="button" class="btn btn-default" onclick="location.href='insert'" style="float: right;display: inline-block;">보고서 추가</button>								
+			</div>
+			<form>
+				<table style="border-spacing: 20px 0;border-collapse: separate;margin-top: 10px;">
+					<tr>
+						<td><label for="start-date"></label><input id="start-date"
+							class="form-control"></td>
+						<td><h4>~</h4></td>
+						<td><label for="end-date"></label><input id="end-date"
+							class="form-control"></td>
+						<td><select class="form-control">
+								<option>승인</option>
+								<option>제출</option>
+								<option>미제출</option>
+								<option>반려</option>
+						</select></td>
+						<td>
+							<button id="search-report"type="button" class="btn btn-default">검색</button>
+						</td>
+					</tr>
+				</table>
+			</form>
+ 			<p></p>
+			<div id="search-count">조회: ${fn:length(list)} 건</div>
+			<hr>
+		</article>
+		<article>
+			<div id="content">
+				<ul>
+					<c:forEach items="${list}"  var="dayreportVo"  varStatus="status">
+					<li id="report-thumnail" style="border: 1px solid gray;overflow: hidden;">
+					<a href="${pageContext.servletContext.contextPath}/report/search" style="float: left; width: 100%;"> 
+					<img src="${pageContext.servletContext.contextPath}/assets/image/approve.png" alt="승인/미승인 이미지" style="width: 77px; float: left">
+						<table id="report-list" class="table" style="margin-left: 100px; width: auto;">
+							<thead>
+								<tr>
+									<th>보고 일자:${dayreportVo.date}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>제목: ${dayreportVo.title}</td>
+								</tr>
+								<tr>
+									<td>작성일자: ${dayreportVo.reg_date}</td>
+								</tr>
+								<tr>
+									<td>팀장의견: ${dayreportVo.opinion}</td>
+								</tr>
+								<!-- 팀장 페이지에서 조회엔 누가 썻는지 알아야 하므로 부서,이름,직급이 표기 되어야 하기 때문에 tr이 한줄 더 필요하다. -->
+							</tbody>
+						</table>
+					</a>
+						<div>
+							<button type="button" class="btn btn-default" value="${dayreportVo.report_no}" style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출</button>
+						</div>
+					</li>
+					</c:forEach>
+				</ul>
+			</div>
+		</article>
+		</main>
+	</div>
+</body>
+</html>

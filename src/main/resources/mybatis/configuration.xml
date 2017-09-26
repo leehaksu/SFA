@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+		<typeAlias alias="uservo" type="com.sfa.vo.UserVo" />
+		<typeAlias alias="weekvo" type="com.sfa.vo.WeekVo" />
+		<typeAlias alias="dayvo" type="com.sfa.vo.DayVo" />
+		<typeAlias alias="datevo" type="com.sfa.vo.DateVo" />
+		<typeAlias alias="positionvo" type="com.sfa.vo.PositionVo" />
+		<typeAlias alias="customervo" type="com.sfa.vo.CustomerVo" />
+		<typeAlias alias="datereportvo" type="com.sfa.vo.DateReportVo" />
+		<typeAlias alias="advicevo" type="com.sfa.vo.AdviceVo" />
+		<typeAlias alias="challengevo" type="com.sfa.vo.ChallengeVo" />
+		<typeAlias alias="affirmationvo" type="com.sfa.vo.AffirmationVo" />
+	</typeAliases>
+
+	<!-- SQL문를 저장하는 파일 -->
+	<mappers>
+		<mapper resource="mybatis/mappers/user.xml" />
+		<mapper resource="mybatis/mappers/weekplan.xml" />
+		<mapper resource="mybatis/mappers/dateplan.xml" />
+		<mapper resource="mybatis/mappers/position.xml" />
+		<mapper resource="mybatis/mappers/customer.xml" />
+		<mapper resource="mybatis/mappers/datereport.xml" />
+		<mapper resource="mybatis/mappers/advice.xml" />
+		<mapper resource="mybatis/mappers/challenge.xml" />
+		<mapper resource="mybatis/mappers/fileupload.xml" />
+		<mapper resource="mybatis/mappers/affirmation.xml" />
+	</mappers>
+</configuration>
