@@ -14,6 +14,7 @@
 	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/main.css">
+<link href="${pageContext.servletContext.contextPath}/assets/css/hover.css" rel="stylesheet" media="all">
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap-theme.min.css">
 <link rel="stylesheet"
@@ -99,13 +100,13 @@ $(document).ready(function() {
 		        $("#search-count").html("조회: "+ response.data.length+" 건");
 		        for(i=0; i<response.data.length;i++){	
 		        	$("#content > ul").append('<li class="report-thumnail"></li>');
-		        	$("#content > ul > li").eq(i).append('<a class="report-detail" href="${pageContext.servletContext.contextPath}/report/search?report_no='+response.data.report_no+'"></a>');		        	
+		        	$("#content > ul > li").eq(i).append('<a class="report-detail hvr-wobble-horizontal" href="${pageContext.servletContext.contextPath}/report/search?report_no='+response.data.report_no+'"></a>');		        	
 		        	        	
 		        	if(response.data[i].approval == 0){
 		        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/write.png" alt="레포트 상태 이미지">');		
 		        	}else if(response.data[i].approval == 1){
 		        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/review.png" alt="레포트 상태 이미지">');		
-		        	}else if(response.data[i].approval == 1){
+// 		        	}else if(response.data[i].approval == 2){
 		        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/approve.png" alt="레포트 상태 이미지">');		
 		        	}else{
 		        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/reject.png" alt="레포트 상태 이미지">');		
@@ -116,7 +117,7 @@ $(document).ready(function() {
 		        		opinion ="";		
 		        	}
 		        	$(".report-detail").eq(i).append('<table class="table report-list"><thead><tr><th>보고 일자:'+response.data[i].date+'</th></tr></thead><tbody><tr><td>제목: '+response.data[i].title+'</td></tr><tr><td>작성일자: '+response.data[i].reg_date+'</td></tr><tr><td>팀장의견: '+opinion+'</td></tr></tbody></table>');
-		        	$("#content > ul > li").eq(i).append('<div><button type="button" class="btn btn-default submit-btn">제출</button> <form class="reportnoform" method="post"><input type="hidden" id="report_no" name="report_no" value="'+response.data[i].report_no+'"><input type="hidden" id="approval" name="approval" value=1></form>');	
+		        	$("#content > ul > li").eq(i).append('<div><button type="button" class="btn btn-default submit-btn">제출</button> <form class="reportnoform" method="POST"><input type="hidden" id="report_no" name="report_no" value="'+response.data[i].report_no+'"><input type="hidden" id="approval" name="approval" value=1></form>');	
 		        }
 		        
 		        $(".report-thumnail").css({"border": "1px solid gray","overflow": "hidden"});
@@ -189,7 +190,7 @@ $(document).ready(function() {
 				<ul>
 					<c:forEach items="${list}"  var="dayreportVo"  varStatus="status">
 					<li id="report-thumnail" style="border: 1px solid gray;overflow: hidden;">
-					<a href="${pageContext.servletContext.contextPath}/report/search" style="float: left; width: 100%;"> 
+					<a href="${pageContext.servletContext.contextPath}/report/search" class="hvr-wobble-horizontal" style="float: left; width: 100%;"> 
 					<img src="${pageContext.servletContext.contextPath}/assets/image/approve.png" alt="승인/미승인 이미지" style="width: 77px; float: left">
 						<table class="table report-list" style="margin-left: 100px; width: auto;">
 							<thead>
@@ -212,8 +213,8 @@ $(document).ready(function() {
 						</table>
 					</a>
 						<div>
-							<button type="button" class="btn btn-default submit-btn" style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출</button>	
-							<form class="reportnoform" method="post">
+							<button type="button" class="btn btn-default submit-btn hvr-shadow-radial" style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출</button>	
+							<form class="reportnoform" method="POST">
 								<input type="hidden" id="report_no" name="report_no" value="${dayreportVo.report_no}">
 								<input type="hidden" id="approval" name="approval" value=1>								
 							</form>
