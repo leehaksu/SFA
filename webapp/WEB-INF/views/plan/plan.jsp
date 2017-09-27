@@ -536,6 +536,7 @@
 								lang : "ko",
 								selectable : true,
 								weekends : false,
+								lazyFetching:true,
 								eventLimit : true, // allow "more" link when too many events
 								disableDragging: true,
 								events : function(start, end,

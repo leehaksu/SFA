@@ -42,7 +42,6 @@ var today = moment().format("YYYY-MM-DD");
 
 
 $(document).ready(function() {
-	
 	advicecount=0;   //상담일지 개수 확인
 	$("#start-date").val(today);
 	$("#end-date").val(today);
@@ -118,14 +117,26 @@ $(document).ready(function() {
 		        		opinion ="";		
 		        	}
 		        	$(".report-detail").eq(i).append('<table class="table report-list"><thead><tr><th>보고 일자:'+response.data[i].date+'</th></tr></thead><tbody><tr><td>제목: '+response.data[i].title+'</td></tr><tr><td>작성일자: '+response.data[i].reg_date+'</td></tr><tr><td>팀장의견: '+opinion+'</td></tr></tbody></table>');
-		        	$("#content > ul > li").eq(i).append('<div><button type="button" class="btn btn-default submit-btn hvr-shadow-radial">제출</button> <form class="reportnoform" action="submit" method="POST"><input type="hidden" id="report_no" name="report_no" value="'+response.data[i].report_no+'"><input type="hidden" id="approval" name="approval" value=1></form>');	
+		        	
+		        	
+		        	
+		        	if(response.data[i].approval == 0){
+		            	$("#content > ul > li").eq(i).append('<div><button type="button" class="btn btn-default submit-btn hvr-shadow-radial">제출</button> <form class="reportnoform" action="submit" method="POST"><input type="hidden" id="report_no" name="report_no" value="'+response.data[i].report_no+'"><input type="hidden" id="approval" name="approval" value=1></form>');		
+		        	}else if(response.data[i].approval == 1){
+		            	$("#content > ul > li").eq(i).append('<div><div class="btn btn-default report-stat">제출 완료</div></div>');		
+ 		        	}else if(response.data[i].approval == 2){
+ 		        		$("#content > ul > li").eq(i).append('<div><div class="btn btn-default report-stat">승인 완료</div></div>');		
+		        	}else{
+		        		$("#content > ul > li").eq(i).append('<div><div class="btn btn-default report-stat">반려</div></div>'); 
+		        	}
 		        }
-		        
 		        $(".report-thumnail").css({"border": "1px solid gray","overflow": "hidden"});
 		        $(".report-detail").css({"float": "left", "width": "100%"});
 		        $(".report-state").css({"width": "77px", "float": "left"});
 		        $(".report-list").css({"margin-left": "100px", "width": "auto"});
 		        $(".submit-btn").css({"margin-left": "-100px", "float": "right", "z-index": "100", "margin-top": "25px", "position": "absolute"});
+		        $(".report-stat").css({"margin-left": "-100px", "float": "right", "z-index": "100", "margin-top": "25px", "position": "absolute"});
+		         
 		    });
 	});
 	
@@ -244,7 +255,7 @@ $(document).ready(function() {
 										<button type="button"
 											class="btn btn-default submit-btn hvr-shadow-radial"
 											style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출</button>
-										<form class="reportnoform" action="submit" method="POST">
+	 										<form class="reportnoform" action="submit" method="POST"> 
 											<input type="hidden" id="report_no" name="report_no"
 												value="${dayreportVo.report_no}"> <input
 												type="hidden" id="approval" name="approval" value=1>
@@ -253,19 +264,19 @@ $(document).ready(function() {
 								</c:when>
 								<c:when test="${dayreportVo.approval == 1}">
 									<div>
-										<div class="btn btn-default"
+										<div class="btn btn-default report-stat"
 											style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출 완료</div>
 									</div>
 								</c:when>
 								<c:when test="${dayreportVo.approval == 2}">
 									<div>
-										<div class="btn btn-default"
+										<div class="btn btn-default report-stat"
 											style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">승인 완료</div>
 									</div>
 								</c:when>
 								<c:otherwise>
 									<div>
-										<div class="btn btn-default"
+										<div class="btn btn-default report-stat"
 											style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">반려됨</div>
 									</div>
 								</c:otherwise>

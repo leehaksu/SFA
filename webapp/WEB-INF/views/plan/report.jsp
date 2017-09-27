@@ -59,7 +59,13 @@
 var today = moment().format("YYYY-MM-DD");
 //상담 일지 갯수 변수
 var adviceCount;
+//datepicker 클릭 확인 변수
 var dayClickCheck=false;
+//제출 날짜 담는 변수
+var submitdate;
+//선택된 상담카드
+var clickedAdviceId;
+
 function onlyNumber(event) {
 	event = event || window.event;
 	var keyID = (event.which) ? event.which : event.keyCode;
@@ -100,7 +106,7 @@ function validateForm(){
 }
 
 $(document).ready(function() {
-	  $("#dayreporttable-files").fileinput({showCaption: false});
+	  $("#dayreporttable-files").fileinput({showCaption: false});	
 	 $.post("select",
 	    {
  			Date:today
@@ -111,7 +117,7 @@ $(document).ready(function() {
 
     	 $("#dayreport-date").attr("value", today);
 		
-    	 adviceCount=0;				
+    	 adviceCount=1;				
 		$( "#submitDay-datepicker" ).val(today);
 		$( "#submitDay-datepicker" ).datepicker({
 			dateFormat: 'yy-mm-dd', 
@@ -123,6 +129,7 @@ $(document).ready(function() {
 		        }, 0);
 		    },
 			onSelect: function(dateText,inst){
+				submitdate=dateText;
 				$("#dayreport-date").val(dateText);
 				 $.post("select",
 				    {
@@ -160,47 +167,49 @@ $(document).ready(function() {
 			console.log("들어오니??");
 			var div = document.createElement('div');
 			div.setAttribute("id","advice_content"+adviceCount);
+			div.setAttribute("class","advice_content");
 
-			div.innerHTML = document.getElementById('advice_content').innerHTML;
-			document.getElementById('advice_contianer').appendChild(div);	
+			div.innerHTML = document.getElementById('advice_content1').innerHTML;
+			document.getElementById('advice_contianer').appendChild(div);
+					
 		});
 	
 		
-		$('#dayreporttable-customer').focus(function() {
-			$.ajax({
+		$(document).on("focus",'#advicereporttable-customer, #advicereporttable-code, #advicereporttable-address',function() {
+				//init modal_table
+				$('#modal_table > tbody').empty();
+
+				//내가 클릭한 상담카드
+				clickedAdviceId = $(this).parents(".advice_content").attr("id");
+				$.ajax({
 						url : '/sfa/customer/select',
 						type : 'GET',
 						dataType : 'json',
 						contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 						success : function(doc) {
-							console.log(doc);
-							console.log(doc.data);
+							//console.log(doc.data);
 
 							for (index = 0; index < doc.data.length; index++) {
-								$('#modal_table').append(
-								"<tr><td class='tg-yw4l'>"
+								$('#modal_table > tbody').append(
+								"<tr><td class='tg-yw4l customer-info'>"
 										+ doc.data[index].code
 										+ "</td>"
-										+ "<td class='tg-yw4l'>"
+										+ "<td class='tg-yw4l customer-info'>"
 										+ doc.data[index].name
 										+ "</td>"
-										+ "<td class='tg-yw4l'>"
+										+ "<td class='tg-yw4l customer-info'>"
 										+ doc.data[index].address
 										+ "</td>"
-										+ "<td class='tg-yw4l'>"
-										+ "<button id='dayreport-updatebutton' class='btn btn-info'>"
+										+ "<td id='customer-button' class='tg-yw4l'>"
+										+ "<button id='advicereport-selectbutton' class='btn btn-info' data-dismiss='modal'>"
 										+ "<strong>선택</strong></button>"
 										+ "</td>"
 										+ "</tr>");
 							}
-
 						},
-						error : function(xhr,
-								status, error) {
-							alert(xhr + " 와 "
-									+ status
-									+ " 와 "
-									+ error);
+						error : function(xhr,status, error) {
+							console.log(xhr);
+							console.log(status+ " 와 "+ error);
 						}
 					});
 		});
@@ -211,6 +220,34 @@ $(document).ready(function() {
 			dayreportForm.submit(); 
 		});
 		
+	
+		$(document).on("click",".cancle-btn",function(){			 
+			$('#modal_table > tbody').empty();
+		});	
+		
+		$(document).on("click","#advicereport-selectbutton",function(){			 
+			var customerInfo= [];
+			console.log("픽미");
+			console.log($(this).index()); 
+		
+ 			$(this).parent().prevAll(".customer-info").each(function(index){				
+ 				console.log(this.innerHTML);
+ 				customerInfo.push(this.innerHTML);
+			}); 			
+ 			console.log("선택된 상담카드ID: " + clickedAdviceId);
+
+ 			$("#"+clickedAdviceId).find("#advicereporttable-code").val(customerInfo[2]);
+ 			$("#"+clickedAdviceId).find("#advicereporttable-customer").val(customerInfo[1]);
+ 			$("#"+clickedAdviceId).find("#advicereporttable-address").val(customerInfo[0]);
+
+		});
+	
+		$(document).on("click",".advicereporttable-savebutton",function(){				
+			var index = $(".advicereporttable-savebutton").index(this);
+			console.log(index);
+			var form = $('#advice_content'+index);
+			form.submit();
+		});
 		
 	});
 </script>
@@ -240,7 +277,7 @@ $(document).ready(function() {
 				<form name="dayreport" id="dayreport-form"  onsubmit="return validateForm()" method="post">
 					<table id="dayreporttable">
 						<tr>
-							<td colspan="3" id="content2">
+							<td colspan="3" id="rpt-content1">
 								<div class="form-group">
 									<div style="display: inline-block;">
 										<label for="show-day-title"
@@ -270,7 +307,7 @@ $(document).ready(function() {
 							</td>
 						</tr>
 						<tr>
-							<td colspan="3" id="content2">
+							<td colspan="3" id="rpt-content2">
 								<div class="form-group">
 									<div style="display: inline-block;">
 										<label for="show-day-title"
@@ -301,7 +338,7 @@ $(document).ready(function() {
 							</td>
 						</tr>
 						<tr>
-							<td colspan="3" id="content2">
+							<td colspan="3" id="rpt-content3">
 								<div class="form-group">
 									<div style="display: inline-block;">
 										<label for="show-day-title"
@@ -391,8 +428,8 @@ $(document).ready(function() {
 							<button id="search_advice" class="btn  btn-sm btn-default"
 								style="float: right; margin-top: 10px; margin-right: 10px; float: right;">검색</button>		
 						</div>
-						<div id="advice_content" class="advice_content">
-							<form>
+						<div id="advice_content1" class="advice_content">
+							<form action="/advice/insert" method="post">
 								<div class="panel panel-info"
 									style="clear: both; margin-top : 10px;">
 									<div class="panel-heading" style="color: #fff; ">
@@ -402,24 +439,23 @@ $(document).ready(function() {
 										<table id="advicereporttable"
 											style="background-color: #fff; width: 100%; border-radius: 5px;">
 											<tr style="margin-top: 5px;">
-												<td colspan="3" id="content2">
+												<td colspan="3" id="adv-content1">
 													<div class="form-group" style="margin-top: 15px;">
 														<div style="display: inline-block;">
 															<label for="show-day-title"
 																style="width: 100px; text-align: center;">고객 코드
-																&nbsp;</label> <input id="advicereporttable-title"
+																&nbsp;</label> <input id="advicereporttable-code"
 																class="form-control advicereporttable-input" type="text"
-																name="" placeholder="고객 코드"
+																name="code" placeholder="고객 코드"
 																style="width: 150px; margin-right: 6px;" required
-																><a href="#"
-																style="text-decoration: none"></a>
+																data-toggle="modal" data-target="#AdviceModal">
 														</div>
 														<div style="display: inline-block;">
 															<label for="day"
 																style="width: 100px; text-align: center;">고객명</label> <input
 																id="advicereporttable-customer"
 																class="form-control advicereporttable-input" type="text"
-																name="" placeholder="고객명"
+																name="customer" placeholder="고객명"
 																style="width: 150px; margin-right: 6px;" required
 																data-toggle="modal" data-target="#AdviceModal">
 														</div>
@@ -428,7 +464,7 @@ $(document).ready(function() {
 																style="width: 100px; text-align: center;">담당자
 																&nbsp;</label> <input id="advicereporttable-manager"
 																class="form-control advicereporttable-input" type="text"
-																name="" placeholder="담당자"
+																name="manager" placeholder="담당자"
 																style="width: 220px; margin-right: 6px;" required
 																>
 														</div>
@@ -436,22 +472,22 @@ $(document).ready(function() {
 												</td>
 											</tr>
 											<tr>
-												<td colspan="3" id="content2">
+												<td colspan="3" id="adv-content2">
 													<div class="form-group">
 														<div style="display: inline-block;">
 															<label for="show-day-title"
 																style="width: 100px; text-align: center">주소&nbsp;</label>
 															<input id="advicereporttable-address"
 																class="form-control advicereporttable-input" type="text"
-																name="" placeholder="주소 자동입력 "
+																name="address" placeholder="주소 자동입력 "
 																style="width: 415px; margin-right: 6px;" required
-																>
+																data-toggle="modal" data-target="#AdviceModal">
 														</div>
 														<div style="display: inline-block;">
-															<label for="day" style="width: 100px; text-align: center">작성일&nbsp;</label>
-															<input id="advicereporttable-regDate"
+															<label for="day" style="width: 100px; text-align: center">제출일&nbsp;</label>
+															<input id="advicereporttable-date"
 																class="form-control advicereporttable-input" type="text"
-																name="" placeholder="작성날짜"
+																name="date" placeholder="작성날짜"
 																style="width: 220px; margin-right: 6px;" required
 																>
 														</div>
@@ -459,24 +495,23 @@ $(document).ready(function() {
 												</td>
 											</tr>
 											<tr>
-												<td colspan="3" id="content2">
+												<td colspan="3" id="adv-content3">
 													<div class="form-group">
 														<div style="display: inline-block;">
 															<label for="show-day-title"
 																style="width: 100px; text-align: center">제목&nbsp;</label>
 															<input id="advicereporttable-title"
 																class="form-control advicereporttable-input" type="text"
-																name="" placeholder="제목을 입력해 주세요"
+																name="title" placeholder="제목을 입력해 주세요"
 																style="width: 740px; margin-right: 6px;" required>
 														</div>
 													</div>
 												</td>
 											</tr>
 											<tr>
-												<td colspan="3" id="content2">
+												<td colspan="3" id="adv-content4">
 													<div class="panel panel-default form-group"
 														style="width: 95%; text-align: center; margin: 10px;">
-
 														<textarea class="date-textarea"></textarea>	
 													</div>
 												</td>
@@ -488,14 +523,12 @@ $(document).ready(function() {
 								<div class="btn-group btn-group-justified" role="group"
 									style="width: 150px; float: right; margin: 10px;">
 									<div id="write-btn" class="btn-group" role="group">
-										<button id="advicereporttable-savebutton" class="btn btn-info"
-											type="submit">
+										<button class="btn btn-info advicereporttable-savebutton" type="submit">
 											<strong>저장하기</strong>
 										</button>
 									</div>
 									<div id="delete-btn" class="btn-group" role="group">
-										<button id="advicereporttable-deletebutton" class="btn btn-danger"
-											type="submit">
+										<button class="btn btn-danger advicereporttable-deletebutton" type="submit">
 											<strong>삭제하기</strong>
 										</button>
 									</div>
@@ -509,42 +542,42 @@ $(document).ready(function() {
 		</div>
 	</article>
 
-	<!-- Modal -->
-	<div class="modal fade" id="AdviceModal" role="dialog"
-		style="z-index: 2000;">
-		<div class="modal-dialog">
 
+	<div class="modal fade" id="AdviceModal" role="dialog"
+		style="z-index: 2000;"  data-backdrop="static">
+		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content" style="width: 800px;">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<button type="button" class="close cancle-btn" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
 						<strong>대리점 검색</strong>
 					</h4>
 				</div>
 				<div id="modal-body" class="modal-body">
 					<label style="margin-right: 10px; margin-left: 10px;">고 객 명
-					</label><input id="dayreporttable-title"
-						class="form-control dayreportform-input" type="text" name=""
+					</label><input id="advicereporttable-name"
+						class="form-control advicereportform-input" type="text" name=""
 						placeholder="주소 자동입력 " style="width: 500px; margin-right: 6px;"
 						required>
-					<button id="dayreport-updatebutton" class="btn btn-info"
+					<button id="advicereport-updatebutton" class="btn btn-info"
 						type="submit">
 						<strong>검 색</strong>
 					</button>
 					<table id="modal_table" class="tg">
+					<thead>
 						<tr>
 							<th class="tg-031e">고객 코드</th>
 							<th class="tg-031e">고객명</th>
 							<th class="tg-031e">주소</th>
 							<th class="tg-031e">선택<br></th>
 						</tr>
-						<tr id="tg_tr">
-						</tr>
+					</thead> 
+					<tbody></tbody>	
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-danger cancle-btn" data-dismiss="modal">취소</button>
 				</div>
 			</div>
 		</div>

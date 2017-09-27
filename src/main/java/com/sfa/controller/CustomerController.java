@@ -36,13 +36,12 @@ public class CustomerController {
 		{
 			
 		}
-		
 		return null;
 
 	}
 	@Auth
 	@ResponseBody
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/select", method = RequestMethod.GET)
 	public JSONResult select(CustomerVo customerVo, @AuthUser UserVo authUser) {
 		if(authUser==null)
 		{
