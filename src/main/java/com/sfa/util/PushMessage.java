@@ -8,12 +8,22 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.sfa.service.UserService;
+
+@Component
 public class PushMessage {
 
-	final String apiKey = "AIzaSyB-jC74-KLX0JBrm-P6Qu66FquC9GPOr6k";
+	@Autowired
+	UserService userSerivce;
+	
+	final String apiKey = "AAAAOpF9q2s:APA91bGcjYFbTe1aPqTDn49vktOG-GTBbFuSgibbb3xQJ3HgJ_c2oHEolDfiSuM1eTBu3rHQJ4_C_K4YAa7Np1OQChlPZcZr8_v88fBjm_W9s7_rTmkpd3QrllY9P7WogT6qlZeF1N-O";
 
-	public int Push(String toK, int no) {
+	public int Push(String id, String from,int no) {
 		int check = 0;
+		String toK = userSerivce.getToken(from);
 		try {
 			URL url = new URL("https://fcm.googleapis.com/fcm/send");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -27,16 +37,28 @@ public class PushMessage {
 
 			switch (no) {
 			case 1:
-				input = "{\"notification\" : {\"title\" : \" 승인 요청 \", \"body\" : \"승인요청되었습니다.\"}, \"to\":\"" + toK
+				input = "{\"notification\" : {\"title\" : \" 반려 \", \"body\" : \""+id+"님이 새로운 주간 계획서가 작성하었습니다.\"}, \"to\":\"" + toK
 						+ "\"}";
 				break;
 			case 2:
-				input = "{\"notification\" : {\"title\" : \" 승인 완료 \", \"body\" : \"승인되었습니다.\"}, \"to\":\"" + toK
-						+ "\"}";
+				input = "{\"notification\" : {\"title\" : \" 반려 \", \"body\" : \""+id+"님이 새로운 일일 계획서가 작성하였습니다.\"}, \"to\":\"" + toK
+				+ "\"}";
 				break;
 			case 3:
-				input = "{\"notification\" : {\"title\" : \" 반려 \", \"body\" : \"승인이 반려되었습니다.\"}, \"to\":\"" + toK
-						+ "\"}";
+				input = "{\"notification\" : {\"title\" : \" 반려 \", \"body\" : \""+id+"님이 새로운 보고서가 작성하었습니다.\"}, \"to\":\"" + toK
+				+ "\"}";
+				break;
+			case 4: 
+				input = "{\"notification\" : {\"title\" : \" 승인 요청 \", \"body\" : \""+id+"님 승인요청\"}, \"to\":\"" + toK
+				+ "\"}";
+				break;
+			case 5 : 
+				input = "{\"notification\" : {\"title\" : \" 승인 완료 \", \"body\" : \""+from+"님 승인완료\"}, \"to\":\"" + toK
+				+ "\"}";
+				break;
+			case 6 : 
+				input = "{\"notification\" : {\"title\" : \" 반려 \", \"body\" : \""+from+"님 반려\"}, \"to\":\"" + toK
+				+ "\"}";
 				break;
 			}
 

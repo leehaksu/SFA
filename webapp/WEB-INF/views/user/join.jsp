@@ -36,6 +36,25 @@
 <script src="https://use.fontawesome.com/f8c7f597cb.js"></script>
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/join.js"></script>
+<link
+	href="${pageContext.servletContext.contextPath}/assets/css/noty/noty.css"
+	rel="stylesheet">
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/noty.js"
+	type="text/javascript"></script>
+	
+<script type="text/javascript">
+	$(document).ready(function() {
+		var url = window.location.href;
+		console.log(url);
+		var url2 = url.substring(40);
+		
+
+		
+		
+	});
+</script>
+
 </head>
 
 <body>
@@ -89,7 +108,6 @@
 								<i class='fa fa-times' aria-hidden='true' style:color='#E82734'></i>
 								&nbsp; 비밀번호가 일치 하지 않습니다.
 							</div>
-
 						</div>
 					</div>
 					<div class="form-group">
@@ -97,6 +115,13 @@
 						<div class="col-sm-6">
 							<input class="form-control" id="inputName" name="name"
 								type="text" placeholder="이름">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="inputName">이메일</label>
+						<div class="col-sm-6">
+							<input class="form-control" id="inputName" name="email"
+								type="text" placeholder="이메일">
 						</div>
 					</div>
 					<div class="form-group">

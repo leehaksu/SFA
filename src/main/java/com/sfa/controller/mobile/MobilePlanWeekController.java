@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfa.dto.JSONResult;
+import com.sfa.service.UserService;
 import com.sfa.service.WeekPlanService;
+import com.sfa.util.PushMessage;
 import com.sfa.vo.DayVo;
 import com.sfa.vo.UserVo;
 import com.sfa.vo.WeekVo;
@@ -23,6 +25,12 @@ public class MobilePlanWeekController {
 
 	@Autowired
 	WeekPlanService weekPlanService;
+	
+	@Autowired
+	PushMessage pushMessage;
+	
+	@Autowired
+	UserService userService;
 
 	@ResponseBody
 	@RequestMapping(value = "/insert")
@@ -39,7 +47,8 @@ public class MobilePlanWeekController {
 		}
 		if (weekPlanService.insertWeek(weekVo, dayVo) == true) {
 			// insert 내용이 정상적으로 할때
-			
+			UserVo userVo= userService.getLeader(weekVo.getId());
+			pushMessage.Push(weekVo.getId(),userVo.getId(), 1);
 			return JSONResult.success();
 		} else {
 			// insert 내용이 실패일 경우

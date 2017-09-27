@@ -3,8 +3,6 @@ package com.sfa.controller;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sfa.dto.JSONResult;
 import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
-import com.sfa.service.ChallengeService;
+import com.sfa.service.UserService;
 import com.sfa.service.WeekPlanService;
-
+import com.sfa.util.PushMail;
+import com.sfa.util.PushMessage;
 import com.sfa.vo.DayVo;
 import com.sfa.vo.UserVo;
 import com.sfa.vo.WeekVo;
@@ -29,51 +28,63 @@ import com.sfa.vo.WeekVo;
 public class PlanWeekController {
 
 	@Autowired
-	WeekPlanService weekPlanService;
+	private WeekPlanService weekPlanService;
 
 	@Autowired
-	ChallengeService challengeService;
+	private PushMail pushMail;
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private PushMessage pushMessage;
 
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public String insertWeek(@ModelAttribute WeekVo weekVo, HttpSession authUser, @ModelAttribute DayVo dayVo) {
-		UserVo userVo = (UserVo) authUser.getAttribute("authUser");
-		if (userVo.getId() == null) {
-			return "user/login";
+	public String insertWeek(@ModelAttribute WeekVo weekVo, @AuthUser UserVo authUser, @ModelAttribute DayVo dayVo) {
+		if (authUser == null) {
+			return "redirect:/user/login";
 		} else {
-			weekVo.setId(userVo.getId());
-			System.out.println(weekVo);
+			weekVo.setId(authUser.getId());
 			boolean check = weekPlanService.insertWeek(weekVo, dayVo);
 			if (check) {
-				return "plan/plan";
+				UserVo userVo = userService.getLeader(authUser.getId());
+				pushMail.Push(userVo.getCompany_email(), weekVo.getTitle(),
+						"새로운 주간 계획이 등록되었습니다." + "월요일 내용 : " + weekVo.getMonday() + "화요일 내용 : " + weekVo.getTuesday()
+								+ "수요일 내용 : " + weekVo.getWednesday() + "목요일 내용 : " + weekVo.getThursday() + "금요일 내용 : "
+								+ weekVo.getFriday(),
+						authUser.getId());
+
+				UserVo userVo2 = userService.getLeader(weekVo.getId());
+				int no = pushMessage.Push(weekVo.getId(), userVo2.getId(), 1);
+				if (no == 200) {
+					System.out.println("정상적으로 발송되었습니다.");
+				} else {
+					System.out.println("정상적으로 발송되지 않았습니다.");
+				}
+
+				return "redirect:/week/";
 			}
 			return "plan/plan";
 		}
 	}
 
-	@Auth
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String deleteWeek(@ModelAttribute WeekVo weekVo, HttpSession authUser) {
-		UserVo userVo = (UserVo) authUser.getAttribute("authUser");
-		if (userVo == null) {
-			return "user/login";
-		} else if (weekVo == null) {
-			return "/week";
-		}
-		boolean check = weekPlanService.deleteWeek(weekVo);
-		if (check == false) {
-			return "plan/plan";
-		}
-		return "plan/plan";
-	}
-
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(@ModelAttribute WeekVo weekVo, Model model, HttpSession authUser) {
-		UserVo userVo = (UserVo) authUser.getAttribute("authUser");
-		weekVo.setId(userVo.getId());
+	public String update(@ModelAttribute WeekVo weekVo, Model model, @AuthUser UserVo authUser) {
+		if (authUser == null) {
+			return "redirect:/user/login";
+		}
+
+		weekVo.setId(authUser.getId());
 
 		int no = weekPlanService.update(weekVo);
 		if (no == 6) {
+			UserVo userVo = userService.getLeader(authUser.getDept());
+			pushMail.Push(userVo.getEmail(), weekVo.getTitle(),
+					"새로운 주간 계획이 업데이트 되었습니다." + "월요일 내용 : " + weekVo.getMonday() + "화요일 내용 : " + weekVo.getTuesday()
+							+ "수요일 내용 : " + weekVo.getWednesday() + "목요일 내용 : " + weekVo.getThursday() + "금요일 내용 : "
+							+ weekVo.getFriday(),
+					authUser.getId());
 			return "plan/plan";
 		}
 		return "plan/plan";
@@ -85,7 +96,7 @@ public class PlanWeekController {
 	public String main(@AuthUser UserVo authUser, Model model, DayVo dayVo) {
 
 		if (authUser == null) {
-			return "user/login";
+			return "redirect:/user/login";
 		} else {
 			return "plan/plan";
 		}
@@ -96,12 +107,12 @@ public class PlanWeekController {
 	@ResponseBody
 	@RequestMapping(value = { "/select" }, method = RequestMethod.GET)
 	public JSONResult selectMonth(@RequestParam(value = "date", required = true, defaultValue = "") String date,
-			HttpSession authUser, Model model, DayVo dayVo) {
-		UserVo userVo = (UserVo) authUser.getAttribute("authUser");
-		if (userVo == null) {
+			@AuthUser UserVo authUser, Model model, DayVo dayVo) {
+		if (authUser == null) {
 			return JSONResult.error("로그인 되지 않았습니다.");
 		}
-		dayVo.setId(userVo.getId());
+
+		dayVo.setId(authUser.getId());
 
 		if ("".equals(date)) {
 			Calendar cal = Calendar.getInstance();
@@ -123,12 +134,14 @@ public class PlanWeekController {
 	@Auth
 	@ResponseBody
 	@RequestMapping(value = { "/select" }, method = RequestMethod.POST)
-	public JSONResult selectWeek(HttpSession authUser,
+	public JSONResult selectWeek(@AuthUser UserVo authUser,
 			@RequestParam(value = "date", required = true, defaultValue = "") String Date, WeekVo weekVo,
 			UserVo userVo) {
-		System.out.println("[Controller]" + Date);
-		userVo = (UserVo) authUser.getAttribute("authUser");
-		weekVo.setId(userVo.getId());
+		if (authUser == null) {
+			return JSONResult.error("로그인이 되지 않았습니다.");
+		}
+		weekVo.setId(authUser.getId());
+
 		Calendar cal = Calendar.getInstance();
 		if ("".equals(Date)) {
 			String calendar = String.valueOf(cal.get(Calendar.YEAR)) + "-" + String.valueOf(cal.get(Calendar.MONTH) + 1)

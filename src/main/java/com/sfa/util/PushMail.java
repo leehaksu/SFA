@@ -20,10 +20,10 @@ public class PushMail {
 	public void Push(String recipient,String Subject,String message,String Sender)
 	{// 네이버일 경우 smtp.naver.com 을 입력합니다.
 		// Google일 경우 smtp.gmail.com 을 입력합니다.
-		String host = "smtp.gmail.com";
+		String host = "smtp.naver.com";
 		
 		final String username = "leehacksue";       //네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요.
-		final String password = "dlgkrtn280!";   //네이버 이메일 비밀번호를 입력해주세요.
+		final String password = "dlgkrtn280a";   //네이버 이메일 비밀번호를 입력해주세요.
 		int port=465; //포트번호
 		 
 		// 메일 내용

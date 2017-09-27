@@ -6,7 +6,7 @@
 		<![CDATA[
 		 insert 
 		   into user 
-		 values( #{id}, password(#{passwd}), #{dept}, #{name},#{email},#{grade},'팀원',now())
+		 values( #{id}, password(#{passwd}), #{name}, #{email},#{company_email},#{dept},#{grade},'팀원',1,null,now())
 		]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
 			select
@@ -16,7 +16,7 @@
 	<select id="getByIdAndPassword" resultType="uservo"
 		parameterType="MAP">
 		<![CDATA[
-		select id,name,dept,email,grade,level
+		select id,name,dept,company_email,grade,level
 		  from user 
 		 where id=#{id}
 		   and passwd =password(#{password})
@@ -24,7 +24,7 @@
 	</select>
 	<select id="getById" resultType="uservo" parameterType="MAP">
 		<![CDATA[
-		select id,name,dept,email,grade
+		select id,name,dept,company_email,grade
 		  from user 
 		 where id=#{id}
 		]]>
@@ -33,30 +33,31 @@
 		<choose>
 			<when test="name == null">
 		<![CDATA[
-		select id,name,dept,email,grade
+		select id,name,dept,company_email,grade
 		  from user  
 		 where grade=#{grade} and dept=#{dept}
 		]]>
 			</when>
 			<when test="grade ==null">
 		<![CDATA[
-		select id,name,dept,email,grade
+		select id,name,dept,company_email,grade
 		  from user  
 		 where name=#{name} and dept=#{dept}
 		]]>
 			</when>
 			<otherwise>
 		<![CDATA[
-		select id,name,dept,email,grade
+		select id,name,dept,company_email,grade
 		  from user  
 		 where name=#{name} and grade=#{grade} and dept=#{dept}
 		]]>
 			</otherwise>
 		</choose>
 	</select>
-	<select id="selectTotalMember" resultType="uservo" parameterType="MAP">
+	<select id="selectTotalMember" resultType="uservo"
+		parameterType="MAP">
 		<![CDATA[
-		select id,name,dept,email,grade,level
+		select id,name,dept,company_email,grade,level
 		  from user 
 		 where dept=#{dept}
 		]]>
@@ -85,4 +86,19 @@
 	delete from user where id=#{id};
 		]]>
 	</delete>
+	<select id="selectLeader" parameterType="MAP" resultType="uservo">
+	<![CDATA[
+	select id,company_email from user where level='팀장' and dept =(select dept from user where id=#{id});
+	]]>
+	</select>
+	<update id="insertToken" parameterType="MAP">
+	<![CDATA[
+	update user set token=#{token} where id=#{id};
+	]]>
+	</update>
+	<select id="getToken" parameterType="string" resultType="string">
+	<![CDATA[
+	select token from user where id =#{id}; 
+	]]>
+	</select>
 </mapper>

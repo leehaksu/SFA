@@ -74,15 +74,16 @@ public class UserController {
 		} else {
 			// 정상적으로 회원가입 되었을 경우
 			if (userService.join(userVo) == true) {
-				userVo = userService.getId(userVo.getId());
-				model.addAttribute("userVo", userVo);
-				pushMail.Push(userVo.getId(), userVo.getId()+"회원가입을 축하합니다.", "사원 아이디 : " +userVo.getId()
+								
+				pushMail.Push(userVo.getEmail(), "["+userVo.getId()+"]님 회원가입을 축하합니다.", 
+				"사원 아이디 : " +userVo.getId()
 				+"사원 이름 : "+userVo.getName()
 				+"사원 부서 : "+userVo.getDept()
-				+"사원 이메일 : " + userVo.getEmail()
+				+"사원 이메일 : " + userVo.getCompany_email()
 				+ "사원 직급 :" +userVo.getGrade()
-				+ "회원 가입을 진심으로 축하합니다.", authUser.getId());
-				
+				+ "회원 가입을 진심으로 축하합니다.", "admin");
+
+				model.addAttribute("userVo", userVo);
 				return "user/joinsuccess";
 			} else if (userService.join(userVo) == false) {
 				return "redirect:/join?result=fail";
@@ -116,7 +117,6 @@ public class UserController {
 			return "user/login";
 		}
 		UserVo userVo = userService.getId(id);
-		System.out.println(userVo);
 		model.addAttribute("userVo", userVo);
 		return "user/modify";
 	}
@@ -199,5 +199,17 @@ public class UserController {
 			model.addAttribute("list", list);
 			return "user/list";
 		}
+	}
+	@RequestMapping(value="/search", method=RequestMethod.GET)
+	public String search(@RequestParam("email") String email, @RequestParam("name") String name)
+	{
+		if(email==null || name==null)
+		{
+			return "redirect:/search";
+		}else
+		{
+			String id = userService.getId(email,name);
+		}
+		return null;
 	}
 }

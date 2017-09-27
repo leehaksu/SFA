@@ -25,7 +25,7 @@ public class UserService {
 	public boolean join(UserVo userVo) {
 		// TODO Auto-generated method stub
 		System.out.println("[service] 회원가입 : " + userVo);
-		userVo.setEmail(userVo.getId()+"@sfa.com");
+		userVo.setCompany_email(userVo.getId()+"@sfa.com");
 		System.out.println("[service] 이메일 등록 후 :  " + userVo);
 		
 		if(userDao.insert(userVo)==1)
@@ -72,5 +72,25 @@ public class UserService {
 		String dept= (userDao.getDept(id)).getDept();
 	
 		return dept;
+	}
+	
+	public UserVo getLeader(String id)
+	{
+	return userDao.getLeader(id);
+	}
+
+	public String getId(String email, String name) {
+		// TODO Auto-generated method stub
+		return userDao.getId(email,name);
+	}
+
+	public int insertToken(String token, String id) {
+		// TODO Auto-generated method stub
+		return userDao.insertToken(token,id);
+	}
+
+	public String getToken(String id) {
+		// TODO Auto-generated method stub
+		return userDao.selectToken(id);
 	}
 }

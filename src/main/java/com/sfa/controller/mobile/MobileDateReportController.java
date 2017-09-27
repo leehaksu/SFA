@@ -72,6 +72,7 @@ public class MobileDateReportController {
 		}
 
 		int no = dateReportService.delete(dateReportVo);
+		System.out.println(no);
 
 		if (no == 1) {
 			return JSONResult.success("삭제에 성공했습니다.");

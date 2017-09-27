@@ -35,6 +35,22 @@
 	src="${pageContext.servletContext.contextPath}/assets/js/ko.js"></script>
 <script src="https://use.fontawesome.com/f8c7f597cb.js"></script>
 
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+
+<!-- Noty 라이브러리(noty.js, noty.css,bounce.js 다운 받아져 있음) -->
+<link
+	href="${pageContext.servletContext.contextPath}/assets/css/noty/noty.css"
+	rel="stylesheet">
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/noty/noty.js"
+	type="text/javascript"></script>
+<!-- mo.js 파일 다운로드 -->
+<script src="//cdn.jsdelivr.net/mojs/latest/mo.min.js"></script>
+
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/push.min.js"
+	type="text/javascript"></script>
 <script>
 	var reg_uid = /^[A-Za-z]{1}[A-Za-z0-9]{3,19}$/;
 	var reg_upw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-]|.*[0-9]).{8,24}$/;
@@ -133,6 +149,22 @@
 							form.action = "delete"; // action에 해당하는 jsp 경로를 넣어주세요.
 							form.submit();
 						});
+						var url = window.location.href;// 현재 URL을 가지고 옴
+						var url2 = url.substring(40);//URL의 40번째기준으로 자름
+						if (url2 == "fail") {//Fail 경우
+							new Noty({
+								type : "info",
+								text : "수정에 실패하였습니다.",
+								timeout : 4500,
+							}).show();
+
+						} else {//success일 경우
+							new Noty({
+								type : "info",
+								text : "수정에 성공하였습니다.",
+								timeout : 4500,
+							}).show(); 
+						}
 					});
 </script>
 
@@ -341,9 +373,9 @@
 								수정하기 &nbsp;<i class="fa fa-check spaceLeft"></i>
 							</button>
 							<button id="modify_cancel_button" class="btn btn-primary"
-								type="button"  onClick="location.href='http://localhost:8080/sfa/main'">
-								취소
-							</button>
+								type="button"
+								onClick="location.href='http://localhost:8080/sfa/main'">
+								취소</button>
 						</div>
 					</div>
 				</form>

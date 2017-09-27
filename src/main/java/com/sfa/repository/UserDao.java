@@ -88,5 +88,32 @@ public class UserDao {
 		return sqlSession.selectOne("user.selectDept", map);
 	}
 
+	public UserVo getLeader(String id) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put( "id", id );
+		map.put("level", "팀장");
+		return sqlSession.selectOne("user.selectLeader", map);
+	}
 
+	public String getId(String email, String name) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put( "email", email );
+		map.put("name", name);
+		return sqlSession.selectOne(email, name);
+	}
+
+	public int insertToken(String token, String id) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put( "token", token );
+		map.put("id", id);
+		return sqlSession.update("user.insertToken", map);
+	}
+
+	public String selectToken(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("user.getToken", id);
+	}
 }

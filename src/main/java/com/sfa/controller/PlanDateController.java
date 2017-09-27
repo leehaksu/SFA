@@ -14,6 +14,8 @@ import com.sfa.security.AuthUser;
 import com.sfa.service.ChallengeService;
 import com.sfa.service.DatePlanService;
 import com.sfa.service.PositionService;
+import com.sfa.service.UserService;
+import com.sfa.util.PushMail;
 import com.sfa.vo.DateVo;
 import com.sfa.vo.PositionVo;
 import com.sfa.vo.UserVo;
@@ -30,6 +32,12 @@ public class PlanDateController {
 
 	@Autowired
 	ChallengeService challengeService;
+	
+	@Autowired
+	private PushMail pushMail;
+	
+	@Autowired
+	private UserService userService;
 
 	@Auth
 	@ResponseBody
@@ -46,7 +54,12 @@ public class PlanDateController {
 			}
 			int no = datePlanService.insertDate(dateVo);
 			if (no == 1) {
+				UserVo userVo2 = userService.getLeader(authUser.getId());
+				pushMail.Push(userVo2.getCompany_email(), "제목 ["+dateVo.getTitle()+"]", "", authUser.getId());
+				
 				model.addAttribute("DateVo", dateVo);
+				
+				
 				return JSONResult.success(dateVo);
 			} else {
 				return JSONResult.fail();

@@ -12,6 +12,7 @@ import com.sfa.dto.JSONResult;
 import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
 import com.sfa.service.AdviceService;
+import com.sfa.util.PushMail;
 import com.sfa.vo.AdviceVo;
 import com.sfa.vo.UserVo;
 
@@ -21,6 +22,9 @@ public class AdviceController {
 
 	@Autowired
 	AdviceService adviceService;
+	
+	@Autowired
+	PushMail pushMail;
 
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)

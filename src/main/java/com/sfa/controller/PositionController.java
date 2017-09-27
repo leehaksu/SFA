@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfa.dto.JSONResult;
+import com.sfa.security.AuthUser;
 import com.sfa.service.PositionService;
 import com.sfa.vo.PositionVo;
 import com.sfa.vo.UserVo;
@@ -24,12 +25,12 @@ public class PositionController {
 
 	@ResponseBody
 	@RequestMapping("/select")
-	public JSONResult getPosition(HttpSession authUser, PositionVo positionVo) {
-		UserVo userVo = (UserVo) authUser.getAttribute("authUser");
-		if (userVo == null) {
+	public JSONResult getPosition(@AuthUser UserVo authUser, PositionVo positionVo) {
+
+		if (authUser == null) {
 			return JSONResult.error("로그인 되지 않았습니다.");
 		} else {
-			positionVo.setId(userVo.getId());
+			positionVo.setId(authUser.getId());
 			List<PositionVo> list = positionService.getPosition(positionVo);
 			return JSONResult.success(list);
 		}
@@ -44,14 +45,13 @@ public class PositionController {
 
 	@ResponseBody
 	@RequestMapping("/insert")
-	public JSONResult insertPosition(@ModelAttribute PositionVo positionVo, HttpSession authUser) {
-		UserVo userVo = (UserVo) authUser.getAttribute("authUser");
-		if (userVo == null) {
+	public JSONResult insertPosition(@ModelAttribute PositionVo positionVo, @AuthUser UserVo authUser) {
+		if (authUser == null) {
 			return JSONResult.error("로그인 되지 않았습니다.");
 		} else if (positionVo == null) {
 			return JSONResult.error("포지션 정보가 들어있지 않습니다.");
 		}
-		positionVo.setId(userVo.getId());
+		positionVo.setId(authUser.getId());
 		int no = positionService.insertPosition(positionVo);
 		if (no == 1) {
 			return JSONResult.success();
@@ -62,10 +62,9 @@ public class PositionController {
 	}
 	@ResponseBody
 	@RequestMapping("/delete")
-	public JSONResult deletePosition(@ModelAttribute PositionVo positionVo, HttpSession authUser)
+	public JSONResult deletePosition(@ModelAttribute PositionVo positionVo, @AuthUser UserVo authUser)
 	{
-		UserVo userVo = (UserVo) authUser.getAttribute("authUser");
-		if (userVo == null) {
+		if (authUser == null) {
 			return JSONResult.error("로그인 되지 않았습니다.");
 		} else if (positionVo == null) {
 			return JSONResult.error("포지션 정보가 들어있지 않습니다.");

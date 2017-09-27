@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfa.dto.JSONResult;
 import com.sfa.service.UserService;
+import com.sfa.util.PushMessage;
 import com.sfa.vo.UserVo;
 
 @Controller
@@ -17,11 +18,11 @@ public class MobileUserController {
 
 	@Autowired
 	private UserService userService;
-
+	
 	@ResponseBody
 	@RequestMapping(value = "/auth")
 	public JSONResult login(@ModelAttribute UserVo vo) {
-		System.out.println(vo);
+		
 		if (vo.getId() == null || vo.getPasswd() == null) {
 			// JSON 응답하기
 			// code_0x1 : id 나 password 문제 있을 경우
@@ -29,20 +30,30 @@ public class MobileUserController {
 			System.out.println(JSONResult.error("error_User_0x1"));
 			return JSONResult.error("code_0x1");
 		} else {
-			UserVo userVo = userService.getUser(vo.getId(), vo.getPasswd());
-			if (userVo == null) {
-				// JSON 응답하기
-				// code_0x2 : id password 잘못 전달 받았을시
-				System.out.println("[web] :  Json응답2");
-				System.out.println(userVo);
-				System.out.println(JSONResult.error("code_User_0x2"));
-				return JSONResult.fail();
+			int no = userService.insertToken(vo.getToken(),vo.getId());
+			if(no==1)
+			{
+				UserVo userVo = userService.getUser(vo.getId(), vo.getPasswd());
+				if (userVo == null) {
+					// JSON 응답하기
+					// code_0x2 : id password 잘못 전달 받았을시
+					System.out.println("[web] :  Json응답2");
+					System.out.println(userVo);
+					System.out.println(JSONResult.error("code_User_0x2"));
+					return JSONResult.fail();
+				}else {
+					// JSON 응답하기
+					// 정상적으로 처리하여 JSON 응답하는 경우
+					System.out.println("[web] :  Json응답3");
+					System.out.println(JSONResult.success(userVo));
+					return JSONResult.success(userVo);
+				}
+			}else {
+				return JSONResult.error("토큰값을 정상적으로 입력하지 못했습니다.");
 			}
-			// JSON 응답하기
-			// 정상적으로 처리하여 JSON 응답하는 경우
-			System.out.println("[web] :  Json응답3");
-			System.out.println(JSONResult.success(userVo));
-			return JSONResult.success(userVo);
+
+			
+			
 		}
 	}
 	@ResponseBody
