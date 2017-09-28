@@ -29,7 +29,11 @@ public class AdviceController {
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public String insertAdvice(@ModelAttribute AdviceVo adviceVo, @AuthUser UserVo authUser) {
-		int no = adviceService.insert(adviceVo);
+	System.out.println(adviceVo);
+	// 파라미터 들어오지 않은것 예외처리 필요
+	int no = adviceService.insert(adviceVo);
+		
+		
 		if (no == 1) {
 			return null;
 		} else {
