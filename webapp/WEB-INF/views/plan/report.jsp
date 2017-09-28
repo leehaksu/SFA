@@ -251,8 +251,11 @@ $(document).ready(function() {
 				content:$("#advice-textarea").froalaEditor('html.get')
 			},
 			function(response,status){
+				
+				if(response.result == "success"){
+					
+				}
 				adviceCount += 1;
-				console.log("들어오니??");
 				var div = document.createElement('div');
 				div.setAttribute("id","advice_content"+adviceCount);
 				div.setAttribute("class","advice_content");
@@ -461,7 +464,7 @@ $(document).ready(function() {
 																class="form-control advicereporttable-input" type="text"
 																name="code" placeholder="고객 코드"
 																style="width: 150px; margin-right: 6px;" required
-																data-toggle="modal" data-target="#AdviceModal">
+																data-toggle="modal" data-target="#AdviceModal" autocomplete="off">
 														</div>
 														<div style="display: inline-block;">
 															<label for="day"
@@ -470,7 +473,7 @@ $(document).ready(function() {
 																class="form-control advicereporttable-input" type="text"
 																name="customer" placeholder="고객명"
 																style="width: 150px; margin-right: 6px;" required
-																data-toggle="modal" data-target="#AdviceModal">
+																data-toggle="modal" data-target="#AdviceModal" autocomplete="off">
 														</div>
 														<div style="display: inline-block;">
 															<label for="day"
@@ -494,7 +497,7 @@ $(document).ready(function() {
 																class="form-control advicereporttable-input" type="text"
 																name="address" placeholder="주소 자동입력 "
 																style="width: 415px; margin-right: 6px;" required
-																data-toggle="modal" data-target="#AdviceModal">
+																data-toggle="modal" data-target="#AdviceModal" autocomplete="off">
 														</div>
 														<div style="display: inline-block;">
 															<label for="day" style="width: 100px; text-align: center">제출일&nbsp;</label>
@@ -516,7 +519,7 @@ $(document).ready(function() {
 															<input id="advicereporttable-title"
 																class="form-control advicereporttable-input" type="text"
 																name="title" placeholder="제목을 입력해 주세요"
-																style="width: 740px; margin-right: 6px;" required>
+																style="width: 740px; margin-right: 6px;" required autocomplete="off">
 														</div>
 													</div>
 												</td>
