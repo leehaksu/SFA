@@ -362,7 +362,7 @@
         urlStr += "&reqCoordType=WGS84GEO"
         urlStr += "&passList="+passList;
         urlStr += "&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"; 
-     
+      
          var obj = {
         		 endX: '14135428.84691669',
         		 endY: '4505733.44979528',
@@ -377,7 +377,10 @@
              dataType: 'json',
              type: 'post',
              contentType: "application/x-www-form-urlencoded;charset=utf-8",
-             data: jsonparse,
+             data:  "startX : "+startX+
+             "startY :"+startY+
+             +"endX : "+endX+
+             +"endY :"+endY,
              success: function( data, textStatus, jQxhr ){
                  console.log(data);
              },
