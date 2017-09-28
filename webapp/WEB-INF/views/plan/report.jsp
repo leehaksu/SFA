@@ -138,6 +138,7 @@ $(document).ready(function() {
 				    function(response, status){
 				        console.log(response.data);
 				        $("#dayreport-date").attr("value", dateText);
+				        $("#advicereporttable-date").attr("value", dateText);				        
 				    });
 			}
 		});
@@ -155,26 +156,9 @@ $(document).ready(function() {
 				});
 		});
 
-		/* $("#dayreporttable-profit").focusout(function(){
-			var profit = $("#dayreporttable-profit").val();	
-		}); */
 		
 	
-		
-		//추가하기 버튼을 눌를 경우 이벤트 발생
-		$("#add_advice").click(function() {
-			adviceCount += 1;
-			console.log("들어오니??");
-			var div = document.createElement('div');
-			div.setAttribute("id","advice_content"+adviceCount);
-			div.setAttribute("class","advice_content");
-
-			div.innerHTML = document.getElementById('advice_content1').innerHTML;
-			document.getElementById('advice_contianer').appendChild(div);
-					
-		});
-	
-		
+		//고객코드,고객명,주소 input태그 focus 될때  modal show
 		$(document).on("focus",'#advicereporttable-customer, #advicereporttable-code, #advicereporttable-address',function() {
 				//init modal_table
 				$('#modal_table > tbody').empty();
@@ -242,11 +226,49 @@ $(document).ready(function() {
 
 		});
 	
-		$(document).on("click",".advicereporttable-savebutton",function(){				
-			var index = $(".advicereporttable-savebutton").index(this);
-			console.log(index);
-			var form = $('#advice_content'+index);
-			form.submit();
+		$(document).on("click",".advicereporttable-savebutton",function(){			
+			var advice = [];  
+			$("#advice_content1").find('input').each(function(index){
+				var name = $("#advice_content1").find('input').eq(index).attr('name'); 
+				console.log(name);
+				var value = $("#advice_content1").find('input').eq(index).val();
+				advice.push({[name]:value});	
+				console.log(advice[index]);
+			});
+			
+			
+			
+			/* console.log($("#advice_content1").find('input[name=code]').val());
+			console.log($("#advice_content1").find('input[name=customer]').val());
+			console.log($("#advice_content1").find('input[name=manager]').val());
+			console.log($("#advice_content1").find('input[name=date]').val());
+			console.log($("#advice_content1").find('input[name=title]').val());
+			console.log($("#advice-textarea").froalaEditor('html.get')); */
+			
+			$.post("${pageContext.servletContext.contextPath}/advice/insert",
+			{
+				code:advice.code,
+				manager:advice.manager,
+				date:advice.date,
+				title:advice.title,
+				content:$("#advice-textarea").froalaEditor('html.get')
+			},
+			function(response,status){
+				adviceCount += 1;
+				console.log("들어오니??");
+				var div = document.createElement('div');
+				div.setAttribute("id","advice_content"+adviceCount);
+				div.setAttribute("class","advice_content");
+
+				div.innerHTML = document.getElementById('advice_content1').innerHTML;
+				document.getElementById('advice_contianer').appendChild(div);
+			});
+			document.getElementById("advice_form").reset();
+			//var index = $(".advicereporttable-savebutton").index(this);
+			//console.log(index);
+			//var form = $('#advice_content'+index);
+			//form.submit();
+			
 		});
 		
 	});
@@ -421,15 +443,9 @@ $(document).ready(function() {
 							<h4 style="width: 70%; display: inline-block;">
 								<Strong>상담일지</Strong>
 							</h4>
-							<button id="delete_advice" class="btn  btn-sm btn-danger"
-								style="float: right; margin-top: 10px; margin-right: 10px; float: right;">삭제</button>
-							<button id="add_advice" class="btn btn-info btn-sm"
-								style="float: right; margin-top: 10px; margin-right: 10px; float: right;">추가</button>
-							<button id="search_advice" class="btn  btn-sm btn-default"
-								style="float: right; margin-top: 10px; margin-right: 10px; float: right;">검색</button>		
 						</div>
 						<div id="advice_content1" class="advice_content">
-							<form action="/advice/insert" method="post">
+							<form id="advice_form">
 								<div class="panel panel-info"
 									style="clear: both; margin-top : 10px;">
 									<div class="panel-heading" style="color: #fff; ">
@@ -489,7 +505,7 @@ $(document).ready(function() {
 																class="form-control advicereporttable-input" type="text"
 																name="date" placeholder="작성날짜"
 																style="width: 220px; margin-right: 6px;" required
-																>
+																readonly>
 														</div>
 													</div>
 												</td>
@@ -512,7 +528,7 @@ $(document).ready(function() {
 												<td colspan="3" id="adv-content4">
 													<div class="panel panel-default form-group"
 														style="width: 95%; text-align: center; margin: 10px;">
-														<textarea class="date-textarea"></textarea>	
+														<textarea id="advice-textarea" class="date-textarea"></textarea>	
 													</div>
 												</td>
 											</tr>
@@ -523,15 +539,15 @@ $(document).ready(function() {
 								<div class="btn-group btn-group-justified" role="group"
 									style="width: 150px; float: right; margin: 10px;">
 									<div id="write-btn" class="btn-group" role="group">
-										<button class="btn btn-info advicereporttable-savebutton" type="submit">
+										<button class="btn btn-info advicereporttable-savebutton" type="button">
 											<strong>저장하기</strong>
 										</button>
 									</div>
-									<div id="delete-btn" class="btn-group" role="group">
+									<!-- <div id="delete-btn" class="btn-group" role="group">
 										<button class="btn btn-danger advicereporttable-deletebutton" type="submit">
 											<strong>삭제하기</strong>
 										</button>
-									</div>
+									</div> -->
 								</div>
 								<div style=" clear:both; border-bottom: 1px solid #eee;"></div>
 							</form>

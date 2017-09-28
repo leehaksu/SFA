@@ -8,7 +8,7 @@ public class AdviceVo {
 	private String human_name;//담당자 이름
 	private String name;//이름
 	private String id;//아이디
-	private String date;//날짜
+	private String date;//제출일
 	private Long report_no;//결과 보고서 번호
 	public Long getAdvice_no() {
 		return advice_no;
