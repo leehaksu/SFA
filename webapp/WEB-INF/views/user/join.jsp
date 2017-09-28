@@ -86,7 +86,7 @@
 									type="text" placeholder="아이디는 대/소문자,숫자  조합  4~20자 사이 "
 									style="display:;"> <i id="check-image"
 									class="fa fa-check" aria-hidden="true" style="display: none;">확인</i>
-								<input id="check-button" class="btn btn-info" type="button"
+								<input id="Idcheck-button" class="btn btn-info" type="button"
 									value="중복체크">
 							</div>
 						</div>
@@ -120,8 +120,11 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label" for="inputName">이메일</label>
 						<div class="col-sm-6">
-							<input class="form-control" id="inputName" name="email"
-								type="text" placeholder="이메일">
+							<input class="form-control" id="inputEmail" name="email"
+								type="text" placeholder="이메일"><i id="check-image"
+									class="fa fa-check" aria-hidden="true" style="display: none;">확인</i>
+								<input id="Emailcheck-button" class="btn btn-info" type="button"
+									value="중복체크">
 						</div>
 					</div>
 					<div class="form-group">

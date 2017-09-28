@@ -247,11 +247,11 @@ $(document).ready(function() {
 			
 			$.post("${pageContext.servletContext.contextPath}/advice/insert",
 			{
-				code:advice.code,
-				manager:advice.manager,
-				date:advice.date,
-				title:advice.title,
-				content:$("#advice-textarea").froalaEditor('html.get')
+				"code="+advice.code,
+				"manager_name="+advice.manager,
+				"date="+advice.date,
+				"title="+advice.title,
+				"content="+$("#advice-textarea").froalaEditor('html.get');
 			},
 			function(response,status){
 				adviceCount += 1;

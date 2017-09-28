@@ -2,6 +2,7 @@ package com.sfa.controller;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
 import com.sfa.service.AffirmationService;
 import com.sfa.service.UserService;
-import com.sfa.util.PushMail;
+import com.sfa.util.Push;
 import com.sfa.vo.UserVo;
 
 @Controller
@@ -32,7 +33,7 @@ public class UserController {
 	private AffirmationService affirmationService;
 	
 	@Autowired
-	private PushMail pushMail;
+	private Push push;
 	
 	@RequestMapping(value = { "", "/login" }, method = RequestMethod.GET)
 	public String login(@AuthUser UserVo authUser, Model model) {
@@ -74,15 +75,23 @@ public class UserController {
 		} else {
 			// 정상적으로 회원가입 되었을 경우
 			if (userService.join(userVo) == true) {
-								
-				pushMail.Push(userVo.getEmail(), "["+userVo.getId()+"]님 회원가입을 축하합니다.", 
-				"사원 아이디 : " +userVo.getId()
-				+"사원 이름 : "+userVo.getName()
-				+"사원 부서 : "+userVo.getDept()
-				+"사원 이메일 : " + userVo.getCompany_email()
-				+ "사원 직급 :" +userVo.getGrade()
-				+ "회원 가입을 진심으로 축하합니다.", "admin");
-
+				
+				try {
+					push.Mail(userVo.getCompany_email(), "["+userVo.getId()+"]님 회원가입을 축하합니다.", 
+					"사원 아이디 : " +userVo.getId()+"\n"
+					+"사원 이름 : "+userVo.getName()+"\n"
+					+"사원 부서 : "+userVo.getDept()+"\n"
+					+"사원 이메일 : " + userVo.getCompany_email()+"\n"
+					+ "사원 직급 :" +userVo.getGrade()+"\n"
+					+ "회원 가입을 진심으로 축하합니다.\n", "admin");
+					
+					UserVo userVo2= userService.getLeader(userVo.getId());
+					push.Message(userVo.getId(), userVo2.getId(), 0);
+					
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				model.addAttribute("userVo", userVo);
 				return "user/joinsuccess";
 			} else if (userService.join(userVo) == false) {
@@ -140,7 +149,7 @@ public class UserController {
 		}
 
 	}
-
+	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/check", method = RequestMethod.GET)
 	public JSONResult search(@RequestParam(value = "id", required = true, defaultValue = "") String id) {
@@ -156,6 +165,20 @@ public class UserController {
 			return JSONResult.fail();
 		}
 		return JSONResult.success(id);
+	}
+	
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/checkEmail", method = RequestMethod.GET)
+	public JSONResult searchEmail(@RequestParam(value = "email", required = true, defaultValue = "") String email) {
+		if ("".equals(email)) {
+			return JSONResult.error("cod_e0x1");
+		}
+		List<UserVo> list = userService.getemail(email);
+		if (list == null) {
+			return JSONResult.success("사용 가능한 메일입니다.");
+		}
+		return JSONResult.fail("중복된 메일이 존재합니다.");
 	}
 
 	@RequestMapping(value = "/joinsuccess", method = RequestMethod.GET)

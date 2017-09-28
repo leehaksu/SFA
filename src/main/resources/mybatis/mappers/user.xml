@@ -101,4 +101,14 @@
 	select token from user where id =#{id}; 
 	]]>
 	</select>
+	<update id="deleteToken" parameterType="string">
+	<![CDATA[
+	update user set token='null' where id =#{id};
+		]]>
+	</update>
+	<select id="getEmail" parameterType="MAP" resultType="uservo">
+	<![CDATA[
+	select email from user where email=#{email};
+	]]>
+	</select>
 </mapper>

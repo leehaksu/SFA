@@ -3,6 +3,8 @@ package com.sfa.controller;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +19,7 @@ import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
 import com.sfa.service.UserService;
 import com.sfa.service.WeekPlanService;
-import com.sfa.util.PushMail;
-import com.sfa.util.PushMessage;
+import com.sfa.util.Push;
 import com.sfa.vo.DayVo;
 import com.sfa.vo.UserVo;
 import com.sfa.vo.WeekVo;
@@ -31,13 +32,10 @@ public class PlanWeekController {
 	private WeekPlanService weekPlanService;
 
 	@Autowired
-	private PushMail pushMail;
-
-	@Autowired
 	private UserService userService;
 
 	@Autowired
-	private PushMessage pushMessage;
+	private Push push;
 
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
@@ -49,14 +47,21 @@ public class PlanWeekController {
 			boolean check = weekPlanService.insertWeek(weekVo, dayVo);
 			if (check) {
 				UserVo userVo = userService.getLeader(authUser.getId());
-				pushMail.Push(userVo.getCompany_email(), weekVo.getTitle(),
-						"새로운 주간 계획이 등록되었습니다." + "월요일 내용 : " + weekVo.getMonday() + "화요일 내용 : " + weekVo.getTuesday()
-								+ "수요일 내용 : " + weekVo.getWednesday() + "목요일 내용 : " + weekVo.getThursday() + "금요일 내용 : "
-								+ weekVo.getFriday(),
-						authUser.getId());
+
+				try {
+					push.Mail(userVo.getCompany_email(), weekVo.getTitle(),
+							authUser.getName() + "[" + authUser.getGrade() + "]" + "님이 새로운 주간 계획이 등록되었습니다.\n"
+									+ "<a herf='localhost:8080/sfa/week'> 내용 확인하러 가기 </a>",
+							authUser.getId());
+					UserVo userVo2= userService.getLeader(userVo.getId());
+					push.Message(weekVo.getId(), userVo2.getId(), 1);
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 				UserVo userVo2 = userService.getLeader(weekVo.getId());
-				int no = pushMessage.Push(weekVo.getId(), userVo2.getId(), 1);
+				int no = push.Message(weekVo.getId(), userVo2.getId(), 1);
 				if (no == 200) {
 					System.out.println("정상적으로 발송되었습니다.");
 				} else {
@@ -80,11 +85,18 @@ public class PlanWeekController {
 		int no = weekPlanService.update(weekVo);
 		if (no == 6) {
 			UserVo userVo = userService.getLeader(authUser.getDept());
-			pushMail.Push(userVo.getEmail(), weekVo.getTitle(),
-					"새로운 주간 계획이 업데이트 되었습니다." + "월요일 내용 : " + weekVo.getMonday() + "화요일 내용 : " + weekVo.getTuesday()
-							+ "수요일 내용 : " + weekVo.getWednesday() + "목요일 내용 : " + weekVo.getThursday() + "금요일 내용 : "
-							+ weekVo.getFriday(),
-					authUser.getId());
+
+			try {
+				push.Mail(
+						userVo.getEmail(), weekVo.getTitle(), authUser.getName() + "[" + authUser.getGrade() + "]"
+								+ "님이 주간 계획을 업데이트 하였습니다.\n" + "<a herf='localhost:8080/sfa/week'> 내용 확인하러 가기 </a>",
+						authUser.getId());
+				UserVo userVo2= userService.getLeader(userVo.getId());
+				push.Message(weekVo.getId(), userVo2.getId(), 2);
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return "plan/plan";
 		}
 		return "plan/plan";

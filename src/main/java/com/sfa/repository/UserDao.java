@@ -116,4 +116,19 @@ public class UserDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("user.getToken", id);
 	}
+
+	public int updateToken(String token, String id) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put( "token", token );
+		map.put("id", id);
+		return sqlSession.update("user.updateToken",map);
+	}
+
+	public List<UserVo> getEmail(String email) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("email", email);
+		return sqlSession.selectList("user.getEmail", map);
+	}
 }
