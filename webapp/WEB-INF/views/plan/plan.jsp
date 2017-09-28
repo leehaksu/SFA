@@ -331,21 +331,26 @@
     	//클릭한 list의 좌표 업체 별로 passList에 넣어 줄것. 문자열로! 끝은 G,0으로 통일할 것이며, 최대 5개의 경유지만 가능
     	//그러므로 route list의 length가 5개 이상이면 검색이 불가능 하거나 5개 까지만 검색이 되게 해야함.
     	//그리고 5개 까지만 검색이 가능함을 사전에 미리 알려줘야한다.
+    	var tData = new Tmap.TData();
     	
-    	if(routecheck == false && routeList.length > 0){
+    	var startX = current_longitude;
+        var startY = current_latitude;
+    	
+    	if(routecheck == false && routeList.length > 0 && routeList.length < 6){
     	routecheck= true;
     	//console.log(templonlat.lat+","+templonlat.lon);
     	var routeFormat = new Tmap.Format.KML({extractStyles:true, extractAttributes:true});
-        var startX = current_longitude;
-        var startY = current_latitude;
         var endX = routeList[routeList.length-1].lon;
         var endY = routeList[routeList.length-1].lat;
+        
         var passList="";
         //"126.96491216,37.53093031,280110,G,0_126.86525408,37.54834317,4298932,G,0";
-        for(i=0;i<routeList.length;i++){
-        	passList +=routeList[i].lon+","+routeList[i].lat+","+ +"G,0"; 
-      	}
-        
+        if(routeList.length>1){
+	        for(i=0;i<routeList.length-1;i++){
+	        	passList +=routeList[i].lon+","+routeList[i].lat+"_"; 
+	      	}
+        }
+        console.log(passList.substring(0,passList.length-1));
        /*  동작대리점 / 1582792 / 37.50418360 / 126.97535640 / 4
         용산대리점 / 280110 / 37.53093031 /126.96491216 / 16	
         양천대리점 / 4298932 / 37.54834317 /126.86525408 / 16 */
@@ -355,8 +360,34 @@
         urlStr += "&endX="+endX;
         urlStr += "&endY="+endY;
         urlStr += "&reqCoordType=WGS84GEO"
-        urlStr += "&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"; 
         urlStr += "&passList="+passList;
+        urlStr += "&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"; 
+     
+         var obj = {
+        		 endX: '14135428.84691669',
+        		 endY: '4505733.44979528',
+        		 startX: '14140669.59746090',
+        		 startY: '4508640.36061872'
+        		};
+        	 var jsonparse = JSON.stringify(obj);
+         	console.log(jsonparse);
+        	
+         	$.ajax({
+             url: "https://apis.skplanetx.com/tmap/routes?version=1&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b",
+             dataType: 'json',
+             type: 'post',
+             contentType: "application/x-www-form-urlencoded;charset=utf-8",
+             data: jsonparse,
+             success: function( data, textStatus, jQxhr ){
+                 console.log(data);
+             },
+             error: function( jqXhr, status, errorThroxwn ){
+            	 console.log(jqXhr);
+                 console.log( errorThroxwn + "," + status);
+             }
+         });
+
+      
         var prtcl = new Tmap.Protocol.HTTP({
                                             url: urlStr,
                                             format:routeFormat
@@ -364,6 +395,7 @@
         routeLayer = new Tmap.Layer.Vector("route", {protocol:prtcl, strategies:[new Tmap.Strategy.Fixed()]});
         routeLayer.events.register("featuresadded", routeLayer, onDrawnFeatures);
         map.addLayer(routeLayer);
+    
         
         routes =""; 
     	for(i=0; i < routeNames.length; i++){
@@ -386,6 +418,11 @@
     //경로 그리기 후 해당영역으로 줌
     function onDrawnFeatures(e){
         map.zoomToExtent(this.getDataExtent());
+    }
+    
+    function complete(data){
+    	console.log("진짜됨");
+    	console.log(data);   	
     }
    
    /*  function searchRoute(){
