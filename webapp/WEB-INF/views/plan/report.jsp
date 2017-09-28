@@ -109,6 +109,7 @@ $(document).ready(function() {
 	  $("#dayreporttable-files").fileinput({showCaption: false});	
 	  
 	  $("#dayreport-date").attr("value", today);
+
 	  $("#advicereporttable-date").attr("value", today);	
 	 $.post("select",
 	    {
@@ -237,24 +238,16 @@ $(document).ready(function() {
 				var value = $("#advice_content1").find('input').eq(index).val();
 				content[key] = value;
 				advice.push(content);	
-				console.log(advice[index]);
 			});
-			
-			
-			
-			/* console.log($("#advice_content1").find('input[name=code]').val());
-			console.log($("#advice_content1").find('input[name=customer]').val());
-			console.log($("#advice_content1").find('input[name=manager]').val());
-			console.log($("#advice_content1").find('input[name=date]').val());
-			console.log($("#advice_content1").find('input[name=title]').val());
-			console.log($("#advice-textarea").froalaEditor('html.get')); */
+			console.log(advice);	
+		
 			
 			$.post("${pageContext.servletContext.contextPath}/advice/insert",
 			{
-				code:advice.code,
-				manager:advice.manager,
-				date:advice.date,
-				title:advice.title,
+				code:advice[0].code,
+				manager_name:advice[2].manager_name,
+				date:advice[4].date,
+				title:advice[5].title,
 				content:$("#advice-textarea").froalaEditor('html.get')
 			},
 			function(response,status){
@@ -482,9 +475,9 @@ $(document).ready(function() {
 														<div style="display: inline-block;">
 															<label for="day"
 																style="width: 100px; text-align: center;">담당자
-																&nbsp;</label> <input id="advicereporttable-manager"
+																&nbsp;</label> <input id="advicereporttable-manager_name"
 																class="form-control advicereporttable-input" type="text"
-																name="manager" placeholder="담당자"
+																name="manager_name" placeholder="담당자"
 																style="width: 220px; margin-right: 6px;" required
 																>
 														</div>
