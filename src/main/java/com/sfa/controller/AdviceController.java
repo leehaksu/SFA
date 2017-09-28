@@ -31,9 +31,9 @@ public class AdviceController {
 	public String insertAdvice(@ModelAttribute AdviceVo adviceVo, @AuthUser UserVo authUser) {
 	System.out.println(adviceVo);
 	// 파라미터 들어오지 않은것 예외처리 필요
+	
+	adviceVo.setId(authUser.getId());
 	int no = adviceService.insert(adviceVo);
-		
-		
 		if (no == 1) {
 			return null;
 		} else {
