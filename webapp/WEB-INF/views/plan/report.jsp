@@ -107,6 +107,9 @@ function validateForm(){
 
 $(document).ready(function() {
 	  $("#dayreporttable-files").fileinput({showCaption: false});	
+	  
+	  $("#dayreport-date").attr("value", today);
+	  $("#advicereporttable-date").attr("value", today);	
 	 $.post("select",
 	    {
  			Date:today
@@ -229,10 +232,11 @@ $(document).ready(function() {
 		$(document).on("click",".advicereporttable-savebutton",function(){			
 			var advice = [];  
 			$("#advice_content1").find('input').each(function(index){
-				var name = $("#advice_content1").find('input').eq(index).attr('name'); 
-				console.log(name);
+				var content={};
+				var key = $("#advice_content1").find('input').eq(index).attr('name'); 
 				var value = $("#advice_content1").find('input').eq(index).val();
-				advice.push({[name]:value});	
+				content[key] = value;
+				advice.push(content);	
 				console.log(advice[index]);
 			});
 			
