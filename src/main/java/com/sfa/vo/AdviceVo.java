@@ -5,11 +5,11 @@ public class AdviceVo {
 	private String title;// 상담일지 제목
 	private String content;// 상담일지 내용
 	private String reg_date;//작성일
-	private String human_name;//담당자 이름
+	private String manager_name;//담당자 이름
+	private String code; // 고객 코드
 	private String name;//이름
 	private String id;//아이디
 	private String date;//날짜
-	private Long report_no;//결과 보고서 번호
 	public Long getAdvice_no() {
 		return advice_no;
 	}
@@ -34,11 +34,17 @@ public class AdviceVo {
 	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
-	public String getHuman_name() {
-		return human_name;
+	public String getManager_name() {
+		return manager_name;
 	}
-	public void setHuman_name(String human_name) {
-		this.human_name = human_name;
+	public void setManager_name(String manager_name) {
+		this.manager_name = manager_name;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 	public String getName() {
 		return name;
@@ -58,18 +64,12 @@ public class AdviceVo {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public Long getReport_no() {
-		return report_no;
-	}
-	public void setReport_no(Long report_no) {
-		this.report_no = report_no;
-	}
-	
 	@Override
 	public String toString() {
 		return "AdviceVo [advice_no=" + advice_no + ", title=" + title + ", content=" + content + ", reg_date="
-				+ reg_date + ", human_name=" + human_name + ", name=" + name + ", id=" + id + ", date=" + date
-				+ ", report_no=" + report_no + "]";
+				+ reg_date + ", manager_name=" + manager_name + ", code=" + code + ", name=" + name + ", id=" + id
+				+ ", date=" + date + "]";
 	}
+	
 	
 }

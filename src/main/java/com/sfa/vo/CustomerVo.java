@@ -6,10 +6,10 @@ public class CustomerVo {
 	private String division_code;//고객 2차 코드
 	private String name;//이름
 	private String contact;//연락처
-	private String human_name;//담당자 이름
-	private String human_grade;// 담당자 직급
-	private String human_email;// 담당자 이메일
-	private String human_birth;// 담당자 생일
+	private String manager_name;//담당자 이름
+	private String manager_grade;// 담당자 직급
+	private String manager_email;// 담당자 이메일
+	private String manager_birth;// 담당자 생일
 	private String time;// 영업 시간
 	private String address;// 주소
 	private String id;//아이디
@@ -37,29 +37,29 @@ public class CustomerVo {
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
-	public String getHuman_name() {
-		return human_name;
+	public String getManager_name() {
+		return manager_name;
 	}
-	public void setHuman_name(String human_name) {
-		this.human_name = human_name;
+	public void setManager_name(String manager_name) {
+		this.manager_name = manager_name;
 	}
-	public String getHuman_grade() {
-		return human_grade;
+	public String getManager_grade() {
+		return manager_grade;
 	}
-	public void setHuman_grade(String human_grade) {
-		this.human_grade = human_grade;
+	public void setManager_grade(String manager_grade) {
+		this.manager_grade = manager_grade;
 	}
-	public String getHuman_email() {
-		return human_email;
+	public String getManager_email() {
+		return manager_email;
 	}
-	public void setHuman_email(String human_email) {
-		this.human_email = human_email;
+	public void setManager_email(String manager_email) {
+		this.manager_email = manager_email;
 	}
-	public String getHuman_birth() {
-		return human_birth;
+	public String getManager_birth() {
+		return manager_birth;
 	}
-	public void setHuman_birth(String human_birth) {
-		this.human_birth = human_birth;
+	public void setManager_birth(String manager_birth) {
+		this.manager_birth = manager_birth;
 	}
 	public String getTime() {
 		return time;
@@ -83,8 +83,10 @@ public class CustomerVo {
 	@Override
 	public String toString() {
 		return "CustomerVo [code=" + code + ", division_code=" + division_code + ", name=" + name + ", contact="
-				+ contact + ", human_name=" + human_name + ", human_grade=" + human_grade + ", human_email="
-				+ human_email + ", human_birth=" + human_birth + ", time=" + time + ", address=" + address + ", id="
-				+ id + "]";
+				+ contact + ", manager_name=" + manager_name + ", manager_grade=" + manager_grade + ", manager_email="
+				+ manager_email + ", manager_birth=" + manager_birth + ", time=" + time + ", address=" + address
+				+ ", id=" + id + "]";
 	}
+	
+	
 }
