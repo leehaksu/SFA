@@ -84,11 +84,18 @@ public class MobileAdviceController {
 	@ResponseBody
 	@RequestMapping("/")
 	public JSONResult select(@ModelAttribute AdviceVo adviceVo) {
-		List<AdviceVo> list = adviceService.select(adviceVo);
-		if (list.isEmpty()) {
-			return JSONResult.fail("상담일지 불러오는데 오류가 발생했습니다.");
-		} else {
+		
+		if(adviceVo==null)
+		{
+			return JSONResult.error("정상적인 접근이 아닙니다.");
+		}else if(adviceVo.getId()==null || adviceVo.getDate()==null)
+		{
+			return JSONResult.error("아이디랑 날짜가 빠져있습니다.");
+		}else
+		{
+			List<AdviceVo> list = adviceService.select(adviceVo);
 			return JSONResult.success(list);
 		}
+		
 	}
 }
