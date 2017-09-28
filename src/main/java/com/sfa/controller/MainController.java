@@ -1,6 +1,5 @@
 package com.sfa.controller;
 
-import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,8 +10,6 @@ import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
 import com.sfa.service.AffirmationService;
 import com.sfa.service.WeekPlanService;
-import com.sfa.util.PushMail;
-import com.sfa.util.PushMail2;
 import com.sfa.vo.UserVo;
 import com.sfa.vo.WeekVo;
 

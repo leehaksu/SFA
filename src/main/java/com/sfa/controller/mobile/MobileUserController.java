@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfa.dto.JSONResult;
 import com.sfa.service.UserService;
-import com.sfa.util.PushMessage;
 import com.sfa.vo.UserVo;
 
 @Controller
