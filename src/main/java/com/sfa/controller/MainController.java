@@ -33,16 +33,6 @@ public class MainController {
 		System.out.println("Controller"+Affirmation);
 		model.addAttribute("affrimation", Affirmation);
 		
-		PushMail2 pushmail= new PushMail2();
-		
-		try {
-			//pushmail.connect();
-			pushmail.push();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		//처음 들어왔을 때 화면
 			return "main/main";	
 	}
