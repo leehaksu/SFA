@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfa.dto.JSONResult;
 import com.sfa.security.Auth;
@@ -27,6 +28,7 @@ public class AdviceController {
 	PushMail pushMail;
 
 	@Auth
+	@ResponseBody
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public JSONResult insertAdvice(@ModelAttribute AdviceVo adviceVo, @AuthUser UserVo authUser) {
 	System.out.println(adviceVo);
