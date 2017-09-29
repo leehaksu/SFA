@@ -331,7 +331,6 @@
     	//클릭한 list의 좌표 업체 별로 passList에 넣어 줄것. 문자열로! 끝은 G,0으로 통일할 것이며, 최대 5개의 경유지만 가능
     	//그러므로 route list의 length가 5개 이상이면 검색이 불가능 하거나 5개 까지만 검색이 되게 해야함.
     	//그리고 5개 까지만 검색이 가능함을 사전에 미리 알려줘야한다.
-    	var tData = new Tmap.TData();
     	
     	var startX = current_longitude;
         var startY = current_latitude;
@@ -362,25 +361,19 @@
         urlStr += "&reqCoordType=WGS84GEO"
         urlStr += "&passList="+passList;
         urlStr += "&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"; 
-     
+           
          var obj = {
-        		 endX: '14135428.84691669',
-        		 endY: '4505733.44979528',
-        		 startX: '14140669.59746090',
-        		 startY: '4508640.36061872',
-        		 endRpFlag:"5",
-        		 passList:'14139173.11510200, 4508188.27930118, 280182,5,0',
-        		 endPoiId:'280185'
+        		 endX: 14135428.84691669,
+        		 endY: 4505733.44979528,
+        		 startX: 14140669.59746090,
+        		 startY: 4508640.36061872
         		};
-        	 var jsonparse = JSON.stringify(obj);
-         	console.log(jsonparse);
+         var road ="startX="+startX+"&startY="+startY+"&endX="+endX+"&endY="+endY+"&reqCoordType=WGS84GEO"+"&passList="+passList; 	 
         	
          	$.ajax({
              url: "https://apis.skplanetx.com/tmap/routes?version=1&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b",
-             dataType: 'json',
              type: 'post',
-             contentType: "application/x-www-form-urlencoded;charset=utf-8",
-             data: jsonparse,
+             data: road,
              success: function( data, textStatus, jQxhr ){
                  console.log(data);
              },
