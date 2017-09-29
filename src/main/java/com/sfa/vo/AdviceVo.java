@@ -10,7 +10,7 @@ public class AdviceVo {
 	private String name;//이름
 	private String id;//아이디
 	private String date;//제출일
-	private Long report_no;//결과 보고서 번호
+	
 	public Long getAdvice_no() {
 		return advice_no;
 	}
@@ -65,17 +65,10 @@ public class AdviceVo {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public Long getReport_no() {
-		return report_no;
-	}
-	public void setReport_no(Long report_no) {
-		this.report_no = report_no;
-	}
 	@Override
 	public String toString() {
 		return "AdviceVo [advice_no=" + advice_no + ", title=" + title + ", content=" + content + ", reg_date="
 				+ reg_date + ", manager_name=" + manager_name + ", code=" + code + ", name=" + name + ", id=" + id
-				+ ", date=" + date + ", report_no=" + report_no + "]";
-	}
-	
+				+ ", date=" + date + "]";
+	}	
 }

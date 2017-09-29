@@ -2,6 +2,8 @@ package com.sfa.controller;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,8 @@ import com.sfa.dto.JSONResult;
 import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
 import com.sfa.service.DateReportService;
+import com.sfa.service.UserService;
+import com.sfa.util.Push;
 import com.sfa.vo.DateReportVo;
 import com.sfa.vo.UserVo;
 
@@ -25,6 +29,12 @@ public class DateReportController {
 	@Autowired
 	DateReportService dateReprotService;
 
+	@Autowired
+	private Push push;
+	
+	@Autowired
+	private UserService userService;
+	
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public String insert() {
@@ -33,17 +43,31 @@ public class DateReportController {
 
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public String insertDateReport(@ModelAttribute DateReportVo dateReortVo, @AuthUser UserVo authUser) {
+	public String insertDateReport(@ModelAttribute DateReportVo dateReportVo, @AuthUser UserVo authUser) {
 
 		if (authUser == null) {
 			return "user/login";
-		} else if (dateReortVo == null) {
+		} else if (dateReportVo == null) {
 			return "plan/report";
 		} else {
-			dateReortVo.setId(authUser.getId());
-			int no = dateReprotService.insert(dateReortVo);
+			dateReportVo.setId(authUser.getId());
+			int no = dateReprotService.insert(dateReportVo);
 
 			if (no == 1) {
+				UserVo userVo2 = userService.getLeader(authUser.getId());	
+				try {
+					push.Mail(userVo2.getCompany_email(), "제목 ["+dateReportVo.getTitle()+"]",
+							"보고 사항  \n"
+							+"날 짜 : " + dateReportVo.getDate()+"\n"
+							+"달 성 률  :" + dateReportVo.getAchive_rank()+"\n"
+							+"출발 게이지: " + dateReportVo.getStart_gauge()+"\n"
+							+"도착 게이지 : " +dateReportVo.getEnd_gauge()+"\n"
+							+"내  용 : " + dateReportVo.getContent()+"\n"
+							+"<a herf='localhost:8080/sfa/report'> 내용 확인하러 가기 </a>", authUser.getId());
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				return "redirect:/report/";
 			} else {
 				return "plan/report";
@@ -115,6 +139,20 @@ public class DateReportController {
 			int no = dateReprotService.update(dateReportVo);
 
 			if (no == 1) {
+				UserVo userVo2 = userService.getLeader(authUser.getId());	
+				try {
+					push.Mail(userVo2.getCompany_email(), "제목 ["+dateReportVo.getTitle()+"]",
+							"보고 사항  \n"
+							+"날 짜 : " + dateReportVo.getDate()+"\n"
+							+"달 성 률  :" + dateReportVo.getAchive_rank()+"\n"
+							+"출발 게이지: " + dateReportVo.getStart_gauge()+"\n"
+							+"도착 게이지 : " +dateReportVo.getEnd_gauge()+"\n"
+							+"내  용 : " + dateReportVo.getContent()+"\n"
+							+"<a herf='localhost:8080/sfa/report'> 내용 확인하러 가기 </a>", authUser.getId());
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				return "redirect:/report/?result=succeess";
 			} else {
 				return "redirect:/report/?result=fail";

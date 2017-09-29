@@ -244,11 +244,18 @@ $(document).ready(function() {
 			
 			$.post("${pageContext.servletContext.contextPath}/advice/insert",
 			{
+				"code="+advice.code,
+				"manager_name="+advice.manager,
+				"date="+advice.date,
+				"title="+advice.title,
+				"content="+$("#advice-textarea").froalaEditor('html.get');
+
 				code:advice[0].code,
 				manager_name:advice[2].manager_name,
 				date:advice[4].date,
 				title:advice[5].title,
 				content:$("#advice-textarea").froalaEditor('html.get')
+
 			},
 			function(response,status){
 				

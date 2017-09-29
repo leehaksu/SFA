@@ -25,7 +25,7 @@ public class UserService {
 	public boolean join(UserVo userVo) {
 		// TODO Auto-generated method stub
 		System.out.println("[service] 회원가입 : " + userVo);
-		userVo.setCompany_email(userVo.getId()+"@sfa.com");
+		userVo.setCompany_email(userVo.getId()+"@leehacksue.cafe24.com");
 		System.out.println("[service] 이메일 등록 후 :  " + userVo);
 		
 		if(userDao.insert(userVo)==1)
@@ -92,5 +92,15 @@ public class UserService {
 	public String getToken(String id) {
 		// TODO Auto-generated method stub
 		return userDao.selectToken(id);
+	}
+
+	public int updateToken(String token, String id) {
+		// TODO Auto-generated method stub
+		return userDao.updateToken(token,id);
+	}
+
+	public List<UserVo> getemail(String email) {
+		// TODO Auto-generated method stub
+		return userDao.getEmail(email);
 	}
 }

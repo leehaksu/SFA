@@ -1,5 +1,6 @@
 	var reg_uid = /^[A-Za-z]{1}[A-Za-z0-9]{3,19}$/;
 	var reg_upw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-]|.*[0-9]).{8,24}$/;
+	var reg_email=/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
 	$(document).ready(function(){	   
 		$("#confirm_button").click(function() {
@@ -44,10 +45,13 @@
 			return true;
 		});
 
-		$("#check-button").click(function() {
-			var id = $("#inputId").val();
-
+		$("#Idcheck-button").click(function() {
+			var id = $("#joininputId").val();
+			
+			console.log(id);
+			
 			if (id == "") {
+				
 				return;
 			}
 			
@@ -85,6 +89,50 @@
 				}
 			});
 		});
+		
+		$("#Emailcheck-button").click(function() {
+			var email = $("#inputEmail").val();
+			
+			if (email == "") {
+				
+				return;
+			}
+			
+			if (reg_email.test(email) != true) {
+				alert("이메일 형식이 잘못 되었습니다. 다시 확인해 주세요.");
+				return "";
+			}
+
+			//ajax 통신
+			$.ajax({
+				url : "/sfa/checkEmail?email="+email,
+				type : "GET",
+				dataType : "json",
+				data : "",
+				success : function(response) {
+
+					// 통신 에러(서버 에러)
+					if (response.result == "error") {
+						//console.log(response.message);
+						return;
+					}
+
+					if (response.result == "fail") {
+						alert("이미 존재하는 이메일 입니다.");
+						$("#inputEmail").val("");
+						$("#inputEmail").focus();
+					} else {
+						alert("사용 가능한 이메일 입니다.");
+					}
+				},
+				error : function(jqXHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+		});
+		
+		
+		
 		
 		$("#inputId").change(function(){
 			$("#check-button").show();

@@ -1,5 +1,7 @@
 package com.sfa.controller;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +17,7 @@ import com.sfa.service.ChallengeService;
 import com.sfa.service.DatePlanService;
 import com.sfa.service.PositionService;
 import com.sfa.service.UserService;
-import com.sfa.util.PushMail;
+import com.sfa.util.Push;
 import com.sfa.vo.DateVo;
 import com.sfa.vo.PositionVo;
 import com.sfa.vo.UserVo;
@@ -34,7 +36,7 @@ public class PlanDateController {
 	ChallengeService challengeService;
 	
 	@Autowired
-	private PushMail pushMail;
+	private Push push;
 	
 	@Autowired
 	private UserService userService;
@@ -54,12 +56,21 @@ public class PlanDateController {
 			}
 			int no = datePlanService.insertDate(dateVo);
 			if (no == 1) {
-				UserVo userVo2 = userService.getLeader(authUser.getId());
-				pushMail.Push(userVo2.getCompany_email(), "제목 ["+dateVo.getTitle()+"]", "", authUser.getId());
-				
+				UserVo userVo2 = userService.getLeader(authUser.getId());	
+				try {
+					push.Mail(userVo2.getCompany_email(), "제목 ["+dateVo.getTitle()+"]",
+							"보고 사항  \n"
+							+"날짜 : " + dateVo.getDate()+"\n"
+							+"도전과제 : " + dateVo.getChallenge_content()+"\n"
+							+"예상 주행거리 :" + dateVo.getEstimate_distance()+"\n"
+							+"예상 목표 액 : " + dateVo.getGoal_sale()+"\n"
+							+"내용 : " +dateVo.getContent()+"\n"
+							+"<a herf='localhost:8080/sfa/date'> 내용 확인하러 가기 </a>", authUser.getId());
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				model.addAttribute("DateVo", dateVo);
-				
-				
 				return JSONResult.success(dateVo);
 			} else {
 				return JSONResult.fail();
@@ -101,6 +112,21 @@ public class PlanDateController {
 			int no = datePlanService.updateDate(dateVo);
 
 			if (no == 1) {
+				try {
+					UserVo userVo2 = userService.getLeader(authUser.getId());	
+					push.Mail(userVo2.getCompany_email(), "제목 ["+dateVo.getTitle()+"]",
+							"보고 사항  \n"
+							+"날짜 : " + dateVo.getDate()+"\n"
+							+"도전과제 : " + dateVo.getChallenge_content()+"\n"
+							+"예상 주행거리 :" + dateVo.getEstimate_distance()+"\n"
+							+"예상 목표 액 : " + dateVo.getGoal_sale()+"\n"
+							+"내용 : " +dateVo.getContent()+"\n"
+							+"<a herf='localhost:8080/sfa/date'> 내용 확인하러 가기 </a>", authUser.getId());
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				return JSONResult.success();
 			} else {
 				return JSONResult.fail();
