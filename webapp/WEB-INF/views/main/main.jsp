@@ -6,31 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>SaleForceAutomation</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.servletContext.contextPath}/assets/css/main.css">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap-theme.min.css">
-<link rel='stylesheet'
-	href="${pageContext.servletContext.contextPath}/assets/css/fullcalendar.css" />
-
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/jquery-3.2.1.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/bootstrap.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/moment.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/fullcalendar.js"></script>
-<script type="text/javascript"
-	src="${pageContext.servletContext.contextPath}/assets/js/ko.js"></script>
-<script src="https://use.fontawesome.com/f8c7f597cb.js"></script>
-
+	<c:import url="/WEB-INF/views/common/common.jsp"></c:import>	
 </head>
 <body>
 	<nav class="navbar navbar-default">

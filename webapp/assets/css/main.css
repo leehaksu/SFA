@@ -18,13 +18,6 @@ body {
 	transition: all .5s ease;
 }
 
-#positive-line p {
-	margin: 0;
-	height: 40px;
-	text-align: center;
-	line-height: 40px;
-	background-color: #D2E4F8;
-}
 
 @media ( min-width : 992px) {
 	#wrapper {
@@ -110,7 +103,7 @@ body {
 
 #sidebar-wrapper {
 	padding-left: 0px;
-	padding-right: 0px;	
+	padding-right: 0px;
 	position: fixed;
 	left: 225px;
 	width: 0;
@@ -571,9 +564,11 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 }
 
 .ui-autocomplete {
-  z-index: 215000000 !important;
+	z-index: 215000000 !important;
 }
-
-<!--report search -->
-
-
+<!--
+report
+ 
+search
+ 
+-->

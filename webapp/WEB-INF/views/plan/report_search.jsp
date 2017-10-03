@@ -6,35 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SaleForceAutomation</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.servletContext.contextPath}/assets/css/main.css">
-<link href="${pageContext.servletContext.contextPath}/assets/css/hover.css"
-	rel="stylesheet" media="all">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap-theme.min.css">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.servletContext.contextPath}/assets/css/jquery-ui.min.css">
-
-
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/jquery-3.2.1.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/jquery-ui.js"></script>
-
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/bootstrap.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/moment.js"></script>
-
+	<c:import url="/WEB-INF/views/common/common.jsp"></c:import>
 <script type="text/javascript">
 //현재 날짜를 moment.js를 활용하여 "YYYY-MM-DD"형식으로 받아온다.
 var today = moment().format("YYYY-MM-DD");

@@ -17,4 +17,9 @@
 		
 		]]>
 	</update>
+	<select id="getPositionById" resultType="positionvo" parameterType="positionvo">
+	<![CDATA[
+	select name,positionX, positionY from customer where id=#{id};
+	]]>
+	</select>
 </mapper>

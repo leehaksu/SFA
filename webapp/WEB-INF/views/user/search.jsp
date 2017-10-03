@@ -6,8 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+  <c:import url="/WEB-INF/views/common/common.jsp"></c:import>
 </head>
 <body>
 <h2> 아이디 찾기</h2>

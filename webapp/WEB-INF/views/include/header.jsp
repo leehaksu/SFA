@@ -3,11 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link rel='stylesheet'
-	href="${pageContext.servletContext.contextPath}/assets/css/header.css" />
-<div id="positive-line">
-	<p class="mb-0">"하루하루를 어떻게 보내는가에 따라 우리의 인생이 결정된다."</p>
-</div>
+<link rel='stylesheet' 
+	href="${pageContext.servletContext.contextPath}/assets/css/header.css" />	
 <div class="container-fluid">
 	<div class="navbar-header">
 		<a class="navbar-brand" href="#"><img class="img-responsive"
@@ -18,7 +15,7 @@
 		<ul class="nav navbar-nav ">
 			<li class="droupdown menu-icon"><a class="dropdown-toggle"
 				data-toggle="dropdown"> <i class="fa fa-calendar"
-					aria-hidden="true"></i><label> 영업 관리</label>
+					aria-hidden="true"></i> 영업 관리
 			</a>
 				<ul class="dropdown-menu">
 					<li><a href="${pageContext.servletContext.contextPath}/week/">영업 계획서</a></li>
@@ -31,7 +28,7 @@
 			</a>
 				<ul class="dropdown-menu">
 					<li><a href="#">고객 조회</a></li>
-					<li><a href="#">고객 등록</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/customer/register">고객 등록</a></li>
 				</ul></li>
 			<li class="droupdown menu-icon"><a class="dropdown-toggle"
 				data-toggle="dropdown" href="#"> <i class="fa fa-truck"

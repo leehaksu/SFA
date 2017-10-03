@@ -6,45 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>SaleForceAutomation</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="content-type" content="text/html;" charset=utf-8>
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.servletContext.contextPath}/assets/css/main.css">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap-theme.min.css">
-<link rel='stylesheet'
-	href="${pageContext.servletContext.contextPath}/assets/css/fullcalendar.css" />
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/font-awesome.min.css">
-
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/froala_editor/css/froala_editor.min.css">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/froala_editor/css/froala_style.min.css">
-
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/jquery-3.2.1.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/jquery-ui.js"></script>
-
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/bootstrap.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/moment.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/fullcalendar.js"></script>
-<script type="text/javascript"
-	src="${pageContext.servletContext.contextPath}/assets/js/ko.js"></script>
-<script type="text/javascript"
-	src="${pageContext.servletContext.contextPath}/assets/froala_editor/js/froala_editor.min.js"></script>
-<script type="text/javascript"
-	src="${pageContext.servletContext.contextPath}/assets/froala_editor/js/plugins/paragraph_format.min.js"></script>
-<script
-	src="https://apis.skplanetx.com/tmap/js?version=1&format=javascript&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"></script>
+	<c:import url="/WEB-INF/views/common/common.jsp"></c:import>
 <script>
 	var date = new Date();
 	var today = moment().format("YYYY-MM-DD");
@@ -151,7 +113,6 @@
     	 //console.log("2번째 실행");
     	current_latitude = position.coords.latitude; 
     	current_longitude= position.coords.longitude;
-    	
     	//map 생성
 		init(); 
     } 
@@ -260,7 +221,7 @@
         var currentmarker = new Tmap.Markers(cLonLat, icon, currentlabel);		        
         markerLayer.addMarker(currentmarker);	
     	$.ajax({
-			url : '/sfa/position/',
+			url : '/sfa/customer/position/',
 			type : 'POST',
 			dataType : 'json',
 			contentType: "application/json; charset=UTF-8",
@@ -335,7 +296,7 @@
     	var startX = current_longitude;
         var startY = current_latitude;
     	
-    	if(routecheck == false && routeList.length > 0 && routeList.length < 6){
+    	if(routecheck == false && routeList.length > 0 ){
     	routecheck= true;
     	//console.log(templonlat.lat+","+templonlat.lon);
     	var routeFormat = new Tmap.Format.KML({extractStyles:true, extractAttributes:true});
@@ -361,38 +322,14 @@
         urlStr += "&reqCoordType=WGS84GEO"
         urlStr += "&passList="+passList;
         urlStr += "&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"; 
-<<<<<<< HEAD
-           
-=======
+        console.log(urlStr);   
       
->>>>>>> branch 'master' of https://github.com/leehaksu/SFA.git
-         var obj = {
-<<<<<<< HEAD
-        		 endX: 14135428.84691669,
-        		 endY: 4505733.44979528,
-        		 startX: 14140669.59746090,
-        		 startY: 4508640.36061872
-=======
-        		 endX: '14135428.84691669',
-        		 endY: '4505733.44979528',
-        		 startX: '14140669.59746090',
-        		 startY: '4508640.36061872'
->>>>>>> branch 'master' of https://github.com/leehaksu/SFA.git
-        		};
          var road ="startX="+startX+"&startY="+startY+"&endX="+endX+"&endY="+endY+"&reqCoordType=WGS84GEO"+"&passList="+passList; 	 
-        	
+        
          	$.ajax({
              url: "https://apis.skplanetx.com/tmap/routes?version=1&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b",
              type: 'post',
-<<<<<<< HEAD
              data: road,
-=======
-             contentType: "application/x-www-form-urlencoded;charset=utf-8",
-             data:  "startX : "+startX+
-             "startY :"+startY+
-             +"endX : "+endX+
-             +"endY :"+endY,
->>>>>>> branch 'master' of https://github.com/leehaksu/SFA.git
              success: function( data, textStatus, jQxhr ){
                  console.log(data);
              },
@@ -659,6 +596,8 @@
 						 									$("#side_title_04").text("입력된 계획이 없습니다.");
 						 									$("#dayplantable-title").val("");
 						 									$("#date-reg-date").text("미작성일");
+						 									$("#date-reg-date").css("background-color","#eee");
+						 									$("#goalmoney").css("background-color","#eee");
 						 									//날짜를 기준으로 클릭한 날짜가 현재 날짜와 같거나 이후이면 새로 작성가능(저장버튼 show).
 						 									if(plandatecheck){ 
 							 									$("#dayplantable-title").removeAttr('disabled');
@@ -683,9 +622,13 @@
 						 									return ;
 					 									}
 					 								else{
-					 										$("#side_title_04").html(response.data.content);
-						 									$("#dayplantable-title").val(response.data.title);
+					 										var tempcontent = response.data.content.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+					 										console.log();
+					 										$("#side_title_04").html();
+															$("#dayplantable-title").val(response.data.title);
 						 									$("#date-reg-date").text(response.data.reg_date);
+						 									$("#date-reg-date").css("background-color","");
+						 									$("#goalmoney").css("background-color","");
 							 								 if(response.data.challenge_no != null){
 							 									$("#challenge option").each(function(){
 							 										if($(this).val()==response.data.challenge_content){
@@ -735,7 +678,7 @@
 													alert(xhr + " 와 " + status + " 와 " + error);
 												}
 											});
-										$.post("/sfa/position",
+										$.post("/sfa/customer/position",
 									        	function(data,status){
 									            //console.log(data );
 									        });
@@ -748,7 +691,9 @@
 									}
 									
 									
-									//console.log(dayClick);						
+									//console.log(dayClick);	
+									
+									//주간획
 									$.ajax({
 												url : "/sfa/week/select",
 												type : 'POST',
@@ -1041,7 +986,7 @@
 			});
 
 			$('#side_drop_button02').click(function() {
-				
+				//바로 뜨면 안됨. 날짜 클릭 확인이 이루어져야 한다. 
 				dayplanmodalShow();
 		       /*  var curLonLat = new Tmap.LonLat(127.027632,37.498078).transform(pr_4326,pr_3857)
 		        var carlabel = new Tmap.Label("지점: 강남역 입니다");
@@ -1253,7 +1198,9 @@
 						  		 challenge_content:challenge
 						        },
 						        function(data,status){
-						            alert("Data: " + data + "\nStatus: " + status);
+						            console.log("Data: " + data + "\nStatus: " + status);
+						           
+									$("#dayplanmodal").attr("class","modal fade");
 						        });
 			});
 			
@@ -1264,7 +1211,22 @@
 		  		  date : dayClick, 
 		        },
 		        function(data,status){
-		            alert("Data: " + data + "\nStatus: " + status);
+		            console.log("Data: " + data + "\nStatus: " + status);
+		            $('#datetable-branch').tooltip('disable');
+					$('html, body').css({'overflow' : 'auto','height' : '100%'}); //scroll hidden 해제 
+					$('#element').off('scroll touchmove mousewheel'); // 터치무브 및 마우스휠 스크롤 가능
+					$('.editor').remove();
+					$('.dayplanform-input').each(function() {
+						$(this).val("");
+					});
+					; 
+					$('#dayplantable-weekplan > tbody> tr > td > ul').each(function() {
+							$(this).children('li').remove();
+							$(this).children('br').remove();
+						});
+					$('#date-textarea').froalaEditor('html.set', '');
+
+		            $("#dayplanmodal").attr("class","modal fade");
 		        });
 			});
 	
@@ -1665,13 +1627,13 @@
 											</div>
 											<div id="update-btn" class="btn-group" role="group">
 												<button id="dayplan-updatebutton" class="btn btn-info"
-													type="submit">
+													type="submit" data-dismiss="modal">
 													<strong>수정하기</strong>
 												</button>
 											</div>
 											<div id="delete-btn" class="btn-group" role="group">
 												<button id="dayplan-deletebutton" class="btn btn-default"
-													type="submit">
+													type="submit" data-dismiss="modal">
 													<strong>삭제하기</strong>
 												</button>
 											</div>
@@ -1751,7 +1713,7 @@
 								<td>
 									<div class="form gorup">
 										<label id="weeklabel" for="target_figure">주간 목표액</label> <input
-											class="form-control well well-sm  weekinput"
+											class="well well-sm  weekinput"
 											id="target_figure" name="target_figure" type="text" readonly>
 									</div>
 								</td>

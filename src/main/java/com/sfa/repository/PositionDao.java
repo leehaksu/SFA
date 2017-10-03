@@ -16,7 +16,7 @@ public class PositionDao {
 	
 	public List<PositionVo> getPostion(PositionVo positionVo) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("position.getPositionById",positionVo);
+		return sqlSession.selectList("customer.getPositionById",positionVo);
 	}
 
 	public List<PositionVo> getPostion() {

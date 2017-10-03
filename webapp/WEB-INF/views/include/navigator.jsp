@@ -26,7 +26,7 @@
 						<ul id="submenu-2" class="panel-collapse collapse panel-switch"
 							role="menu">
 							<li><a href="#"><i class="fa fa-caret-right"></i>고객 조회</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i>고객 등록</a></li>
+							<li><a href="${pageContext.servletContext.contextPath}/customer/register"><i class="fa fa-caret-right"></i>고객 등록</a></li>
 						</ul></li>
 					<li><a id="menu3"
 						class="accordion-toggle collapsed toggle-switch"

@@ -6,35 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<title>SaleForceAutomation</title>
-
-<!-- Bootstrap -->
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.servletContext.contextPath}/assets/css/main.css">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap-theme.min.css">
-<link rel='stylesheet'
-	href="${pageContext.servletContext.contextPath}/assets/css/join.css" />
-
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/jquery-3.2.1.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/bootstrap.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/moment.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/fullcalendar.js"></script>
-<script type="text/javascript"
-	src="${pageContext.servletContext.contextPath}/assets/js/ko.js"></script>
-<script src="https://use.fontawesome.com/f8c7f597cb.js"></script>
-
+	<c:import url="/WEB-INF/views/common/common.jsp"></c:import>
 </head>
 
 <body>

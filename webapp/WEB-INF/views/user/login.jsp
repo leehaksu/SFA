@@ -8,23 +8,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-		<title>SaleForceAutomation</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-
-		<script  src="http://code.jquery.com/jquery-1.12.4.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-		<!-- Optional theme -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-		<script src="https://use.fontawesome.com/f8c7f597cb.js"></script>
-		<!-- <link rel="stylesheet" href="animate.css"> -->
-		<script src="${pageContext.servletContext.contextPath}/assets/js/jquery-3.2.1.js"></script>
-		<link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/assets/css/login.css">
-		
+<c:import url="/WEB-INF/views/common/common.jsp"></c:import>
 
 <script type="text/javascript">
 
@@ -59,9 +43,7 @@ $(function(){
 				
 				<div class="login_box">
 					<div id="positive-line">
-						<p class="large">
-					 		"하루하루를 어떻게 보내는가에 따라 우리의 인생이 결정된다."
-						</p>
+						<p class="large">"하루하루를 어떻게 보내는가에 따라 우리의 인생이 결정된다."</p>
 					</div>
 					<form id="login_form" name="loginform" action="${pageContext.servletContext.contextPath}/user/auth" method="POST" >
 					  <div class="input-group">

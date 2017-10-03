@@ -49,9 +49,9 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
-			value="jdbc:mysql://innodb-005.cafe24.com:3306/leehacksue1" />
-		<property name="username" value="leehacksue1" />
-		<property name="password" value="dlgkrtn280!" />
+			value="jdbc:mysql://localhost:3306/sfa" />
+		<property name="username" value="sfa" />
+		<property name="password" value="1234" />
 		<property name="initialSize" value="20" />
 		<property name="maxActive" value="20" />
 	</bean>
