@@ -40,12 +40,15 @@ public class PlanWeekController {
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public String insertWeek(@ModelAttribute WeekVo weekVo, @AuthUser UserVo authUser, @ModelAttribute DayVo dayVo) {
+		System.out.println("[controller]"+weekVo);
 		if (authUser == null) {
 			return "redirect:/user/login";
 		} else {
+			System.out.println("[controller] insert부분 들어옴");
 			weekVo.setId(authUser.getId());
 			boolean check = weekPlanService.insertWeek(weekVo, dayVo);
-			if (check) {
+			System.out.println("[controller]"+check);
+			/*if (check) {
 				UserVo userVo = userService.getLeader(authUser.getId());
 
 				try {
@@ -69,7 +72,7 @@ public class PlanWeekController {
 				}
 
 				return "redirect:/week/";
-			}
+			}*/
 			return "plan/plan";
 		}
 	}

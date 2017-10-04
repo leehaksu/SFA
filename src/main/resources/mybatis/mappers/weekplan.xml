@@ -14,7 +14,7 @@
 		<![CDATA[
 		 insert 
 		   into day_plan  
-		 values( null, #{day}, #{content}, #{day_sale},#{date},#{id},#{week_no})
+		 values( null, #{day}, #{content}, #{day_sale},#{date},#{week_no},#{id})
 		]]>
 	</insert>
 	<delete id="deletetotalDay" parameterType="weekvo">
