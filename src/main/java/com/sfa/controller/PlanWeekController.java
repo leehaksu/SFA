@@ -48,7 +48,7 @@ public class PlanWeekController {
 			weekVo.setId(authUser.getId());
 			boolean check = weekPlanService.insertWeek(weekVo, dayVo);
 			System.out.println("[controller]"+check);
-			/*if (check) {
+			if (check) {
 				UserVo userVo = userService.getLeader(authUser.getId());
 
 				try {
@@ -72,7 +72,7 @@ public class PlanWeekController {
 				}
 
 				return "redirect:/week/";
-			}*/
+			}
 			return "plan/plan";
 		}
 	}
@@ -139,9 +139,13 @@ public class PlanWeekController {
 		}
 
 		List<DayVo> list = weekPlanService.selectMonth(dayVo);
+		
+		
 		if (list == null) {
 			return JSONResult.fail("제대로 불러오지 못햇습니다.");
-		} else {
+		} 
+		
+		else {
 			return JSONResult.success(list);
 		}
 	}
@@ -166,12 +170,20 @@ public class PlanWeekController {
 			weekVo.setFirst_date(Date);
 		}
 		weekVo = weekPlanService.selectWeek(weekVo);
-
-		if (weekVo == null) {
+        WeekVo temp_weekVo = weekPlanService.selectReport(Date,authUser.getId());
+		System.out.println("[controller]"+temp_weekVo);
+        
+        if (weekVo == null) {
 			JSONResult.error("서버에 error 발생");
-		} else if (weekVo.getMonday() == null) {
-			JSONResult.fail(weekVo);
+		} else if (temp_weekVo==null) {
+			weekVo.setAchive_rank(0.0);
+			weekVo.setWeek_sale((long) 0);	
+		} else
+		{
+			weekVo.setAchive_rank(temp_weekVo.getAchive_rank());
+			weekVo.setWeek_sale(temp_weekVo.getWeek_sale());
 		}
+        System.out.println(weekVo);
 		return JSONResult.success(weekVo);
 	}
 }

@@ -76,4 +76,9 @@
 	update day_report set approval=#{approval} where report_no=#{report_no};
 	]]>
 	</update>
+	<select id="reportByDate" parameterType="MAP" resultType="weekvo">
+	<![CDATA[
+	select report_sale, achive_rank from day_report where date=#{date} and id=#{id};
+	]]>
+	</select>
 </mapper>
