@@ -31,9 +31,10 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/main.css">
 <link rel="stylesheet" type="text/css" 
-	href="${pageContext.servletContext.contextPath}/assets/css/login.css">
+	href="${pageContext.servletContext.contextPath}/assets/css/user/login.css">
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.servletContext.contextPath}/assets/css/join.css">
+	href="${pageContext.servletContext.contextPath}/assets/css/user/join.css">
+<link href="${pageContext.servletContext.contextPath}/assets/css/user/search.css" rel="stylesheet" type="text/css" media="all">
 
 
 <!-- jquery 자바스크립트 -->

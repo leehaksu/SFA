@@ -223,6 +223,7 @@ public class UserController {
 			return "user/list";
 		}
 	}
+	@ResponseBody
 	@RequestMapping(value="/search", method=RequestMethod.GET)
 	public String search(@RequestParam("email") String email, @RequestParam("name") String name)
 	{
