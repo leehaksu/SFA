@@ -24,7 +24,6 @@ import com.sfa.util.Push;
 import com.sfa.vo.UserVo;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
@@ -226,7 +225,7 @@ public class UserController {
 	}
 	
 
-	/* 기존 코드 @RequestMapping(value="/search", method=RequestMethod.GET)
+	@RequestMapping(value="/search", method=RequestMethod.GET)
 	public String search(@RequestParam("email") String email, @RequestParam("name") String name)
 	{
 		if(email==null || name==null)
@@ -237,8 +236,8 @@ public class UserController {
 			String id = userService.getId(email,name);
 		}
 		return null;
-	}*/
-	@RequestMapping(value="/search", method=RequestMethod.GET)
+	}
+	@RequestMapping(value="/user/search", method=RequestMethod.GET)
 		public String search()
 		{
 			return "user/search";

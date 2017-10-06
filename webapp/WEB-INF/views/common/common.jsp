@@ -5,43 +5,53 @@
 <meta http-equiv="content-type" content="text/html;" charset=utf-8>
 <!-- css 초기화 -->
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.servletContext.contextPath}/assets/css/common.css">
+	href="${pageContext.servletContext.contextPath}/assets/css/common/common.css">
 			
 <!-- 외부 css -->	
 <link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap.min.css">
+	href="${pageContext.servletContext.contextPath}/assets/css/jquery/jquery-ui.min.css">
 <link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap-theme.min.css">
+	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap/bootstrap.min.css">
+<link rel="stylesheet"
+	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap/bootstrap-theme.min.css">
 <link rel='stylesheet'
 	href="${pageContext.servletContext.contextPath}/assets/css/fullcalendar.css" />
 <link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/font-awesome.min.css">
+	href="${pageContext.servletContext.contextPath}/assets/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/assets/froala_editor/css/froala_editor.css">
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/assets/froala_editor/css/froala_style.min.css">
-<link href="${pageContext.servletContext.contextPath}/assets/css/hover.css"
-	rel="stylesheet" media="all">
+<link rel="stylesheet" media="all"
+	href="${pageContext.servletContext.contextPath}/assets/css/hover.css" >
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/bootstrap-fileinput/css/fileinput.min.css">
 <link
-	href="${pageContext.servletContext.contextPath}/assets/css/noty/noty.css" rel="stylesheet">
+	href="${pageContext.servletContext.contextPath}/assets/css/noty.css" rel="stylesheet">
+<link
+	href="${pageContext.servletContext.contextPath}/assets/css/animate.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
 
 <!-- 내부 css -->
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.servletContext.contextPath}/assets/css/main.css">
+	href="${pageContext.servletContext.contextPath}/assets/css/main/main.css">
 <link rel="stylesheet" type="text/css" 
 	href="${pageContext.servletContext.contextPath}/assets/css/user/login.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/user/join.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.servletContext.contextPath}/assets/css/plan/dayplan.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.servletContext.contextPath}/assets/css/plan/weekplan.css">
 <link href="${pageContext.servletContext.contextPath}/assets/css/user/search.css" rel="stylesheet" type="text/css" media="all">
 
 
 <!-- jquery 자바스크립트 -->
 <script
-	src="${pageContext.servletContext.contextPath}/assets/js/jquery-3.2.1.js"></script>
+	src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-3.2.1.js"></script>
 <script
-	src="${pageContext.servletContext.contextPath}/assets/js/jquery-ui.js"></script>
+	src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-ui.js"></script>
 
 <!-- 외부 자바스크립트  -->
 <script
@@ -66,7 +76,7 @@
 
 <!-- 내부 자바스크립트 -->
 <script
-	src="${pageContext.servletContext.contextPath}/assets/js/join.js"></script>
+	src="${pageContext.servletContext.contextPath}/assets/js/user/join.js"></script>
 	
 
 

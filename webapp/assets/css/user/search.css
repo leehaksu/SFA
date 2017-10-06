@@ -1,7 +1,5 @@
 /* CSS Document */
 
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, figure, figcaption 
-{ font-family:"¸¼Àº°íµñ", "MalgunGothic", "NanumGothic"; font-size:12px; padding:0; margin:0; list-style:none; }
 a { text-decoration: none; } 
 h3 { font-size:22px; padding-bottom:5px; padding-top:30px; }
 span.desc { display:inline-block; padding-bottom:30px; font-size:14px; color:#555; }
@@ -16,7 +14,7 @@ span.desc { display:inline-block; padding-bottom:30px; font-size:14px; color:#55
 				/*-moz-box-shadow: 0px 2px 7px rgba(56,56,56,0.2);
 				-webkit-box-shadow: 0px 2px 7px rgba(56,56,56,0.2);*/ }
 .find_id { width:470px; border-top:1px solid #eee; border-bottom:1px solid #eee; margin-top:20px; margin-bottom:20px; }
-.find_id > p { padding:30px; text-align:center; font-size:14px;  }
+.find_id > p { padding:30px; text-align:center; font-size:14px; display: none;}
 .find_id > p > a { color:#c61f1f; font-weight:bold; }
 th { height:35px; text-align:left; padding-right:10px; font-size:15px; color:#666; font-weight:bold; }
 td { height:35px; padding:5px 0; }

@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <link rel='stylesheet' 
-	href="${pageContext.servletContext.contextPath}/assets/css/header.css" />	
+	href="${pageContext.servletContext.contextPath}/assets/css/include/header.css" />	
 <div class="container-fluid">
 	<div class="navbar-header">
 		<a class="navbar-brand" href="#"><img class="img-responsive"

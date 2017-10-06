@@ -1,0 +1,149 @@
+.weekinput {
+	width: 50%;
+	margin-left: 10px;
+}
+.week-user-info{
+	width: 300px;
+}
+
+
+#weektable-info {
+	margin: 0 auto;
+}
+
+#weektable {
+	clear: both;
+}
+#week {
+	clear: both;
+	margin: 0 0 0 0;
+}
+
+.weektable-userinfo {
+	display: inline-block;
+	width: 150px;
+}
+.week-userinfo-label {
+	margin-right: 20px;
+}
+
+
+.week-user-info #dept, .user-info #name, .user-info #reg-day {
+	margin-left: 33px;
+}
+#show-week-title {
+	margin-left: 56px;
+	width: 16.7%;
+	display: inline-block;
+	text-align: center;
+}
+
+#weektabletitle {
+	width: 68%;
+}
+
+#weekplan_main {
+	clear: both;
+	width: 90%;
+	height: 300px;
+	margin: 30px 30px;
+}
+
+#week_plane {
+	width: 80%
+}
+
+#week_title {
+	margin: 10px;
+	display: inline-block;
+	float: left;
+	width: 40%
+}
+
+#week_btn {
+	width: 20%;
+	display: inline-block;
+	float: right;
+	margin: 25px 10px 10px 10px;
+}
+
+
+
+.tg {
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-color: #999;
+	border: none;
+	width: 100%;
+	margin: 30px 10px;
+}
+
+.tg td {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	padding: 10px 5px;
+	border-style: solid;
+	border-width: 0px;
+	overflow: hidden;
+	word-break: normal;
+	border-color: #999;
+	color: #444;
+	background-color: #F7FDFA;
+}
+
+.tg th {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	padding: 10px 5px;
+	border-style: solid;
+	border-width: 0px;
+	overflow: hidden;
+	word-break: normal;
+	border-color: #999;
+	color: #fff;
+	background-color: #26ADE4;
+}
+
+.tg .tg-e3zv {
+	font-weight: bold;
+	text-align: center;
+}
+
+.tg .tg-amwm {
+	font-weight: bold;
+	text-align: center;
+	vertical-align: center;
+}
+
+.tg .tg-9hbo {
+	width: 84px;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: center;
+}
+
+.tg .tg-yw4l {
+	vertical-align: center;
+	text-align: center
+}
+
+.tg .tg-ek65 {
+	background-color: #ffffff;
+	color: #000000
+}
+
+.tg ul {
+	padding: 0;
+}
+
+.tg-031e {
+	text-align: center;
+}
+
+
+#monday_money, #tuesday_money, #wednesday_money, #thursday_money,
+	#friday_money {
+	width: 121px;
+	margin-left: 20px;
+}
