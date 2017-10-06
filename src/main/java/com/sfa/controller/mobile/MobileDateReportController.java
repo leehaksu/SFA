@@ -67,14 +67,13 @@ public class MobileDateReportController {
 	public JSONResult deleteReport(@ModelAttribute DateReportVo dateReportVo) {
 		if (dateReportVo.getId() == null) {
 			return JSONResult.error("id값이 없습니다.");
-		} else if (dateReportVo.getDate() == null) {
-			return JSONResult.error("날짜값이 들어오지 않습니다.");
+		} else if (dateReportVo.getReport_no() == null) {
+			return JSONResult.error("보고서 번호가 들어오지 않습니다.");
 		}
-
 		int no = dateReportService.delete(dateReportVo);
 		System.out.println(no);
 
-		if (no == 1) {
+		if (no > 0) {
 			return JSONResult.success("삭제에 성공했습니다.");
 		} else {
 			return JSONResult.fail("실패하였습니다.");

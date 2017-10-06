@@ -10,7 +10,7 @@
 	</insert>
 	<update id="update" parameterType="advicevo">
 	<![CDATA[
-	update advice set title=#{title}, content=#{content},date=#{date},reg_date=now(),manager_name={manager_name},code=#{code} where advice_no=#{advice_no};
+	update advice set title=#{title}, content=#{content},date=#{date},reg_date=now(),manager_name={manager_name},customer_code=#{code} where advice_no=#{advice_no};
 	]]>
 	</update>
 	<delete id="delete" parameterType="advicevo">
@@ -20,7 +20,7 @@
 	</delete>
 	<select id="select" parameterType="advicevo" resultType="advicevo">
 	<![CDATA[
-	select advice_no, title,content,date,manager_name,reg_date,code from advice where id=#{id} and date=#{date} ;
+	select advice_no, title,content,date,manager_name,reg_date,customer_code from advice where id=#{id} and date=#{date} ;
 	]]>
 	</select>
 </mapper>

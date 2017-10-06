@@ -2,8 +2,7 @@ package com.sfa.vo;
 //고객 관리
 public class CustomerVo {
 	
-	private String code;//고객 고유 코드
-	private String division_code;//고객 2차 코드
+	private String customer_code;//고객 고유 코드
 	private String name;//이름
 	private String contact;//연락처
 	private String manager_name;//담당자 이름
@@ -13,17 +12,11 @@ public class CustomerVo {
 	private String time;// 영업 시간
 	private String address;// 주소
 	private String id;//아이디
-	public String getCode() {
-		return code;
+	public String getCustomer_code() {
+		return customer_code;
 	}
-	public void setCode(String code) {
-		this.code = code;
-	}
-	public String getDivision_code() {
-		return division_code;
-	}
-	public void setDivision_code(String division_code) {
-		this.division_code = division_code;
+	public void setCustomer_code(String customer_code) {
+		this.customer_code = customer_code;
 	}
 	public String getName() {
 		return name;
@@ -79,14 +72,11 @@ public class CustomerVo {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
 	@Override
 	public String toString() {
-		return "CustomerVo [code=" + code + ", division_code=" + division_code + ", name=" + name + ", contact="
-				+ contact + ", manager_name=" + manager_name + ", manager_grade=" + manager_grade + ", manager_email="
+		return "CustomerVo [customer_code=" + customer_code + ", name=" + name + ", contact=" + contact
+				+ ", manager_name=" + manager_name + ", manager_grade=" + manager_grade + ", manager_email="
 				+ manager_email + ", manager_birth=" + manager_birth + ", time=" + time + ", address=" + address
 				+ ", id=" + id + "]";
-	}
-	
-	
+	}	
 }

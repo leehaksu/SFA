@@ -33,8 +33,7 @@
 		]]>
 	</select>
 	<delete id="delete" parameterType="datereportvo">
-		delete from day_report where
-		id=#{id} and date=#{date} and approval=0;
+		delete from day_report where report_no=#{report_no} and id=#{id} and approval=0;
 	</delete>
 	<select id="getApproval" parameterType="MAP" resultType="datereportvo">
 		<![CDATA[

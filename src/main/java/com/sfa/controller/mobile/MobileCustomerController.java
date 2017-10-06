@@ -40,14 +40,10 @@ public class MobileCustomerController {
 	{
 		if("".equals(id))
 		{
-			return JSONResult.error("아이디랑 날짜가 입력되지 않았습니다.");
+			return JSONResult.error("아이디가 입력되지 않았습니다.");
 		}else
 		{
 			List<CustomerVo> list = customerService.select(id);
-			if(list==null)
-			{
-				return JSONResult.fail("오류가 발생했습니다.");
-			}
 			return JSONResult.success(list);
 		}
 	}
