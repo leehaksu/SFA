@@ -28,6 +28,12 @@ public class CustomerController {
 	@Autowired
 	PositionService positionService;
 
+	
+	@Auth
+	@RequestMapping(value = "/insert", method = RequestMethod.GET)
+	public String insert() {
+		return "customer/insert";
+	}
 	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)

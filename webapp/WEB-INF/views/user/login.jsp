@@ -32,15 +32,6 @@ $(function(){
 	});
 });
 
-function postPopUp(formName) {
-	frm = document.getElementById(formName);
-	window.open('', 'viewer', 'width=1000, height=700');
-	frm.action = "viewing.jsp";
-	frm.target = "viewer";
-	frm.method = "post";
-	frm.submit();
-	}
-
 </script>
 
 </head>
@@ -75,7 +66,7 @@ function postPopUp(formName) {
 					  	<input id="login_button" type="submit" class="btn btn-default" value="Login">
 					  </div>
 					  <div class="search_uesrinfo">
-						<input type="button" class="btn btn-info" value="ID 찾기/PW 찾기" onclick="window.open('user/search', 'SFA ID&PWD', 'width=1000, height=700')">
+						<a id="search_userid" href="${pageContext.servletContext.contextPath}/user/search" class="btn btn-info"  target="_blank">ID 찾기/PW 찾기</a>
 					  </div>
 					</form>
 				</div>

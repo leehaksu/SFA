@@ -49,8 +49,7 @@
 		</div>
 		<div class="list_butt">
 			<ul class="link_list">
-				<li><a href="#">회원가입</a></li>
-				<li><a href="#">로그인</a></li>
+				<li><a href="#" class="btn btn-default">로그인</a></li>
 			</ul>
 		</div>
 	</div>
@@ -92,8 +91,7 @@
 		</div>
 		<div class="list_butt">
 			<ul class="link_list">
-				<li><a href="#">회원가입</a></li>
-				<li><a href="#">로그인</a></li>
+				<li><a href="#" class="btn btn-default">로그인</a></li>
 			</ul>
 		</div>
 	</div>
