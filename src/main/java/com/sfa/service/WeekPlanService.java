@@ -10,6 +10,7 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import com.sfa.repository.DateReportDao;
 import com.sfa.repository.PlanWeekDao;
 import com.sfa.util.ChangeDate;
 import com.sfa.vo.DayVo;
@@ -20,6 +21,9 @@ public class WeekPlanService {
 
 	@Autowired
 	PlanWeekDao weekplanDao;
+	
+	@Autowired
+	DateReportDao dateReportDao;
 
 	@Autowired
 	private PlatformTransactionManager transactionManager;
@@ -273,5 +277,10 @@ public class WeekPlanService {
 		String id = dayVo.getId();
 		List<DayVo> list = weekplanDao.selectMonth(id, Date1, Date2, Date3);
 		return list;
+	}
+
+	public WeekVo selectReport(String date,String id) {
+		// TODO Auto-generated method stub
+		return dateReportDao.selectReport(date,id);
 	}
 }
