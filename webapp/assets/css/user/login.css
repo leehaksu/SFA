@@ -13,7 +13,7 @@
 
 #company-name .company_wrap {
 	min-height: 800px;
-	background: url("../image/bg.jpg")center center no-repeat;
+	background: url("../../image/bg.jpg")center center no-repeat;
 	-webkit-background-size: cover; 
 	-moz-background-size: cover; 
 	-o-background-size: cover; 

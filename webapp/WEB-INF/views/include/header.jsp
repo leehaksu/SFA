@@ -23,8 +23,8 @@
 					<li><a href="#">영업 기획서</a></li>
 				</ul></li>
 			<li class="droupdown menu-icon"><a class="dropdown-toggle"
-				data-toggle="dropdown" href="#"> <i class="fa fa-users"
-					aria-hidden="true"></i> 고객 관리
+				data-toggle="dropdown" href="#"> 
+				<i class="fa fa-address-book-o" aria-hidden="true"></i> 고객 관리				 
 			</a>
 				<ul class="dropdown-menu">
 					<li><a href="#">고객 조회</a></li>
@@ -49,7 +49,8 @@
 				</ul></li>
 					<c:if test="${authUser.level =='팀장'}">
 			<li class="droupdown menu-icon"><a class="dropdown-toggle"
-				data-toggle="dropdown" href="#"><i class="fa fa-user-o" aria-hidden="true"></i> 팀원 관리 </a>
+				data-toggle="dropdown" href="#"><i class="fa fa-users"
+					aria-hidden="true"></i> 팀원 관리 </a>
 				<ul class="dropdown-menu">
 				<li><a href="${pageContext.servletContext.contextPath}/join">팀원 등록</a></li>
 					<li><a href="${pageContext.servletContext.contextPath}/list">팀원 조회</a></li>
