@@ -25,19 +25,19 @@ public class MobileUserController {
 
 	@Autowired
 	private Push push;
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/auth")
 	public JSONResult login(@ModelAttribute UserVo vo) {
-		
+
 		if (vo.getId() == null || vo.getPasswd() == null) {
 			// JSON 응답하기
 			// code_0x1 : id 나 password 문제 있을 경우
 			System.out.println("[web] : Json응답1");
 			System.out.println(JSONResult.error("error_User_0x1"));
 			return JSONResult.error("code_0x1");
-		} else{
-			if (vo.getToken()==null) {
+		} else {
+			if (vo.getToken() == null) {
 				UserVo userVo = userService.getUser(vo.getId(), vo.getPasswd());
 				if (userVo == null) {
 					// JSON 응답하기
@@ -50,13 +50,11 @@ public class MobileUserController {
 					// JSON 응답하기
 					// 정상적으로 처리하여 JSON 응답하는 경우
 					int no = userService.insertToken(vo.getToken(), vo.getId());
-					if(no==1)
-					{
+					if (no == 1) {
 						System.out.println("[web] :  Json응답3");
 						System.out.println(JSONResult.success(userVo));
 						return JSONResult.success(userVo);
-					}else
-					{
+					} else {
 						return JSONResult.fail("Token값을 저장하지 못했습니다.");
 					}
 				}
@@ -83,19 +81,17 @@ public class MobileUserController {
 		} else {
 			if (userService.join(userVo) == true) {
 				// 정상적으로 파라미터 들어와 가입 진행하는 경우
-				
+
 				try {
-					push.Mail(userVo.getCompany_email(), "["+userVo.getId()+"]님 회원가입을 축하합니다.", 
-					"사원 아이디 : " +userVo.getId()+"\n"
-					+"사원 이름 : "+userVo.getName()+"\n"
-					+"사원 부서 : "+userVo.getDept()+"\n"
-					+"사원 이메일 : " + userVo.getCompany_email()+"\n"
-					+ "사원 직급 :" +userVo.getGrade()+"\n"
-					+ "회원 가입을 진심으로 축하합니다.\n", "admin");
-					
-					UserVo userVo2= userService.getLeader(userVo.getId());
+					push.Mail(userVo.getCompany_email(), "[" + userVo.getId() + "]님 회원가입을 축하합니다.",
+							"사원 아이디 : " + userVo.getId() + "\n" + "사원 이름 : " + userVo.getName() + "\n" + "사원 부서 : "
+									+ userVo.getDept() + "\n" + "사원 이메일 : " + userVo.getCompany_email() + "\n"
+									+ "사원 직급 :" + userVo.getGrade() + "\n" + "회원 가입을 진심으로 축하합니다.\n",
+							"admin");
+
+					UserVo userVo2 = userService.getLeader(userVo.getId());
 					push.Message(userVo.getId(), userVo2.getId(), 0);
-					
+
 				} catch (MessagingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -129,9 +125,9 @@ public class MobileUserController {
 		}
 		return JSONResult.fail("서버에 이상이 생겼습니다.");
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/checkEmail")
+	@RequestMapping(value = "/checkEmail")
 	public JSONResult checkEmail(@RequestParam(value = "email", required = true, defaultValue = "") String email) {
 		System.out.println("[web] check:  mobile  접속함");
 
@@ -150,4 +146,24 @@ public class MobileUserController {
 		return JSONResult.fail("서버에 이상이 생겼습니다.");
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/list")
+	public JSONResult list(@RequestParam(value = "id", required = true, defaultValue = "") String id,
+			@RequestParam(value = "dept", required = true, defaultValue = "") String dept,
+			@RequestParam(value = "name", required = true, defaultValue = "") String name,
+			@RequestParam(value = "grade", required = true, defaultValue = "") String grade) {
+		if ("".equals(id) || "".equals(dept)) {
+			return JSONResult.error("id값,부서값이 넘어오지 않았습니다.");
+		} else {
+			if ("".equals(name) && "".equals(grade)) {
+				return JSONResult.error("이름과  직책 중 하나는 결정되어야 합니다.");
+			} else if ("전체".equals(grade) && "".equals(name)) {
+				List<UserVo> list = userService.getTotalMember(dept);
+				return JSONResult.success(list);
+			} else {
+				List<UserVo> list = userService.getMember(name, grade, dept);
+				return JSONResult.success(list);
+			}
+		}
+	}
 }

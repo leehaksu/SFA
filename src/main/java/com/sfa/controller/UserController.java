@@ -231,20 +231,20 @@ public class UserController {
 		return "user/search";
 	}
 	//id 찾기 부분 통신 구현
+	@ResponseBody
 	@RequestMapping(value="/search/id", method=RequestMethod.POST)
-	public String searchbyId(@RequestParam(value="email",required=true, defaultValue="") String email, 
-			@RequestParam(value="name",required=true, defaultValue="") String name,Model model)
+	public JSONResult searchbyId(@RequestParam(value="email",required=true, defaultValue="") String email, 
+			@RequestParam(value="name",required=true, defaultValue="") String name)
 	{
 		String id=null;
 		if("".equals(email)|| "".equals(name))
 		{
-			return "redirect:/search";
+			return JSONResult.error("이메일과 이름이 전달되지 않았습니다.");
 		}else
 		{
 			id = userService.getId(email,name);
 		}
-		model.addAttribute("id", id);
-		return "/search";
+		return JSONResult.success(id);
 	}
 	//pw 찾기 부분 통신 구현
 	@RequestMapping(value="/search/pw", method=RequestMethod.POST)
