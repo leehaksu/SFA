@@ -35,7 +35,7 @@ public class PlanDateDao {
 		return sqlSession.update("dateplan.delete_date",dateVo);
 	}
 
-	public Long selectReport(DateReportVo dateReportVo) {
+	public Long selectGoal(DateReportVo dateReportVo) {
 		// TODO Auto-generated method stub
 		dateReportVo=sqlSession.selectOne("dateplan.selctSale",dateReportVo);
 		Long goal_sale;
@@ -56,5 +56,13 @@ public class PlanDateDao {
 		
 		return sqlSession.update("dateplan.updateByChallenge", map);
 		
+	}
+
+	public DateVo select(String date, String id) {
+		// TODO Auto-generated method stub
+		HashMap<String , Object> map = new HashMap<String,Object>();
+		map.put("date", date);
+		map.put("id", id);
+		return sqlSession.selectOne("dateplan.selectGoalSale",map);
 	}
 }

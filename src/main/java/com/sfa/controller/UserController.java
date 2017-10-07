@@ -175,7 +175,8 @@ public class UserController {
 			return JSONResult.error("cod_e0x1");
 		}
 		List<UserVo> list = userService.getemail(email);
-		if (list == null) {
+		System.out.println(list);
+		if (list.isEmpty()) {
 			return JSONResult.success("사용 가능한 메일입니다.");
 		}
 		return JSONResult.fail("중복된 메일이 존재합니다.");
@@ -223,23 +224,39 @@ public class UserController {
 			return "user/list";
 		}
 	}
-	
-
+	//회원 아이디/비밀번호 찾기 페이지 들어가기
 	@RequestMapping(value="/search", method=RequestMethod.GET)
-	public String search(@RequestParam("email") String email, @RequestParam("name") String name)
+	public String search()
 	{
-		if(email==null || name==null)
+		return "user/search";
+	}
+	//id 찾기 부분 통신 구현
+	@RequestMapping(value="/search/id", method=RequestMethod.POST)
+	public String searchbyId(@RequestParam(value="email",required=true, defaultValue="") String email, 
+			@RequestParam(value="name",required=true, defaultValue="") String name,Model model)
+	{
+		String id=null;
+		if("".equals(email)|| "".equals(name))
 		{
 			return "redirect:/search";
 		}else
 		{
-			String id = userService.getId(email,name);
+			id = userService.getId(email,name);
+		}
+		model.addAttribute("id", id);
+		return "/search";
+	}
+	//pw 찾기 부분 통신 구현
+	@RequestMapping(value="/search/pw", method=RequestMethod.POST)
+	public String searchbyPw(@RequestParam("id") String id, @RequestParam("name") String name)
+	{
+		if("".equals(name)|| "".equals(name))
+		{
+			return "redirect:/search";
+		}else
+		{
+			//비밀번호 초기화 후 보내기.
 		}
 		return null;
 	}
-	@RequestMapping(value="/user/search", method=RequestMethod.GET)
-		public String search()
-		{
-			return "user/search";
-		}
 }

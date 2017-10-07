@@ -87,11 +87,11 @@ public class PlanWeekController {
 
 		int no = weekPlanService.update(weekVo);
 		if (no == 6) {
-			UserVo userVo = userService.getLeader(authUser.getDept());
-
+			UserVo userVo = userService.getLeader(authUser.getId());
+				System.out.println("[controlloer]"+userVo);
 			try {
 				push.Mail(
-						userVo.getEmail(), weekVo.getTitle(), authUser.getName() + "[" + authUser.getGrade() + "]"
+						userVo.getCompany_email(), weekVo.getTitle(), authUser.getName() + "[" + authUser.getGrade() + "]"
 								+ "님이 주간 계획을 업데이트 하였습니다.\n" + "<a herf='localhost:8080/sfa/week'> 내용 확인하러 가기 </a>",
 						authUser.getId());
 				UserVo userVo2= userService.getLeader(userVo.getId());
