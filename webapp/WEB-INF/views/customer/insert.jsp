@@ -109,7 +109,7 @@ function getLocation() {
 								<th>업체 주소</th>
 								<td><input id="customer-address-input" type="input"
 									class="form-control" name="name">
-									<button type="button" class="btn btn-info btn-lg"
+									<button type="button" class="btn btn-info btn-md"
 										data-toggle="modal" data-target="#search_customer_map">맵
 										검색</button>
 									<div id="search_customer_map" class="modal fade" role="dialog">

@@ -121,7 +121,8 @@ body {
 	position: fixed;
 	width: 225px;
 	font-size: 14px;
-	margin: 0;
+	margin-left: 10px;
+    margin-top: 40px;
 	padding: 0;
 	list-style: none;
 }
@@ -193,8 +194,10 @@ body {
 	}
 }
 
-
-
+#sidemenu {
+	box-shadow: 5px 5px 5px 0px darkslategrey;
+}
+    
 #submenu li a {
 	background: #92bce0 !important;
 	color: #fff !important;
