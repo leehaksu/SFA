@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfa.dto.JSONResult;
 import com.sfa.service.CustomerService;
+import com.sfa.service.UserService;
 import com.sfa.vo.CustomerVo;
 
 @Controller
@@ -19,6 +20,9 @@ public class MobileCustomerController {
 	
 	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
+	UserService userService;
 	
 	@ResponseBody
 	@RequestMapping("/insert")
@@ -48,7 +52,8 @@ public class MobileCustomerController {
 			return JSONResult.error("아이디가 입력되지 않았습니다.");
 		}else
 		{
-			List<CustomerVo> list = customerService.select(id);
+			String dept=userService.getDept(id);
+			List<CustomerVo> list = customerService.select(dept);
 			return JSONResult.success(list);
 		}
 	}

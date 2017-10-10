@@ -14,11 +14,11 @@ public class CustomerDao {
 
 	@Autowired
 	SqlSession sqlSession;
-	public List<CustomerVo> select(String id) {
+	public List<CustomerVo> select(String dept) {
 		// TODO Auto-generated method stub
 		HashMap <String,String> map= new HashMap<String,String>();
-		map.put("id", id);
-		return sqlSession.selectList("customer.select", map);
+		map.put("dept", dept);
+		return sqlSession.selectList("customer.selectbyDept", map);
 	}
 	public int insert(CustomerVo customerVo) {
 		// TODO Auto-generated method stub

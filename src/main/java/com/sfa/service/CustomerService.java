@@ -14,9 +14,9 @@ public class CustomerService {
 	@Autowired
 	CustomerDao customerDao;
 	
-	public List<CustomerVo> select(String id)
+	public List<CustomerVo> select(String dept)
 	{
-		return customerDao.select(id);
+		return customerDao.select(dept);
 	}
 
 	public int insert(CustomerVo customerVo) {

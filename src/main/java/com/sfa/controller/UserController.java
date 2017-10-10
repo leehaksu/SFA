@@ -264,6 +264,6 @@ public class UserController {
 	public String mypage(@AuthUser UserVo authUSer,Model model)
 	{
 		model.addAttribute("user", authUSer);
-		return null;
+		return "mypage/mypage";
 	}
 }
