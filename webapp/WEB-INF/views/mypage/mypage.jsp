@@ -21,34 +21,37 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
+	<div class="page-header">
+		<h3 class="dayreport">
+			<strong>회원 정보</strong>
+		</h3>
+	</div>
 	<form class="form-horizontal">
-		<fieldset>
-
-			<!-- Form Name -->
-			<legend>회원정보</legend>
+		<fieldset id="user-info-container">
 
 			<!-- Text input-->
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="customer_id">아이디
-					ID</label>
+				<label class="col-md-4 control-label" for="user_id"> ID</label>
 				<div class="col-md-4">
-					아이디
+					<span>${authUser.id}</span>
 				</div>
 			</div>
 
 			<!-- Text input-->
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="customer_name">이름</label>
+				<label class="col-md-4 control-label" for="user_name">이름</label>
 				<div class="col-md-4">
-					이름
+					<span>${authUser.name}</span>
 				</div>
 			</div>
 
 			<!-- Text input-->
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="customer_e_mail">개인 이메일</label>
+				<label class="col-md-4 control-label" for="user_e_mail">이메일</label>
 				<div class="col-md-4">
-					개인 이메일
+					<input id="user_e_mail" name="user_e_mail" placeholder="개인 이메일"
+						class="form-control input-md" required="" type="text">
+
 				</div>
 			</div>
 
@@ -56,29 +59,74 @@
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="password">PASSWORD</label>
 				<div class="col-md-4">
-					비밀번호
+					<input id="password" name="password" placeholder="PASSWORD"
+						class="form-control " required="" type="password">
+
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="password_check">PASSWORD
+					확인</label>
+				<div class="col-md-4">
+					<input id="password_check" name="password_check"
+						placeholder="비밀번호 확인" class="form-control " required=""
+						type="password">
+
 				</div>
 			</div>
 
 			<!-- Text input-->
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="customer_status">부서
-				</label>
+				<label class="col-md-4 control-label" for="user_status">부서</label>
 				<div class="col-md-4">
-					영업 ?팀
+					<select id="user_status" name="user_status" class="form-control "
+						required>
+						<option value="부서" selected>부서</option>
+						<option value="1">영업1팀</option>
+						<option value="2">영업2팀</option>
+						<option value="3">영업3팀</option>
+					</select>
+
 				</div>
 			</div>
 
 			<!-- Text input-->
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="site_web">직급</label>
+				<label class="col-md-4 control-label" for="grade">직급</label>
 				<div class="col-md-4">
-					대리
+					<select id="grade" name="grade" class="form-control " required>
+						<option value="부서" selected>직급</option>
+						<option value="1">사원</option>
+						<option value="2">대리</option>
+						<option value="3">과장</option>
+					</select>
+
+				</div>
+			</div>
+
+
+			<!-- Text input-->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="phone1">전화번호</label>
+				<div class="col-md-4">
+					<input id="phone1" name="phone1" placeholder="PHONE1"
+						class="form-control " required="" type="text">
+				</div>
+			</div>
+
+
+			<!-- Button -->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for=""></label>
+				<div class="col-md-4">
+					<button id="" name="" class="btn btn-primary">수정하기</button>
 				</div>
 			</div>
 
 		</fieldset>
 	</form>
+
 
 	</main>
 </body>

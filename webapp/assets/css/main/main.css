@@ -19,11 +19,6 @@ body {
 }
 
 
-@media ( min-width : 992px) {
-	#wrapper {
-		padding-left: 225px;
-	}
-}
 
 @media ( min-width : 992px) {
 	#wrapper #sidebar-wrapper {
@@ -124,7 +119,6 @@ body {
 
 #sidebar-wrapper .sidebar-nav {
 	position: fixed;
-	top: 18%;
 	width: 225px;
 	font-size: 14px;
 	margin: 0;
@@ -220,7 +214,10 @@ body {
 	background: #3071a9 !important;
 	color: #fff !important;
 }
-
+.sidebar-nav li:nth-child(4) ul {
+	background: #6aa3d5 !important;
+	color: #fff !important;
+}
 .sidebar-nav li:nth-child(5) a {
 	background: #245682 !important;
 	color: #fff !important;
@@ -338,3 +335,6 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 	z-index: 215000000 !important;
 }
 
+ main{
+  margin-left: 18%;
+ }  

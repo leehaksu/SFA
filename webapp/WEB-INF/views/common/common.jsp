@@ -50,6 +50,8 @@
 	href="${pageContext.servletContext.contextPath}/assets/css/customer/search.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/customer/insert.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.servletContext.contextPath}/assets/css/mypage/mypage.css">
 
 
 <!-- jquery 자바스크립트 -->
@@ -57,6 +59,9 @@
 	src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-3.2.1.js"></script>
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-ui.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery.mask.js"></script>
+
 
 <!-- 외부 자바스크립트  -->
 <script
@@ -79,6 +84,9 @@
 	src="${pageContext.servletContext.contextPath}/assets/bootstrap-fileinput/js/locales/kr.js"></script>
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/util/validate.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/zingchart/zingchart.min.js"></script>
+
 
 <!-- 내부 자바스크립트 -->
 <script

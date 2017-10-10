@@ -2,9 +2,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script>
+$(document).ready(function() {
+	jQuery(".panel-collapse").hide();
+	//content 클래스를 가진 div를 표시/숨김(토글)
+	  $(".accordion-toggle").click(function()
+	  {
+	    $(".panel-collapse").not($(this).next(".panel-collapse").slideToggle(500)).slideUp();
+	  });
+	});
+</script>
 			<aside id="sidebar">
 				<ul id="sidemenu" class="sidebar-nav">
-					<li><a id="menu1"
+					<li>
+					<a id="menu1"
 						class="accordion-toggle collapsed toggle-switch"
 						data-toggle="collapse" data-target="#submenu"> <span
 							class="sidebar-icon"> <i class="fa fa-calendar"
@@ -17,7 +28,8 @@
 							<li><a href="${pageContext.servletContext.contextPath}/report/"><i class="fa fa-caret-right"></i>영업 보고서</a></li>
 							<li><a href="#"><i class="fa fa-caret-right"></i>영업 기획서</a></li>
 						</ul></li>
-					<li><a id="menu2"
+					<li>
+					<a id="menu2"
 						class="accordion-toggle collapsed toggle-switch"
 						data-toggle="collapse" href="#submenu-2"> <span
 							class="sidebar-icon"> <i class="fa fa-address-book-o" aria-hidden="true"></i>
@@ -28,24 +40,16 @@
 							<li><a href="${pageContext.servletContext.contextPath}/customer/search"><i class="fa fa-caret-right"></i>고객 조회</a></li>
 							<li><a href="${pageContext.servletContext.contextPath}/customer/insert"><i class="fa fa-caret-right"></i>고객 등록</a></li>
 						</ul></li>
-					<li><a id="menu3"
+					<li>
+					<a id="menu3"
 						class="accordion-toggle collapsed toggle-switch"
 						data-toggle="collapse" href="#submenu-3"> <span
 							class="sidebar-icon"><i class="fa fa-line-chart"
 								aria-hidden="true"></i></span> <span class="sidebar-title">통계 현황</span>
-							<b class="caret"></b>
 					</a>
-						<ul id="submenu-3" class="panel-collapse collapse panel-switch"
-							role="menu">
-							<li><a href="#"><i class="fa fa-caret-right"></i>거래처 현황</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i>금일
-									목표/실적 현황</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i>주행거리 기록
-									현황</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i>월별 매출
-									현황</a></li>
-						</ul></li>
-					<li><a id="menu4" a href="#"> 
+					</li>
+					<li>
+					<a id="menu4" a href="#"> 
 						<span class="sidebar-icon">
 							<i class="fa fa-bell" aria-hidden="true"></i>
 						</span> 

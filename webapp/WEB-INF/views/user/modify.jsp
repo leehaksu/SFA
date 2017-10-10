@@ -141,9 +141,11 @@
 	</div>
 	<article>
 		<div id="join_container">
-			<div class="pageheader">
-				<h3>정보 수정</h3>
-			</div>
+			<div class="page-header">
+					<h3 class="dayreport">
+						<strong>회원 정보수정</strong>
+					</h3>
+				</div>
 			<div class="pagedetailHeader">
 				<h4>${userVo.id}님의사원정보입니다.</h4>
 				<h5>사원정보는 개인정보처리방침에 따라 안전하게 보호되며, ${userVo.id}님의 명백한 동의 없이 공개

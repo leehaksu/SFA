@@ -66,7 +66,7 @@ $(function(){
 					  	<input id="login_button" type="submit" class="btn btn-default" value="Login">
 					  </div>
 					  <div class="search_uesrinfo">
-						<a id="search_userid" href="${pageContext.servletContext.contextPath}/search" class="btn btn-info"  target="_blank">ID 찾기/PW 찾기</a>
+						<a id="search_userid" href="${pageContext.servletContext.contextPath}/search" class="btn btn-info"  target="_blank" width=500, sheight=300>ID 찾기/PW 찾기</a>
 					  </div>
 					</form>
 				</div>

@@ -247,9 +247,10 @@ $(document).ready(function() {
 			</c:import>
 		</div>
 	</div>
+	<main id="page-content-wrapper" role="main">
 	<article>
-		<div id="join_container">
-			<div class="col-md-12">
+		<div>
+			<div>
 				<div class="page-header">
 					<h3 class="dayreport">
 						<strong>일일 보고서</strong>
@@ -550,5 +551,6 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
+	</main>
 </body>
 </html>
