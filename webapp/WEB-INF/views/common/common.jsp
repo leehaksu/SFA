@@ -40,11 +40,16 @@
 	href="${pageContext.servletContext.contextPath}/assets/css/user/login.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/user/join.css">
+<link rel="stylesheet" type="text/css" 
+ 	href="${pageContext.servletContext.contextPath}/assets/css/user/search.css"  media="all">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/plan/dayplan.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/plan/weekplan.css">
-<link href="${pageContext.servletContext.contextPath}/assets/css/user/search.css" rel="stylesheet" type="text/css" media="all">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.servletContext.contextPath}/assets/css/customer/search.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.servletContext.contextPath}/assets/css/customer/insert.css">
 
 
 <!-- jquery 자바스크립트 -->
@@ -72,7 +77,8 @@
 	src="${pageContext.servletContext.contextPath}/assets/bootstrap-fileinput/js/fileinput.min.js"></script>
 <script
 	src="${pageContext.servletContext.contextPath}/assets/bootstrap-fileinput/js/locales/kr.js"></script>
-
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/util/validate.js"></script>
 
 <!-- 내부 자바스크립트 -->
 <script

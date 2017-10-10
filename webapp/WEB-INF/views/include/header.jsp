@@ -27,16 +27,8 @@
 				<i class="fa fa-address-book-o" aria-hidden="true"></i> 고객 관리				 
 			</a>
 				<ul class="dropdown-menu">
-					<li><a href="#">고객 조회</a></li>
-					<li><a href="${pageContext.servletContext.contextPath}/customer/register">고객 등록</a></li>
-				</ul></li>
-			<li class="droupdown menu-icon"><a class="dropdown-toggle"
-				data-toggle="dropdown" href="#"> <i class="fa fa-truck"
-					aria-hidden="true"></i> 제품 관리
-			</a>
-				<ul class="dropdown-menu">
-					<li><a href="#">제품 조회</a></li>
-					<li><a href="#">제품 등록</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/customer/search">고객 조회</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/customer/insert">고객 등록</a></li>
 				</ul></li>
 			<li class="droupdown menu-icon"><a class="dropdown-toggle"
 				data-toggle="dropdown" href="#"><i class="fa fa-line-chart"
@@ -57,7 +49,14 @@
 				</ul>
 				</li>
 				</c:if>
+				
+				<li class="droupdown menu-icon">
+				<a class="dropdown-toggle" href="${pageContext.servletContext.contextPath}/user/mypage"> <i class="fa fa-user" aria-hidden="true"></i> 마이페이지
+				</a>
+				</li>
+			
 				</ul>
+				
 	</div>
 	<div>
 		<ul class="nav navbar-nav navbar-right">

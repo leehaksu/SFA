@@ -99,15 +99,14 @@ body {
 
 #sidebar-wrapper {
 	border-right: 1px solid #e7e7e7;
+
 }
 
 #sidebar-wrapper {
 	padding-left: 0px;
 	padding-right: 0px;
-	position: fixed;
+	position: absolute;
 	left: 225px;
-	width: 0;
-	height: 100%;
 	margin-left: -225px;
 	overflow-y: auto;
 	background: #f8f8f8;
@@ -124,8 +123,8 @@ body {
 }
 
 #sidebar-wrapper .sidebar-nav {
-	position: absolute;
-	top: 0;
+	position: fixed;
+	top: 18%;
 	width: 225px;
 	font-size: 14px;
 	margin: 0;
@@ -199,6 +198,8 @@ body {
 		height: 0;
 	}
 }
+
+
 
 #submenu li a {
 	background: #92bce0 !important;
@@ -332,9 +333,4 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 .ui-autocomplete {
 	z-index: 215000000 !important;
 }
-<!--
-report
- 
-search
- 
--->
+
