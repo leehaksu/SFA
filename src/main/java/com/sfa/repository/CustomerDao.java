@@ -36,4 +36,12 @@ public class CustomerDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("customer.last_select");
 	}
+	public List<CustomerVo> selectById(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("customer.selectbyid", id);
+	}
+	public List<CustomerVo> selectByName(String name) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("customer.selectByName",name);
+	}
 }

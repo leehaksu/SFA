@@ -47,5 +47,8 @@ public class CustomerService {
 		// TODO Auto-generated method stub
 		return customerDao.select();
 	}
-
+	public List<CustomerVo> selectByName(String name) {
+		// TODO Auto-generated method stub
+		return customerDao.selectByName(name);
+	}
 }

@@ -1,6 +1,5 @@
 package com.sfa.controller.mobile;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +67,7 @@ public class MobileLeaderController {
 			List<DateReportVo> list = DateReportService.selectTotalReport(id,date);
 			return JSONResult.success(list);
 		}
-		return null;
+		return JSONResult.error("서버에 예상치 못한 오류가 발생하였습니다.");
 	}
 
 }
