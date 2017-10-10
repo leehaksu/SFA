@@ -81,4 +81,11 @@ public class CustomerController {
 			return JSONResult.success(list);
 		}
 	}
+	
+	// test를 위한 코드
+	@Auth
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String search() {
+		return "customer/search";
+	}
 }

@@ -25,28 +25,17 @@
 					</a>
 						<ul id="submenu-2" class="panel-collapse collapse panel-switch"
 							role="menu">
-							<li><a href="#"><i class="fa fa-caret-right"></i>고객 조회</a></li>
+							<li><a href="${pageContext.servletContext.contextPath}/customer/search"><i class="fa fa-caret-right"></i>고객 조회</a></li>
 							<li><a href="${pageContext.servletContext.contextPath}/customer/insert"><i class="fa fa-caret-right"></i>고객 등록</a></li>
 						</ul></li>
 					<li><a id="menu3"
-						class="accordion-toggle collapsed toggle-switch"
-						data-toggle="collapse" href="#submenu-3"> <span
-							class="sidebar-icon"><i class="fa fa-truck"></i></span> <span
-							class="sidebar-title">제품 관리</span> <b class="caret"></b>
-					</a>
-						<ul id="submenu-3" class="panel-collapse collapse panel-switch"
-							role="menu">
-							<li><a href="#"><i class="fa fa-caret-right"></i>제품 조회</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i>제품 등록</a></li>
-						</ul></li>
-					<li><a id="menu4"
 						class="accordion-toggle collapsed toggle-switch"
 						data-toggle="collapse" href="#submenu-4"> <span
 							class="sidebar-icon"><i class="fa fa-line-chart"
 								aria-hidden="true"></i></span> <span class="sidebar-title">통계 현황</span>
 							<b class="caret"></b>
 					</a>
-						<ul id="submenu-4" class="panel-collapse collapse panel-switch"
+						<ul id="submenu-3" class="panel-collapse collapse panel-switch"
 							role="menu">
 							<li><a href="#"><i class="fa fa-caret-right"></i>거래처 현황</a></li>
 							<li><a href="#"><i class="fa fa-caret-right"></i>금일
@@ -56,6 +45,14 @@
 							<li><a href="#"><i class="fa fa-caret-right"></i>월별 매출
 									현황</a></li>
 						</ul></li>
+					<li><a id="menu4" a href="#"> 
+						<span class="sidebar-icon">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</span> 
+							<span class="sidebar-title">마이페이지</span>
+					</a>
+					</li>	
+						
 					<li><a href="#"> <span class="sidebar-icon"><i
 								class="fa fa-arrow-up" aria-hidden="true"></i></span> <span
 							class="sidebar-title">top</span>

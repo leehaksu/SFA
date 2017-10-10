@@ -56,25 +56,28 @@ function getLocation() {
 	</script>
 
 </head>
-<body onload="getLocation()">
+<body> <!-- onload="getLocation()" -->
 	<nav class="navbar navbar-default"> <c:import
 		url="/WEB-INF/views/include/header.jsp">
 		<c:param name="menu" value="main" />
-	</c:import> </nav>
+	</c:import> 
+	</nav>
 	<div id="wrapper">
 		<div id="sidebar-wrapper">
 			<c:import url="/WEB-INF/views/include/navigator.jsp">
 				<c:param name="menu" value="main" />
 			</c:import>
 		</div>
+<!-- 	</div> -->
 		<main id="page-content-wrapper" role="main">
-		<div class="container">
-			<span><strong><h1>고객 등록</h1></strong></span>
+		<div class="container" >
+			<br>
+			<h3>고객 등록</h3>
 			<hr>
 			<div class="customer">
 				<h3>고객사 정보</h3>
 				<form>
-					<table class="table">
+					<table class="table customer-table">
 						<tbody>
 							<tr>
 								<th>고객 코드</th>
@@ -97,7 +100,7 @@ function getLocation() {
 							</tr>
 							<tr>
 								<th>업체 주소</th>
-								<td><input type="input" class="form-control" name="name">
+								<td><input id="customer-address-input" type="input" class="form-control" name="name" >
 									<button type="button" class="btn btn-info btn-lg"
 										data-toggle="modal" data-target="#search_customer_map">맵
 										검색</button>
@@ -125,6 +128,10 @@ function getLocation() {
 				</form>
 			</div>
 		</div>
-		</main>
+		
+		<br>
+		<h3>당담자</h3>
+		
+		</main>		
 </body>
 </html>
