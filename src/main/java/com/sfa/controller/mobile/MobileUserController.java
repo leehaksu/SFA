@@ -28,48 +28,42 @@ public class MobileUserController {
 
 	@Autowired
 	private Push push;
-
+	
+	
 	@ResponseBody
-	@RequestMapping(value = "/auth")
-	public JSONResult login(@ModelAttribute UserVo vo) {
-
-		if (vo.getId() == null || vo.getPasswd() == null) {
-			// JSON 응답하기
-			// code_0x1 : id 나 password 문제 있을 경우
+	@RequestMapping(value="/auth")
+	public JSONResult log(@ModelAttribute UserVo vo)
+	{
+		//아이디 비밀번호가 전달되지 않을때
+		if(vo.getId()==null || vo.getPasswd()==null || vo.getToken()==null)
+		{
 			return JSONResult.error("code_0x1");
-		} else {
-			// token값이 있을 경우
-			if (vo.getToken() != null) {
-				UserVo userVo = userService.getIdbyToken(vo.getToken());
-				if (userVo != null) {
-					userService.deleteToken(userVo.getId());
-				}
-				userVo = userService.getUser(vo.getId(), vo.getPasswd());
-			} else {
-				if (vo.getToken() == null) {
-
-					UserVo userVo = userService.getUser(vo.getId(), vo.getPasswd());
-
-					if (userVo == null) { // JSON 응답하기 // code_0x2 : id password 잘못 전달 받았을시
-						return JSONResult.fail("등록된 회원이 없습니다.");
-					} else { // JSON 응답하기 //정상적으로 처리하여 JSON 응답하는 경우
-						int no = userService.insertToken(vo.getToken(), vo.getId());
-						if (no == 1) {
-							System.out.println("[web] :  Json응답3");
-							System.out.println(JSONResult.success(userVo));
-							return JSONResult.success(userVo);
-						} else {
-							return JSONResult.fail("Token값을 저장하지 못했습니다.");
-						}
-					}
-				} else {
-					return JSONResult.error("토큰값이 없습니다.");
-				}
+		}else if(vo.getToken()!=null)
+		{ // vo의 토큰이 존재하는 경우
+			UserVo userVo= userService.getIdbyToken(vo.getToken());
+			if(userVo!=null)
+			{
+				//db에 토큰이 존재하는 경우 삭제 처리
+				userService.deleteToken(userVo.getId());
 			}
 		}
-		return JSONResult.error("예상치 못한 오류가 발생하였습니다.");
+		//토큰을 해당 아이이에 입력
+		int no = userService.insertToken(vo.getToken(), vo.getId());
+		
+		if(no==1)
+		{
+			UserVo userVo = userService.getUser(vo.getId(), vo.getPasswd());
+			if(userVo==null)
+			{
+				return JSONResult.fail("로그인에 실패하였습니다.");
+			}else
+			{
+				return JSONResult.success(userVo);
+			}
+			
+		}
+		return JSONResult.fail("Token 저장에 실패하였습니다.");
 	}
-
 	@ResponseBody
 	@RequestMapping(value = "/join")
 	public JSONResult join(@ModelAttribute UserVo userVo) {
