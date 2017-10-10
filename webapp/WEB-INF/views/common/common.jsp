@@ -57,6 +57,9 @@
 	src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-3.2.1.js"></script>
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-ui.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery.mask.js"></script>
+
 
 <!-- 외부 자바스크립트  -->
 <script

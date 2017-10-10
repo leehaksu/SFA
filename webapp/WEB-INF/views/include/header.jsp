@@ -51,7 +51,7 @@
 				</c:if>
 			
 				<li class="droupdown menu-icon">
-				<a href="${pageContext.servletContext.contextPath}/user/mypage"> 
+				<a href="${pageContext.servletContext.contextPath}/user/notice_board"> 
 				<i class="fa fa-bell" aria-hidden="true"></i> 공지사항
 				</a>
 				</li>

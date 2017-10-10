@@ -22,7 +22,7 @@
 			</c:import>
 		</div>
 	</div>
-	<article>
+	<main id="page-content-wrapper" role="main">
 		<div class="joinsuccess_container">
 			<div class="pageheader">
 				<h3>회원 가입</h3>
@@ -100,6 +100,6 @@
 			</div>
 
 		</div>
-	</article>
+	</main>
 </body>
 </html>

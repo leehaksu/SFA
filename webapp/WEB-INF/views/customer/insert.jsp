@@ -7,7 +7,7 @@
 <html>
 <head>
 <c:import url="/WEB-INF/views/common/common.jsp"></c:import>
-	<script>
+<script>
 		var current_latitude;
 		var current_longitude;
 
@@ -53,24 +53,29 @@ function getLocation() {
 	 	map.setCenter(cLonLat,zoom);
 	 }
 	
+
+    $(document).ready(function(){
+    	  $('input[name=cellphone]').mask('000-0000-0000');
+    	  $('input[name=customer-phone]').mask('00-000-0000');   	  
+    });
 	</script>
 
 </head>
-<body> <!-- onload="getLocation()" -->
+<body>
+	<!-- onload="getLocation()" -->
 	<nav class="navbar navbar-default"> <c:import
 		url="/WEB-INF/views/include/header.jsp">
 		<c:param name="menu" value="main" />
-	</c:import> 
-	</nav>
+	</c:import> </nav>
 	<div id="wrapper">
 		<div id="sidebar-wrapper">
 			<c:import url="/WEB-INF/views/include/navigator.jsp">
 				<c:param name="menu" value="main" />
 			</c:import>
 		</div>
-<!-- 	</div> -->
+		<!-- 	</div> -->
 		<main id="page-content-wrapper" role="main">
-		<div class="container" >
+		<div class="container">
 			<br>
 			<h3>고객 등록</h3>
 			<hr>
@@ -85,22 +90,23 @@ function getLocation() {
 							</tr>
 							<tr>
 								<th>고객명</th>
-								<td><input type="input" class="form-control" name="name">
+								<td><input type="text" class="form-control" name="customer-name">
 								</td>
 							</tr>
 							<tr>
 								<th>고객 연락처</th>
-								<td><input type="input" class="form-control" name="name">
+								<td><input class="form-control" type="text" class="form-control" name="customer-phone">
 								</td>
 							</tr>
 							<tr>
 								<th>고객 영업시간</th>
-								<td><input type="input" class="form-control" name="name">
+								<td><input type="text" class="form-control" name="opening-hours">
 								</td>
 							</tr>
 							<tr>
 								<th>업체 주소</th>
-								<td><input id="customer-address-input" type="input" class="form-control" name="name" >
+								<td><input id="customer-address-input" type="input"
+									class="form-control" name="name">
 									<button type="button" class="btn btn-info btn-lg"
 										data-toggle="modal" data-target="#search_customer_map">맵
 										검색</button>
@@ -127,11 +133,32 @@ function getLocation() {
 					</table>
 				</form>
 			</div>
-		</div>
-		
-		<br>
+			<br>
 		<h3>당담자</h3>
-		
-		</main>		
+		<form>
+			<table class="table customer-table">
+				<tbody>
+					<tr>
+						<th>이름</th>
+						<td><input id="name" type="text" class="form-control" name="name" placeholer="휴대전화 번호 "></td>
+					</tr>
+					<tr>
+						<th>연락처</th>
+						<td>
+							<input id="cellPhone" type="text" class="form-control" name="cellphone" placeholer="휴대전화 번호 " >
+						</td>
+					</tr>
+					<tr>
+						<th>이메일</th>
+						<td><input type="email" class="form-control" name="name">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<input id="customer-submit-button" type="submit" class="btn btn-default">
+		</form>
+		</div>
+		</main>
 </body>
 </html>

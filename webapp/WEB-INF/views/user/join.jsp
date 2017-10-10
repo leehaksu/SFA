@@ -29,7 +29,7 @@
 				</c:import>
 			</div>
 		</div>
-		<article>
+		<main id="page-content-wrapper" role="main">
 			<div id="join_container" style="margin-left: 300px;">
 				<div class="col-md-12">
 					<div class="page-header">
@@ -131,6 +131,6 @@
 					<hr>
 				</div>
 			</div>
-		</article>
+		</main>
 	</body>
 	</html>
