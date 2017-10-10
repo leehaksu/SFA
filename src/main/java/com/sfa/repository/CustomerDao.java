@@ -28,5 +28,9 @@ public class CustomerDao {
 		// TODO Auto-generated method stub
 		return sqlSession.update("customer.update",customerVo);
 	}
+	public int delete(String customer_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("customer.delete",customer_code);
+	}
 
 }

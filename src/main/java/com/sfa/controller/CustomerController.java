@@ -41,6 +41,9 @@ public class CustomerController {
 		if(authUser==null)
 		{
 			return JSONResult.error("로그인 세션이 만료되었습니다.");
+		}else if (customerVo==null)
+		{
+			return JSONResult.error("입력값이 들어오지 않았습니다.");
 		}else
 		{
 			

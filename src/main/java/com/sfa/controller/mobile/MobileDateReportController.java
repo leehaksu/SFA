@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfa.dto.JSONResult;
+import com.sfa.service.DatePlanService;
 import com.sfa.service.DateReportService;
 import com.sfa.service.UserService;
 import com.sfa.vo.DateReportVo;
@@ -22,7 +23,9 @@ public class MobileDateReportController {
 
 	@Autowired
 	DateReportService dateReportService;
-
+	
+	@Autowired
+	DatePlanService datePlanService;
 	@Autowired
 	UserService userService;
 

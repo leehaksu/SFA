@@ -39,7 +39,7 @@ public class PlanDateDao {
 		// TODO Auto-generated method stub
 		dateReportVo=sqlSession.selectOne("dateplan.selctSale",dateReportVo);
 		Long goal_sale;
-		if(dateReportVo.getGoal_sale()==null)
+		if(dateReportVo==null || dateReportVo.getGoal_sale()==null)
 		{
 			goal_sale=(long) 0;
 		}else

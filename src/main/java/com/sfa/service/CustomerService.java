@@ -29,4 +29,9 @@ public class CustomerService {
 		return customerDao.update(customerVo);
 	}
 
+	public int delete(String customer_code) {
+		// TODO Auto-generated method stub
+		return customerDao.delete(customer_code);
+	}
+
 }
