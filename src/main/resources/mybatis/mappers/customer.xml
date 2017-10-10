@@ -4,17 +4,22 @@
 <mapper namespace="customer">
 	<select id="select" resultType="customervo" parameterType="MAP">
 		<![CDATA[
-	select * from customer where id=#{id};
+	select customer_code,name,contact,manager_name,manager_grade,manager_contact,manager_email,manager_birth,time,address,positionX,positionY,state from customer where id=#{id};
 	]]>
+	</select>
+	<select id="selectbyDept" parameterType="MAP" resultType="customervo">
+		<![CDATA[
+		
+		]]>
 	</select>
 	<insert id="insert" parameterType="customervo">
 		<![CDATA[
-	insert into customer values (#{customer_code},#{name},#{contact},#{manager_name},#{manager_contact},#{manager_email},#{manager_birth},#{time},#{address},#{id},#{positionX},#{positionY});	
+	insert into customer values (#{customer_code},#{name},#{contact},#{manager_name},#{manager_grade},#{manager_contact},#{manager_email},#{manager_birth},#{time},#{address},#{id},#{positionX},#{positionY},1);	
 		]]>
 	</insert>
 	<update id="update" parameterType="customervo">
 		<![CDATA[
-		
+	
 		]]>
 	</update>
 	<select id="getPositionById" resultType="positionvo" parameterType="positionvo">
