@@ -84,6 +84,9 @@
 	src="${pageContext.servletContext.contextPath}/assets/bootstrap-fileinput/js/locales/kr.js"></script>
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/util/validate.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/zingchart/zingchart.min.js"></script>
+
 
 <!-- 내부 자바스크립트 -->
 <script

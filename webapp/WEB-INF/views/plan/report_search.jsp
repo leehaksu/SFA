@@ -133,18 +133,18 @@ $(document).ready(function() {
 		</c:import>
 	</nav>
 	<div id="wrapper">
-		<div class="col-sm-3" id="sidebar-wrapper">
+		<div id="sidebar-wrapper">
 			<c:import url="/WEB-INF/views/include/navigator.jsp">
 				<c:param name="menu" value="main" />
 			</c:import>
 		</div>
-
+	</div>
 		<main id="page-content-wrapper" role="main">
 		<article>
 			<div>
 				<div class="page-header">
 					<h3 class="dayreport">
-						<strong>회원 가입 완료</strong>
+						<strong>보고서 조회</strong>
 					</h3>
 				</div>
 				<button type="button" class="btn btn-default"
@@ -262,6 +262,6 @@ $(document).ready(function() {
 			</div>
 		</article>
 		</main>
-	</div>
+
 </body>
 </html>

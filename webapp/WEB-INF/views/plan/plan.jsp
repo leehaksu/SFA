@@ -669,7 +669,7 @@
 		</c:import>
 	</nav>
 	<div id="wrapper">
-		<div class="col-sm-3" id="sidebar-wrapper">
+		<div id="sidebar-wrapper">
 			<c:import url="/WEB-INF/views/include/navigator.jsp">
 				<c:param name="menu" value="main" />
 			</c:import>
