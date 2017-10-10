@@ -30,7 +30,7 @@
 						</ul></li>
 					<li><a id="menu3"
 						class="accordion-toggle collapsed toggle-switch"
-						data-toggle="collapse" href="#submenu-4"> <span
+						data-toggle="collapse" href="#submenu-3"> <span
 							class="sidebar-icon"><i class="fa fa-line-chart"
 								aria-hidden="true"></i></span> <span class="sidebar-title">통계 현황</span>
 							<b class="caret"></b>
@@ -46,6 +46,14 @@
 									현황</a></li>
 						</ul></li>
 					<li><a id="menu4" a href="#"> 
+						<span class="sidebar-icon">
+							<i class="fa fa-bell" aria-hidden="true"></i>
+						</span> 
+							<span class="sidebar-title">공지사항</span>
+					</a>
+					</li>	
+					
+					<li><a id="menu5" a href="#"> 
 						<span class="sidebar-icon">
 							<i class="fa fa-user" aria-hidden="true"></i>
 						</span> 

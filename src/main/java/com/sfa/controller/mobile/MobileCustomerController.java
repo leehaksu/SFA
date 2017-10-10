@@ -77,6 +77,7 @@ public class MobileCustomerController {
 		{
 			int no = customerService.delete(customer_code);
 		}
+		return null;
 	}
 	
 
