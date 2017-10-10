@@ -131,4 +131,18 @@ public class UserDao {
 		map.put("email", email);
 		return sqlSession.selectList("user.getEmail", map);
 	}
+
+	public int delteToken(String id) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		return sqlSession.delete("user.deleteToken", map);
+	}
+
+	public UserVo getIdByToken(String token) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("token", token);
+		return sqlSession.selectOne("user.getIdbyToken",map);
+	}
 }

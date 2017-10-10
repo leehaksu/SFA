@@ -361,38 +361,31 @@
         urlStr += "&reqCoordType=WGS84GEO"
         urlStr += "&passList="+passList;
         urlStr += "&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"; 
-<<<<<<< HEAD
+
            
-=======
-      
->>>>>>> branch 'master' of https://github.com/leehaksu/SFA.git
+
          var obj = {
-<<<<<<< HEAD
+
         		 endX: 14135428.84691669,
         		 endY: 4505733.44979528,
         		 startX: 14140669.59746090,
-        		 startY: 4508640.36061872
-=======
+        		 startY: 4508640.36061872,
         		 endX: '14135428.84691669',
         		 endY: '4505733.44979528',
         		 startX: '14140669.59746090',
         		 startY: '4508640.36061872'
->>>>>>> branch 'master' of https://github.com/leehaksu/SFA.git
         		};
          var road ="startX="+startX+"&startY="+startY+"&endX="+endX+"&endY="+endY+"&reqCoordType=WGS84GEO"+"&passList="+passList; 	 
         	
          	$.ajax({
              url: "https://apis.skplanetx.com/tmap/routes?version=1&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b",
              type: 'post',
-<<<<<<< HEAD
              data: road,
-=======
              contentType: "application/x-www-form-urlencoded;charset=utf-8",
              data:  "startX : "+startX+
              "startY :"+startY+
              +"endX : "+endX+
              +"endY :"+endY,
->>>>>>> branch 'master' of https://github.com/leehaksu/SFA.git
              success: function( data, textStatus, jQxhr ){
                  console.log(data);
              },

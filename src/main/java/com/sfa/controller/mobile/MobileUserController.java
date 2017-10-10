@@ -1,13 +1,17 @@
 package com.sfa.controller.mobile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,30 +33,30 @@ public class MobileUserController {
 	@ResponseBody
 	@RequestMapping(value = "/auth")
 	public JSONResult login(@ModelAttribute UserVo vo) {
-		
+
 		if (vo.getId() == null || vo.getPasswd() == null) {
 			// JSON 응답하기
 			// code_0x1 : id 나 password 문제 있을 경우
-			System.out.println("[web] : Json응답1");
-			System.out.println(JSONResult.error("error_User_0x1"));
 			return JSONResult.error("code_0x1");
 		} else{
-			if (vo.getToken()==null) {
-				UserVo userVo = userService.getUser(vo.getId(), vo.getPasswd());
+			//token값이 있을 경우
+			if (vo.getToken()!=null) {
+				UserVo userVo=userService.getIdbyToken(vo.getToken());
+				if(userVo!=null)
+				{
+					userService.deleteToken(userVo.getId());	
+				}
+				userVo = userService.getUser(vo.getId(), vo.getPasswd());
 				if (userVo == null) {
 					// JSON 응답하기
 					// code_0x2 : id password 잘못 전달 받았을시
-					System.out.println("[web] :  Json응답2");
-					System.out.println(userVo);
-					System.out.println(JSONResult.error("code_User_0x2"));
-					return JSONResult.fail();
+					return JSONResult.fail("등록된 회원이 없습니다.");
 				} else {
 					// JSON 응답하기
 					// 정상적으로 처리하여 JSON 응답하는 경우
 					int no = userService.insertToken(vo.getToken(), vo.getId());
 					if(no==1)
 					{
-						System.out.println("[web] :  Json응답3");
 						System.out.println(JSONResult.success(userVo));
 						return JSONResult.success(userVo);
 					}else
@@ -141,7 +145,8 @@ public class MobileUserController {
 		} else {
 			// id값 이용해서
 			List<UserVo> list = userService.getemail(email);
-			if (list == null) {
+			System.out.println(list);
+			if (list.isEmpty()) {
 				return JSONResult.success("이메일 가입  가능합니다.");
 			} else {
 				return JSONResult.fail("중복된 이메일이  존재합니다.");
@@ -149,5 +154,35 @@ public class MobileUserController {
 		}
 		return JSONResult.fail("서버에 이상이 생겼습니다.");
 	}
+	@ResponseBody
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public JSONResult list(@RequestParam(value="dept", required=true, defaultValue="") String dept ) {
+		
+		List<UserVo> list = userService.getTotalMember(dept);
+		return JSONResult.success(list);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	public JSONResult list(@RequestParam(value = "name", required = true, defaultValue = "") String name,
+			@RequestParam(value = "grade", required = true, defaultValue = "") String grade,
+			@RequestParam(value="dept", required= true, defaultValue="")String dept) {
+
+		if ("".equals(name) && "".equals(grade)) {
+			return JSONResult.error("이름과  직책이 없습니다.");
+		} else if ("전체".equals(grade) && "".equals(name)) {
+			List<UserVo> list = userService.getTotalMember(dept);
+			return JSONResult.success(list);
+		} else {
+			List<UserVo> list = userService.getMember(name, grade, dept);
+			return JSONResult.success(list);
+		}
+	}
+	@RequestMapping(value="/download", method=RequestMethod.POST)
+	public void download(HttpServletResponse response) throws IOException
+	{
+
+	}	
+
 
 }

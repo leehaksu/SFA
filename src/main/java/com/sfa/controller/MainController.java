@@ -28,7 +28,6 @@ public class MainController {
 	public String main(Model model,WeekVo weekVo,@AuthUser UserVo authUser)
 	{
 		String Affirmation = affirmationService.select();
-		System.out.println("Controller"+Affirmation);
 		model.addAttribute("affrimation", Affirmation);
 		
 		//처음 들어왔을 때 화면

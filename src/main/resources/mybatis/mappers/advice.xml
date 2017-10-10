@@ -10,7 +10,7 @@
 	</insert>
 	<update id="update" parameterType="advicevo">
 	<![CDATA[
-	update advice set title=#{title}, content=#{content},date=#{date},reg_date=now(),manager_name={manager_name},code=#{code} where advice_no=#{advice_no};
+	update advice set title=#{title}, content=#{content},date=#{date},reg_date=now(),manager_name=#{manager_name},code=#{code} where advice_no=#{advice_no};
 	]]>
 	</update>
 	<delete id="delete" parameterType="advicevo">
