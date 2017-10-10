@@ -9,7 +9,13 @@
 	</select>
 	<select id="selectbyDept" parameterType="MAP" resultType="customervo">
 		<![CDATA[
-	select customer_code,b.name,b.contact,manager_name,manager_grade,manager_contact,manager_email,manager_birth,time,address,positionX,positionY,state,a.id,a.dept from user as a, customer as b where a.id=b.id and dept=#{dept};		]]>
+	select customer_code,b.name,b.contact,manager_name,manager_grade,manager_contact,manager_email,manager_birth,time,address,positionX,positionY,state,a.id,a.dept from user as a, customer as b where a.id=b.id and dept=#{dept};		
+	]]>
+	</select>
+	<select id="last_select" resultType="customervo">
+	<![CDATA[
+	select customer_code from customer order by customer_code desc limit 1;
+	]]>
 	</select>
 	<insert id="insert" parameterType="customervo">
 		<![CDATA[
@@ -18,7 +24,7 @@
 	</insert>
 	<update id="update" parameterType="customervo">
 		<![CDATA[
-	
+	update customer set name=#{name}, contact=#{contact},manager_name=#{manager_name}, manager_grade=#{manager_grade},manager_contact=#{manager_contact},manager_birth=#{manager_birth},time=#{time},positionX=#{positionX},positionY=#{positionY} where customer_code=#{customer_code};
 		]]>
 	</update>
 	<select id="getPositionById" resultType="positionvo" parameterType="positionvo">

@@ -20,10 +20,13 @@ import com.sfa.vo.WeekVo;
 public class WeekPlanService {
 
 	@Autowired
-	PlanWeekDao weekplanDao;
-	
+	private PlanWeekDao weekplanDao;
+
 	@Autowired
-	DateReportDao dateReportDao;
+	private DateReportDao dateReportDao;
+
+	@Autowired
+	private ChangeDate changeDate;
 
 	@Autowired
 	private PlatformTransactionManager transactionManager;
@@ -40,7 +43,7 @@ public class WeekPlanService {
 			System.out.println("[InsertWeek]" + weekVo);
 			// 주간계획이 입력이 되어 있는지 확인.
 			WeekVo temp_weekVo = checkWeek(weekVo);
-		
+
 			if (temp_weekVo != null) {
 				// 주간계획이 있을경우에는 false값을 전달
 				System.out.println(temp_weekVo);
@@ -113,35 +116,35 @@ public class WeekPlanService {
 			dayVo.setDay("월");
 			dayVo.setDay_sale((weekVo.getMonday_money()));
 			dayVo.setContent(weekVo.getMonday());
-			System.out.println("월"+dayVo);
+			System.out.println("월" + dayVo);
 			no = weekplanDao.update(dayVo);
 			break;
 		case 3:
 			dayVo.setDay("화");
 			dayVo.setDay_sale(weekVo.getTuesday_money());
 			dayVo.setContent(weekVo.getTuesday());
-			System.out.println("화"+dayVo);
+			System.out.println("화" + dayVo);
 			no = weekplanDao.update(dayVo);
 			break;
 		case 4:
 			dayVo.setDay("수");
 			dayVo.setDay_sale(weekVo.getWednesday_money());
 			dayVo.setContent(weekVo.getWednesday());
-			System.out.println("수"+dayVo);
+			System.out.println("수" + dayVo);
 			no = weekplanDao.update(dayVo);
 			break;
 		case 5:
 			dayVo.setDay("목");
 			dayVo.setDay_sale(weekVo.getThursday_money());
 			dayVo.setContent(weekVo.getThursday());
-			System.out.println("목"+dayVo);
+			System.out.println("목" + dayVo);
 			no = weekplanDao.update(dayVo);
 			break;
 		case 6:
 			dayVo.setDay("금");
 			dayVo.setDay_sale(weekVo.getFriday_money());
 			dayVo.setContent(weekVo.getFriday());
-			System.out.println("금"+dayVo);
+			System.out.println("금" + dayVo);
 			no = weekplanDao.update(dayVo);
 			break;
 		}
@@ -229,58 +232,96 @@ public class WeekPlanService {
 		// 주간 계획이 입력되었는지 확인
 		WeekVo temp_weekVo = checkWeek(weekVo);
 		int no = 0;
-/*		try
-		{
+		try {
 			def = new DefaultTransactionDefinition();
 			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 			status = transactionManager.getTransaction(def);
-		*/
+
 			if (temp_weekVo == null) {
 				// 주간계획이 입력이 되지 않을경우
-				System.out.println("너 여기 들어갓니?");
 				no = 1;
 			} else if (temp_weekVo != null) {
 				// 주간계획이 입력되어 정상적으로 update 진행
-				System.out.println("아님 여기 들어왔니?");
 				no = weekplanDao.update(weekVo);
 				for (int i = 2; i < 7; i++) {
 					no += updateDay(weekVo, i);
 				}
 			}
-			return no;
-			/*transactionManager.commit(status);
-			
-		}catch(Exception e)
-		{
+			transactionManager.commit(status);
+		} catch (Exception e) {
 			transactionManager.rollback(status);
-			no=0;
+			no = 0;
 			return no;
-		}*/
-		
-		
+		}
+
+		return no;
 	}
 
 	public List<DayVo> selectMonth(DayVo dayVo) {
 		// TODO Auto-generated method stub
-		ChangeDate Changedate = new ChangeDate();
-		ArrayList<Integer> date = Changedate.parserDate(dayVo.getFirst_date());
-		String name = Changedate.getWeekNo(date);
+		ArrayList<Integer> date = changeDate.parserDate(dayVo.getFirst_date());
+		String name = changeDate.getWeekNo(date);
 		name = name.substring(0, 6);
 		int Date = Integer.parseUnsignedInt(name);
-		System.out.println("date" +Date);
-		String Date1 = "%" + String.valueOf(Date-1) + "%";
+		System.out.println("date" + Date);
+		String Date1 = "%" + String.valueOf(Date - 1) + "%";
 		String Date2 = "%" + String.valueOf(Date) + "%";
 		String Date3 = "%" + String.valueOf(Date + 1) + "%";
-		System.out.println(Date1);
-		System.out.println(Date2);
-		System.out.println(Date3);
 		String id = dayVo.getId();
 		List<DayVo> list = weekplanDao.selectMonth(id, Date1, Date2, Date3);
 		return list;
 	}
 
-	public WeekVo selectReport(String date,String id) {
+	public WeekVo selectReport(String date, String id) {
 		// TODO Auto-generated method stub
-		return dateReportDao.selectReport(date,id);
+		return dateReportDao.selectReport(date, id);
+	}
+
+	public List<WeekVo> selectTotalWeek(String id, String date) {
+		// TODO Auto-generated method stub
+		ArrayList<Integer> date2 = changeDate.parserDate(date);
+		String week_no = changeDate.getWeekNo(date2);
+		List<WeekVo> week_list = weekplanDao.selectTotalWeek(id, week_no);
+		List<DayVo> day_list = weekplanDao.selectTotalDay(id, week_no);
+		System.out.println(day_list);
+		for (int i = 0; i < week_list.size(); i++) {
+			for (int j = 0; j < day_list.size(); j++) {
+				if ((week_list.get(i).getWeek_no()).equals(day_list.get(i).getWeek_no())
+						&& (week_list.get(i).getId()).equals(day_list.get(j).getId())) {
+
+					switch (day_list.get(j).getDay()) {
+					case "월":
+						week_list.get(i).setMonday((day_list.get(j)).getContent());
+						week_list.get(i).setMonday_money((day_list.get(j)).getDay_sale());
+						week_list.get(i).setMonday_date(day_list.get(j).getDate());
+						break;
+					case "화":
+						week_list.get(i).setTuesday((day_list.get(j)).getContent());
+						week_list.get(i).setTuesday_money((day_list.get(j)).getDay_sale());
+						week_list.get(i).setTuesday_date(day_list.get(j).getDate());
+						break;
+					case "수":
+						week_list.get(i).setWednesday((day_list.get(j)).getContent());
+						week_list.get(i).setWednesday_money((day_list.get(j)).getDay_sale());
+						week_list.get(i).setWednesday_date(day_list.get(j).getDate());
+						break;
+					case "목":
+						week_list.get(i).setThursday((day_list.get(j)).getContent());
+						week_list.get(i).setThursday_money((day_list.get(j)).getDay_sale());
+						week_list.get(i).setThursday_date(day_list.get(j).getDate());
+						break;
+					case "금":
+						week_list.get(i).setFriday((day_list.get(j)).getContent());
+						week_list.get(i).setFriday_money((day_list.get(j)).getDay_sale());
+						week_list.get(i).setFriday_date(day_list.get(j).getDate());
+						break;
+					default:
+						System.out.println(day_list.get(j).getDay());
+						break;
+					}
+				}
+			}
+		}
+		return week_list;
 	}
 }

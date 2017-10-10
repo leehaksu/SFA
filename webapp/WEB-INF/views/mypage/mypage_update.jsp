@@ -28,18 +28,16 @@
 
 			<!-- Text input-->
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="user_id">
-					ID</label>
-				<div class="col-md-4">
-					아이디: <span>${authUser.id}</span>
+				<label class="col-md-4 control-label" for="user_id">ID</label>
+				<div class="col-md-4"><span>${authUser.id}</span>
 				</div>
 			</div>
 
 			<!-- Text input-->
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="user_name">${authUser.name}</label>
-				<div class="col-md-4">
-					이름 : <span>관리자</span>
+			
+				<label class="col-md-4 control-label" for="user_name">이 름 </label>
+				<div class="col-md-4"><span>${authUser.name}</span>
 				</div>
 			</div>
 
@@ -49,7 +47,7 @@
 				<div class="col-md-4">
 					<input id="user_e_mail" name="user_e_mail"
 						placeholder="개인 이메일" class="form-control input-md"
-						required="" type="text">
+						required="" type="text" value="${authUser.email}" >
 
 				</div>
 			</div>
@@ -59,7 +57,7 @@
 				<label class="col-md-4 control-label" for="password">PASSWORD</label>
 				<div class="col-md-4">
 					<input id="password" name="password" placeholder="PASSWORD"
-						class="form-control input-md" required="" type="password">
+						class="form-control input-md" required="" type="password" >
 
 				</div>
 			</div>
@@ -80,8 +78,7 @@
 					<select id="user_status" name="user_status"
 						 class="form-control input-md"
 						required> 
-						<option value="부서" selected>부서</option>
-						<option value="1">영업1팀</option>
+						<option value="1" selected>영업1팀</option>
 						<option value="2">영업2팀</option>
 						<option value="3">영업3팀</option>						
 						</select>
@@ -95,31 +92,19 @@
 				<div class="col-md-4">
 					<select id="grade" name="grade"
 						class="form-control input-md" required>
-						<option value="부서" selected>직급</option>
-						<option value="1">사원</option>
+						<option value="1" selected>사원</option>
 						<option value="2">대리</option>
 						<option value="3">과장</option>
 						</select>
 
 				</div>
 			</div>
-
-
-			<!-- Text input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="phone1">전화번호</label>
-				<div class="col-md-4">
-					<input id="phone1" name="phone1" placeholder="PHONE1"
-						class="form-control input-md" required="" type="text">
-				</div>
-			</div>
-
-
+			
 			<!-- Button -->
 			<div class="form-group">
 				<label class="col-md-4 control-label" for=""></label>
 				<div class="col-md-4">
-					<button id="" name="" class="btn btn-primary">Submit</button>
+					<button id="" name="" class="btn btn-primary">수정하기</button>
 				</div>
 			</div>
 

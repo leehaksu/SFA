@@ -100,4 +100,20 @@ public class PlanWeekDao {
 		map.put("id",id);
 		return sqlSession.selectList("weekplan.selectMonth",map);
 	}
+
+	public List<WeekVo> selectTotalWeek(String id,String week_no) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("week_no", week_no);
+		map.put("id", id);
+		return sqlSession.selectList("weekplan.selectTotalWeek", map);
+	}
+
+	public List<DayVo> selectTotalDay(String id,String week_no) {
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("week_no", week_no);
+		map.put("id", id);
+		return sqlSession.selectList("weekplan.selectTotalDay", map);
+		// TODO Auto-generated method stub
+	}
 }

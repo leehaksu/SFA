@@ -32,5 +32,8 @@ public class CustomerDao {
 		// TODO Auto-generated method stub
 		return sqlSession.update("customer.delete",customer_code);
 	}
-
+	public CustomerVo select() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("customer.last_select");
+	}
 }

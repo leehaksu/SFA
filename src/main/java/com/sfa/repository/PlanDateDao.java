@@ -1,6 +1,7 @@
 package com.sfa.repository;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,13 @@ public class PlanDateDao {
 		map.put("date", date);
 		map.put("id", id);
 		return sqlSession.selectOne("dateplan.selectGoalSale",map);
+	}
+
+	public List<DateVo> selectTotalDate(String id, String date) {
+		// TODO Auto-generated method stub
+		HashMap<String , Object> map = new HashMap<String,Object>();
+		map.put("date", date);
+		map.put("id", id);
+		return sqlSession.selectList("dateplan.selectTotalDate", map);
 	}
 }

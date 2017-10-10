@@ -14,6 +14,7 @@ import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
 import com.sfa.service.CustomerService;
 import com.sfa.service.PositionService;
+import com.sfa.util.CreateCustomerCode;
 import com.sfa.vo.CustomerVo;
 import com.sfa.vo.PositionVo;
 import com.sfa.vo.UserVo;
@@ -28,12 +29,14 @@ public class CustomerController {
 	@Autowired
 	PositionService positionService;
 
+
 	
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
-	public String insert() {
+	public String insert(@ModelAttribute CustomerVo customerVo) {
 		return "customer/insert";
 	}
+	
 	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
@@ -43,12 +46,18 @@ public class CustomerController {
 			return JSONResult.error("로그인 세션이 만료되었습니다.");
 		}else if (customerVo==null)
 		{
-			return JSONResult.error("입력값이 들어오지 않았습니다.");
+			return JSONResult.error("고객정보가 들어오지 않았습니다.");
 		}else
 		{
-			
+			int no=customerService.insert(customerVo);
+			if(no==1)
+			{
+				return JSONResult.success();
+			}else
+			{
+				return JSONResult.fail("저장에 실패하였습니다.");
+			}
 		}
-		return null;
 
 	}
 	@Auth

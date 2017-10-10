@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sfa.repository.CustomerDao;
+import com.sfa.util.CreateCustomerCode;
 import com.sfa.vo.CustomerVo;
 
 @Service
@@ -14,13 +15,21 @@ public class CustomerService {
 	@Autowired
 	CustomerDao customerDao;
 	
-	public List<CustomerVo> select(String dept)
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	private CreateCustomerCode createCutomerCode;
+	
+	public List<CustomerVo> select(String id)
 	{
+		String dept=userService.getDept(id);
 		return customerDao.select(dept);
 	}
 
 	public int insert(CustomerVo customerVo) {
 		// TODO Auto-generated method stub
+		customerVo.setCustomer_code(createCutomerCode.create());
 		return customerDao.insert(customerVo);
 	}
 
@@ -32,6 +41,11 @@ public class CustomerService {
 	public int delete(String customer_code) {
 		// TODO Auto-generated method stub
 		return customerDao.delete(customer_code);
+	}
+
+	public CustomerVo select_last() {
+		// TODO Auto-generated method stub
+		return customerDao.select();
 	}
 
 }
