@@ -57,10 +57,7 @@
 				</li>
 				
 				<li class="droupdown menu-icon">
-				<a class="dropdown-toggle" href="${pageContext.servletContext.contextPath}/mypage"> <i class="fa fa-user" aria-hidden="true"></i> 마이페이지
-				<a href="${pageContext.servletContext.contextPath}/user/mypage"> 
-				<i class="fa fa-user" aria-hidden="true"></i> 마이페이지
-				</a>
+				<a class="dropdown-toggle" href="${pageContext.servletContext.contextPath}/mypage"> <i class="fa fa-user" aria-hidden="true"></i> 마이페이지				</a>
 				</li>
 			
 				</ul>

@@ -50,6 +50,8 @@
 	href="${pageContext.servletContext.contextPath}/assets/css/customer/search.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/customer/insert.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.servletContext.contextPath}/assets/css/mypage/mypage.css">
 
 
 <!-- jquery 자바스크립트 -->

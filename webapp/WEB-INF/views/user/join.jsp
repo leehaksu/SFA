@@ -30,10 +30,10 @@
 			</div>
 		</div>
 		<main id="page-content-wrapper" role="main">
-			<div id="join_container" style="margin-left: 300px;">
+			<div>
 				<div class="col-md-12">
 					<div class="page-header">
-						<h3>회원 가입</h3>
+						<h3><strong>회원 가입<strong></h3>
 					</div>
 					<form name="joinform" class="form-horizontal" method="post" 
 						action="${pageContext.servletContext.contextPath}/join" >
@@ -42,7 +42,7 @@
 							<div class="col-sm-6">
 								<div id="inputid-form">
 									<input class="form-control" id="inputId" name="id"
-										type="text" placeholder="5~12자 영문소문자, 숫자, 특수문자 _ 사용가능"
+										type="text" placeholder="첫문자는 영문 대/소문자로  [숫자, 특수문자 _ 조합] 5~12자 "
 										pattern="^[a-z0-9_]{5,12}$" required > 
 										<i id="Idcheck-image" class="fa fa-check" aria-hidden="true" style="display: none;">확인</i>
 									<input id="Idcheck-button" class="btn btn-info" type="button"
@@ -80,8 +80,8 @@
 							<label class="col-sm-3 control-label" for="inputEmail">이메일</label>
 							<div class="col-sm-6">
 								<input class="form-control" id="inputEmail" name="email"
-									type="email" placeholder="이메일" required><i id="check-image"
-										class="fa fa-check" aria-hidden="true" style="display: none;">확인</i>
+									type="email" placeholder="이메일" required>
+									<i id="Emailcheck-image" class="fa fa-check" aria-hidden="true" style="display: none;">확인</i>
 									<input id="Emailcheck-button" class="btn btn-info" type="button"
 										value="중복체크">
 							</div>
@@ -122,7 +122,7 @@
 								<button id="confirm_button" class="btn btn-primary" type="submit" onsubmit="validate()">
 									회원가입 &nbsp;<i class="fa fa-check spaceLeft"></i>
 								</button>
-								<button id="cancel_button" class="btn btn-danger">
+								<button id="cancel_button" class="btn btn-danger"  onClick="location.href='http://localhost:8080/sfa/';" >
 									가입취소 &nbsp;<i class="fa fa-times spaceLeft"></i>
 								</button>
 							</div>

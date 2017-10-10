@@ -19,11 +19,6 @@ body {
 }
 
 
-@media ( min-width : 992px) {
-	#wrapper {
-		padding-left: 225px;
-	}
-}
 
 @media ( min-width : 992px) {
 	#wrapper #sidebar-wrapper {
@@ -338,3 +333,6 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 	z-index: 215000000 !important;
 }
 
+ main{
+  margin-left: 18%;
+ }  

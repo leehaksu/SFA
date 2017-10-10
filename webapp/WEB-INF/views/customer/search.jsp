@@ -21,10 +21,12 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div class="container" style="margin-left: 18%;">
-		<br>
-		<h3>고객 조회</h3>
-		<hr>
+	<div class="container">
+		<div class="page-header">
+					<h3 class="dayreport">
+						<strong>고객 조회</strong>
+					</h3>
+				</div>
 		<div class="search_wrap">
 			<div class="search_list">
 				<ul>

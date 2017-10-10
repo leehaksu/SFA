@@ -132,17 +132,21 @@ $(document).ready(function() {
 			<c:param name="menu" value="main" />
 		</c:import>
 	</nav>
-	<div class="row" id="wrapper">
+	<div id="wrapper">
 		<div class="col-sm-3" id="sidebar-wrapper">
 			<c:import url="/WEB-INF/views/include/navigator.jsp">
 				<c:param name="menu" value="main" />
 			</c:import>
 		</div>
 
-		<main class="col-sm-9" style="margin-left: 40px;">
+		<main id="page-content-wrapper" role="main">
 		<article>
-			<div style="margin-top: 30px;">
-				<h3 style="display: inline;">영업 보고서 조회</h3>
+			<div>
+				<div class="page-header">
+					<h3 class="dayreport">
+						<strong>회원 가입 완료</strong>
+					</h3>
+				</div>
 				<button type="button" class="btn btn-default"
 					onclick="location.href='insert'"
 					style="float: right; display: inline-block;">보고서 추가</button>

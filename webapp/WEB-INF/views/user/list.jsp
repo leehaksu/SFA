@@ -24,9 +24,11 @@
 	</div>
 	<article>
 		<div id="search_container">
-			<div class="pageheader">
-				<h3>사원 정보 조회</h3>
-			</div>
+			<div class="page-header">
+					<h3 class="dayreport">
+						<strong>사원 정보 조회</strong>
+					</h3>
+				</div>
 			<form name="joinform" class="form-horizontal" method="post"
 				action="${pageContext.servletContext.contextPath}/list">
 				<div class="search_box">

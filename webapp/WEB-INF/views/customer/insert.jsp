@@ -76,9 +76,11 @@ function getLocation() {
 		<!-- 	</div> -->
 		<main id="page-content-wrapper" role="main">
 		<div class="container">
-			<br>
-			<h3>고객 등록</h3>
-			<hr>
+			<div class="page-header">
+					<h3 class="dayreport">
+						<strong>고객 등록</strong>
+					</h3>
+				</div>
 			<div class="customer">
 				<h3>고객사 정보</h3>
 				<form>
