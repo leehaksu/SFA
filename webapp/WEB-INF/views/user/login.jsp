@@ -43,7 +43,7 @@ $(function(){
 				
 				<div class="login_box">
 					<div id="positive-line">
-						<p class="large">"하루하루를 어떻게 보내는가에 따라 우리의 인생이 결정된다."</p>
+						<p class="large">${affrimation}</p>
 					</div>
 					<form id="login_form" name="loginform" action="${pageContext.servletContext.contextPath}/user/auth" method="POST" >
 					  <div class="input-group">

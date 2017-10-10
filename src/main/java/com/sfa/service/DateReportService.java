@@ -113,4 +113,9 @@ public class DateReportService {
 		// TODO Auto-generated method stub
 		return dateReportDao.update(report_no,approval);
 	}
+
+	public List<DateReportVo> selectTotalReport(String id, String date) {
+		// TODO Auto-generated method stub
+		return dateReportDao.selectTotalReport(id, date);
+	}
 }

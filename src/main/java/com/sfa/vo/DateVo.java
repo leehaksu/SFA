@@ -12,6 +12,7 @@ public class DateVo {
 	private String estimate_course; // 예상 코스
 	private Long challenge_no; // 도전과제 번호
 	private String challenge_content; // 도전과제 내용
+	
 	public String getTitle() {
 		return title;
 	}

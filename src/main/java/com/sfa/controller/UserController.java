@@ -266,4 +266,30 @@ public class UserController {
 		model.addAttribute("user", authUSer);
 		return "mypage/mypage";
 	}
+	
+	@RequestMapping(value="/mypage/update", method=RequestMethod.GET)
+	public String updateMypage(@AuthUser UserVo authUSer,Model model)
+	{
+		model.addAttribute("authuser", authUSer);
+		return "mypage/mypage_update";
+	}
+	
+	@RequestMapping(value="/mypage/update", method=RequestMethod.POST)
+	public String updateMypage(@AuthUser UserVo authUSer,@ModelAttribute UserVo userVo,Model model)
+	{
+		if(userVo==null)
+		{
+			return "mypage/mypage_update";
+		}
+		
+		int no= userService.modify(userVo);
+		if(no==1)
+		{
+			return "";
+		}else
+		{
+			return "";
+		}
+	}
+	
 }

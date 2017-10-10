@@ -33,6 +33,7 @@ public class MobileCustomerController {
 		{
 			return JSONResult.error("정상적인 접근이 아닙니다.");
 		}
+		
 		int no=customerService.insert(customerVo);
 		if(no==1)
 		{
@@ -52,8 +53,7 @@ public class MobileCustomerController {
 			return JSONResult.error("아이디가 입력되지 않았습니다.");
 		}else
 		{
-			String dept=userService.getDept(id);
-			List<CustomerVo> list = customerService.select(dept);
+			List<CustomerVo> list = customerService.select(id);
 			return JSONResult.success(list);
 		}
 	}
@@ -68,7 +68,14 @@ public class MobileCustomerController {
 		}else
 		{
 			int no = customerService.update(customerVo);
-			return JSONResult.success();
+			if(no==1)
+			{
+				return JSONResult.success();
+			}else
+			{
+				return JSONResult.fail("수정에 실패하였습니다.");
+			}
+			
 		}
 	}
 	@ResponseBody
@@ -81,9 +88,13 @@ public class MobileCustomerController {
 		}else
 		{
 			int no = customerService.delete(customer_code);
+			if(no==1)
+			{
+				return JSONResult.success();
+			}else
+			{
+				return JSONResult.fail("삭제 실패하였습니다.");
+			}
 		}
-		return null;
 	}
-	
-
 }

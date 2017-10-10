@@ -78,4 +78,14 @@
 	select * from day_plan where  id=#{id} and (week_no like #{Date1} or week_no like #{Date2} or week_no like #{Date3});
 	]]>
 	</select>
+	<select id="selectTotalWeek" parameterType="map" resultType="weekvo">
+	<![CDATA[
+	select week_no,reg_date,title,target_figure,week_sale,achive_rank,c.id from week_plan as a, user as c where a.id=c.id and c.dept=(select dept from user where id=#{id}) and a.week_no=#{week_no};	
+	]]>
+	</select>
+	<select id="selectTotalDay" parameterType="map" resultType="dayvo">
+	<![CDATA[
+	select * from day_plan as a, user as b where a.id=b.id and b. dept=(select dept from user where id=#{id}) and week_no=#{week_no};
+	]]>
+	</select>
 </mapper>

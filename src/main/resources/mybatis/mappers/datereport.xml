@@ -80,4 +80,9 @@
 	select report_sale, achive_rank from day_report where date=#{date} and id=#{id};
 	]]>
 	</select>
+	<select id="selectTotalReport" parameterType="MAP" resultType="datereportvo">
+	<![CDATA[
+	select * from day_report as a, user as b where a.id=b.id and b.dept=(select dept from user where id=#{id}) and date=#{date};
+	]]>	
+	</select>
 </mapper>

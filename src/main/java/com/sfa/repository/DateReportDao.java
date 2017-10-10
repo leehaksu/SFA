@@ -105,4 +105,13 @@ public class DateReportDao {
 		return sqlSession.selectOne("datereport.reportByDate", map);
 	}
 
+	public List<DateReportVo> selectTotalReport(String id, String date) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("date", date);
+		map.put("id", id);
+		return sqlSession.selectList("datereport.selectTotalReport", map);
+	}
+
+
 }

@@ -1,5 +1,7 @@
 package com.sfa.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +38,9 @@ public class DatePlanService {
 	public Long getGoal_sale(DateReportVo dateReportVo) {
 		// TODO Auto-generated method stub
 		return planDateDao.selectGoal(dateReportVo);
+	}
+	public List<DateVo> selectTotalDate(String id, String date) {
+		// TODO Auto-generated method stub
+		return planDateDao.selectTotalDate(id,date);
 	}
 }

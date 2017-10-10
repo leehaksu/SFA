@@ -7,8 +7,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.StringTokenizer;
 
+import org.springframework.stereotype.Component;
+
 import com.sfa.vo.WeekVo;
 //날짜 변경
+@Component
 public class ChangeDate {
 	
 	//주간 계획 번호 알아오는 메소드

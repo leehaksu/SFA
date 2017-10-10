@@ -34,4 +34,10 @@
 	
 	]]>
 	</update>
+	
+	<select id="selectTotalDate" parameterType="MAP" resultType="datevo">
+	<![CDATA[	
+	select a.title,a.goal_sale,a.opinion,a.content,a.reg_date,a.date,a.estimate_distance,a.estimate_course,a.challenge_no,b.content as challenge_content from plan as a, challenge as b, user as c where a.challenge_no=b.challenge_no and a.id=c.id and c.dept=(select dept from user where id=#{id}) and a.date=#{date};
+	]]>
+	</select>
 </mapper>
