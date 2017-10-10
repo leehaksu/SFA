@@ -13,7 +13,9 @@ import com.sfa.dto.JSONResult;
 import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
 import com.sfa.service.CustomerService;
+import com.sfa.service.PositionService;
 import com.sfa.vo.CustomerVo;
+import com.sfa.vo.PositionVo;
 import com.sfa.vo.UserVo;
 
 @Controller
@@ -22,7 +24,16 @@ public class CustomerController {
 
 	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
+	PositionService positionService;
 
+	
+	@Auth
+	@RequestMapping(value = "/insert", method = RequestMethod.GET)
+	public String insert() {
+		return "customer/insert";
+	}
 	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
@@ -30,6 +41,9 @@ public class CustomerController {
 		if(authUser==null)
 		{
 			return JSONResult.error("로그인 세션이 만료되었습니다.");
+		}else if (customerVo==null)
+		{
+			return JSONResult.error("입력값이 들어오지 않았습니다.");
 		}else
 		{
 			
@@ -57,5 +71,17 @@ public class CustomerController {
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String delete(@ModelAttribute CustomerVo customerVo, @AuthUser UserVo authUser) {
 		return null;
+	}
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/position", method = RequestMethod.POST)
+	public JSONResult getPosition(@AuthUser UserVo authUser,PositionVo positionVo) {
+		if (authUser == null) {
+			return JSONResult.error("로그인 되지 않았습니다.");
+		} else {
+			positionVo.setId(authUser.getId());
+			List<PositionVo> list = positionService.getPosition(positionVo);
+			return JSONResult.success(list);
+		}
 	}
 }

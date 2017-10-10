@@ -20,7 +20,7 @@
 	</delete>
 	<select id="select" parameterType="advicevo" resultType="advicevo">
 	<![CDATA[
-	select advice_no, title,content,date,manager_name,reg_date,code from advice where id=#{id} and date=#{date} ;
+	select advice_no, title,content,date,manager_name,reg_date,customer_code from advice where id=#{id} and date=#{date} ;
 	]]>
 	</select>
 </mapper>

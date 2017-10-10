@@ -1,58 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SaleForceAutomation</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.servletContext.contextPath}/assets/css/main.css">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/bootstrap-theme.min.css">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.servletContext.contextPath}/assets/css/join.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.servletContext.contextPath}/assets/css/jquery-ui.min.css">
-
-
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/jquery-3.2.1.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/jquery-ui.js"></script>
-
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/bootstrap.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/moment.js"></script>
-
-
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/froala_editor/css/froala_editor.css">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/assets/froala_editor/css/froala_style.min.css">
-<script type="text/javascript"
-	src="${pageContext.servletContext.contextPath}/assets/froala_editor/js/froala_editor.min.js"></script>
-<script type="text/javascript"
-	src="${pageContext.servletContext.contextPath}/assets/froala_editor/js/plugins/paragraph_format.min.js"></script>
-
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.servletContext.contextPath}/assets/bootstrap-fileinput/css/fileinput.min.css">
-<script
-	src="${pageContext.servletContext.contextPath}/assets/bootstrap-fileinput/js/fileinput.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/bootstrap-fileinput/js/locales/kr.js"></script>
-
-
+	<c:import url="/WEB-INF/views/common/common.jsp"></c:import>
 
 <script type="text/javascript">
 //현재 날짜 변수
@@ -244,33 +201,29 @@ $(document).ready(function() {
 			
 			$.post("${pageContext.servletContext.contextPath}/advice/insert",
 			{
-				"code="+advice.code,
-				"manager_name="+advice.manager,
-				"date="+advice.date,
-				"title="+advice.title,
-				"content="+$("#advice-textarea").froalaEditor('html.get');
-
 				code:advice[0].code,
 				manager_name:advice[2].manager_name,
 				date:advice[4].date,
 				title:advice[5].title,
 				content:$("#advice-textarea").froalaEditor('html.get')
-
 			},
 			function(response,status){
 				
 				if(response.result == "success"){
-					
-				}
-				adviceCount += 1;
-				var div = document.createElement('div');
-				div.setAttribute("id","advice_content"+adviceCount);
-				div.setAttribute("class","advice_content");
+					adviceCount += 1;
+					var div = document.createElement('div');
+					div.setAttribute("id","advice_content"+adviceCount);
+					div.setAttribute("class","advice_content");
 
-				div.innerHTML = document.getElementById('advice_content1').innerHTML;
-				document.getElementById('advice_contianer').appendChild(div);
+					div.innerHTML = document.getElementById('advice_content1').innerHTML;
+					document.getElementById('advice_contianer').appendChild(div);					
+				}
 			});
-			document.getElementById("advice_form").reset();
+		     
+			$("#advice_content1").children('#advice_form').each(function() {  
+            	this.reset();  
+         	});  
+
 			//var index = $(".advicereporttable-savebutton").index(this);
 			//console.log(index);
 			//var form = $('#advice_content'+index);
@@ -413,18 +366,6 @@ $(document).ready(function() {
 									<strong>저장하기</strong>
 								</button>
 							</div>
-							<!-- <div id="update-btn" class="btn-group" role="group">
-								<button id="dayreport-updatebutton" class="btn btn-info"
-									type="submit">
-									<strong>수정하기</strong>
-								</button>
-							</div>
-							<div id="delete-btn" class="btn-group" role="group">
-								<button id="dayreport-deletebutton" class="btn btn-default"
-									type="submit">
-									<strong>삭제하기</strong>
-								</button>
-							</div> -->
 						</div>
 					</div>				
 					<div class="modal fade" id="myModal" role="dialog" style="z-index:1000000">
@@ -457,6 +398,10 @@ $(document).ready(function() {
 									style="clear: both; margin-top : 10px;">
 									<div class="panel-heading" style="color: #fff; ">
 										<strong>상담카드</strong>
+										<div style="float: right;">
+										 <i class="fa fa-pencil fa-6" aria-hidden="true"></i>
+										 <i class="fa fa-trash fa-6" aria-hidden="true"></i>
+										</div>
 									</div>
 									<div class="panel-body">
 										<table id="advicereporttable"

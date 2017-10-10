@@ -1,0 +1,65 @@
+
+#dayplantable-weekplan>thead>tr>th {
+	text-align: center;
+	width: 20%;
+}
+
+#dayplantable-weekplan>tbody>tr>td {
+	text-align: center;
+	width: 20%;
+}
+
+#side-dayplan-coworker-group {
+	width: 78%;
+	height: 40px;
+	display: inline-block;
+	float: left;
+	margin: 0 0 0 0;
+	display: inline-block;
+}
+
+#side-dayplan-coworker-button, #side-dayplan-coworker_list,#side-dayplan-open-button{
+	width: 100%;
+	height: 100%;
+}
+
+#side-dayplan {
+	width: 22%;
+	display: inline-block;
+	float: right;
+	padding: 5px 5px;
+}
+
+#side-dayplan-title {
+	width: 90%;
+	height: 20%;
+	margin: 10px 10px 0px 10px;
+	text-align: center;
+}
+
+#side-dayplan2,#side-dayplan3 {
+	clear: both;
+	width: 90%;
+	height: 20%;
+}
+
+#side-dayplan-date {
+	width: 100%;
+	height: 20%;
+	margin: 1px 10px 1px 10px;
+	padding: 10px 3px;
+	border-top: 5px solid #afafaf;
+	border-bottom: 2px solid #ffffff;
+	color: #333;
+	font-size: 1.1em;
+}
+
+#side-dayplan-content {
+	width:100%;
+	height: 20%;
+	margin: 1px 10px 1px 10px;
+	padding: 10px 3px;
+	font-size: 0.9em;
+	background: #fffff0;
+}
+

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sfa.vo.DateReportVo;
+import com.sfa.vo.WeekVo;
 
 @Repository
 public class DateReportDao {
@@ -94,6 +95,14 @@ public class DateReportDao {
 		map.put("report_no", report_no);
 		map.put("approval", approval);
 		return sqlSession.update("datereport.updateApproval",map);
+	}
+
+	public WeekVo selectReport(String date,String id) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("date", date);
+		map.put("id", id);
+		return sqlSession.selectOne("datereport.reportByDate", map);
 	}
 
 }

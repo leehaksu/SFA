@@ -1,29 +1,27 @@
 package com.sfa.vo;
+
 //고객 관리
 public class CustomerVo {
-	
-	private String code;//고객 고유 코드
-	private String division_code;//고객 2차 코드
-	private String name;//이름
-	private String contact;//연락처
-	private String manager_name;//담당자 이름
+
+	private String customer_code;// 고객 고유 코드
+	private String name;// 이름
+	private String contact;// 연락처
+	private String manager_name;// 담당자 이름
 	private String manager_grade;// 담당자 직급
+	private String manager_contact; // 담당자 연락처
 	private String manager_email;// 담당자 이메일
 	private String manager_birth;// 담당자 생일
 	private String time;// 영업 시간
 	private String address;// 주소
-	private String id;//아이디
-	public String getCode() {
-		return code;
+	private String id;// 아이디
+	private double positionX;//고객 위치
+	private double positionY;// 고객 위치
+	private int state;// 고객 상태 (0-비활성화, 1-활성화)
+	public String getCustomer_code() {
+		return customer_code;
 	}
-	public void setCode(String code) {
-		this.code = code;
-	}
-	public String getDivision_code() {
-		return division_code;
-	}
-	public void setDivision_code(String division_code) {
-		this.division_code = division_code;
+	public void setCustomer_code(String customer_code) {
+		this.customer_code = customer_code;
 	}
 	public String getName() {
 		return name;
@@ -48,6 +46,12 @@ public class CustomerVo {
 	}
 	public void setManager_grade(String manager_grade) {
 		this.manager_grade = manager_grade;
+	}
+	public String getManager_contact() {
+		return manager_contact;
+	}
+	public void setManager_contact(String manager_contact) {
+		this.manager_contact = manager_contact;
 	}
 	public String getManager_email() {
 		return manager_email;
@@ -79,14 +83,30 @@ public class CustomerVo {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+	public double getPositionX() {
+		return positionX;
+	}
+	public void setPositionX(double positionX) {
+		this.positionX = positionX;
+	}
+	public double getPositionY() {
+		return positionY;
+	}
+	public void setPositionY(double positionY) {
+		this.positionY = positionY;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
 	@Override
 	public String toString() {
-		return "CustomerVo [code=" + code + ", division_code=" + division_code + ", name=" + name + ", contact="
-				+ contact + ", manager_name=" + manager_name + ", manager_grade=" + manager_grade + ", manager_email="
-				+ manager_email + ", manager_birth=" + manager_birth + ", time=" + time + ", address=" + address
-				+ ", id=" + id + "]";
+		return "CustomerVo [customer_code=" + customer_code + ", name=" + name + ", contact=" + contact
+				+ ", manager_name=" + manager_name + ", manager_grade=" + manager_grade + ", manager_contact="
+				+ manager_contact + ", manager_email=" + manager_email + ", manager_birth=" + manager_birth + ", time="
+				+ time + ", address=" + address + ", id=" + id + ", positionX=" + positionX + ", positionY=" + positionY
+				+ ", state=" + state + "]";
 	}
-	
-	
 }

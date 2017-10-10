@@ -22,7 +22,7 @@ public class DateReportService {
 	public double getAchive_rank(DateReportVo dateReportVo) {
 		Long goal_sale = (long) 0;
 		Long achive_rank = (long) 0;
-		System.out.println(planDateDao.selectReport(dateReportVo));
+		System.out.println(planDateDao.selectGoal(dateReportVo));
 		// planDateDao.select(dateReportVo);
 		if (goal_sale == 0) {
 			achive_rank = (long) 0.0;

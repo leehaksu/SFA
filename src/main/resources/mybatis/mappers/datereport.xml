@@ -18,12 +18,12 @@
 	</update>
 	<select id="getById" parameterType="datereportvo" resultType="datereportvo">
 		<![CDATA[
-		select report_no,title, report_sale,content,achive_rank,approval,opinion,reg_date,date from day_report where id=#{id}; 
+		select report_no,title,report_sale,b.content as content,achive_rank,approval,opinion,b.date,reg_date,day_sale as goal_sale from day_report as a,day_plan as b where a.date=b.date and a.id=b.id and a.id=#{id};
 		]]>
 	</select>
 	<select id="getByDate" parameterType="datereportvo" resultType="datereportvo">
 		<![CDATA[
-		select report_no,title, report_sale,content,achive_rank,approval,opinion,reg_date,date from day_report where date=#{date} and id=#{id}; 
+		select report_no,title,report_sale,b.content as content,achive_rank,approval,opinion,b.date,reg_date,day_sale as goal_sale from day_report as a,day_plan as b where a.date=b.date and a.id=b.id and a.date=#{date} and a.id=#{id};	
 		]]>
 	</select>
 	<select id="getByDept" parameterType="datereportvo" resultType="datereportvo">
@@ -33,8 +33,7 @@
 		]]>
 	</select>
 	<delete id="delete" parameterType="datereportvo">
-		delete from day_report where
-		id=#{id} and date=#{date} and approval=0;
+		delete from day_report where report_no=#{report_no} and id=#{id} and approval=0;
 	</delete>
 	<select id="getApproval" parameterType="MAP" resultType="datereportvo">
 		<![CDATA[
@@ -76,4 +75,9 @@
 	update day_report set approval=#{approval} where report_no=#{report_no};
 	]]>
 	</update>
+	<select id="reportByDate" parameterType="MAP" resultType="weekvo">
+	<![CDATA[
+	select report_sale, achive_rank from day_report where date=#{date} and id=#{id};
+	]]>
+	</select>
 </mapper>

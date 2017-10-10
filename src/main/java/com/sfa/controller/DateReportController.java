@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sfa.dto.JSONResult;
 import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
+import com.sfa.service.DatePlanService;
 import com.sfa.service.DateReportService;
 import com.sfa.service.UserService;
 import com.sfa.util.Push;
 import com.sfa.vo.DateReportVo;
+import com.sfa.vo.DateVo;
 import com.sfa.vo.UserVo;
 
 @Controller
@@ -28,12 +30,17 @@ public class DateReportController {
 
 	@Autowired
 	DateReportService dateReprotService;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private DatePlanService datePlanService;
 
 	@Autowired
 	private Push push;
 	
-	@Autowired
-	private UserService userService;
+
 	
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
@@ -99,9 +106,13 @@ public class DateReportController {
 	@Auth
 	@ResponseBody
 	@RequestMapping(value="/select", method=RequestMethod.GET)
-	public JSONResult select(@RequestParam(value="report_no", required=true, defaultValue="") Long report_no,Model model)
+	public JSONResult select(@RequestParam(value="report_no", required=true, defaultValue="") Long report_no,
+			@AuthUser UserVo authUser,Model model)
 	{
 		DateReportVo dateReportVo = dateReprotService.selectReport(report_no);
+		dateReportVo.setId(authUser.getId());
+		Long goal_sale =datePlanService.getGoal_sale(dateReportVo);
+		dateReportVo.setGoal_sale(goal_sale);
 		model.addAttribute("dateReportVo", dateReportVo);
 		
 		return null;//report_detail로 넘겨줄 예정 ->파일 생성되지 않음.

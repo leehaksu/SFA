@@ -24,6 +24,11 @@ public class MobileCustomerController {
 	@RequestMapping("/insert")
 	public JSONResult insert(@ModelAttribute CustomerVo customerVo)
 	{
+		System.out.println("[Controller]"+customerVo);
+		if(customerVo==null)
+		{
+			return JSONResult.error("정상적인 접근이 아닙니다.");
+		}
 		int no=customerService.insert(customerVo);
 		if(no==1)
 		{
@@ -40,14 +45,10 @@ public class MobileCustomerController {
 	{
 		if("".equals(id))
 		{
-			return JSONResult.error("아이디랑 날짜가 입력되지 않았습니다.");
+			return JSONResult.error("아이디가 입력되지 않았습니다.");
 		}else
 		{
 			List<CustomerVo> list = customerService.select(id);
-			if(list==null)
-			{
-				return JSONResult.fail("오류가 발생했습니다.");
-			}
 			return JSONResult.success(list);
 		}
 	}
@@ -65,5 +66,19 @@ public class MobileCustomerController {
 			return JSONResult.success();
 		}
 	}
+	@ResponseBody
+	@RequestMapping("/delete")
+	public JSONResult delete(@RequestParam(value="customer_code",required=true,defaultValue="")String customer_code)
+	{
+		if("".equals(customer_code))
+		{
+			return JSONResult.error("고객코드가 넘어오지 않았습니다.");
+		}else
+		{
+			int no = customerService.delete(customer_code);
+		}
+		return null;
+	}
+	
 
 }

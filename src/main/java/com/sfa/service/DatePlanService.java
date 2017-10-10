@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sfa.repository.PlanDateDao;
+import com.sfa.vo.DateReportVo;
 import com.sfa.vo.DateVo;
 
 @Service
@@ -31,5 +32,9 @@ public class DatePlanService {
 	public int deleteDate(DateVo dateVo) {
 		// TODO Auto-generated method stub
 		return planDateDao.delete(dateVo);
+	}
+	public Long getGoal_sale(DateReportVo dateReportVo) {
+		// TODO Auto-generated method stub
+		return planDateDao.selectGoal(dateReportVo);
 	}
 }

@@ -40,11 +40,14 @@ public class PlanWeekController {
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public String insertWeek(@ModelAttribute WeekVo weekVo, @AuthUser UserVo authUser, @ModelAttribute DayVo dayVo) {
+		System.out.println("[controller]"+weekVo);
 		if (authUser == null) {
 			return "redirect:/user/login";
 		} else {
+			System.out.println("[controller] insert부분 들어옴");
 			weekVo.setId(authUser.getId());
 			boolean check = weekPlanService.insertWeek(weekVo, dayVo);
+			System.out.println("[controller]"+check);
 			if (check) {
 				UserVo userVo = userService.getLeader(authUser.getId());
 
@@ -84,11 +87,11 @@ public class PlanWeekController {
 
 		int no = weekPlanService.update(weekVo);
 		if (no == 6) {
-			UserVo userVo = userService.getLeader(authUser.getDept());
-
+			UserVo userVo = userService.getLeader(authUser.getId());
+				System.out.println("[controlloer]"+userVo);
 			try {
 				push.Mail(
-						userVo.getEmail(), weekVo.getTitle(), authUser.getName() + "[" + authUser.getGrade() + "]"
+						userVo.getCompany_email(), weekVo.getTitle(), authUser.getName() + "[" + authUser.getGrade() + "]"
 								+ "님이 주간 계획을 업데이트 하였습니다.\n" + "<a herf='localhost:8080/sfa/week'> 내용 확인하러 가기 </a>",
 						authUser.getId());
 				UserVo userVo2= userService.getLeader(userVo.getId());
@@ -136,9 +139,13 @@ public class PlanWeekController {
 		}
 
 		List<DayVo> list = weekPlanService.selectMonth(dayVo);
+		
+		
 		if (list == null) {
 			return JSONResult.fail("제대로 불러오지 못햇습니다.");
-		} else {
+		} 
+		
+		else {
 			return JSONResult.success(list);
 		}
 	}
@@ -163,12 +170,20 @@ public class PlanWeekController {
 			weekVo.setFirst_date(Date);
 		}
 		weekVo = weekPlanService.selectWeek(weekVo);
-
-		if (weekVo == null) {
+        WeekVo temp_weekVo = weekPlanService.selectReport(Date,authUser.getId());
+		System.out.println("[controller]"+temp_weekVo);
+        
+        if (weekVo == null) {
 			JSONResult.error("서버에 error 발생");
-		} else if (weekVo.getMonday() == null) {
-			JSONResult.fail(weekVo);
+		} else if (temp_weekVo==null) {
+			weekVo.setAchive_rank(0.0);
+			weekVo.setWeek_sale((long) 0);	
+		} else
+		{
+			weekVo.setAchive_rank(temp_weekVo.getAchive_rank());
+			weekVo.setWeek_sale(temp_weekVo.getWeek_sale());
 		}
+        System.out.println(weekVo);
 		return JSONResult.success(weekVo);
 	}
 }

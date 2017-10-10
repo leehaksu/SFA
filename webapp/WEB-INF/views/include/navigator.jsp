@@ -20,13 +20,13 @@
 					<li><a id="menu2"
 						class="accordion-toggle collapsed toggle-switch"
 						data-toggle="collapse" href="#submenu-2"> <span
-							class="sidebar-icon"> <i class="fa fa-users"></i>
+							class="sidebar-icon"> <i class="fa fa-address-book-o" aria-hidden="true"></i>
 						</span> <span class="sidebar-title">고객 관리</span> <b class="caret"></b>
 					</a>
 						<ul id="submenu-2" class="panel-collapse collapse panel-switch"
 							role="menu">
 							<li><a href="#"><i class="fa fa-caret-right"></i>고객 조회</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i>고객 등록</a></li>
+							<li><a href="${pageContext.servletContext.contextPath}/customer/insert"><i class="fa fa-caret-right"></i>고객 등록</a></li>
 						</ul></li>
 					<li><a id="menu3"
 						class="accordion-toggle collapsed toggle-switch"
