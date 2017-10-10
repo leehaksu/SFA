@@ -111,4 +111,9 @@
 	select email from user where email=#{email};
 	]]>
 	</select>
+	<select id="getIdbyToken" parameterType="MAP" resultType="uservo">
+	<![CDATA[
+	select id from user where token=#{token};
+	]]>
+	</select>
 </mapper>

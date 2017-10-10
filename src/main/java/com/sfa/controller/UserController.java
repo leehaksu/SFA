@@ -259,4 +259,11 @@ public class UserController {
 		}
 		return null;
 	}
+	
+	@RequestMapping(value="/mypage", method=RequestMethod.GET)
+	public String mypage(@AuthUser UserVo authUSer,Model model)
+	{
+		model.addAttribute("user", authUSer);
+		return null;
+	}
 }

@@ -103,4 +103,14 @@ public class UserService {
 		// TODO Auto-generated method stub
 		return userDao.getEmail(email);
 	}
+
+	public int deleteToken(String id) {
+		// TODO Auto-generated method stub
+		return userDao.delteToken(id);
+	}
+
+	public UserVo getIdbyToken(String token) {
+		// TODO Auto-generated method stub
+		return userDao.getIdByToken(token);
+	}
 }
