@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,18 +12,18 @@
 		var current_longitude;
 
 function getLocation() {
-			//console.log("1¹øÂ° ½ÇÇà");
+			//console.log("1ë²ˆì§¸ ì‹¤í–‰");
 			if (navigator.geolocation) {        
 				navigator.geolocation.getCurrentPosition(showPosition,showError);
 			} else { 
-				alert("À§Ä¡ ±â¹İ ¼­ºñ½º¸¦ Áö¿øÇÏÁö ¾Ê´Â ºê¶ó¿ìÀú ÀÔ´Ï´Ù.")
+				alert("ìœ„ì¹˜ ê¸°ë°˜ ì„œë¹„ìŠ¤ë¥¼ ì§€ì›í•˜ì§€ ì•ŠëŠ” ë¸Œë¼ìš°ì € ì…ë‹ˆë‹¤.")
 			}
 		}
 			function showPosition(position) {
-    	 //console.log("2¹øÂ° ½ÇÇà");
+    	 //console.log("2ë²ˆì§¸ ì‹¤í–‰");
     	 current_latitude = position.coords.latitude; 
     	 current_longitude= position.coords.longitude;
-    	//map »ı¼º
+    	//map ìƒì„±
     	init(); 
     } 
     function showError(error) {
@@ -46,7 +46,7 @@ function getLocation() {
     }
 		
     function init() {	
-	 	zoom = 16;  // zoom levelÀÔ´Ï´Ù.  0~19 ·¹º§À» ¼­ºñ½º ÇÏ°í ÀÖ½À´Ï´Ù. 
+	 	zoom = 16;  // zoom levelì…ë‹ˆë‹¤.  0~19 ë ˆë²¨ì„ ì„œë¹„ìŠ¤ í•˜ê³  ìˆìŠµë‹ˆë‹¤. 
 	 	cLonLat = new Tmap.LonLat(current_longitude,current_latitude);
 
 	 	map = new Tmap.Map({div:'map_div', width:'400px' ,height:'400px', animation:true}); 
@@ -72,44 +72,44 @@ function getLocation() {
 		<main id="page-content-wrapper" role="main">
 		<div class="container" >
 			<br>
-			<h3>°í°´ µî·Ï</h3>
+			<h3>ê³ ê° ë“±ë¡</h3>
 			<hr>
 			<div class="customer">
-				<h3>°í°´»ç Á¤º¸</h3>
+				<h3>ê³ ê°ì‚¬ ì •ë³´</h3>
 				<form>
 					<table class="table customer-table">
 						<tbody>
 							<tr>
-								<th>°í°´ ÄÚµå</th>
-								<td><ÀÚµ¿ ±âÀÔ></td>
+								<th>ê³ ê° ì½”ë“œ</th>
+								<td><ìë™ ê¸°ì…></td>
 							</tr>
 							<tr>
-								<th>°í°´¸í</th>
+								<th>ê³ ê°ëª…</th>
 								<td><input type="input" class="form-control" name="name">
 								</td>
 							</tr>
 							<tr>
-								<th>°í°´ ¿¬¶ôÃ³</th>
+								<th>ê³ ê° ì—°ë½ì²˜</th>
 								<td><input type="input" class="form-control" name="name">
 								</td>
 							</tr>
 							<tr>
-								<th>°í°´ ¿µ¾÷½Ã°£</th>
+								<th>ê³ ê° ì˜ì—…ì‹œê°„</th>
 								<td><input type="input" class="form-control" name="name">
 								</td>
 							</tr>
 							<tr>
-								<th>¾÷Ã¼ ÁÖ¼Ò</th>
+								<th>ì—…ì²´ ì£¼ì†Œ</th>
 								<td><input id="customer-address-input" type="input" class="form-control" name="name" >
 									<button type="button" class="btn btn-info btn-lg"
-										data-toggle="modal" data-target="#search_customer_map">¸Ê
-										°Ë»ö</button>
+										data-toggle="modal" data-target="#search_customer_map">ë§µ
+										ê²€ìƒ‰</button>
 									<div id="search_customer_map" class="modal fade" role="dialog">
 										<div class="modal-dialog">
 											<div class="modal-content">
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal">&times;</button>
-													<h4 class="modal-title">°í°´ À§Ä¡ °Ë»ö</h4>
+													<h4 class="modal-title">ê³ ê° ìœ„ì¹˜ ê²€ìƒ‰</h4>
 												</div>
 												<div class="modal-body">
 													<div id="map_div"></div>
@@ -130,7 +130,7 @@ function getLocation() {
 		</div>
 		
 		<br>
-		<h3>´ç´ãÀÚ</h3>
+		<h3>ë‹¹ë‹´ì</h3>
 		
 		</main>		
 </body>

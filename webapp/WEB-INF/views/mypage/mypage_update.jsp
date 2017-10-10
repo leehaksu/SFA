@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,37 +24,31 @@
 	<form class="form-horizontal">
 		<fieldset>
 			<!-- Form Name -->
-			<legend>ȸ������</legend>
+			<legend>회원정보</legend>
 
 			<!-- Text input-->
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="customer_id">
+				<label class="col-md-4 control-label" for="user_id">
 					ID</label>
 				<div class="col-md-4">
-					<input id="customer_id" name="customer_id"
-						placeholder="CUSTOMER ID" class="form-control input-md"
-						required="" type="text">
-
+					아이디: <span>${authUser.id}</span>
 				</div>
 			</div>
 
 			<!-- Text input-->
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="customer_name">�̸�</label>
+				<label class="col-md-4 control-label" for="user_name">${authUser.name}</label>
 				<div class="col-md-4">
-					<input id="customer_name" name="customer_name"
-						placeholder="CUSTOMER NAME" class="form-control input-md"
-						required="" type="text">
-
+					이름 : <span>관리자</span>
 				</div>
 			</div>
 
 			<!-- Text input-->
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="customer_e_mail">�̸���</label>
+				<label class="col-md-4 control-label" for="user_e_mail">이메일</label>
 				<div class="col-md-4">
-					<input id="customer_e_mail" name="customer_e_mail"
-						placeholder="CUSTOMER E.MAIL" class="form-control input-md"
+					<input id="user_e_mail" name="user_e_mail"
+						placeholder="개인 이메일" class="form-control input-md"
 						required="" type="text">
 
 				</div>
@@ -69,24 +63,43 @@
 
 				</div>
 			</div>
-
-			<!-- Text input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="customer_status">�μ�</label>
+			
+				<div class="form-group">
+				<label class="col-md-4 control-label" for="password_check">PASSWORD 확인</label>
 				<div class="col-md-4">
-					<input id="customer_status" name="customer_status"
-						placeholder="CUSTOMER STATUS" class="form-control input-md"
-						required="" type="text">
+					<input id="password_check" name="password_check" placeholder="비밀번호 확인"
+						class="form-control input-md" required="" type="password">
 
 				</div>
 			</div>
 
 			<!-- Text input-->
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="site_web">����</label>
+				<label class="col-md-4 control-label" for="user_status">부서</label>
 				<div class="col-md-4">
-					<input id="site_web" name="site_web" placeholder="SITE WEB"
-						class="form-control input-md" type="text">
+					<select id="user_status" name="user_status"
+						 class="form-control input-md"
+						required> 
+						<option value="부서" selected>부서</option>
+						<option value="1">영업1팀</option>
+						<option value="2">영업2팀</option>
+						<option value="3">영업3팀</option>						
+						</select>
+
+				</div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="grade">직급</label>
+				<div class="col-md-4">
+					<select id="grade" name="grade"
+						class="form-control input-md" required>
+						<option value="부서" selected>직급</option>
+						<option value="1">사원</option>
+						<option value="2">대리</option>
+						<option value="3">과장</option>
+						</select>
 
 				</div>
 			</div>
@@ -94,7 +107,7 @@
 
 			<!-- Text input-->
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="phone1">��ȭ��ȣ</label>
+				<label class="col-md-4 control-label" for="phone1">전화번호</label>
 				<div class="col-md-4">
 					<input id="phone1" name="phone1" placeholder="PHONE1"
 						class="form-control input-md" required="" type="text">

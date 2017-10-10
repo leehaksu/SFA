@@ -225,6 +225,10 @@ body {
 	background: #245682 !important;
 	color: #fff !important;
 }
+.sidebar-nav li:nth-child(6) a {
+	background: #104068 !important;
+	color: #fff !important;
+}
 
 #calendar_main {
 	width: 70%;

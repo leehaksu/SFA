@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,44 +23,44 @@
 	<main id="page-content-wrapper" role="main">
 	<div class="container" style="margin-left: 18%;">
 		<br>
-		<h3>°í°´ Á¶È¸</h3>
+		<h3>ê³ ê° ì¡°íšŒ</h3>
 		<hr>
 		<div class="search_wrap">
 			<div class="search_list">
 				<ul>
 					<li class="all"><input class="ng-all" type="text"
-						placeholder="°í°´¸í"></li>
-					<li class="btn_group"><a href="#" class="button" type="button">Ãß°¡</a>
-						<a href="#" class="button" type="button">°Ë»ö</a></li>
+						placeholder="ê³ ê°ëª…"></li>
+					<li class="btn_group"><a href="#" class="button" type="button">ì¶”ê°€</a>
+						<a href="#" class="button" type="button">ê²€ìƒ‰</a></li>
 					<li><select name="ng-valid" class="ng-valid">
-							<option value="¿µ¾÷ºÎ" selected>¿µ¾÷ºÎ</option>
-							<option value="ÆÄÆ®³Ê">ÆÄÆ®³Ê</option>
-							<option value="ÆÄÆ®³Ê»ç">ÆÄÆ®³Ê»ç</option>
+							<option value="ì˜ì—…ë¶€" selected>ì˜ì—…ë¶€</option>
+							<option value="íŒŒíŠ¸ë„ˆ">íŒŒíŠ¸ë„ˆ</option>
+							<option value="íŒŒíŠ¸ë„ˆì‚¬">íŒŒíŠ¸ë„ˆì‚¬</option>
 					</select></li>
 					<li><select name="ng-valid" class="ng-valid">
-							<option value="»ç¿ø¸í" selected>»ç¿ø¸í</option>
-							<option value="±è´ë¸®">ÆÄÆ®³Ê</option>
-							<option value="ÀÌÂ÷Àå">ÆÄÆ®³Ê»ç</option>
+							<option value="ì‚¬ì›ëª…" selected>ì‚¬ì›ëª…</option>
+							<option value="ê¹€ëŒ€ë¦¬">íŒŒíŠ¸ë„ˆ</option>
+							<option value="ì´ì°¨ìž¥">íŒŒíŠ¸ë„ˆì‚¬</option>
 					</select></li>
 				</ul>
 			</div>
 			<div class="search_mt">
 				<div class="left">
-					<span class="ng-binding">0°Ç</span>
+					<span class="ng-binding">0ê±´</span>
 				</div>
 				<div class="right">
-					<a class="on" href="#">µî·ÏÀÏ ¼ø</a> <a class="on" href="#">°í°´»ç ¼ø</a> <a
-						class="on default" href="#">°¡³ª´Ù ¼ø</a>
+					<a class="on" href="#">ë“±ë¡ì¼ ìˆœ</a> <a class="on" href="#">ê³ ê°ì‚¬ ìˆœ</a> <a
+						class="on default" href="#">ê°€ë‚˜ë‹¤ ìˆœ</a>
 				</div>
 			</div>
 		</div>
 		<hr>
 		<div>
-			<h4>¾Ë¸®µò ½´ÆÛ</h4>
-			<small>¼­¿ï½Ã µ¿ÀÛ±¸ ½Å´ë¹æµ¿ <i class="glyphicon glyphicon-map-marker"> </i>
+			<h4>ì•Œë¦¬ë”˜ ìŠˆí¼</h4>
+			<small>ì„œìš¸ì‹œ ë™ìž‘êµ¬ ì‹ ëŒ€ë°©ë™ <i class="glyphicon glyphicon-map-marker"> </i>
 			</small>
 			<p>
-				<i class="fa fa-user" aria-hidden="true"></i>´ã´çÀÚ:±è»ï¼ø<br />
+				<i class="fa fa-user" aria-hidden="true"></i>ë‹´ë‹¹ìž:ê¹€ì‚¼ìˆœ<br />
 				<i class="glyphicon glyphicon-envelope"></i>email@example.com <br />
 				<i class="fa fa-phone" aria-hidden="true"></i>010-1234-5678
 			</p>
