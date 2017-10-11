@@ -73,14 +73,15 @@ function getLocation() {
 				<c:param name="menu" value="main" />
 			</c:import>
 		</div>
-		<!-- 	</div> -->
+		</div> 
 		<main id="page-content-wrapper" role="main">
-		<div class="container">
+		<div class="customer-container">
 			<div class="page-header">
 					<h3 class="dayreport">
 						<strong>고객 등록</strong>
 					</h3>
 				</div>
+			<div id="custominertmain-content">
 			<div class="customer">
 				<h3>고객사 정보</h3>
 				<form>
@@ -160,6 +161,7 @@ function getLocation() {
 			<br>
 			<input id="customer-submit-button" type="submit" class="btn btn-default">
 		</form>
+		</div>
 		</div>
 		</main>
 </body>

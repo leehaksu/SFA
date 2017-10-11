@@ -34,22 +34,6 @@
 			<div class="container_right">
 				<div class="title">
 					<h4 id="main_notice">
-						<Strong>매출 현황표</Strong>
-					</h4>
-				</div>
-			</div>
-			<div class="container_left">
-				<div class="title">
-					<h4 id="distance_notice">
-						<Strong>목표 주행거리</Strong> :2534<Strong>KM</strong>&nbsp;
-						<Strong>총 주행거리</Strong> :2222<Strong>KM</strong>&nbsp;
-						<Strong>일일 주행거리</Strong> :1572<Strong>KM</strong>
-					</h4>
-				</div>
-			</div>
-			<div class="container_right">
-				<div class="title">
-					<h4 id="main_notice">
 						<i class="fa fa-list" aria-hidden="true"></i>&nbsp;&nbsp;<Strong>공지사항</Strong>
 					</h4>
 					<h5 id="main_notice2">

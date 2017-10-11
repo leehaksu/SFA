@@ -16,6 +16,6 @@ public class ChartController {
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String chart(@AuthUser UserVo authUser)
 	{
-		return "chart/leaderchart";
+		return "chart/teamchart";
 	}
 }

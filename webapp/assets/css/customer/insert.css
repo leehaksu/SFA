@@ -1,9 +1,11 @@
  #customer-address-input{
-    width: 88%;
+    width: 83%;
  }
- 
+ .customer-container{
+ 	width:800px;
+ }
  .customer-table{
- 	width: 80%;
+ 	width: 100%;
  }
  #customer-submit-button{
      float: right;

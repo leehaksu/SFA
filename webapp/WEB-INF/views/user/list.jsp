@@ -22,8 +22,8 @@
 			</c:import>
 		</div>
 	</div>
-	<article>
-		<div id="search_container">
+	<main id="page-content-wrapper" role="main">
+		<div id="list_container">
 			<div class="page-header">
 					<h3 class="dayreport">
 						<strong>사원 정보 조회</strong>
@@ -90,6 +90,6 @@
 				</div>
 			</div>
 		</div>
-	</article>
+	</main>
 </body>
 </html>

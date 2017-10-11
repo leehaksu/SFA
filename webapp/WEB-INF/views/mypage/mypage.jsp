@@ -32,7 +32,7 @@
 			<!-- Text input-->
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="user_id"> ID</label>
-				<div class="col-md-4">
+				<div class="col-md-4" style="margin-top: 8px;">
 					<span>${authUser.id}</span>
 				</div>
 			</div>
@@ -40,7 +40,7 @@
 			<!-- Text input-->
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="user_name">이름</label>
-				<div class="col-md-4">
+				<div class="col-md-4" style="margin-top: 8px;">
 					<span>${authUser.name}</span>
 				</div>
 			</div>

@@ -173,7 +173,7 @@
 	border-top: 1px solid #e5e5e5;
 	border-bottom : 1px solid #e5e5e5;
 }
-.search_box, #search_list, .modify_box, .main_box
+.search_box, #search_list, .modify_box
 {	margin: 20px 50px 0px 50px;
 	width : 93%;
 	border : 1px solid #d7dbdf;
@@ -205,9 +205,4 @@
 {
 	margin-left : 300px;
 	margin-bottom : 50px;	
-}
-#modify_button
-{
-	padding-right : 150px;
-	text-align: right;
 }

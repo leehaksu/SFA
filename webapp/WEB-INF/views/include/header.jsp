@@ -30,7 +30,7 @@
 					<li><a href="${pageContext.servletContext.contextPath}/customer/search">고객 조회</a></li>
 					<li><a href="${pageContext.servletContext.contextPath}/customer/insert">고객 등록</a></li>
 				</ul></li>
-			<li class="droupdown menu-icon"><a  href="${pageContext.servletContext.contextPath}/chart/leaderchart"><i class="fa fa-line-chart"
+			<li class="droupdown menu-icon"><a  href="${pageContext.servletContext.contextPath}/chart/"><i class="fa fa-line-chart"
 					aria-hidden="true"></i> 영업 통계 </a>
 				
 					<c:if test="${authUser.level =='팀장'}">

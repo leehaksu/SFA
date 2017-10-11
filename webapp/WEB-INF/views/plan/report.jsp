@@ -256,7 +256,7 @@ $(document).ready(function() {
 						<strong>일일 보고서</strong>
 					</h3>
 				</div>
-				<div id="page_content">
+				<div id="reportmain_content">
 				<form name="dayreport" id="dayreport-form"  onsubmit="return validateForm()" method="post">
 					<table id="dayreporttable">
 						<tr>
@@ -265,25 +265,26 @@ $(document).ready(function() {
 									<div style="display: inline-block;">
 										<label for="show-day-title"
 											style="width: 100px; text-align: center;">예상
-											목표액&nbsp;</label> <input id="dayreporttable-goal-sale"
+											목표액&nbsp;</label> 
+											<input id="dayreporttable-goal-sale"
 											class="form-control dayreportform-input" type="text" name="goal_sale"
-											placeholder="ajax통신" style="width: 150px; margin-right: 6px;"
-											>
+											placeholder="ajax통신" >
 									</div>
 									<div style="display: inline-block;">
-										<label for="day" style="width: 115px; text-align: center;">매
-											출 액 &nbsp;</label> <input id="dayreporttable-report-sale"
+										<label for="day" style="width: 110px; text-align: center;">매
+											출 액 &nbsp;</label> 
+											<input id="dayreporttable-report-sale"
 											class="form-control dayreportform-input" type="Number" name="report_sale"
-											placeholder="일일 매출액" style="width: 150px; margin-right: 6px;"
+											placeholder="일일 매출액" 
 											onkeydown='return onlyNumber(event)'
 											onkeyup='removeChar(event)'
 											min="0" required >
 									</div>
 									<div style="display: inline-block;">
-										<label for="day" style="width: 115px; text-align: center;">달
+										<label for="day" style="width: 110px; text-align: center;">달
 											성 률 &nbsp;</label> <input id="dayreporttable-achive-rank"
 											class="form-control dayreportform-input" type="text" name=""
-											placeholder="일일 달성률" style="width: 230px; margin-right: 6px;"
+											placeholder="일일 달성률" 
 											required >
 									</div>
 								</div>
@@ -297,7 +298,7 @@ $(document).ready(function() {
 											style="width: 100px; text-align: center;">출발 계기판
 											&nbsp;</label> 
 											<input id="dayreporttable-startGauge" class="form-control dayreportform-input" type="text" name="start_gauge"
-											placeholder="출발 계기판" style="width: 150px; margin-right: 6px;"
+											placeholder="출발 계기판" 
 											required >
 											<a href="#" style="text-decoration: none" data-toggle="modal" data-target="#myModal"><i
 											class="fa fa-camera" aria-hidden="true"></i></a>
@@ -306,7 +307,7 @@ $(document).ready(function() {
 										<label for="day" style="width: 100px; text-align: center;">도착
 											계기판 </label> <input id="dayreporttable-endGauge"
 											class="form-control dayreportform-input" type="text" name="end_gauge"
-											placeholder="도착 계기판" style="width: 150px; margin-right: 6px;"
+											placeholder="도착 계기판" 
 											required ><a href="#AdviceModal"
 											style="text-decoration: none" data-toggle="modal" data-target="#myModal"><i class="fa fa-camera"></i></a>
 									</div>
@@ -314,7 +315,7 @@ $(document).ready(function() {
 										<label for="day" style="width: 100px; text-align: center;">주행거리
 											&nbsp;</label> <input id="dayreporttable-mile"
 											class="form-control dayreportform-input" type="text" name="mile"
-											placeholder="주행거리" style="width: 227px; margin-right: 6px;"
+											placeholder="주행거리" 
 											required >
 									</div>
 								</div>
@@ -335,7 +336,7 @@ $(document).ready(function() {
 										style="width: 115px; text-align: center">제출일&nbsp;</label> <input
 										id="submitDay-datepicker" class="form-control"
 										type="text"  placeholder="작성날짜"
-										style="width: 230px; margin-right: 6px;" required>
+										 required>
 										<input id="dayreport-date" type="hidden" name="date" class="dayreportform-input">
 								</div>
 							</td>
@@ -416,7 +417,7 @@ $(document).ready(function() {
 																&nbsp;</label> <input id="advicereporttable-code"
 																class="form-control advicereporttable-input" type="text"
 																name="code" placeholder="고객 코드"
-																style="width: 150px; margin-right: 6px;" required
+																required
 																data-toggle="modal" data-target="#AdviceModal" autocomplete="off">
 														</div>
 														<div style="display: inline-block;">
@@ -425,7 +426,7 @@ $(document).ready(function() {
 																id="advicereporttable-customer"
 																class="form-control advicereporttable-input" type="text"
 																name="customer" placeholder="고객명"
-																style="width: 150px; margin-right: 6px;" required
+																required
 																data-toggle="modal" data-target="#AdviceModal" autocomplete="off">
 														</div>
 														<div style="display: inline-block;">
@@ -434,7 +435,7 @@ $(document).ready(function() {
 																&nbsp;</label> <input id="advicereporttable-manager_name"
 																class="form-control advicereporttable-input" type="text"
 																name="manager_name" placeholder="담당자"
-																style="width: 220px; margin-right: 6px;" required
+																required
 																>
 														</div>
 													</div>
@@ -452,7 +453,7 @@ $(document).ready(function() {
 																style="width: 415px; margin-right: 6px;" required
 																data-toggle="modal" data-target="#AdviceModal" autocomplete="off">
 														</div>
-														<div style="display: inline-block;">
+														<div style="display: inline-block; margin-top: 20px;">
 															<label for="day" style="width: 100px; text-align: center">제출일&nbsp;</label>
 															<input id="advicereporttable-date"
 																class="form-control advicereporttable-input" type="text"
@@ -472,7 +473,7 @@ $(document).ready(function() {
 															<input id="advicereporttable-title"
 																class="form-control advicereporttable-input" type="text"
 																name="title" placeholder="제목을 입력해 주세요"
-																style="width: 740px; margin-right: 6px;" required autocomplete="off">
+																required autocomplete="off">
 														</div>
 													</div>
 												</td>

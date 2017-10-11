@@ -4,10 +4,8 @@
 }
 
 #positive-line p{
-  position: absolute;
+  text-align: center;
   color: white;
-  padding-top: 50px;
-  padding-left: 60px;
   height: 40px;
 }
 
@@ -43,7 +41,7 @@
 
 #login_form{
 	float: left;
-	padding-top: 150px;
+	padding-top: 20px;
 	padding-left:100px;
 }
 .input-group {

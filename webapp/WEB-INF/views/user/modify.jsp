@@ -139,8 +139,9 @@
 			</c:import>
 		</div>
 	</div>
+	<main id="page-content-wrapper" role="main">
 	<article>
-		<div id="join_container">
+		<div id="modify_container">
 			<div class="page-header">
 					<h3 class="dayreport">
 						<strong>회원 정보수정</strong>
@@ -320,8 +321,8 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-3 control-label" for="inputGrade"></label>
-						<div class="col-sm-6" id="modify_button">
+						<label class="control-label" for="inputGrade"></label>
+						<div id="modify_button">
 							<button id="modify_delete_button" class="btn btn-danger"
 								type="button">
 								<i class="fa fa-times spaceLeft"></i>&nbsp;탈퇴하기
@@ -340,5 +341,6 @@
 			</div>
 		</div>
 	</article>
+	<main>
 </body>
 </html>

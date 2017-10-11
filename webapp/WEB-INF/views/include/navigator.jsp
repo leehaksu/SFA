@@ -43,7 +43,7 @@ $(document).ready(function() {
 					<li>
 					<a id="menu3"
 						class="accordion-toggle collapsed toggle-switch"
-						 href="${pageContext.servletContext.contextPath}/chart/leaderchart"> <span
+						 href="${pageContext.servletContext.contextPath}/chart/"> <span
 							class="sidebar-icon"><i class="fa fa-line-chart"
 								aria-hidden="true"></i></span> <span class="sidebar-title">통계 현황</span>
 					</a>

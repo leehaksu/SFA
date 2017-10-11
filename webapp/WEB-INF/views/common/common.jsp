@@ -43,15 +43,26 @@
 <link rel="stylesheet" type="text/css" 
  	href="${pageContext.servletContext.contextPath}/assets/css/user/search.css"  media="all">
 <link rel="stylesheet" type="text/css"
+	href="${pageContext.servletContext.contextPath}/assets/css/user/list.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.servletContext.contextPath}/assets/css/user/modify.css">
+
+<link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/plan/dayplan.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/plan/weekplan.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.servletContext.contextPath}/assets/css/plan/report_search.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.servletContext.contextPath}/assets/css/plan/report.css">
+
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/customer/search.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/customer/insert.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath}/assets/css/mypage/mypage.css">
+
 
 
 <!-- jquery 자바스크립트 -->
@@ -85,14 +96,21 @@
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/util/validate.js"></script>
 <script
-	src="${pageContext.servletContext.contextPath}/assets/js/zingchart/zingchart.min.js"></script>
-
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
 
 <!-- 내부 자바스크립트 -->
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/user/join.js"></script>
-	
-
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/plan/calendar.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/plan/dayplan.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/plan/weekplan.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/util/util.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/util/validate.js"></script>	
 
 <!-- mo.js 파일 다운로드 -->
 

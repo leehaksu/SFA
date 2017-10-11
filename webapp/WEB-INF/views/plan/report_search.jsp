@@ -140,7 +140,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 		<main id="page-content-wrapper" role="main">
-		<article>
+		<article id="reportsearch-content">
 			<div>
 				<div class="page-header">
 					<h3 class="dayreport">
