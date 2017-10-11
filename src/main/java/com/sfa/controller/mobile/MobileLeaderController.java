@@ -37,10 +37,10 @@ public class MobileLeaderController {
 	UserService userService;
 
 	@ResponseBody
-	@RequestMapping(value = "/select/{no}", method=RequestMethod.POST)
+	@RequestMapping(value = "/select/{no}", method = RequestMethod.POST)
 	public JSONResult week(@PathVariable(value = "no") Long no,
 			@RequestParam(value = "id", required = true, defaultValue = "") String id,
-			@RequestParam(value= "date", required= true, defaultValue= "")String date) {
+			@RequestParam(value = "date", required = true, defaultValue = "") String date) {
 		if ("".equals(id) || "".equals(date)) {
 			return JSONResult.error("id값이 없습니다.");
 		}
@@ -48,26 +48,49 @@ public class MobileLeaderController {
 		System.out.println(userVo);
 		if (userVo == null) {
 			return JSONResult.error("팀장이 존재하지 않습니다.");
-		} else if (!id.equals(userVo.getId()) ) {
+		} else if (!id.equals(userVo.getId())) {
 			return JSONResult.error("팀장이 아닙니다.");
 		}
 
-		if(no==1)
-		{
-			List<WeekVo> list= weekPlanService.selectTotalWeek(id,date);
+		if (no == 1) {
+			List<WeekVo> list = weekPlanService.selectTotalWeek(id, date);
 			return JSONResult.success(list);
-			
-		}else if(no==2)
-		{
-			List<DateVo> list = datePlanService.selectTotalDate(id,date); 
+
+		} else if (no == 2) {
+			List<DateVo> list = datePlanService.selectTotalDate(id, date);
 			return JSONResult.success(list);
-			
-		}else if (no==3)
-		{
-			List<DateReportVo> list = DateReportService.selectTotalReport(id,date);
+
+		} else if (no == 3) {
+			List<DateReportVo> list = DateReportService.selectTotalReport(id, date);
 			return JSONResult.success(list);
 		}
 		return JSONResult.error("서버에 예상치 못한 오류가 발생하였습니다.");
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/report/auth", method = RequestMethod.POST)
+	public JSONResult AuthReport(@RequestParam(value = "id", required = true, defaultValue = "") String id,
+			@RequestParam(value = "approval", required = true, defaultValue = "0") Long approval,
+			@RequestParam(value = "report_no", required = true, defaultValue = "0") Long report_no) {
+		UserVo userVo = userService.getLeader(id);
+		if (userVo == null) {
+			return JSONResult.error("팀장이 존재하지 않습니다.");
+		} else if (!id.equals(userVo.getId())) {
+			return JSONResult.error("팀장이 아닙니다.");
+		}
+		if ("".equals(id) || approval == 0 || report_no == 0) {
+			return JSONResult.error("id값,번호,승인여부가 없습니다.");
+		} else if (approval == 2 || approval == 3) {
+			int no = DateReportService.updateApproval(report_no, approval);
+
+			if (no == 1) {
+				return JSONResult.success();
+			} else {
+				return JSONResult.fail("정상적으로 승인되지 않았습니다.");
+			}
+		} else {
+			return JSONResult.error("승인값이 잘못왔습니다.");
+
+		}
+	}
 }
