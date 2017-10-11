@@ -1,8 +1,7 @@
-#dayreporttable-goal-sale,#dayreporttable-report-sale,#dayreporttable-startGauge,
-#dayreporttable-endGauge,#dayreporttable-achive-rank,#dayreporttable-mile,#submitDay-datepicker,
+.dayreportform-input ,#submitDay-datepicker
 {
-	width: 150px;
-    margin-right: 6px;
+	width: 150px;  
+    margin-right: 6px;  
 }
 
 #advicereporttable-code,#advicereporttable-customer,#advicereporttable-manager_name

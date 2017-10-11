@@ -19,8 +19,7 @@
 			</a>
 				<ul class="dropdown-menu">
 					<li><a href="${pageContext.servletContext.contextPath}/week/">영업 계획서</a></li>
-					<li><a href="#">영업 보고서</a></li>
-					<li><a href="#">영업 기획서</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/report/">영업 보고서</a></li>
 				</ul></li>
 			<li class="droupdown menu-icon"><a class="dropdown-toggle"
 				data-toggle="dropdown" href="#"> 

@@ -177,7 +177,7 @@ $(document).ready(function() {
 			<hr>
 		</article>
 		<article>
-			<div id="content">
+			<div id="report-content">
 				<ul>
 					<c:forEach items="${list}" var="dayreportVo" varStatus="status">
 						<li id="report-thumnail"
