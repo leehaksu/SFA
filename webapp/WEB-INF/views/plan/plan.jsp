@@ -146,9 +146,9 @@
         mapW = '682px';  // 지도의 가로 크기 입니다. 
         mapH = '240px';  // 지도의 세로 크기 입니다. 
         if(typeof current_longitude == "undefined" || current_longitude == null || current_longitude == ""){
-            cLonLat = new Tmap.LonLat(current_longitude,current_latitude).transform(pr_4326,pr_3857);     	
+        	cLonLat = new Tmap.LonLat(default_longitude,default_latitude).transform(pr_4326,pr_3857);  
         }else{
-        	cLonLat = new Tmap.LonLat(default_longitude,default_latitude).transform(pr_4326,pr_3857);
+        	cLonLat = new Tmap.LonLat(current_longitude,current_latitude).transform(pr_4326,pr_3857);     	
         }
     }
     
