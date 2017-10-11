@@ -65,7 +65,7 @@ public class CustomerController {
 		List<CustomerVo> list = customerService.select(authUser.getId());
 		return JSONResult.success(list);
 	}
-
+	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(@ModelAttribute CustomerVo customerVo, @AuthUser UserVo authUser) {
 		if (customerVo == null || authUser == null) {
@@ -79,7 +79,8 @@ public class CustomerController {
 			return "customer/update?result=fail";
 		}
 	}
-
+	@Auth
+	@ResponseBody
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public JSONResult delete(@ModelAttribute CustomerVo customerVo, @AuthUser UserVo authUser) {
 		if (customerVo == null || authUser == null) {
@@ -111,6 +112,7 @@ public class CustomerController {
 	}
 
 	@Auth
+	@ResponseBody
 	@RequestMapping(value = "/search/name", method = RequestMethod.GET)
 	public JSONResult searchByName(@AuthUser UserVo authUser,
 			@RequestParam(value = "name", required = true, defaultValue = "") String name) {
