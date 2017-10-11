@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sfa.dto.JSONResult;
 import com.sfa.service.UserService;
 import com.sfa.service.WeekPlanService;
+import com.sfa.util.ChangeDate;
 import com.sfa.util.Push;
 import com.sfa.vo.DayVo;
 import com.sfa.vo.UserVo;
@@ -124,12 +125,10 @@ public class MobilePlanWeekController {
 		} else {
 			weekVo.setFirst_date(first_date);
 		}
-		weekVo = weekPlanService.selectWeek(weekVo);
-		if (weekVo == null) {
-			return JSONResult.fail();
-		} else if (weekVo.getWeek_no() == null) {
-			return JSONResult.fail(weekVo);
-		} else {
+		WeekVo weekVo2 = weekPlanService.selectWeek(weekVo);
+		if (weekVo2 == null) {
+			return JSONResult.fail(ChangeDate.getWeekNo(ChangeDate.CheckDate(weekVo)));
+		}  else {
 			return JSONResult.success(weekVo);
 		}
 

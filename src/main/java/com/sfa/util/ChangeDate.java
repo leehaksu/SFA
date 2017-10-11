@@ -15,7 +15,7 @@ import com.sfa.vo.WeekVo;
 public class ChangeDate {
 	
 	//주간 계획 번호 알아오는 메소드
-	public String getWeekNo(ArrayList<Integer> date) {
+	public static String getWeekNo(ArrayList<Integer> date) {
 		int week_no;//주간계획 번호
 		String temp_week_no;//임시 주간계획 번호
 		// 그 달의 1일 날짜는 임시 저장
@@ -89,7 +89,7 @@ public class ChangeDate {
 		return cal;
 	}
 
-	public String calDay(Calendar cal) {
+	public static String calDay(Calendar cal) {
 		String day = "";
 		System.out.println("cal" + cal.get(Calendar.DAY_OF_WEEK));
 		int dayNum = cal.get(Calendar.DAY_OF_WEEK);
@@ -120,7 +120,7 @@ public class ChangeDate {
 		return day;
 	}
 
-	public int getWeek(ArrayList<Integer> date) {
+	public static int getWeek(ArrayList<Integer> date) {
 
 		Calendar c = Calendar.getInstance();
 		c.set(date.get(0), date.get(1) - 1, date.get(2));
