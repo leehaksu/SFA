@@ -206,7 +206,7 @@
 				<configuration>
 					<url>http://13.125.12.195/manager/text</url>
 					<server>tomcatserver</server>
-					<path>/SFA2</path>
+					<path></path>
 					<username>admin</username>
 					<password>admin</password>
 				</configuration>
