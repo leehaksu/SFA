@@ -9,7 +9,7 @@
 	</select>
 	<select id="selectbyDept" parameterType="MAP" resultType="customervo">
 	<![CDATA[
-	select customer_code,b.name,b.contact,manager_name,manager_grade,manager_contact,manager_email,manager_birth,time,address,positionX,positionY,state,a.id,a.dept from user as a, customer as b where a.id=b.id and dept=#{dept};		
+	select customer_code,b.name,b.contact,manager_name,manager_grade,manager_contact,manager_email,manager_birth,time,address,positionX,positionY from user as a, customer as b where a.id=b.id and dept=#{dept};		
 	]]>
 	</select>
 	<select id="selectByName" parameterType="MAP" resultType="customervo">
