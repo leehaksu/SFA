@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<c:import url="/WEB-INF/views/common/common.jsp"></c:import>
+<c:import url="/WEB-INF/views/common/common.jsp"></c:import>
 <script type="text/javascript">
 //현재 날짜를 moment.js를 활용하여 "YYYY-MM-DD"형식으로 받아온다.
 var today = moment().format("YYYY-MM-DD");
@@ -139,129 +139,131 @@ $(document).ready(function() {
 			</c:import>
 		</div>
 	</div>
-		<main id="page-content-wrapper" role="main">
-		<article id="reportsearch-content">
-			<div>
-				<div class="page-header">
-					<h3 class="dayreport">
-						<strong>보고서 조회</strong>
-					</h3>
-				</div>
-				<button type="button" class="btn btn-default"
-					onclick="location.href='insert'"
-					style="float: right; display: inline-block;">보고서 추가</button>
+	<main id="page-content-wrapper" role="main">
+	<article id="reportsearch-content">
+		<div>
+			<div class="page-header">
+				<h3 class="dayreport">
+					<strong>보고서 조회</strong>
+				</h3>
 			</div>
-			<form>
-				<table
-					style="border-spacing: 20px 0; border-collapse: separate; margin-top: 10px;">
-					<tr>
-						<td><label for="start-date"></label><input id="start-date"
-							class="form-control"></td>
-						<td><h4>~</h4></td>
-						<td><label for="end-date"></label><input id="end-date"
-							class="form-control"></td>
-						<td><select class="form-control">
-								<option>승인</option>
-								<option>제출</option>
-								<option>미제출</option>
-								<option>반려</option>
-						</select></td>
-						<td>
-							<button id="search-report" type="button" class="btn btn-default">조회</button>
-						</td>
-					</tr>
-				</table>
-			</form>
-			<p></p>
-			<div id="search-count">조회: ${fn:length(list)} 건</div>
-			<hr>
-		</article>
-		<article>
-			<div id="report-content">
-				<ul>
-					<c:forEach items="${list}" var="dayreportVo" varStatus="status">
-						<li id="report-thumnail"
-							style="border: 1px solid gray; overflow: hidden;"><a
-							href="${pageContext.servletContext.contextPath}/report/search"
-							class="hvr-wobble-horizontal" style="float: left; width: 100%;">
-								<c:choose>
-									<c:when test="${dayreportVo.approval == 0}">
-										<img
-											src="${pageContext.servletContext.contextPath}/assets/image/write.png"
-											alt="승인/미승인 이미지" style="width: 77px; float: left">
-									</c:when>
-									<c:when test="${dayreportVo.approval == 1}">
-										<img
-											src="${pageContext.servletContext.contextPath}/assets/image/review.png"
-											alt="승인/미승인 이미지" style="width: 77px; float: left">
-									</c:when>
-									<c:when test="${dayreportVo.approval == 2}">
-										<img
-											src="${pageContext.servletContext.contextPath}/assets/image/approve.png"
-											alt="승인/미승인 이미지" style="width: 77px; float: left">
-									</c:when>
-									<c:otherwise>
-										<img
-											src="${pageContext.servletContext.contextPath}/assets/image/reject.png"
-											alt="승인/미승인 이미지" style="width: 77px; float: left">
-									</c:otherwise>
-								</c:choose>
-								<table class="table report-list" style="margin-left: 100px; width: auto;">
-									<thead>
-										<tr>
-											<th>보고 일자:${dayreportVo.date}</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>제목: ${dayreportVo.title}</td>
-										</tr>
-										<tr>
-											<td>작성일자: ${dayreportVo.reg_date}</td>
-										</tr>
-										<tr>
-											<td>팀장의견: ${dayreportVo.opinion}</td>
-										</tr>
-										<!-- 팀장 페이지에서 조회엔 누가 썻는지 알아야 하므로 부서,이름,직급이 표기 되어야 하기 때문에 tr이 한줄 더 필요하다. -->
-									</tbody>
-								</table>
-						</a> <c:choose>
+			<button type="button" class="btn btn-default"
+				onclick="location.href='insert'"
+				style="float: right; display: inline-block;">보고서 추가</button>
+		</div>
+		<form>
+			<table
+				style="border-spacing: 20px 0; border-collapse: separate; margin-top: 10px;">
+				<tr>
+					<td><label for="start-date"></label><input id="start-date"
+						class="form-control"></td>
+					<td><h4>~</h4></td>
+					<td><label for="end-date"></label><input id="end-date"
+						class="form-control"></td>
+					<td><select class="form-control">
+							<option>승인</option>
+							<option>제출</option>
+							<option>미제출</option>
+							<option>반려</option>
+					</select></td>
+					<td>
+						<button id="search-report" type="button" class="btn btn-default">조회</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<p></p>
+		<div id="search-count">조회: ${fn:length(list)} 건</div>
+		<hr>
+	</article>
+	<article>
+		<div id="report-content">
+			<ul>
+				<c:forEach items="${list}" var="dayreportVo" varStatus="status">
+					<li id="report-thumnail"
+						style="border: 1px solid gray; overflow: hidden;"><a
+						href="${pageContext.servletContext.contextPath}/report/search"
+						class="hvr-wobble-horizontal" style="float: left; width: 100%;">
+							<c:choose>
 								<c:when test="${dayreportVo.approval == 0}">
-									<div>
-										<button type="button"
-											class="btn btn-default submit-btn hvr-shadow-radial"
-											style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출</button>
-	 										<form class="reportnoform" action="submit" method="POST"> 
-											<input type="hidden" id="report_no" name="report_no"
-												value="${dayreportVo.report_no}"> <input
-												type="hidden" id="approval" name="approval" value=1>
-										</form>
-									</div>
+									<img
+										src="${pageContext.servletContext.contextPath}/assets/image/write.png"
+										alt="승인/미승인 이미지" style="width: 77px; float: left">
 								</c:when>
 								<c:when test="${dayreportVo.approval == 1}">
-									<div>
-										<div class="btn btn-default report-stat"
-											style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출 완료</div>
-									</div>
+									<img
+										src="${pageContext.servletContext.contextPath}/assets/image/review.png"
+										alt="승인/미승인 이미지" style="width: 77px; float: left">
 								</c:when>
 								<c:when test="${dayreportVo.approval == 2}">
-									<div>
-										<div class="btn btn-default report-stat"
-											style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">승인 완료</div>
-									</div>
+									<img
+										src="${pageContext.servletContext.contextPath}/assets/image/approve.png"
+										alt="승인/미승인 이미지" style="width: 77px; float: left">
 								</c:when>
 								<c:otherwise>
-									<div>
-										<div class="btn btn-default report-stat"
-											style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">반려됨</div>
-									</div>
+									<img
+										src="${pageContext.servletContext.contextPath}/assets/image/reject.png"
+										alt="승인/미승인 이미지" style="width: 77px; float: left">
 								</c:otherwise>
-							</c:choose></li>
-					</c:forEach>
-				</ul>
-			</div>
-		</article>
-		</main>
-
+							</c:choose>
+							<table class="table report-list"
+								style="margin-left: 100px; width: auto;">
+								<thead>
+									<tr>
+										<th>보고 일자:${dayreportVo.date}</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>제목: ${dayreportVo.title}</td>
+									</tr>
+									<tr>
+										<td>작성일자: ${dayreportVo.reg_date}</td>
+									</tr>
+									<tr>
+										<td>팀장의견: ${dayreportVo.opinion}</td>
+									</tr>
+									<!-- 팀장 페이지에서 조회엔 누가 썻는지 알아야 하므로 부서,이름,직급이 표기 되어야 하기 때문에 tr이 한줄 더 필요하다. -->
+								</tbody>
+							</table>
+					</a> <c:choose>
+							<c:when test="${dayreportVo.approval == 0}">
+								<div>
+									<button type="button"
+										class="btn btn-default submit-btn hvr-shadow-radial"
+										style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출</button>
+									<form class="reportnoform" action="submit" method="POST">
+										<input type="hidden" id="report_no" name="report_no"
+											value="${dayreportVo.report_no}"> <input
+											type="hidden" id="approval" name="approval" value=1>
+									</form>
+								</div>
+							</c:when>
+							<c:when test="${dayreportVo.approval == 1}">
+								<div>
+									<div class="btn btn-default report-stat"
+										style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">제출
+										완료</div>
+								</div>
+							</c:when>
+							<c:when test="${dayreportVo.approval == 2}">
+								<div>
+									<div class="btn btn-default report-stat"
+										style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">승인
+										완료</div>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div>
+									<div class="btn btn-default report-stat"
+										style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">반려됨</div>
+								</div>
+							</c:otherwise>
+						</c:choose></li>
+				</c:forEach>
+			</ul>
+		</div>
+	</article>
+	</main>
 </body>
 </html>

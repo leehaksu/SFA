@@ -7,14 +7,14 @@
 	href="${pageContext.servletContext.contextPath}/assets/css/include/header.css" />	
 <div class="container-fluid">
 	<div class="navbar-header">
-		<a class="navbar-brand" href="#"><img class="img-responsive"
+		<a class="navbar-brand" href="${pageContext.servletContext.contextPath}/main/"><img class="img-responsive"
 			style="width: 183px;"
 			src="${pageContext.servletContext.contextPath}/assets/image/logo.png" /></a>
 	</div>
 	<div>
 		<ul class="nav navbar-nav ">
 			<li class="droupdown menu-icon"><a class="dropdown-toggle"
-				data-toggle="dropdown"> <i class="fa fa-calendar"
+				data-toggle="dropdown" href="#"> <i class="fa fa-calendar"
 					aria-hidden="true"></i> 영업 관리
 			</a>
 				<ul class="dropdown-menu">
@@ -44,7 +44,7 @@
 				</c:if>
 			
 				<li class="droupdown menu-icon">
-				<a href="${pageContext.servletContext.contextPath}/user/notice_board"> 
+				<a href="${pageContext.servletContext.contextPath}/board/"> 
 				<i class="fa fa-bell" aria-hidden="true"></i> 공지사항
 				</a>
 				</li>

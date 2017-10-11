@@ -674,7 +674,7 @@
 				<c:param name="menu" value="main" />
 			</c:import>
 		</div>
-
+	</div>
 		<main id="page-content-wrapper" role="main">
 
 		<div id="calendar_main">
@@ -1098,7 +1098,7 @@
 				</div>
 				<div>
 					<div>
-						<table style="margin: 0 auto;">
+						<table >
 							<tr>
 								<td>
 									<div class="week-user-info">
@@ -1122,21 +1122,21 @@
 							</tr>
 							<tr>
 								<td>
-									<div class="form gorup">
+									<div class="form gorup" week-user-info>
 										<label id="weeklabel" for="target_figure">주간 목표액</label> <input
 											class="well well-sm  weekinput"
 											id="target_figure" name="target_figure" type="text" readonly>
 									</div>
 								</td>
 								<td>
-									<div class="form gorup">
+									<div class="form gorup week-user-info">
 										<label for="week_sale">주간 매출액</label>
 										<div class="well well-sm weekinput" id="week_sale"
 											style="display: inline-block;">매출액(원)</div>
 									</div>
 								</td>
 								<td>
-									<div class="form gorup">
+									<div class="form gorup week-user-info">
 										<label for="achive_rank">주간 달성률</label>
 										<div class="well well-sm weekinput" id="achive_rank"
 											style="display: inline-block; margin-left: 25px;">달성률(%)</div>
@@ -1408,6 +1408,5 @@
 			</form>
 		</div>
 		</main>
-	</div>
 </body>
 </html>

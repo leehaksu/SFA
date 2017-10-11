@@ -38,8 +38,8 @@
 					<form name="joinform" class="form-horizontal" method="post" 
 						action="${pageContext.servletContext.contextPath}/join" >
 						<div class="form-group">
-							<label class="col-sm-1 control-label" for="inputId">아이디</label>
-							<div class="col-sm-6">
+							<label class="col-sm-2 control-label" for="inputId">아이디</label>
+							<div class="col-sm-8">
 								<div id="inputid-form">
 									<input class="form-control" id="inputId" name="id"
 										type="text" placeholder="첫문자는 영문 대/소문자로  [숫자, 특수문자 _ 조합] 5~12자 "
@@ -51,16 +51,16 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-1 control-label" for="inputPassword">비밀번호</label>
-							<div class="col-sm-6">
+							<label class="col-sm-2 control-label" for="inputPassword">비밀번호</label>
+							<div class="col-sm-8">
 								<input class="form-control" id="inputPassword" name="passwd" pattern="^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-]|.*[0-9]).{8,24}$"
 									type="password" placeholder="비밀번호는 숫자, 특수문자 포함 8자 이상" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-1 control-label" for="inputPasswordCheck">비밀번호
+							<label class="col-sm-2 control-label" for="inputPasswordCheck">비밀번호
 								확인</label>
-							<div class="col-sm-6">
+							<div class="col-sm-8">
 								<input class="form-control" id="inputPasswordCheck"
 									type="password" placeholder="비밀번호 확인" required>
 								<div id="passwordcheck" style="display: none;">
@@ -70,15 +70,15 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-1 control-label" for="inputName">이름</label>
-							<div class="col-sm-6">
+							<label class="col-sm-2 control-label" for="inputName">이름</label>
+							<div class="col-sm-8">
 								<input class="form-control" id="inputName" name="name"
 									type="text" placeholder="이름" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-1 control-label" for="inputEmail">이메일</label>
-							<div class="col-sm-6">
+							<label class="col-sm-2 control-label" for="inputEmail">이메일</label>
+							<div class="col-sm-8">
 								<input class="form-control" id="inputEmail" name="email"
 									type="email" placeholder="이메일" required>
 									<i id="Emailcheck-image" class="fa fa-check" aria-hidden="true" style="display: none;">확인</i>
@@ -87,8 +87,8 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-1 control-label" for="inputDepartment">소속</label>
-							<div class="col-sm-6">
+							<label class="col-sm-2 control-label" for="inputDepartment">소속</label>
+							<div class="col-sm-8">
 								<div class="input-group">
 									<select class="form-control" id="inputDepartment" name="dept"
 									 required>
@@ -104,8 +104,8 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-1 control-label" for="inputGrade">직급</label>
-							<div class="col-sm-6">
+							<label class="col-sm-2 control-label" for="inputGrade">직급</label>
+							<div class="col-sm-8">
 								<div class="input-group">
 									<select class="form-control" id="inputGrade" name="grade" required>
 										<option>부장</option>
@@ -118,7 +118,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-12 text-center">
+							<div class="col-sm-8 text-center">
 								<button id="confirm_button" class="btn btn-primary" type="submit" onsubmit="validate()">
 									회원가입 &nbsp;<i class="fa fa-check spaceLeft"></i>
 								</button>

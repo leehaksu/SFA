@@ -54,7 +54,7 @@
 					</table>
 				</div>
 			</form>
-			<div class="pageheader">
+			<div class="page-header">
 				<h3>팀원 목록</h3>
 			</div>
 			<div id="search_list">

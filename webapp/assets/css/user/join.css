@@ -4,13 +4,17 @@
 }
 
 
-#join_container {
-	margin-left: 300px;
+.join_container {
+	width: 830px;
 }
 
 #inputId,#inputEmail {
 	width: 80%;
 }
+#Idcheck-button,#Emailcheck-button{
+	    margin-left: 12px;
+}
+
 
 .tg1 {
 	border-collapse: collapse;
@@ -190,9 +194,7 @@
 	width: 8%;
 	text-align: center;
 }
-#search_input{
-	width: 15%;
-}
+
 #search_table
 {
 	margin-left : 10%;

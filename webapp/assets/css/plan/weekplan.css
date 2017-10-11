@@ -3,7 +3,7 @@
 	margin-left: 10px;
 }
 .week-user-info{
-	width: 300px;
+	width: 250px;
 }
 
 
@@ -44,9 +44,8 @@
 
 #weekplan_main {
 	clear: both;
-	width: 90%;
+	width: 100%;
 	height: 300px;
-	margin: 30px 30px;
 }
 
 #week_plane {

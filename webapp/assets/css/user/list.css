@@ -1,4 +1,7 @@
 #list_container{
 	width:800px;
 }
-s
+#search_input{
+	width: 15%;
+	text-align: center;
+}

@@ -22,7 +22,9 @@
 	width: 100%;
 	height: 100%;
 }
-
+#side-dayplan-open-button{
+	padding-left: 10px;
+}
 #side-dayplan {
 	width: 22%;
 	display: inline-block;

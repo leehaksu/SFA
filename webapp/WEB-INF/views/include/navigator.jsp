@@ -49,7 +49,7 @@ $(document).ready(function() {
 					</a>
 					</li>
 					<li>
-					<a id="menu4" a href="#"> 
+					<a id="menu4" a href="${pageContext.servletContext.contextPath}/board/"> 
 						<span class="sidebar-icon">
 							<i class="fa fa-bell" aria-hidden="true"></i>
 						</span> 
