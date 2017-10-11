@@ -104,8 +104,7 @@
 			</div>
 			<div class="bottom">
 				<c:if test="${not empty authUser }">
-					<a
-						href="${pageContext.request.contextPath }/board/write?p=${map.currentPage }&kwd=${map.keyword }"
+					<a href="${pageContext.request.contextPath }/board/write?p=${map.currentPage }&kwd=${map.keyword }"
 						id="new-book">글쓰기</a>
 				</c:if>
 			</div>
