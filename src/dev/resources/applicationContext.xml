@@ -48,8 +48,8 @@
 	<!-- Connection Pool DataSource -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://sfa.cjauhz5fxfvj.ap-northeast-2.rds.amazonaws.com:3306/leehacksue1" />
-		<property name="username" value="leehacksue" />
+		<property name="url" value="jdbc:mysql://innodb-005.cafe24.com:3306/leehacksue1" />
+		<property name="username" value="leehacksue1" />
 		<property name="password" value="dlgkrtn280!" />
 		<property name="initialSize" value="20" />
 		<property name="maxActive" value="20" />
