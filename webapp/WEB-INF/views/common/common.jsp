@@ -111,6 +111,9 @@
 	src="${pageContext.servletContext.contextPath}/assets/js/util/util.js"></script>
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/util/validate.js"></script>	
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/map/map.js"></script>
+
 
 <!-- mo.js 파일 다운로드 -->
 

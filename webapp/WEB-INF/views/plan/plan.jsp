@@ -6,18 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<c:import url="/WEB-INF/views/common/common.jsp"></c:import>
-	<script
-	src="${pageContext.servletContext.contextPath}/assets/js/util/util.js"></script>
-	<script
-	src="${pageContext.servletContext.contextPath}/assets/js/plan/calendar.js"></script>
-	<script
-	src="${pageContext.servletContext.contextPath}/assets/js/plan/weekplan.js"></script>
-	<script
-	src="${pageContext.servletContext.contextPath}/assets/js/map/map.js"></script>
-	<script
-	src="${pageContext.servletContext.contextPath}/assets/js/plan/dayplan.js"></script>	
-	
+	<c:import url="/WEB-INF/views/common/common.jsp"></c:import>	
 <script>
 	var date = new Date();
 	var today = moment().format("YYYY-MM-DD");
@@ -55,7 +44,11 @@
     
     var size = new Tmap.Size(24,38);
 	var offset = new Tmap.Pixel(-(size.w/2), -size.h);
-	    
+	
+	//현재 위치를 담기 위한 변수
+	var default_latitude ="37.49349134";
+	var default_longitude="127.02785193" ;
+   
     
     //현재 위치를 담기 위한 변수
 	var current_latitude;
@@ -82,7 +75,7 @@
  	
  	//일일 계획서 일일 목표액 저장 변수 
  	var dateGoalMoney;
- 	
+ 
  	var positions=[];
  	
 	var routecheck=false;
@@ -132,7 +125,8 @@
     	 
     	    switch(error.code) {
     	        case error.PERMISSION_DENIED:
-    	            alert("User denied the request for Geolocation.");
+    	        	init();
+    	        	alert("User denied the request for Geolocation.");
     	            break;
     	        case error.POSITION_UNAVAILABLE:
     	            alert("Location information is unavailable.");
@@ -151,7 +145,11 @@
         zoom = 16;  // zoom level입니다.  0~19 레벨을 서비스 하고 있습니다. 
         mapW = '682px';  // 지도의 가로 크기 입니다. 
         mapH = '240px';  // 지도의 세로 크기 입니다. 
-        cLonLat = new Tmap.LonLat(current_longitude,current_latitude).transform(pr_4326,pr_3857);
+        if(typeof current_longitude == "undefined" || current_longitude == null || current_longitude == ""){
+            cLonLat = new Tmap.LonLat(current_longitude,current_latitude).transform(pr_4326,pr_3857);     	
+        }else{
+        	cLonLat = new Tmap.LonLat(default_longitude,default_latitude).transform(pr_4326,pr_3857);
+        }
     }
     
     function onMouseMarker (evt){
@@ -338,15 +336,10 @@
            
 
          var obj = {
-
         		 endX: 14135428.84691669,
         		 endY: 4505733.44979528,
         		 startX: 14140669.59746090,
-        		 startY: 4508640.36061872,
-        		 endX: '14135428.84691669',
-        		 endY: '4505733.44979528',
-        		 startX: '14140669.59746090',
-        		 startY: '4508640.36061872'
+        		 startY: 4508640.36061872
         		};
          var road ="startX="+startX+"&startY="+startY+"&endX="+endX+"&endY="+endY+"&reqCoordType=WGS84GEO"+"&passList="+passList; 	 
         	
