@@ -17,7 +17,6 @@
 	src="${pageContext.servletContext.contextPath}/assets/js/map/map.js"></script>
 	<script
 	src="${pageContext.servletContext.contextPath}/assets/js/plan/dayplan.js"></script>	
-	
 <script>
 	var date = new Date();
 	var today = moment().format("YYYY-MM-DD");
