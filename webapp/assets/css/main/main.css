@@ -182,6 +182,7 @@ body {
 	box-shadow: 5px 5px 5px 0px darkslategrey;
 	position: absolute;
     left: -180px;
+    margin-top:30px;
     transition: 0.3s;
     padding: 15px;
     width: 100px;

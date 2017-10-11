@@ -32,9 +32,9 @@
 			<div class="search_list">
 				<ul>
 					<li class="all"><input class="ng-all" type="text"
-						placeholder="고객명"> <a href="#" class="button"
-						type="button">추가</a> <a href="#" class="button" type="button">검색</a>
-
+						placeholder="고객명">
+						 <a href="#" class="button" type="button">검색</a>
+						 <a href="#" class="button" type="button">추가</a>
 					</li>
 					<li><select name="ng-valid" class="ng-valid">
 							<option value="영업부" selected="">영업부</option>
