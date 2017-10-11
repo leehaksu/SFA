@@ -44,7 +44,7 @@ public class DateReportController {
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public String insert() {
-		return "plan/report";
+		return "plan/report_insert";
 	}
 
 	@Auth
@@ -54,7 +54,7 @@ public class DateReportController {
 		if (authUser == null) {
 			return "user/login";
 		} else if (dateReportVo == null) {
-			return "plan/report";
+			return "plan/report_insert";
 		} else {
 			dateReportVo.setId(authUser.getId());
 			int no = dateReprotService.insert(dateReportVo);
@@ -76,7 +76,7 @@ public class DateReportController {
 				}
 				return "redirect:/report/";
 			} else {
-				return "plan/report";
+				return "plan/report_insert";
 			}
 		}
 	}

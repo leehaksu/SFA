@@ -126,10 +126,13 @@ public class MobilePlanWeekController {
 			weekVo.setFirst_date(first_date);
 		}
 		WeekVo weekVo2 = weekPlanService.selectWeek(weekVo);
+		System.out.println(weekVo2);
 		if (weekVo2 == null) {
 			return JSONResult.fail(ChangeDate.getWeekNo(ChangeDate.CheckDate(weekVo)));
-		}  else {
-			return JSONResult.success(weekVo);
+		} else if (weekVo2.getWeek_no() == null) {
+			return JSONResult.fail(ChangeDate.getWeekNo(ChangeDate.CheckDate(weekVo)));
+		} else {
+			return JSONResult.success(weekVo2);
 		}
 
 	}

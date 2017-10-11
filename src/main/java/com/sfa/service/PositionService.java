@@ -20,9 +20,9 @@ public class PositionService {
 	}
 
 
-	public List<PositionVo> getPosition() {
+	public List<PositionVo> getPosition(String id) {
 		// TODO Auto-generated method stub
-		return positionDao.getPostion();
+		return positionDao.getPostion(id);
 	}
 
 

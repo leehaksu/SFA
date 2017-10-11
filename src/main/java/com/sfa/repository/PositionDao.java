@@ -1,5 +1,6 @@
 package com.sfa.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -19,9 +20,11 @@ public class PositionDao {
 		return sqlSession.selectList("customer.getPositionById",positionVo);
 	}
 
-	public List<PositionVo> getPostion() {
+	public List<PositionVo> getPostion(String id) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("position.getPosition");
+		HashMap<String,String> map = new HashMap<String,String> ();
+		map.put("id", id);
+		return sqlSession.selectList("position.getPosition",map);
 	}
 
 	public int insertPosition(PositionVo positionVo) {

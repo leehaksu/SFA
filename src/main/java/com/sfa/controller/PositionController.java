@@ -37,8 +37,8 @@ public class PositionController {
 
 	@ResponseBody
 	@RequestMapping(value = { "", "/" })
-	public JSONResult getPosition() {
-		List<PositionVo> list = positionService.getPosition();
+	public JSONResult getPosition(@AuthUser UserVo authUser) {
+		List<PositionVo> list = positionService.getPosition(authUser.getId());
 		return JSONResult.success(list);
 	}
 

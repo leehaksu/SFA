@@ -40,9 +40,13 @@ public class MobilePositionController {
 	}
 	@ResponseBody
 	@RequestMapping("/")
-	public JSONResult getPosition()
+	public JSONResult getPosition(@RequestParam(value="id", required=true, defaultValue="") String id)
 	{
-		List<PositionVo> list = positionService.getPosition();
+		if("".equals(id))
+		{
+			return JSONResult.error("아이디 없습니다.");
+		}
+		List<PositionVo> list = positionService.getPosition(id);
 		if(list==null)
 		{
 			return JSONResult.fail("업체 좌표가 없습니다.");
