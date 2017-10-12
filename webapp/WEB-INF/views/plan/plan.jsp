@@ -551,7 +551,7 @@
 
 									//console.log(dayClick);	
 									//날짜 클릭 이벤트 주간 계획 데이터 ajax
-									 changeweekplan(ClickedDay);
+									 changeweekplan(ClickedDay,changeID);
 								},
 								eventRender : function(e, elm) {
 									elm.popover({
