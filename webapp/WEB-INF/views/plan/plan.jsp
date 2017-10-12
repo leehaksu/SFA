@@ -25,7 +25,7 @@
 	//moment('2017-09-05','YYYY-MM-DD').diff('2017-09-04','day');
 
 	//달력에서 클릭 한 날짜를 담는 변수
-	var dayClick;
+	var ClickedDay;
 	var current;// ajax를 위해 변화하는 달 정보담는 변수	
 
 	// ajax 통신후 response dat를 담는 변수들.
@@ -35,6 +35,9 @@
 	var weekno;
 	var thisweekdate;
 
+	//check UserID select 박스에서 변경된 아이디를 담는 변수이다.(팀장 전용)
+	var changeID;
+	
 	//입력 체크 변수
 	var changecheck = false;
 
@@ -544,24 +547,11 @@
 								},
 								dayClick : function(date, jsEvent,view) {
 									//클릭한 날짜를  날짜 형식을 'YYYY-MM-DD'로 맞춰준다.
-									dayClick = date.format('YYYY-MM-DD');	
-									//현재 날짜와 클릭한 날짜 비교 
-									var plandatecheck = moment(dayClick).isSameOrAfter(today);
-									
-									//선택한 날짜가 있는지 없는지 유무 확인
-									if (dayClick != null) {
-										//날짜 클릭 이벤트 일일 계획 데이터 ajax
-										changedayplan(dayClick,plandatecheck);
-										getCustomerPosition();
-									} else {
-										$("#dayplancheckmodal").modal('show');
-										getCustomerPosition();
-									}
-									
-									
+									ClickedDay = date.format('YYYY-MM-DD');	
+
 									//console.log(dayClick);	
 									//날짜 클릭 이벤트 주간 계획 데이터 ajax
-									 changeweekplan(dayClick);
+									 changeweekplan(ClickedDay);
 								},
 								eventRender : function(e, elm) {
 									elm.popover({
@@ -600,8 +590,20 @@
 			/////////////////////////////////////////////////////////////////////////////
 			/* 수정이 필요한 부분 ~~~~~~~~~~~~~~~~~*/
 			$('#side-dayplan-open-button').click(function() {
-				//문제점! 바로 뜨면 안됨. 날짜 클릭확인!!!!이 이루어져야 한다. 캘린더의 dayclick이벤트를 수정할 것. 
-				dayplanmodalShow();	
+				//현재 날짜와 클릭한 날짜 비교 
+				var plandatecheck = moment(ClickedDay).isSameOrAfter(today);
+				
+				//선택한 날짜가 있는지 없는지 유무 확인
+				if (typeof ClickedDay == "undefined" || ClickedDay == null || ClickedDay == "") {
+					$("#dayplancheckmodal").modal('show');
+					getCustomerPosition();
+				} else {
+					//날짜 클릭 이벤트 일일 계획 데이터 ajax
+					changedayplan(ClickedDay,plandatecheck);
+					getCustomerPosition();
+					dayplanmodalShow();	
+				}
+				
 			});
 			/////////////////////////////////////////////////////////////////////////////
 			//dayplanmodal close 이벤트
@@ -658,18 +660,49 @@
 			}); */
 			
 		$("#side-dayplan-coworker-button").on("change",function(){
-			var userid = $("#side-dayplan-coworker-button option:selected").val();
-			alert(userid);
-			$.get("select/?id="+userid+"&date="+today , 
+			changeID = $("#side-dayplan-coworker-button option:selected").val();
+			$.get("select?id="+changeID+"&date="+today , 
 		    	function(response, status){
 				if(status == "success"){
-					alert(response.data);	
+					console.log(response.data);
+					
+					var events = [];
+
+					$(response.data).each(function(index) {
+						var templist;
+						var tempdate;
+
+						if (response.data[index].content !== null || response.data[index].content != "") {
+							templist = response.data[index].content.split("\n");
+							tempdate = response.data[index].date;
+
+							if (templist == "") {
+								events.push({
+									title : '업무 내용 미기입',
+									start : response.data[index].date
+									// will be parsed
+								});
+							}
+							for (i = 0; i < templist.length; i++) {
+								//console.log(templist[i]);
+								if (templist[i] !== "") {
+									events.push({
+										title : templist[i],
+										start : tempdate
+										// will be parsed
+									});
+								}
+							}
+						}
+					});
+					$('#calendar').fullCalendar('removeEvents');
+		            $('#calendar').fullCalendar('addEventSource', events);
 				}
 				else{
 					alert("오류 발생: "+status)
 				}
 			});
-			//$('#calendar').fullCalendar('updateEvent', event);
+			
 		});
 });
 
@@ -711,6 +744,9 @@
 					<c:when test="${authUser.level == '팀장'}">
 					<select id="side-dayplan-coworker-button"
 						class="btn btn-default btn-sm">
+						<option value="${authUser.id}" selected>
+							${authUser.name} / ${authUser.dept}
+						</option>
 						<c:forEach var="i" items="${members}" varStatus="status">
 						<option value="${i.id}">
 							${i.name} / ${i.dept}

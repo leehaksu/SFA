@@ -67,12 +67,12 @@ function getWeeks(current,callback){
 	});
 }
 
-function changeweekplan(dayClick){
+function changeweekplan(dayClick,changeID){
 	//주간계획
 	$.ajax({
 				url : "/sfa/week/select",
 				type : 'POST',
-				data : "date="+ dayClick, //2017-08-26
+				data : "date="+ dayClick+"id="+changeID, //2017-08-26
 				dataType : "json",
 				success : function(response) {
 					console.log(response.data)

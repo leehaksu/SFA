@@ -34,11 +34,11 @@
 	}
 	
 	//달력 클릭시 일일계획서 데이터  ajax
-	function changedayplan(dayClick,plandatecheck){
+	function changedayplan(dayClick,id,plandatecheck){
 		$.ajax({
 			url : "/sfa/date/select",
 			type : 'POST',
-			data : "date="+ dayClick, //2017-09-08
+			data : "date="+ dayClick +"id=" +id, //2017-09-08
 			dataType : "json",
 			success : function(response) {
 					console.log(response.data);
