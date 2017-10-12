@@ -521,8 +521,8 @@
 	
 	//moment('2016-06','YYYY-MM').diff('2015-01','month');     //17 시간차
 	$(document).ready( function() {
-		var selectID=$("#side-dayplan-coworker-button option:selected").val();						
-		
+		 selectID = $("#side-dayplan-coworker-button option:eq(0)").val();						
+		alert("처음 자기 ID: "+selectID);
 		//도전과제 ajax
 		ajaxChallenge();
 		//텍스트 에디터 초기화
@@ -663,7 +663,9 @@
 			}); */
 			
 		$("#side-dayplan-coworker-button").on("change",function(){
+			resetweekplan();
 			selectID = $("#side-dayplan-coworker-button option:selected").val();
+			alert("바뀐 아이디: "+ selectID);
 			$.get("select?id="+selectID+"&date="+today , 
 		    	function(response, status){
 				if(status == "success"){
@@ -747,7 +749,7 @@
 					<c:when test="${authUser.level == '팀장'}">
 					<select id="side-dayplan-coworker-button"
 						class="btn btn-default btn-sm">
-						<option value="${authUser.id}" selected>
+						<option value="${authUser.id}" >
 							${authUser.name} / ${authUser.dept}
 						</option>
 						<c:forEach var="i" items="${members}" varStatus="status">

@@ -67,21 +67,24 @@ function getWeeks(current,selectID,callback){
 	});
 }
 
+function resetweekplan(){
+	$(".dayedit-content").val("");
+	$(".to-do-list").children().remove(); // 현재 모달에 입력된 값 다 날리고
+}
+
 function changeweekplan(dayClick,changeID){
 	//주간계획
 	$.ajax({
 				url : "/sfa/week/select",
 				type : 'POST',
-				data : "date="+ dayClick+",id="+changeID, //2017-08-26
+				data : "date="+ dayClick+"&id="+changeID, //2017-08-26
 				dataType : "json",
 				success : function(response) {
 					console.log(response.data)
 					//제목 넣기
 					weekno = response.data.week_no;
 					//modal-list, textarea 초기화
-					$(".dayedit-content").val("");
-					$(".to-do-list").children().remove(); // 현재 모달에 입력된 값 다 날리고
-
+					resetweekplan();
 					//주간테이블  textarea에 들어갈 데이터 체크 후 배열에 담는다. 앞에 공백이 있으면 제거 해주고 넣어야 함.
 					weeklist = [
 							$.trim(response.data.monday),
