@@ -10,7 +10,6 @@
 <html>
 <head>
 	<c:import url="/WEB-INF/views/common/common.jsp"></c:import>
-
 <script type="text/javascript">
 //현재 날짜 변수
 var today = moment().format("YYYY-MM-DD");
@@ -285,7 +284,7 @@ $(document).ready(function() {
 											성 률 &nbsp;</label> <input id="dayreporttable-achive-rank"
 											class="form-control dayreportform-input" type="text" name=""
 											placeholder="일일 달성률" 
-											required >
+											required readonly>
 									</div>
 								</div>
 							</td>
@@ -401,8 +400,9 @@ $(document).ready(function() {
 									<div class="panel-heading" style="color: #fff; ">
 										<strong>상담카드</strong>
 										<div style="float: right;">
-										 <i class="fa fa-pencil fa-6" aria-hidden="true"></i>
-										 <i class="fa fa-trash fa-6" aria-hidden="true"></i>
+										<i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i>
+										&nbsp;
+										 <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
 										</div>
 									</div>
 									<div class="panel-body">

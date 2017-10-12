@@ -58,7 +58,7 @@
 								"8월", "9월", "10월", "11월", "12월" ],
 						datasets : [
 								{
-									label : '흑자',
+									label : '영업 매출액',
 									data : [ 12, 19, 3, 5, 2, 3, 8, 9, 12, 65,
 											88, 18 ],
 									backgroundColor : 'rgba(54, 162, 235, 0.2)',
@@ -66,9 +66,8 @@
 									borderWidth : 1
 								},
 								{
-									label : '적자',
-									data : [ -12, -19, -3, -5, -2, -3, -8, -9,
-											-12, -65, -88, -18 ],
+									label : '예상 매출액',
+									data : [10,20,30,40,50,60,70,80,90,100,110,120],
 									backgroundColor : 'rgba(255, 99, 132, 0.2)',
 									borderColor : 'rgba(255,99,132,1)',
 									borderWidth : 1
@@ -76,11 +75,16 @@
 					},
 					options : {
 						scales : {
-							xAxes : [ {
-								stacked : true,
-							} ],
-							yAxes : [ {
+							xAxes : [{
 								stacked : true
+								  }],
+							yAxes : [ {
+								stacked : true,
+								scaleLabel: {
+							        display: true,
+							        labelString: "매출실적(만원)",
+							        fontColor: "black"
+							      }
 							} ]
 						}
 					}
@@ -112,7 +116,12 @@
 						stacked : true,
 					} ],
 					yAxes : [ {
-						stacked : true
+						stacked : true,
+						scaleLabel: {
+					        display: true,
+					        labelString: "주행미터(km)",
+					        fontColor: "black"
+					      }
 					} ]
 				}
 			}

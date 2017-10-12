@@ -7,7 +7,8 @@
 <!DOCTYPE html>
 <html>
 <head>
- <c:import url="/WEB-INF/views/common/common.jsp"></c:import>
+<link rel="stylesheet" type="text/css" 
+ 	href="${pageContext.servletContext.contextPath}/assets/css/user/search.css"  media="all">
  </head>
 <body>
 <!-- Start of Body -->

@@ -35,6 +35,13 @@ public class CustomerController {
 	public String insert(@ModelAttribute CustomerVo customerVo) {
 		return "customer/insert";
 	}
+	
+	//TEST detail
+	@Auth
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+	public String detail(@ModelAttribute CustomerVo customerVo) {
+		return "customer/customer_detail";
+	}
 
 	@Auth
 	@ResponseBody

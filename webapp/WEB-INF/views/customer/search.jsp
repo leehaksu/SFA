@@ -22,7 +22,7 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div class="container">
+	<div>
 		<div class="page-header">
 			<h3 class="dayreport">
 				<strong>고객 조회</strong>
@@ -34,7 +34,7 @@
 					<li class="all"><input class="ng-all" type="text"
 						placeholder="고객명">
 						 <a href="#" class="button" type="button">검색</a>
-						 <a href="#" class="button" type="button">추가</a>
+						 <a href="${pageContext.servletContext.contextPath}/customer/insert" class="button" type="button">추가</a>
 					</li>
 					<li><select name="ng-valid" class="ng-valid">
 							<option value="영업부" selected="">영업부</option>
@@ -59,18 +59,33 @@
 			</div>
 		</div>
 		<hr>
-		<div>
+		<div id="customer-info" class="well">
+			<a href="#">
 			<h4>알리딘 슈퍼</h4>
-			<small>서울시 동작구 신대방동 <i class="glyphicon glyphicon-map-marker">
-			</i>
+			<small>서울시 동작구 신대방동 <i class="glyphicon glyphicon-map-marker"></i>			
 			</small>
+			
 			<p>
 				<i class="fa fa-user" aria-hidden="true"></i>담당자:김삼순<br /> <i
 					class="glyphicon glyphicon-envelope"></i>email@example.com <br />
 				<i class="fa fa-phone" aria-hidden="true"></i>010-1234-5678
 			</p>
-
+			</a>
 		</div>
+		<%-- <c:forEach items="${customerList}" var="dayreportVo" varStatus="status">
+		<div id="customer-info" class="well">
+			<a href="${pageContext.servletContext.contextPath}/customer/customer_detail">
+			<h4>${customerlist.name}</h4>
+			<small>${customerlist.address}<i class="glyphicon glyphicon-map-marker"></i>			
+			</small>
+			<p>
+				<i class="fa fa-user" aria-hidden="true"></i>담당자:${customerlist.manager_name}<br /> <i
+					class="glyphicon glyphicon-envelope"></i>${customerlist.manager_email} <br />
+				<i class="fa fa-phone" aria-hidden="true"></i>${customerlist.manager_contact}
+			</p>
+			</a>
+		</div>
+		</c:forEach> --%>
 	</div>
 	</main>
 

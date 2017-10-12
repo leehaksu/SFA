@@ -21,15 +21,16 @@
 
 .weektable-userinfo {
 	display: inline-block;
-	width: 150px;
+	width: 140px;
 }
 .week-userinfo-label {
 	margin-right: 20px;
 }
 
 
-.week-user-info #dept, .user-info #name, .user-info #reg-day {
+.week-user-info #dept, .week-user-info #name, .week-user-info #reg-day {
 	margin-left: 33px;
+	width:140px;
 }
 #show-week-title {
 	margin-left: 56px;

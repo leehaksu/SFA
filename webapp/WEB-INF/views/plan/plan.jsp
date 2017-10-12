@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<c:import url="/WEB-INF/views/common/common.jsp"></c:import>	
+<c:import url="/WEB-INF/views/common/common.jsp"></c:import>
 <script>
 	var date = new Date();
 	var today = moment().format("YYYY-MM-DD");
@@ -505,6 +505,7 @@
 		$.trim(todo)
 	}
 	
+
 	
 	//moment('2016-06','YYYY-MM').diff('2015-01','month');     //17 시간차
 	$(document).ready( function() {
@@ -655,7 +656,7 @@
 
 
 </head>
-<body >
+<body>
 	<nav class="navbar navbar-default">
 		<c:import url="/WEB-INF/views/include/header.jsp">
 			<c:param name="menu" value="main" />
@@ -668,63 +669,77 @@
 			</c:import>
 		</div>
 	</div>
-		<main id="page-content-wrapper" role="main">
+	<main id="page-content-wrapper" role="main">
 
-		<div id="calendar_main">
-			<div id=calendar></div>
+	<div id="calendar_main">
+		<div id=calendar></div>
+	</div>
+
+	<div id="side-dayplan">
+		<div id="side-dayplan-title">
+			<h5>
+				<strong>금일 영업 계획</strong>
+			</h5>
 		</div>
-		
-		<div id="side-dayplan">
-			<div id="side-dayplan-title">
-				<h5>
-					<strong>금일 영업 계획</strong>
-				</h5>
+		<div>
+			<div id="side-dayplan-coworker">
+				<!-- Small button group -->
+				<div id="side-dayplan-coworker-group" class="btn-group">
+					
+   
+					<select id="side-dayplan-coworker-button"
+						class="btn btn-default btn-sm">
+						<option>
+							${authUser.name} / ${authUser.dept}
+						</option>
+						<c:forEach var="i" items="${members}" varStatus="status">
+						<option>
+							${i.name} / ${i.dept}
+						</option>
+						</c:forEach>
+					</select>
+					<%-- <button id="side-dayplan-coworker-button"
+						class="btn btn-default btn-sm dropdown-toggle" type="button"
+						data-toggle="dropdown" aria-expanded="false">
+						${authUser.name} / ${authUser.dept} &nbsp; &nbsp; &nbsp;<span
+							class="caret"></span>
+					</button> --%>
+					<ul id="side-dayplan-coworker_list" class="dropdown-menu"
+						role="menu">
+
+					</ul>
+				</div>
 			</div>
-			<div>
-				<div id="side-dayplan-coworker">
-					<!-- Small button group -->
-					<div id="side-dayplan-coworker-group" class="btn-group">
-						<button id="side-dayplan-coworker-button"
-							class="btn btn-default btn-sm dropdown-toggle" type="button"
-							data-toggle="dropdown" aria-expanded="false">
-							${authUser.name} / ${authUser.dept} &nbsp; &nbsp; &nbsp;<span
-								class="caret"></span>
-						</button>
-						<ul id="side-dayplan-coworker_list" class="dropdown-menu" role="menu">
-							
-						</ul>
+			<div id="side_insert_group">
+				<button id="side-dayplan-open-button" type="button"
+					class="btn btn-default" aria-label="Left Align"
+					data-target="#dayplanmodal">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+				</button>
+
+				<div class="modal modal-center fade" id="dayplancheckmodal"
+					role="dialog" style="z-index: 2000;">
+					<div class="modal-dialog modal-center modal-sm">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">우선 사항</h4>
+							</div>
+							<div class="modal-body">
+								<p>달력에서 날짜를 먼저 클릭해 주세요.</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">확인</button>
+							</div>
+						</div>
+
 					</div>
 				</div>
-				<div id="side_insert_group">
-					<button id="side-dayplan-open-button" type="button"
-						class="btn btn-default" aria-label="Left Align"
-						data-target="#dayplanmodal">
-						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-					</button>
-
-					<div class="modal fade" id="dayplancheckmodal" role="dialog"
-						style="z-index: 2000;">
-						<div class="modal-dialog modal-sm">
-
-							<!-- Modal content-->
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">우선 사항</h4>
-								</div>
-								<div class="modal-body">
-									<p>달력에서 날짜를 먼저 클릭해 주세요.</p>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal">확인</button>
-								</div>
-							</div>
-
-						</div>
-					</div>
-					<!-- Modal -->
-					<%-- 					<c:choose>
+				<!-- Modal -->
+				<%-- 					<c:choose>
 						<c:when test="${authUser.level == '팀장'}">
 							<!-- c:import로 구분하여 불러들이기 -->
 							<div id="dayplanmodal" class="modal fade" role="dialog"
@@ -875,172 +890,195 @@
 						</c:when>
 					</c:choose>
  --%>
-					<div id="dayplanmodal" class="modal fade" role="dialog"
-						style="z-index: 2000;">
-						<div class="modal-dialog">
+				<div id="dayplanmodal" class="modal fade" role="dialog"
+					style="z-index: 2000;">
+					<div class="modal-dialog">
 
-							<!-- Modal content-->
-							<div class="modal-content" style="width: 800px;">
-								<div class="modal-header">
-									<h3 class="dayplan">
-										<strong>일일 계획서</strong>
-									</h3>
-									<div>
-										<button type="button" class="close" id="dayplanmodalclose"
-											data-dismiss="modal">&times;</button>
-										<br>
-									</div>
+						<!-- Modal content-->
+						<div class="modal-content" style="width: 800px;">
+							<div class="modal-header">
+								<h3 class="dayplan">
+									<strong>일일 계획서</strong>
+								</h3>
+								<div>
+									<button type="button" class="close" id="dayplanmodalclose"
+										data-dismiss="modal">&times;</button>
+									<br>
 								</div>
+							</div>
 
-								<div class="modal-body">
-									<form id="dayplanform" class="form-inline" method="#"
-										action="#">
-										<table id="dayplantable"
-											style="width: 100%; margin: 0 auto; border-spacing: 20px; border-collapse: separate;">
-											<tr>
-												<td colspan="3" id="content2">
-													<div class="form-group">
-														<div style="display: inline-block;">
-															<label for="show-day-title" style="width: 40px;">제목&nbsp;</label>
-															<input id="dayplantable-title"
-																class="form-control dayplanform-input" type="text"
-																name="" placeholder="[필수입력 항목]"
-																style="width: 459px; margin-right: 6px;" required>
-														</div>
-														<input type="hidden" name="id" class="dayplanform-input"
-															value="노대리"> <label for="day"
-															style="width: 50px;">작성일&nbsp;</label>
-														<div id="date-reg-date" class="form-control" style="width: 120px;"></div>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td colspan="3">
-													<div id="challengeinput" class="form-group"
-														style="width: -webkit-fill-available;">
-														<div>
-															<strong>오늘의 도전 과제(성과에 반영)</strong>
-														</div>
-														<select id="challenge"
-															class="form-control dayplanform-input" name=""
-															style="width: -webkit-fill-available; text-align-last: center;">
-														</select>
-													</div>
-												</td>
-											</tr>
-											<tr id="second-line">
-												<td>
-													<div class="form-group">
-														<span><strong>목표액</strong></span>
-														<div id="goalmoney" class="form-control dayplanform-input"></div>
-													</div>
-												</td>
-												<td>
-													<div class="form-group">
-														<span><strong>예상 주행거리량</strong></span> <input
-															id="datetable-distance" class="form-control dayplanform-input"
-															type="text" name="" placeholder="방문 지점 거리 측정하여 표시" readonly>
-													</div>
-												</td>
-												<td>
-													<div class="form-group">
-														<span><strong>방문지점</strong></span> <input id="datetable-branch" data-toggle="tooltip"
+							<div class="modal-body">
+								<form id="dayplanform" class="form-inline" method="#" action="#">
+									<table id="dayplantable"
+										style="width: 100%; margin: 0 auto; border-spacing: 20px; border-collapse: separate;">
+										<tr>
+											<td colspan="3" id="content2">
+												<div class="form-group">
+													<div style="display: inline-block;">
+														<label for="show-day-title" style="width: 40px;">제목&nbsp;</label>
+														<input id="dayplantable-title"
 															class="form-control dayplanform-input" type="text"
-															name="" placeholder="지도에서 방문지점 선택시 자동 삽입" readonly>
+															name="" placeholder="[필수입력 항목]"
+															style="width: 459px; margin-right: 6px;" required>
 													</div>
-												</td>
-											</tr>
-											<tr>
-												<td colspan="3">
+													<input type="hidden" name="id" class="dayplanform-input"
+														value="노대리"> <label for="day" style="width: 50px;">작성일&nbsp;</label>
+													<div id="date-reg-date" class="form-control"
+														style="width: 120px;"></div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="3">
+												<div id="challengeinput" class="form-group"
+													style="width: -webkit-fill-available;">
 													<div>
-														<span id="mapsearch"><strong>지도 검색</strong> </span>
-														<ul style="display: -webkit-box;">
-															<li><button id= "dateplan-searchRoutes" type="button" onclick="searchRoute()">경로탐색</button><li>
-															<li><button id= "dateplan-deleteRoutes" type="button" onclick="deleteRoute()">경로삭제</button><li>
-															<li><button id= "dateplan-searchPosition" type="button" >위치검색</button><li>
-														</ul>
-														<div id="searchPosition-modal" class="modal fade" style="z-index:10000;" role="dialog">
-														  <div class="modal-dialog modal-sm">
-														
-														    <!-- Modal content-->
-														    <div class="modal-content">
-														      <div class="modal-header">
-														        <button type="button" id="searchPosition-modal-close" class="close" data-dismiss="modal">&times;</button>
-														        <h4 class="modal-title">위치 검색</h4>
-														      </div>
-														      <div class="modal-body">		
-														      		<ul id="position-list">
-														      		<li><strong>[업체 리스트]</strong></li>
-														      		</ul>
-														      		
-														      </div>
-														      <div class="modal-footer">
-														        <label for="my-positions">업체명: </label>
-														        <input id="my-positions" name="search-position">
-														        <button type="button" id="searchPosition-search" class="btn btn-default" >검색</button>
-														      </div>
-														    </div>
-														  </div>
-														</div>
-														<div id="map_div"></div>
+														<strong>오늘의 도전 과제(성과에 반영)</strong>
 													</div>
-												</td>
+													<select id="challenge"
+														class="form-control dayplanform-input" name=""
+														style="width: -webkit-fill-available; text-align-last: center;">
+													</select>
+												</div>
+											</td>
+										</tr>
+										<tr id="second-line">
+											<td>
+												<div class="form-group">
+													<span><strong>목표액</strong></span>
+													<div id="goalmoney" class="form-control dayplanform-input"></div>
+												</div>
+											</td>
+											<td>
+												<div class="form-group">
+													<span><strong>예상 주행거리량</strong></span> <input
+														id="datetable-distance"
+														class="form-control dayplanform-input" type="text" name=""
+														placeholder="방문 지점 거리 측정하여 표시" readonly>
+												</div>
+											</td>
+											<td>
+												<div class="form-group">
+													<span><strong>방문지점</strong></span> <input
+														id="datetable-branch" data-toggle="tooltip"
+														class="form-control dayplanform-input" type="text" name=""
+														placeholder="지도에서 방문지점 선택시 자동 삽입" readonly>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="3">
+												<div>
+													<span id="mapsearch"><strong>지도 검색</strong> </span>
+													<ul style="display: -webkit-box;">
+														<li><button id="dateplan-searchRoutes" type="button"
+																onclick="searchRoute()">경로탐색</button>
+														<li>
+														<li><button id="dateplan-deleteRoutes" type="button"
+																onclick="deleteRoute()">경로삭제</button>
+														<li>
+														<li><button id="dateplan-searchPosition"
+																type="button">위치검색</button>
+														<li>
+													</ul>
+													<div id="searchPosition-modal" class="modal fade"
+														style="z-index: 10000;" role="dialog">
+														<div class="modal-dialog modal-sm">
+
+															<!-- Modal content-->
+															<div class="modal-content">
+																<div class="modal-header">
+																	<button type="button" id="searchPosition-modal-close"
+																		class="close" data-dismiss="modal">&times;</button>
+																	<h4 class="modal-title">위치 검색</h4>
+																</div>
+																<div class="modal-body">
+																	<ul id="position-list">
+																		<li><strong>[업체 리스트]</strong></li>
+																	</ul>
+
+																</div>
+																<div class="modal-footer">
+																	<label for="my-positions">업체명: </label> <input
+																		id="my-positions" name="search-position">
+																	<button type="button" id="searchPosition-search"
+																		class="btn btn-default">검색</button>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div id="map_div"></div>
+												</div>
+											</td>
+										</tr>
+									</table>
+									<table class="table table-striped table-bordered"
+										id="dayplantable-weekplan">
+										<thead>
+											<tr>
+												<th>월</th>
+												<th>화</th>
+												<th>수</th>
+												<th>목</th>
+												<th>금</th>
 											</tr>
-										</table>
-										<table class="table table-striped table-bordered" 
-											id="dayplantable-weekplan">
-											<thead>
-												<tr>
-													<th>월</th>
-													<th>화</th>
-													<th>수</th>
-													<th>목</th>
-													<th>금</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td><ul></ul></td>
-													<td><ul></ul></td>
-													<td><ul></ul></td>
-													<td><ul></ul></td>
-													<td><ul></ul></td>
-												</tr>
-											</tbody>
-										</table>
-									</form>
-									<div class=" panel panel-default form-group"
-										style="width: 100%;">
-											<strong>업무 일정</strong>		
-										<textarea id="date-textarea"></textarea>									
+										</thead>
+										<tbody>
+											<tr>
+												<td><ul></ul></td>
+												<td><ul></ul></td>
+												<td><ul></ul></td>
+												<td><ul></ul></td>
+												<td><ul></ul></td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+								<div class=" panel panel-default form-group"
+									style="width: 100%;">
+									<div class="panel-heading">
+										<strong>업무 일정</strong>
 									</div>
-									<div class="panel panel-info">
-										<div class="panel-heading">
-											<strong>팀장 의견</strong>
+										<textarea id="date-textarea"></textarea>
+								</div>
+								<c:choose>
+								<c:when test="${authUser.level == '팀원'} ">
+								<div class="panel panel-info">
+									<div class="panel-heading">
+										<strong>팀장 의견</strong>
+									</div>
+									<div class="panel-body">일 이따구로 할꺼야?</div>
+								</div>
+								</c:when>
+								<c:otherwise>
+								<div class="panel panel-info">
+									<div class="panel-heading">
+										<strong>팀장 의견</strong>
+									</div>
+									<input class="panel-body">
+								</div>
+								</c:otherwise>
+								</c:choose>
+								<div class="modal-footer">
+									<div class="btn-group btn-group-justified" role="group"
+										style="width: 240px; float: right;">
+										<div id="write-btn" class="btn-group" role="group">
+											<button id="dayplan-savebutton" class="btn btn-primary"
+												type="submit">
+												<strong>저장하기</strong>
+											</button>
 										</div>
-										<div class="panel-body">일 이따구로 할꺼야?</div>
-									</div>
-									<div class="modal-footer">
-										<div class="btn-group btn-group-justified" role="group"
-											style="width: 240px; float: right;">
-											<div id="write-btn" class="btn-group" role="group">
-												<button id="dayplan-savebutton" class="btn btn-primary"
-													type="submit">
-													<strong>저장하기</strong>
-												</button>
-											</div>
-											<div id="update-btn" class="btn-group" role="group">
-												<button id="dayplan-updatebutton" class="btn btn-info"
-													type="submit" data-dismiss="modal">
-													<strong>수정하기</strong>
-												</button>
-											</div>
-											<div id="delete-btn" class="btn-group" role="group">
-												<button id="dayplan-deletebutton" class="btn btn-default"
-													type="submit" data-dismiss="modal">
-													<strong>삭제하기</strong>
-												</button>
-											</div>
+										<div id="update-btn" class="btn-group" role="group">
+											<button id="dayplan-updatebutton" class="btn btn-info"
+												type="submit" data-dismiss="modal">
+												<strong>수정하기</strong>
+											</button>
+										</div>
+										<div id="delete-btn" class="btn-group" role="group">
+											<button id="dayplan-deletebutton" class="btn btn-default"
+												type="submit" data-dismiss="modal">
+												<strong>삭제하기</strong>
+											</button>
 										</div>
 									</div>
 								</div>
@@ -1048,358 +1086,354 @@
 						</div>
 					</div>
 				</div>
+			</div>
 
-				<div id="side-dayplan2">
-					<div id="side-dayplan-date">
-						<i class="fa fa-calendar" aria-hidden="true"></i> <span
-							class="dayplan-date"></span>
-					</div>
+			<div id="side-dayplan2">
+				<div id="side-dayplan-date">
+					<i class="fa fa-calendar" aria-hidden="true"></i> <span
+						class="dayplan-date"></span>
 				</div>
-				<div id="side-dayplan3">
-					<div id="side-dayplan-content" style="overflow:hidden;word-wrap:break-word;">	
-					</div>
+			</div>
+			<div id="side-dayplan3">
+				<div id="side-dayplan-content"
+					style="overflow: hidden; word-wrap: break-word;"></div>
+			</div>
+		</div>
+	</div>
+
+	<div id="weekplan_main">
+		<div id="week_title">
+			<h3>
+				<strong>주간계획 </strong>
+			</h3>
+		</div>
+		<div id="week_btn">
+			<div class="btn-group btn-group-justified " role="group">
+				<div id="write-btn" class="btn-group" role="group">
+					<button id="insertDB_button" class="btn btn-primary" disabled
+						type="button">저장하기</button>
+				</div>
+				<div id="delete-btn" class="btn-group" role="group">
+					<button id="init_button" class="btn btn-primary" disabled
+						type="button">전체 삭제</button>
 				</div>
 			</div>
 		</div>
-
-		<div id="weekplan_main">
-			<div id="week_title">
-				<h3>
-					<strong>주간계획 </strong>
-				</h3>
+		<div id="week">
+			<hr>
+		</div>
+		<form id="weekform" name="weekform" class="form-horizontal"
+			method="post">
+			<div class="form gorup">
+				<input id="first_date" class="form-control" type="hidden"
+					name="first_date">
 			</div>
-			<div id="week_btn">
-				<div class="btn-group btn-group-justified " role="group">
-					<div id="write-btn" class="btn-group" role="group">
-						<button id="insertDB_button" class="btn btn-primary" disabled
-							type="button">저장하기</button>
-					</div>
-					<div id="delete-btn" class="btn-group" role="group">
-						<button id="init_button" class="btn btn-primary" disabled
-							type="button">전체 삭제</button>
-					</div>
-				</div>
-			</div>
-			<div id="week">
-				<hr>
-			</div>
-			<form id="weekform" name="weekform" class="form-horizontal"
-				method="post">
-				<div class="form gorup">
-					<input id="first_date" class="form-control" type="hidden"
-						name="first_date">
-				</div>
+			<div>
 				<div>
-					<div>
-						<table >
-							<tr>
-								<td>
-									<div class="week-user-info">
-										<span class="week-userinfo-label"><strong>소속&nbsp;</strong></span>
-										<div id="dept" class="well well-sm weektable-userinfo">
-											  ${authUser.dept}</div>
-									</div>
-								</td>
-								<td>
-									<div class="week-user-info">
-										<span class="week-userinfo-label"><strong>이름&nbsp;</strong></span>
-										<div id="name" class="well well-sm weektable-userinfo">${authUser.name}</div>
-									</div>
-								</td>
-								<td>
-									<div class="week-user-info">
-										<span class="week-userinfo-label"><strong>작성일&nbsp;</strong></span>
-										<div id="reg-day" class="well well-sm weektable-userinfo"></div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<div class="form gorup" week-user-info>
-										<label id="weeklabel" for="target_figure">주간 목표액</label> <input
-											class="well well-sm  weekinput"
-											id="target_figure" name="target_figure" type="text" readonly>
-									</div>
-								</td>
-								<td>
-									<div class="form gorup week-user-info">
-										<label for="week_sale">주간 매출액</label>
-										<div class="well well-sm weekinput" id="week_sale"
-											style="display: inline-block;">매출액(원)</div>
-									</div>
-								</td>
-								<td>
-									<div class="form gorup week-user-info">
-										<label for="achive_rank">주간 달성률</label>
-										<div class="well well-sm weekinput" id="achive_rank"
-											style="display: inline-block; margin-left: 25px;">달성률(%)</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="3">
-									<div class="form gorup">
-										<label for="weektabletitle">제목</label> <input
-											class="well well-sm form-control" id="show-week-title"
-											placeholder="[주간계획]" disabled></input> <input
-											class="well well-sm form-control " id="weektabletitle"
-											name="title" type="text" placeholder="제목입력"
-											autocomplete=”off” disabled>
-									</div>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</div>
-				<div id="weektable">
-					<table class="tg">
+					<table>
 						<tr>
-							<th class="tg-amwm">요일</th>
-							<th class="tg-e3zv">월(<span> </span>)
-							</th>
-							<th class="tg-e3zv">화(<span> </span>)
-							</th>
-							<th class="tg-e3zv">수(<span> </span>)
-							</th>
-							<th class="tg-e3zv">목(<span> </span>)
-							</th>
-							<th class="tg-e3zv">금(<span> </span>)
-							</th>
-						</tr>
-						<tr>
-							<td class="tg-9hbo">일일 목표액</td>
-							<td class="weekmoney">
-								<div class="form gorup" style="display: inline-block;">
-									<input class="form-control target-money" id="monday_money"
-										name="Monday_money" type="Number"
-										onkeydown='return onlyNumber(event)'
-										onkeyup='removeChar(event)' min="0" disabled>
-								</div> <span>원</span>
+							<td>
+								<div class="week-user-info">
+									<span class="week-userinfo-label"><strong>소속&nbsp;</strong></span>
+									<div id="dept" class="well well-sm weektable-userinfo">
+										${authUser.dept}</div>
+								</div>
 							</td>
-							<td class="weekmoney">
-								<div class="form gorup" style="display: inline-block;">
-									<input class="form-control target-money" id="tuesday_money"
-										name="Tuesday_money" type="Number"
-										onkeydown='return onlyNumber(event)'
-										onkeyup='removeChar(event)' min="0" disabled>
-								</div> <span>원</span>
+							<td>
+								<div class="week-user-info">
+									<span class="week-userinfo-label"><strong>이름&nbsp;</strong></span>
+									<div id="name" class="well well-sm weektable-userinfo">${authUser.name}</div>
+								</div>
 							</td>
-							<td class="weekmoney">
-								<div class="form gorup" style="display: inline-block;">
-									<input class="form-control target-money" id="wednesday_money"
-										name="Wednesday_money" type="Number"
-										onkeydown='return onlyNumber(event)'
-										onkeyup='removeChar(event)' min="0" disabled>
-								</div> <span>원</span>
-							</td>
-							<td class="weekmoney">
-								<div class="form gorup" style="display: inline-block;">
-									<input class="form-control target-money" id="thursday_money"
-										name="Thursday_money" type="Number"
-										onkeydown='return onlyNumber(event)'
-										onkeyup='removeChar(event)' min="0" disabled>
-								</div> <span>원</span>
-							</td>
-							<td class="weekmoney">
-								<div class="form gorup" style="display: inline-block;">
-									<input class="form-control target-money" id="friday_money"
-										name="Friday_money" type="Number"
-										onkeydown='return onlyNumber(event)'
-										onkeyup='removeChar(event)' min="0" disabled>
-								</div> <span>원</span>
+							<td>
+								<div class="week-user-info">
+									<span class="week-userinfo-label"><strong>작성일&nbsp;</strong></span>
+									<div id="reg-day" class="well well-sm weektable-userinfo"></div>
+								</div>
 							</td>
 						</tr>
 						<tr>
-							<td class="tg-amwm">내용</td>
-							<td class="tg-031e">
-								<ul id="monday-container">
-									<li>
-										<textarea class="form-control dayedit-content"
-											id="monday-content" name="Monday" style="height: 150px"
-											placeholder="업무 내용이 없습니다." disabled></textarea>
-										<div class="modal fade" role="dialog" style="z-index: 1000;">
-											<div class="modal-dialog">
-												<!-- Modal content-->
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close day-content-modal" data-dismiss="modal">&times;</button>
-														<h4 class="modal-title">활동 계획 입력창</h4>
-													</div>
-													<div class="modal-body">
-														<div class="modal-buttons" style="float: right;">
-															<button class="modal-add-button" type="button"
-																class="btn btn-default">
-																추가 <i class="fa fa-plus" aria-hidden="true"></i>
-															</button>
-														</div>
-														<br> <br>
-														<ol class="to-do-list">
-
-														</ol>
-													</div>
-													<div class="modal-footer">
-														<button class="modal-save-button" type="button"
-															class="btn btn-default" data-dismiss="modal">저장</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
+							<td>
+								<div class="form gorup" week-user-info>
+									<label id="weeklabel" for="target_figure">주간 목표액</label> <input
+										class="well well-sm  weekinput" id="target_figure"
+										name="target_figure" type="text" readonly>
+								</div>
 							</td>
-							<td class="tg-031e">
-								<ul id="tuesday-container">
-									<li>
-										<textarea class="form-control dayedit-content"
-											id="tuesday-content" name="Tuesday" style="height: 150px"
-											placeholder="업무 내용이 없습니다." disabled></textarea>
-										<div class="modal fade" role="dialog" style="z-index: 1000;">
-											<div class="modal-dialog">
-												<!-- Modal content-->
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close day-content-modal" data-dismiss="modal">&times;</button>
-														<h4 class="modal-title">활동 계획 입력창</h4>
-													</div>
-													<div class="modal-body">
-														<div class="modal-buttons" style="float: right;">
-															<!--클래스로 다 만들어서  스타일 적용할것.-->
-															<button class="modal-add-button" type="button"
-																class="btn btn-default">
-																추가 <i class="fa fa-plus" aria-hidden="true"></i>
-															</button>
-														</div>
-														<br> <br>
-														<ol class="to-do-list">
-
-														</ol>
-													</div>
-													<div class="modal-footer">
-														<button class="modal-save-button" type="button"
-															class="btn btn-default" data-dismiss="modal">저장</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
+							<td>
+								<div class="form gorup week-user-info">
+									<label for="week_sale">주간 매출액</label>
+									<div class="well well-sm weekinput" id="week_sale"
+										style="display: inline-block;">매출액(원)</div>
+								</div>
 							</td>
-							<td class="tg-031e">
-								<ul id="wednesday-container">
-									<li>
-										<textarea class="form-control dayedit-content"
-											id="wednesday-content" name="Wednesday" style="height: 150px"
-											placeholder="업무 내용이 없습니다." disabled></textarea>
-										<div class="modal fade" role="dialog" style="z-index: 1000;">
-											<div class="modal-dialog">
-												<!-- Modal content-->
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close day-content-modal" data-dismiss="modal">&times;</button>
-														<h4 class="modal-title">활동 계획 입력창</h4>
-													</div>
-													<div class="modal-body">
-														<div class="modal-buttons" style="float: right;">
-															<!--클래스로 다 만들어서  스타일 적용할것.-->
-															<button class="modal-add-button" type="button"
-																class="btn btn-default">
-																추가 <i class="fa fa-plus" aria-hidden="true"></i>
-															</button>
-														</div>
-														<br> <br>
-														<ol class="to-do-list">
-
-														</ol>
-													</div>
-													<div class="modal-footer">
-														<button class="modal-save-button" type="button"
-															class="btn btn-default" data-dismiss="modal">저장</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
+							<td>
+								<div class="form gorup week-user-info">
+									<label for="achive_rank">주간 달성률</label>
+									<div class="well well-sm weekinput" id="achive_rank"
+										style="display: inline-block; margin-left: 25px;">달성률(%)</div>
+								</div>
 							</td>
-							<td class="tg-031e">
-								<ul id="thursday-container">
-									<li>
-										<textarea class="form-control dayedit-content"
-											id="thursday-content" name="Thursday" style="height: 150px"
-											placeholder="업무 내용이 없습니다." disabled></textarea>
-										<div class="modal fade" role="dialog" style="z-index: 1000;">
-											<div class="modal-dialog">
-												<!-- Modal content-->
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close day-content-modal" data-dismiss="modal">&times;</button>
-														<h4 class="modal-title">활동 계획 입력창</h4>
-													</div>
-													<div class="modal-body">
-														<div class="modal-buttons" style="float: right;">
-															<!--클래스로 다 만들어서  스타일 적용할것.-->
-															<button class="modal-add-button" type="button"
-																class="btn btn-default">
-																추가 <i class="fa fa-plus" aria-hidden="true"></i>
-															</button>
-														</div>
-														<br> <br>
-														<ol class="to-do-list">
-
-														</ol>
-													</div>
-													<div class="modal-footer">
-														<button class="modal-save-button" type="button"
-															class="btn btn-default" data-dismiss="modal">저장</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</td>
-							<td class="tg-031e">
-								<ul id="friday-container">
-									<li>
-										<textarea class="form-control dayedit-content"
-											id="friday-content" name="Friday" style="height: 150px"
-											placeholder="업무 내용이 없습니다." disabled></textarea>
-										<div class="modal fade" role="dialog" style="z-index: 1000;">
-											<div class="modal-dialog">
-												<!-- Modal content-->
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close day-content-modal" data-dismiss="modal">&times;</button>
-														<h4 class="modal-title">활동 계획 입력창</h4>
-													</div>
-													<div class="modal-body">
-														<div class="modal-buttons" style="float: right;">
-															<!--클래스로 다 만들어서  스타일 적용할것.-->
-															<button class="modal-add-button" type="button"
-																class="btn btn-default">
-																추가 <i class="fa fa-plus" aria-hidden="true"></i>
-															</button>
-														</div>
-														<br> <br>
-														<ol class="to-do-list">
-
-														</ol>
-													</div>
-													<div class="modal-footer">
-														<button class="modal-save-button" type="button"
-															class="btn btn-default" data-dismiss="modal">저장</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<div class="form gorup">
+									<label for="weektabletitle">제목</label> <input
+										class="well well-sm form-control" id="show-week-title"
+										placeholder="[주간계획]" disabled></input> <input
+										class="well well-sm form-control " id="weektabletitle"
+										name="title" type="text" placeholder="제목입력" autocomplete=”off”
+										disabled>
+								</div>
 							</td>
 						</tr>
 					</table>
 				</div>
-			</form>
-		</div>
-		</main>
+			</div>
+			<div id="weektable">
+				<table class="tg">
+					<tr>
+						<th class="tg-amwm">요일</th>
+						<th class="tg-e3zv">월(<span> </span>)
+						</th>
+						<th class="tg-e3zv">화(<span> </span>)
+						</th>
+						<th class="tg-e3zv">수(<span> </span>)
+						</th>
+						<th class="tg-e3zv">목(<span> </span>)
+						</th>
+						<th class="tg-e3zv">금(<span> </span>)
+						</th>
+					</tr>
+					<tr>
+						<td class="tg-9hbo">일일 목표액</td>
+						<td class="weekmoney">
+							<div class="form gorup" style="display: inline-block;">
+								<input class="form-control target-money" id="monday_money"
+									name="Monday_money" type="Number"
+									onkeydown='return onlyNumber(event)'
+									onkeyup='removeChar(event)' min="0" disabled>
+							</div> <span>원</span>
+						</td>
+						<td class="weekmoney">
+							<div class="form gorup" style="display: inline-block;">
+								<input class="form-control target-money" id="tuesday_money"
+									name="Tuesday_money" type="Number"
+									onkeydown='return onlyNumber(event)'
+									onkeyup='removeChar(event)' min="0" disabled>
+							</div> <span>원</span>
+						</td>
+						<td class="weekmoney">
+							<div class="form gorup" style="display: inline-block;">
+								<input class="form-control target-money" id="wednesday_money"
+									name="Wednesday_money" type="Number"
+									onkeydown='return onlyNumber(event)'
+									onkeyup='removeChar(event)' min="0" disabled>
+							</div> <span>원</span>
+						</td>
+						<td class="weekmoney">
+							<div class="form gorup" style="display: inline-block;">
+								<input class="form-control target-money" id="thursday_money"
+									name="Thursday_money" type="Number"
+									onkeydown='return onlyNumber(event)'
+									onkeyup='removeChar(event)' min="0" disabled>
+							</div> <span>원</span>
+						</td>
+						<td class="weekmoney">
+							<div class="form gorup" style="display: inline-block;">
+								<input class="form-control target-money" id="friday_money"
+									name="Friday_money" type="Number"
+									onkeydown='return onlyNumber(event)'
+									onkeyup='removeChar(event)' min="0" disabled>
+							</div> <span>원</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="tg-amwm">내용</td>
+						<td class="tg-031e">
+							<ul id="monday-container">
+								<li><textarea class="form-control dayedit-content"
+										id="monday-content" name="Monday" style="height: 150px"
+										placeholder="업무 내용이 없습니다." disabled></textarea>
+									<div class="modal fade" role="dialog" style="z-index: 1000;">
+										<div class="modal-dialog">
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close day-content-modal"
+														data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">활동 계획 입력창</h4>
+												</div>
+												<div class="modal-body">
+													<div class="modal-buttons" style="float: right;">
+														<button class="modal-add-button" type="button"
+															class="btn btn-default">
+															추가 <i class="fa fa-plus" aria-hidden="true"></i>
+														</button>
+													</div>
+													<br> <br>
+													<ol class="to-do-list">
+
+													</ol>
+												</div>
+												<div class="modal-footer">
+													<button class="modal-save-button" type="button"
+														class="btn btn-default" data-dismiss="modal">저장</button>
+												</div>
+											</div>
+										</div>
+									</div></li>
+							</ul>
+						</td>
+						<td class="tg-031e">
+							<ul id="tuesday-container">
+								<li><textarea class="form-control dayedit-content"
+										id="tuesday-content" name="Tuesday" style="height: 150px"
+										placeholder="업무 내용이 없습니다." disabled></textarea>
+									<div class="modal fade" role="dialog" style="z-index: 1000;">
+										<div class="modal-dialog">
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close day-content-modal"
+														data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">활동 계획 입력창</h4>
+												</div>
+												<div class="modal-body">
+													<div class="modal-buttons" style="float: right;">
+														<!--클래스로 다 만들어서  스타일 적용할것.-->
+														<button class="modal-add-button" type="button"
+															class="btn btn-default">
+															추가 <i class="fa fa-plus" aria-hidden="true"></i>
+														</button>
+													</div>
+													<br> <br>
+													<ol class="to-do-list">
+
+													</ol>
+												</div>
+												<div class="modal-footer">
+													<button class="modal-save-button" type="button"
+														class="btn btn-default" data-dismiss="modal">저장</button>
+												</div>
+											</div>
+										</div>
+									</div></li>
+							</ul>
+						</td>
+						<td class="tg-031e">
+							<ul id="wednesday-container">
+								<li><textarea class="form-control dayedit-content"
+										id="wednesday-content" name="Wednesday" style="height: 150px"
+										placeholder="업무 내용이 없습니다." disabled></textarea>
+									<div class="modal fade" role="dialog" style="z-index: 1000;">
+										<div class="modal-dialog">
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close day-content-modal"
+														data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">활동 계획 입력창</h4>
+												</div>
+												<div class="modal-body">
+													<div class="modal-buttons" style="float: right;">
+														<!--클래스로 다 만들어서  스타일 적용할것.-->
+														<button class="modal-add-button" type="button"
+															class="btn btn-default">
+															추가 <i class="fa fa-plus" aria-hidden="true"></i>
+														</button>
+													</div>
+													<br> <br>
+													<ol class="to-do-list">
+
+													</ol>
+												</div>
+												<div class="modal-footer">
+													<button class="modal-save-button" type="button"
+														class="btn btn-default" data-dismiss="modal">저장</button>
+												</div>
+											</div>
+										</div>
+									</div></li>
+							</ul>
+						</td>
+						<td class="tg-031e">
+							<ul id="thursday-container">
+								<li><textarea class="form-control dayedit-content"
+										id="thursday-content" name="Thursday" style="height: 150px"
+										placeholder="업무 내용이 없습니다." disabled></textarea>
+									<div class="modal fade" role="dialog" style="z-index: 1000;">
+										<div class="modal-dialog">
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close day-content-modal"
+														data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">활동 계획 입력창</h4>
+												</div>
+												<div class="modal-body">
+													<div class="modal-buttons" style="float: right;">
+														<!--클래스로 다 만들어서  스타일 적용할것.-->
+														<button class="modal-add-button" type="button"
+															class="btn btn-default">
+															추가 <i class="fa fa-plus" aria-hidden="true"></i>
+														</button>
+													</div>
+													<br> <br>
+													<ol class="to-do-list">
+
+													</ol>
+												</div>
+												<div class="modal-footer">
+													<button class="modal-save-button" type="button"
+														class="btn btn-default" data-dismiss="modal">저장</button>
+												</div>
+											</div>
+										</div>
+									</div></li>
+							</ul>
+						</td>
+						<td class="tg-031e">
+							<ul id="friday-container">
+								<li><textarea class="form-control dayedit-content"
+										id="friday-content" name="Friday" style="height: 150px"
+										placeholder="업무 내용이 없습니다." disabled></textarea>
+									<div class="modal fade" role="dialog" style="z-index: 1000;">
+										<div class="modal-dialog">
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close day-content-modal"
+														data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">활동 계획 입력창</h4>
+												</div>
+												<div class="modal-body">
+													<div class="modal-buttons" style="float: right;">
+														<!--클래스로 다 만들어서  스타일 적용할것.-->
+														<button class="modal-add-button" type="button"
+															class="btn btn-default">
+															추가 <i class="fa fa-plus" aria-hidden="true"></i>
+														</button>
+													</div>
+													<br> <br>
+													<ol class="to-do-list">
+
+													</ol>
+												</div>
+												<div class="modal-footer">
+													<button class="modal-save-button" type="button"
+														class="btn btn-default" data-dismiss="modal">저장</button>
+												</div>
+											</div>
+										</div>
+									</div></li>
+							</ul>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</form>
+	</div>
+	</main>
 </body>
 </html>

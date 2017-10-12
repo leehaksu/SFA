@@ -42,7 +42,6 @@
 			alert("An unknown error occurred.");
 			break;
 		}
-
 	}
 
 	function init() {
@@ -61,11 +60,13 @@
 	$(document).ready(function() {
 		$('input[name=cellphone]').mask('000-0000-0000');
 		$('input[name=customer-phone]').mask('00-000-0000');
+		
 	});
 </script>
 
 </head>
-<body onload="init()" > 
+<body>
+	<!-- onload="getLocation()" -->
 	<nav class="navbar navbar-default">
 		<c:import url="/WEB-INF/views/include/header.jsp">
 			<c:param name="menu" value="main" />
@@ -98,25 +99,43 @@
 							<tr>
 								<th>고객명</th>
 								<td><input type="text" class="form-control"
-									name="customer-name"></td>
+									name="customer-name" readonly></td>
 							</tr>
 							<tr>
 								<th>고객 연락처</th>
 								<td><input class="form-control" type="text"
-									class="form-control" name="customer-phone"></td>
+									class="form-control" name="customer-phone"readonly></td>
 							</tr>
 							<tr>
 								<th>고객 영업시간</th>
 								<td><input type="text" class="form-control"
-									name="opening-hours"></td>
+									name="opening-hours"readonly></td>
 							</tr>
 							<tr>
 								<th>업체 주소</th>
 								<td><input id="customer-address-input" type="input"
-									class="form-control" name="name">
+									class="form-control" name="name"readonly>
 									<button type="button" class="btn btn-info btn-md"
 										data-toggle="modal" data-target="#search_customer_map">맵
-										검색</button></td>
+										검색</button>
+									<div id="search_customer_map" class="modal fade" role="dialog">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">고객 위치 검색</h4>
+												</div>
+												<div class="modal-body">
+													<div id="map_div"></div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default"
+														data-dismiss="modal">Close</button>
+												</div>
+											</div>
+
+										</div>
+								</div></td>
 							</tr>
 						</tbody>
 					</table>
@@ -130,47 +149,25 @@
 						<tr>
 							<th>이름</th>
 							<td><input id="name" type="text" class="form-control"
-								name="name" placeholer="휴대전화 번호 "></td>
+								name="name" placeholer="휴대전화 번호 " readonly></td>
 						</tr>
 						<tr>
 							<th>연락처</th>
 							<td><input id="cellPhone" type="text" class="form-control"
-								name="cellphone" placeholer="휴대전화 번호 "></td>
+								name="cellphone" placeholer="휴대전화 번호 " readonly></td>
 						</tr>
 						<tr>
 							<th>이메일</th>
-							<td><input type="email" class="form-control" name="name">
+							<td><input type="email" class="form-control" name="name" readonly>
 							</td>
 						</tr>
 					</tbody>
 				</table>
-				<br> <input id="customer-submit-button" type="submit" value="저장"
-					class="btn btn-default" onclick="getLocation()">
+				<br> <input id="customer-submit-button" type="submit"
+					class="btn btn-default" readonly>
 			</form>
 		</div>
 	</div>
-	<div id="search_customer_map" class="modal fade  modal-lg" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">고객 위치 검색</h4>
-				</div>
-				<div class="modal-body">
-					<div>
-					<input type="text" name="position">
-					<button type="button">검색</button>
-					</div>
-					<br>
-					<div id="map_div"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">저장</button>
-				</div>
-			</div>
-		</div>
-	</div>
 	</main>
-
 </body>
 </html>

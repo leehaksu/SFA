@@ -46,6 +46,12 @@ public class DateReportController {
 	public String insert() {
 		return "plan/report_insert";
 	}
+	
+	@Auth
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+	public String detail() {
+		return "plan/report_detail";
+	}
 
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)

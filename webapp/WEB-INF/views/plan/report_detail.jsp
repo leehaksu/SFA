@@ -11,7 +11,31 @@
 <head>
 	<c:import url="/WEB-INF/views/common/common.jsp"></c:import>
 <script type="text/javascript">
-
+	$(document).ready(function(){
+		$(function() { $('.date-textarea').froalaEditor(
+				{
+				  toolbarButtons: ['bold', 'italic','paragraphFormat'],
+					paragraphFormat: 
+					{
+					    N: 'Normal',
+					    H1: 'Heading 1',
+					    H2: 'Heading 2',
+						H3: 'Heading 3'
+				  	}
+				});
+		});
+		
+		$('.date-textarea').froalaEditor('edit.off');
+		$("#dayreporttable-files").fileinput({showCaption: false});	
+		$(".dayreportform-input").attr("readonly",true);	
+		$(".advicereporttable-input").attr("readonly",true);
+		$("#submitDay-datepicker").attr("readonly",true);
+	});
+	
+	function update(){
+		$(".dayreportform-input").attr("readonly",false);	
+	}
+	
 </script>
 </head>
 <body>
@@ -114,7 +138,7 @@
 									</div>
 									 <label for="day"
 										style="width: 115px; text-align: center">제출일&nbsp;</label> <input
-										id="submitDay-datepicker" class="form-control"
+										id="submitDay-datepicker" class="form-control" 
 										type="text"  placeholder="작성날짜"
 										 required>
 										<input id="dayreport-date" type="hidden" name="date" class="dayreportform-input">
@@ -127,7 +151,7 @@
 						<div class="panel-heading">
 							<strong>업무 보고 내용</strong>
 						</div>
-						<textarea name="content" class="date-textarea"></textarea>	
+						<textarea name="content" class="date-textarea dayreportform-input"></textarea>	
 					</div>
 					<div class="form-group">
 						<input id="dayreporttable-files" class="form-control" multiple type="file">
@@ -143,9 +167,9 @@
 						<div class="btn-group btn-group-justified" role="group"
 							style="width: 240px; float: right;">
 							<div id="write-btn" class="btn-group" role="group">
-								<button id="dayreport-savebutton" class="btn btn-primary"
-									type="submit">
-									<strong>저장하기</strong>
+								<button id="dayreport-updatebutton" class="btn btn-primary"
+									type="button" onclick="update()">
+									<strong>수정하기</strong>
 								</button>
 							</div>
 						</div>
@@ -181,8 +205,9 @@
 									<div class="panel-heading" style="color: #fff; ">
 										<strong>상담카드</strong>
 										<div style="float: right;">
-										 <i class="fa fa-pencil fa-6" aria-hidden="true"></i>
-										 <i class="fa fa-trash fa-6" aria-hidden="true"></i>
+										 <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+										 &nbsp;
+										 <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
 										</div>
 									</div>
 									<div class="panel-body">
@@ -262,7 +287,7 @@
 												<td colspan="3" id="adv-content4">
 													<div class="panel panel-default form-group"
 														style="width: 95%; text-align: center; margin: 10px;">
-														<textarea id="advice-textarea" class="date-textarea"></textarea>	
+														<textarea id="advice-textarea" class="date-textarea advicereporttable-input"></textarea>	
 													</div>
 												</td>
 											</tr>
@@ -270,19 +295,7 @@
 
 									</div>
 								</div>
-								<div class="btn-group btn-group-justified" role="group"
-									style="width: 150px; float: right; margin: 10px;">
-									<div id="write-btn" class="btn-group" role="group">
-										<button class="btn btn-info advicereporttable-savebutton" type="button">
-											<strong>저장하기</strong>
-										</button>
-									</div>
-									<!-- <div id="delete-btn" class="btn-group" role="group">
-										<button class="btn btn-danger advicereporttable-deletebutton" type="submit">
-											<strong>삭제하기</strong>
-										</button>
-									</div> -->
-								</div>
+								
 								<div style=" clear:both; border-bottom: 1px solid #eee;"></div>
 							</form>
 						</div>
@@ -292,46 +305,6 @@
 		</div>
 	</article>
 
-
-	<div class="modal fade" id="AdviceModal" role="dialog"
-		style="z-index: 2000;"  data-backdrop="static">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content" style="width: 800px;">
-				<div class="modal-header">
-					<button type="button" class="close cancle-btn" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">
-						<strong>대리점 검색</strong>
-					</h4>
-				</div>
-				<div id="modal-body" class="modal-body">
-					<label style="margin-right: 10px; margin-left: 10px;">고 객 명
-					</label><input id="advicereporttable-name"
-						class="form-control advicereportform-input" type="text" name=""
-						placeholder="주소 자동입력 " style="width: 500px; margin-right: 6px;"
-						required>
-					<button id="advicereport-updatebutton" class="btn btn-info"
-						type="submit">
-						<strong>검 색</strong>
-					</button>
-					<table id="modal_table" class="tg">
-					<thead>
-						<tr>
-							<th class="tg-031e">고객 코드</th>
-							<th class="tg-031e">고객명</th>
-							<th class="tg-031e">주소</th>
-							<th class="tg-031e">선택<br></th>
-						</tr>
-					</thead> 
-					<tbody></tbody>	
-					</table>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger cancle-btn" data-dismiss="modal">취소</button>
-				</div>
-			</div>
-		</div>
-	</div>
 	</main>
 	
 </body>

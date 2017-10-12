@@ -190,6 +190,7 @@ body {
     font-size: 20px;
     color: white;
     border-radius: 0 5px 5px 0;
+    z-index: 100;
     
 }
  #sidemenu:hover {
@@ -284,8 +285,7 @@ body {
 .modal {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
-	padding-top: 100px; /* Location of the box */
+	z-index: 3000000; /* Sit on top */
 	left: 0;
 	top: 0;
 	width: 100%; /* Full width */
