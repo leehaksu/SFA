@@ -126,12 +126,18 @@ public class PlanWeekController {
 	@ResponseBody
 	@RequestMapping(value = { "/select" }, method = RequestMethod.GET)
 	public JSONResult selectMonth(@RequestParam(value = "date", required = true, defaultValue = "") String date,
-			@AuthUser UserVo authUser, Model model, DayVo dayVo) {
+			@RequestParam(value = "id", required = true, defaultValue = "") String id, @AuthUser UserVo authUser,
+			Model model, DayVo dayVo) {
 		if (authUser == null) {
 			return JSONResult.error("로그인 되지 않았습니다.");
+		} else if ("".equals(id)) {
+			return JSONResult.error("아이디값이 없습니다.");
 		}
-
-		dayVo.setId(authUser.getId());
+		if ((authUser.getLevel()).equals(id)) {
+			dayVo.setId(id);
+		} else {
+			dayVo.setId(authUser.getId());
+		}
 
 		if ("".equals(date)) {
 			Calendar cal = Calendar.getInstance();
@@ -155,46 +161,22 @@ public class PlanWeekController {
 
 	@Auth
 	@ResponseBody
-	@RequestMapping(value = { "/select/" }, method = RequestMethod.GET)
-	public JSONResult selectMonth(@RequestParam(value = "date", required = true, defaultValue = "") String date,
-			@AuthUser UserVo authUser, Model model, DayVo dayVo,
-			@RequestParam(value="id",required=true, defaultValue="")String id) {
-		if (authUser == null) {
-			return JSONResult.error("로그인 되지 않았습니다.");
-		}else if("".equals(id))
-		{
-			return JSONResult.error("아이디 넘어오지 않습니다.");
-		}
-		dayVo.setId(id);
-
-		if ("".equals(date)) {
-			Calendar cal = Calendar.getInstance();
-			String calendar = String.valueOf(cal.get(Calendar.YEAR)) + "-" + String.valueOf(cal.get(Calendar.MONTH) + 1)
-					+ "-" + String.valueOf(cal.get(Calendar.DATE));
-			dayVo.setFirst_date(calendar);
-		} else {
-			dayVo.setFirst_date(date);
-		}
-
-		List<DayVo> list = weekPlanService.selectMonth(dayVo);
-
-		if (list == null) {
-			return JSONResult.fail("제대로 불러오지 못햇습니다.");
-		}else {
-			return JSONResult.success(list);
-		}
-	}
-	@Auth
-	@ResponseBody
 	@RequestMapping(value = { "/select" }, method = RequestMethod.POST)
 	public JSONResult selectWeek(@AuthUser UserVo authUser,
-			@RequestParam(value = "date", required = true, defaultValue = "") String Date, WeekVo weekVo,
+			@RequestParam(value = "date", required = true, defaultValue = "") String Date, 
+			@RequestParam(value = "id", required = true, defaultValue = "") String id, WeekVo weekVo,
 			UserVo userVo) {
 		if (authUser == null) {
-			return JSONResult.error("로그인이 되지 않았습니다.");
+			return JSONResult.error("로그인 되지 않았습니다.");
+		} else if ("".equals(id)) {
+			return JSONResult.error("아이디값이 없습니다.");
 		}
-		weekVo.setId(authUser.getId());
-
+		if ((authUser.getLevel()).equals(id)) {
+			weekVo.setId(id);
+		} else {
+			weekVo.setId(authUser.getId());
+		}
+		
 		Calendar cal = Calendar.getInstance();
 		if ("".equals(Date)) {
 			String calendar = String.valueOf(cal.get(Calendar.YEAR)) + "-" + String.valueOf(cal.get(Calendar.MONTH) + 1)
@@ -204,12 +186,13 @@ public class PlanWeekController {
 			weekVo.setFirst_date(Date);
 		}
 		weekVo = weekPlanService.selectWeek(weekVo);
-		WeekVo temp_weekVo = weekPlanService.selectReport(Date, authUser.getId());
-		System.out.println("[controller]" + temp_weekVo);
-
 		if (weekVo == null) {
 			JSONResult.error("서버에 error 발생");
-		} else if (temp_weekVo == null) {
+		}
+		WeekVo temp_weekVo = weekPlanService.selectReport(Date, weekVo.getId());
+		System.out.println("[controller]" + temp_weekVo);
+
+		if (temp_weekVo == null) {
 			weekVo.setAchive_rank(0.0);
 			weekVo.setWeek_sale((long) 0);
 		} else {
