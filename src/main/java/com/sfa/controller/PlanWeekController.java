@@ -189,6 +189,7 @@ public class PlanWeekController {
 			weekVo.setFirst_date(Date);
 		}
 		weekVo = weekPlanService.selectWeek(weekVo);
+		System.out.println(weekVo);
 		if (weekVo == null) {
 			JSONResult.error("서버에 error 발생");
 		}

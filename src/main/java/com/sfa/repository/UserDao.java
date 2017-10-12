@@ -145,4 +145,19 @@ public class UserDao {
 		map.put("token", token);
 		return sqlSession.selectOne("user.getIdbyToken",map);
 	}
+
+	public int insertKey(String user_key, String id) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("user_key", user_key);
+		map.put("id", id);
+		return sqlSession.insert("user.insertKey", map);
+	}
+
+	public UserVo getKey(String user_key) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("user_key", user_key);
+		return sqlSession.selectOne("user.getKey", map);
+	}
 }

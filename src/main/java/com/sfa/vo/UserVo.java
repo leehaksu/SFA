@@ -14,6 +14,7 @@ public class UserVo {
 	private String date;//가입 날짜
 	private String Token;//토큰
 	private String status;//상태
+	private String user_key;// 카카오톡 user_key
 	public String getId() {
 		return id;
 	}
@@ -80,11 +81,16 @@ public class UserVo {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+	public String getUser_key() {
+		return user_key;
+	}
+	public void setUser_key(String user_key) {
+		this.user_key = user_key;
+	}
 	@Override
 	public String toString() {
 		return "UserVo [id=" + id + ", passwd=" + passwd + ", dept=" + dept + ", name=" + name + ", grade=" + grade
 				+ ", company_email=" + company_email + ", email=" + email + ", level=" + level + ", date=" + date
-				+ ", Token=" + Token + ", status=" + status + "]";
+				+ ", Token=" + Token + ", status=" + status + ", user_key=" + user_key + "]";
 	}
 }
