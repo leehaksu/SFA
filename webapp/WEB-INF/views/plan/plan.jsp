@@ -36,7 +36,7 @@
 	var thisweekdate;
 
 	//check UserID select 박스에서 변경된 아이디를 담는 변수이다.(팀장 전용)
-	var changeID;
+	var selectID;
 	
 	//입력 체크 변수
 	var changecheck = false;
@@ -521,6 +521,8 @@
 	
 	//moment('2016-06','YYYY-MM').diff('2015-01','month');     //17 시간차
 	$(document).ready( function() {
+		var selectID=$("#side-dayplan-coworker-button option:selected").val();						
+		
 		//도전과제 ajax
 		ajaxChallenge();
 		//텍스트 에디터 초기화
@@ -542,8 +544,9 @@
 								disableDragging: true,
 								events : function(start, end, timezone, callback) {
 									current = $('#calendar').fullCalendar('getDate').format("YYYY-MM-DD");
-									//달력에 모든 주간일정 ajax
-									getWeeks(current,callback);
+									//달력에 모든 주간일정 ajax'
+
+									getWeeks(current,selectID,callback);
 								},
 								dayClick : function(date, jsEvent,view) {
 									//클릭한 날짜를  날짜 형식을 'YYYY-MM-DD'로 맞춰준다.
@@ -551,7 +554,7 @@
 
 									//console.log(dayClick);	
 									//날짜 클릭 이벤트 주간 계획 데이터 ajax
-									 changeweekplan(ClickedDay,changeID);
+									 changeweekplan(ClickedDay,selectID);
 								},
 								eventRender : function(e, elm) {
 									elm.popover({
@@ -660,8 +663,8 @@
 			}); */
 			
 		$("#side-dayplan-coworker-button").on("change",function(){
-			changeID = $("#side-dayplan-coworker-button option:selected").val();
-			$.get("select?id="+changeID+"&date="+today , 
+			selectID = $("#side-dayplan-coworker-button option:selected").val();
+			$.get("select?id="+selectID+"&date="+today , 
 		    	function(response, status){
 				if(status == "success"){
 					console.log(response.data);

@@ -166,12 +166,15 @@ public class PlanWeekController {
 			@RequestParam(value = "date", required = true, defaultValue = "") String Date, 
 			@RequestParam(value = "id", required = true, defaultValue = "") String id, WeekVo weekVo,
 			UserVo userVo) {
+		
+		System.out.println("[Controller]"+Date+","+id);
+		
 		if (authUser == null) {
 			return JSONResult.error("로그인 되지 않았습니다.");
 		} else if ("".equals(id)) {
 			return JSONResult.error("아이디값이 없습니다.");
 		}
-		if ((authUser.getLevel()).equals(id)) {
+		if ((authUser.getLevel()).equals("팀장")) {
 			weekVo.setId(id);
 		} else {
 			weekVo.setId(authUser.getId());

@@ -26,9 +26,9 @@ function ajaxChallenge(){
 	});
 }
 
-function getWeeks(current,callback){
+function getWeeks(current,selectID,callback){
 	$.ajax({
-		url : '/sfa/week/select?date='+ current,
+		url : '/sfa/week/select?date='+ current+"&id="+selectID,
 		type : 'GET',
 		dataType : 'json',
 		success : function(doc) {
@@ -72,7 +72,7 @@ function changeweekplan(dayClick,changeID){
 	$.ajax({
 				url : "/sfa/week/select",
 				type : 'POST',
-				data : "date="+ dayClick+"id="+changeID, //2017-08-26
+				data : "date="+ dayClick+",id="+changeID, //2017-08-26
 				dataType : "json",
 				success : function(response) {
 					console.log(response.data)
