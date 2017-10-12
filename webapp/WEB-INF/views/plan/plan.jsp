@@ -7,6 +7,16 @@
 <html>
 <head>
 <c:import url="/WEB-INF/views/common/common.jsp"></c:import>
+	<script
+	src="${pageContext.servletContext.contextPath}/assets/js/util/util.js"></script>
+	<script
+	src="${pageContext.servletContext.contextPath}/assets/js/plan/calendar.js"></script>
+	<script
+	src="${pageContext.servletContext.contextPath}/assets/js/plan/weekplan.js"></script>
+	<script
+	src="${pageContext.servletContext.contextPath}/assets/js/map/map.js"></script>
+	<script
+	src="${pageContext.servletContext.contextPath}/assets/js/plan/dayplan.js"></script>	
 <script>
 	var date = new Date();
 	var today = moment().format("YYYY-MM-DD");
@@ -173,7 +183,6 @@
   		//클릭한 순서대로 지점 좌표가 배열에 삽입된다.		
       	routeList.push(tempLonLat);
       	//routeList.push(new Tmap.Geometry.Point(this.lonlat.lon,this.lonlat.lat));
-
 	}
 
     /* // 2개 사이의 거리 계산 
@@ -648,7 +657,13 @@
 				}
 			}); */
 			
-		
+		$("#side-dayplan-coworker-button").on("change",function(){
+			var userid = $("#side-dayplan-coworker-button option:selected").val();
+			$.get("select/", function(response, status){
+				console.log(response.data);				
+			});
+			//$('#calendar').fullCalendar('updateEvent', event);
+		});
 });
 
 	//texteditor
@@ -685,19 +700,24 @@
 			<div id="side-dayplan-coworker">
 				<!-- Small button group -->
 				<div id="side-dayplan-coworker-group" class="btn-group">
-					
-   
+					<c:choose>
+					<c:when test="${authUser.level == '팀장'}">
 					<select id="side-dayplan-coworker-button"
 						class="btn btn-default btn-sm">
-						<option>
-							${authUser.name} / ${authUser.dept}
-						</option>
 						<c:forEach var="i" items="${members}" varStatus="status">
-						<option>
+						<option value="${i.id}">
 							${i.name} / ${i.dept}
 						</option>
 						</c:forEach>
 					</select>
+					</c:when>
+					<c:otherwise>
+					<button id="side-dayplan-my-button"
+						class="btn btn-default btn-sm">
+						${authUser.name} / ${authUser.dept}
+					</button>
+					</c:otherwise>
+					</c:choose>
 					<%-- <button id="side-dayplan-coworker-button"
 						class="btn btn-default btn-sm dropdown-toggle" type="button"
 						data-toggle="dropdown" aria-expanded="false">

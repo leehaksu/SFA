@@ -278,10 +278,6 @@ body {
 }
 
 
-
-
-
-
 .modal {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
@@ -339,5 +335,5 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 
  main{
   margin-left: 14%;
-      width: 830px;
+      width: 930px;
  }  
