@@ -659,8 +659,15 @@
 			
 		$("#side-dayplan-coworker-button").on("change",function(){
 			var userid = $("#side-dayplan-coworker-button option:selected").val();
-			$.get("select/", function(response, status){
-				console.log(response.data);				
+			alert(userid);
+			$.get("select/?id="+userid+"&date="+today , 
+		    	function(response, status){
+				if(status == "success"){
+					alert(response.data);	
+				}
+				else{
+					alert("오류 발생: "+status)
+				}
 			});
 			//$('#calendar').fullCalendar('updateEvent', event);
 		});
