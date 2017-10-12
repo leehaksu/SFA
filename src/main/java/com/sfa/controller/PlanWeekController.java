@@ -133,7 +133,7 @@ public class PlanWeekController {
 		} else if ("".equals(id)) {
 			return JSONResult.error("아이디값이 없습니다.");
 		}
-		if ((authUser.getLevel()).equals(id)) {
+		if ((authUser.getLevel()).equals("팀장")) {
 			dayVo.setId(id);
 		} else {
 			dayVo.setId(authUser.getId());

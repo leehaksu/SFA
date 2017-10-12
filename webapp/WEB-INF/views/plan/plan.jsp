@@ -36,8 +36,10 @@
 	var thisweekdate;
 
 	//check UserID select 박스에서 변경된 아이디를 담는 변수이다.(팀장 전용)
-	var selectID;
+	var selectID ='<c:out value="${authUser.id}"/>';
 	
+	var authUserID = '<c:out value="${authUser.id}"/>';
+
 	//입력 체크 변수
 	var changecheck = false;
 
@@ -521,8 +523,7 @@
 	
 	//moment('2016-06','YYYY-MM').diff('2015-01','month');     //17 시간차
 	$(document).ready( function() {
-		 selectID = $("#side-dayplan-coworker-button option:eq(0)").val();						
-		alert("처음 자기 ID: "+selectID);
+		
 		//도전과제 ajax
 		ajaxChallenge();
 		//텍스트 에디터 초기화
@@ -546,7 +547,7 @@
 									current = $('#calendar').fullCalendar('getDate').format("YYYY-MM-DD");
 									//달력에 모든 주간일정 ajax'
 
-									getWeeks(current,selectID,callback);
+									getWeeks(current,authUserID,callback);
 								},
 								dayClick : function(date, jsEvent,view) {
 									//클릭한 날짜를  날짜 형식을 'YYYY-MM-DD'로 맞춰준다.
@@ -554,7 +555,13 @@
 
 									//console.log(dayClick);	
 									//날짜 클릭 이벤트 주간 계획 데이터 ajax
-									 changeweekplan(ClickedDay,selectID);
+									if(typeof selectID == "undefined" || selectID == null || selectID == "")
+									{
+										changeweekplan(ClickedDay,authUserID);
+									}
+									else{
+										changeweekplan(ClickedDay,selectID);	
+									}
 								},
 								eventRender : function(e, elm) {
 									elm.popover({
@@ -602,9 +609,16 @@
 					getCustomerPosition();
 				} else {
 					//날짜 클릭 이벤트 일일 계획 데이터 ajax
-					changedayplan(ClickedDay,plandatecheck);
+					changedayplan(ClickedDay,selectID,plandatecheck);
 					getCustomerPosition();
 					dayplanmodalShow();	
+				}
+				
+				alert(authUserID +","+selectID);
+				//회원에 권한에 따라 input 태그의 활성화 상태 적용
+				if(authUserID != selectID){
+					alert("여기 탐");
+					blockdayplan();
 				}
 				
 			});
@@ -663,10 +677,23 @@
 			}); */
 			
 		$("#side-dayplan-coworker-button").on("change",function(){
+			//weektable 초기화
 			resetweekplan();
+			
+			//  날짜 초기화.
+			ClickedDay="";
+			$(".dayplan-date").text("날짜 미지정");
+
+			//option에서 선택된 사용자 정보
 			selectID = $("#side-dayplan-coworker-button option:selected").val();
-			alert("바뀐 아이디: "+ selectID);
-			$.get("select?id="+selectID+"&date="+today , 
+			var selectUserInfo = $("#side-dayplan-coworker-button option:selected").text().trim();
+			selectUserInfo = selectUserInfo.split("/");  
+			
+			
+			$("#name").text(selectUserInfo[0]);
+			$("#dept").text(selectUserInfo[1]);
+			
+			$.get("select?id="+selectID+"&date="+today, 
 		    	function(response, status){
 				if(status == "success"){
 					console.log(response.data);
@@ -806,158 +833,7 @@
 
 					</div>
 				</div>
-				<!-- Modal -->
-				<%-- 					<c:choose>
-						<c:when test="${authUser.level == '팀장'}">
-							<!-- c:import로 구분하여 불러들이기 -->
-							<div id="dayplanmodal" class="modal fade" role="dialog"
-								style="z-index: 2000;">
-								<div class="modal-dialog">
-
-									<!-- Modal content-->
-									<div class="modal-content" style="width: 800px;">
-										<div class="modal-header">
-											<h3 class="dayplan">
-												<strong>일일 계획서</strong>
-											</h3>
-											<button type="button" class="close" id="dayplanmodalclose"
-												data-dismiss="modal">&times;</button>
-											<br>
-										</div>
-
-										<div class="modal-body" onload="init()">
-											<form id="dayplanform" class="form-inline" method="#"
-												action="#">
-												<table id="dayplantable"
-													style="width: 100%; margin: 0 auto; border-spacing: 20px; border-collapse: separate;">
-													<tr>
-														<td id="content1">
-															<div>
-																<span><strong>소속&nbsp;</strong></span>
-																<div id="dept" class="well well-sm weektable-userinfo">
-																	영업1팀</div>
-															</div>
-														</td>
-														<td id="content2">
-															<div>
-																<span><strong>이름&nbsp;</strong></span>
-																<div id="name" class="well well-sm weektable-userinfo">노경욱</div>
-															</div>
-														</td>
-														<td id="content3">
-															<div>
-																<span><strong>작성일&nbsp;</strong></span>
-																<div id="reg-day"
-																	class="well well-sm weektable-userinfo"></div>
-															</div>
-														</td>
-													</tr>
-													<tr>
-														<td id="content4" colspan="2">
-															<label for="show-day-title" style="width: 40px;">제목&nbsp;</label>
-															<div class="form-group" style="float: left;">
-																<input id="title" class="well well-sm form-control"
-																	style="margin-bottom: 0px; width: 468px;" type="text"
-																	name="" placeholder="제목" disabled> <input
-																	type="hidden" name="id" value="노대리">
-															</div>
-														</td>
-													</tr>
-
-													<tr>
-														<td colspan="3">
-															<div id="challengeinput" class="form-group"
-																style="width: -webkit-fill-available;">
-																<div>
-																	<strong>오늘의 도전 과제(성과에 반영)</strong>
-																</div>
-																<input id="challenge" class="form-control" type="text"
-																	name="" placeholder="select형식으로 정해진 과제 중 선택으로??"
-																	style="width: -webkit-fill-available;" disabled>
-															</div>
-														</td>
-													</tr>
-													<tr id="second-line">
-														<td>
-															<div class="form-group">
-																<span><strong>목표액</strong></span> <input id="goalmoney"
-																	class="form-control" type="text" name=""
-																	placeholder="주간 목표액을 placeholder로 보여주기" disabled>
-															</div>
-														</td>
-														<td>
-															<div class="form-group">
-																<span><strong>예상 주행거리량</strong></span> <input
-																	id="distance" class="form-control" type="text" name=""
-																	placeholder="방문 지점 거리 측정하여 표시" disabled>
-															</div>
-														</td>
-														<td>
-															<div class="form-group">
-																<span><strong>방문지점</strong></span> <input id="branch"
-																	class="form-control" type="text" name=""
-																	placeholder="지도에서 방문지점 선택시 자동 삽입" disabled>
-															</div>
-														</td>
-													</tr>
-													<tr>
-														<td colspan="3">
-															<div onload="init()">
-																<span id="mapsearch"><strong>지도 검색</strong> </span>
-																<div id="map_div"></div>
-															</div>
-														</td>
-													</tr>
-												</table>
-												<table class="table table-striped table-bordered"
-													id="dayplantable-weekplan">
-													<thead>
-														<tr>
-															<th>월</th>
-															<th>화</th>
-															<th>수</th>
-															<th>목</th>
-															<th>금</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr style="height: auto;">
-															<td><ul></ul></td>
-															<td><ul></ul></td>
-															<td><ul></ul></td>
-															<td><ul></ul></td>
-															<td><ul></ul></td>
-														</tr>
-													</tbody>
-												</table>
-											</form>
-											<div class="form-group" style="width: 100%;">
-												<div>
-													<strong>업무 계획</strong>
-												</div>
-												<textarea id="scheduleinput" class="form-control" name=""
-													placeholder="오늘의 일정은?" disabled></textarea>
-											</div>
-
-												<div>
-													<strong>팀장 의견</strong>
-												</div>
-											<div class="form-group" style="width: 100%;display: inline-flex;">
-												<textarea id="cheif-comment-input" class="form-control"
-													placeholder="팀장의 한마디" name="" style="width: 639px;"></textarea>
-												<button id="dayplan-cheif-sendbutton" class="btn btn-default"
-													type="submit">
-													<strong>comments</strong>
-												</button>													
-											</div>
-											
-										</div>
-									</div>
-								</div>
-							</div>
-						</c:when>
-					</c:choose>
- --%>
+				
 				<div id="dayplanmodal" class="modal fade" role="dialog"
 					style="z-index: 2000;">
 					<div class="modal-dialog">
@@ -986,11 +862,11 @@
 														<label for="show-day-title" style="width: 40px;">제목&nbsp;</label>
 														<input id="dayplantable-title"
 															class="form-control dayplanform-input" type="text"
-															name="" placeholder="[필수입력 항목]"
+															name="title" placeholder="[필수입력 항목]"
 															style="width: 459px; margin-right: 6px;" required>
 													</div>
 													<input type="hidden" name="id" class="dayplanform-input"
-														value="노대리"> <label for="day" style="width: 50px;">작성일&nbsp;</label>
+														value="${authUser.id}"> <label for="day" style="width: 50px;">작성일&nbsp;</label>
 													<div id="date-reg-date" class="form-control"
 														style="width: 120px;"></div>
 												</div>
@@ -1004,7 +880,7 @@
 														<strong>오늘의 도전 과제(성과에 반영)</strong>
 													</div>
 													<select id="challenge"
-														class="form-control dayplanform-input" name=""
+														class="form-control dayplanform-input" name="challenge_no"
 														style="width: -webkit-fill-available; text-align-last: center;">
 													</select>
 												</div>
@@ -1021,7 +897,7 @@
 												<div class="form-group">
 													<span><strong>예상 주행거리량</strong></span> <input
 														id="datetable-distance"
-														class="form-control dayplanform-input" type="text" name=""
+														class="form-control dayplanform-input" type="text" name="estimate_distance"
 														placeholder="방문 지점 거리 측정하여 표시" readonly>
 												</div>
 											</td>
@@ -1029,7 +905,7 @@
 												<div class="form-group">
 													<span><strong>방문지점</strong></span> <input
 														id="datetable-branch" data-toggle="tooltip"
-														class="form-control dayplanform-input" type="text" name=""
+														class="form-control dayplanform-input" type="text" name="estimate_course"
 														placeholder="지도에서 방문지점 선택시 자동 삽입" readonly>
 												</div>
 											</td>
@@ -1123,7 +999,7 @@
 									<div class="panel-heading">
 										<strong>팀장 의견</strong>
 									</div>
-									<input class="panel-body">
+									<textarea class="panel-body"></textarea>
 								</div>
 								</c:otherwise>
 								</c:choose>

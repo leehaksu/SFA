@@ -33,6 +33,18 @@
 				}); 
 	}
 	
+	//일일 계획서의 모든 입력 block
+	function blockdayplan(){
+		$("#dayplantable-title").attr('disabled',true);
+		$("#challenge").attr('disabled',true);
+		$("#dateplan-searchRoutes").attr('disabled',true);
+		$("#dateplan-deleteRoutes").attr('disabled',true);
+		$("#dateplan-searchPosition").attr('disabled',true);
+		$("#write-btn").hide();
+		$("#update-btn").hide();
+		$("#delete-btn").hide();
+	}
+	
 	//달력 클릭시 일일계획서 데이터  ajax
 	function changedayplan(dayClick,id,plandatecheck){
 		$.ajax({
@@ -65,14 +77,7 @@
 							}
 							//지난 날짜에 대하여 예외처리(모든 입력과 이벤트를 불가능하게 한다.)
 							else{
-								$("#dayplantable-title").attr('disabled',true);
-								$("#challenge").attr('disabled',true);
-								$("#dateplan-searchRoutes").attr('disabled',true);
-								$("#dateplan-deleteRoutes").attr('disabled',true);
-								$("#dateplan-searchPosition").attr('disabled',true);
-								$("#write-btn").hide();
-								$("#update-btn").hide();
-							$("#delete-btn").hide();
+								blockdayplan();
 							}
 							
 							return ;
