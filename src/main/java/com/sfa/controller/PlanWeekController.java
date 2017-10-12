@@ -155,6 +155,37 @@ public class PlanWeekController {
 
 	@Auth
 	@ResponseBody
+	@RequestMapping(value = { "/select/" }, method = RequestMethod.GET)
+	public JSONResult selectMonth(@RequestParam(value = "date", required = true, defaultValue = "") String date,
+			@AuthUser UserVo authUser, Model model, DayVo dayVo,
+			@RequestParam(value="id",required=true, defaultValue="")String id) {
+		if (authUser == null) {
+			return JSONResult.error("로그인 되지 않았습니다.");
+		}else if("".equals(id))
+		{
+			return JSONResult.error("아이디 넘어오지 않습니다.");
+		}
+		dayVo.setId(id);
+
+		if ("".equals(date)) {
+			Calendar cal = Calendar.getInstance();
+			String calendar = String.valueOf(cal.get(Calendar.YEAR)) + "-" + String.valueOf(cal.get(Calendar.MONTH) + 1)
+					+ "-" + String.valueOf(cal.get(Calendar.DATE));
+			dayVo.setFirst_date(calendar);
+		} else {
+			dayVo.setFirst_date(date);
+		}
+
+		List<DayVo> list = weekPlanService.selectMonth(dayVo);
+
+		if (list == null) {
+			return JSONResult.fail("제대로 불러오지 못햇습니다.");
+		}else {
+			return JSONResult.success(list);
+		}
+	}
+	@Auth
+	@ResponseBody
 	@RequestMapping(value = { "/select" }, method = RequestMethod.POST)
 	public JSONResult selectWeek(@AuthUser UserVo authUser,
 			@RequestParam(value = "date", required = true, defaultValue = "") String Date, WeekVo weekVo,
