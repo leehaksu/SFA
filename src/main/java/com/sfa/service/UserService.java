@@ -113,4 +113,14 @@ public class UserService {
 		// TODO Auto-generated method stub
 		return userDao.getIdByToken(token);
 	}
+
+	public int insertKey(String user_key,String id) {
+		// TODO Auto-generated method stub
+		return userDao.insertKey(user_key,id);
+	}
+
+	public UserVo getKey(String user_key) {
+		// TODO Auto-generated method stub
+		return userDao.getKey(user_key);
+	}
 }

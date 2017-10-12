@@ -6,7 +6,7 @@
 		<![CDATA[
 		 insert 
 		   into user 
-		 values( #{id}, password(#{passwd}), #{name}, #{email},#{company_email},#{dept},#{grade},'팀원',now(),1,null)
+		 values( #{id}, password(#{passwd}), #{name}, #{email},#{company_email},#{dept},#{grade},'팀원',now(),1,null,null)
 		]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
 			select
@@ -114,6 +114,16 @@
 	<select id="getIdbyToken" parameterType="MAP" resultType="uservo">
 	<![CDATA[
 	select id from user where token=#{token};
+	]]>
+	</select>
+	<insert id="insertKey" parameterType="MAP">
+		<![CDATA[
+	update user set user_key=#{user_key} where id=#{id};
+	]]>	
+		</insert>
+	<select id="getKey" parameterType="MAP" resultType="uservo">
+		<![CDATA[
+	slect id from user where user_key=#{user_key}
 	]]>
 	</select>
 </mapper>

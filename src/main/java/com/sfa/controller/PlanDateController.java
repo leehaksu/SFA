@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfa.dto.JSONResult;
@@ -81,11 +82,16 @@ public class PlanDateController {
 	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/select", method = RequestMethod.POST)
-	public JSONResult select(@ModelAttribute DateVo dateVo, @AuthUser UserVo authUser, UserVo userVo, PositionVo postionVo) {
-		if (dateVo.getDate() == null) {
-			return JSONResult.error("날짜 넘어오지 않았습니다.");
-		} else {
-			dateVo.setId(authUser.getId());
+	public JSONResult select(@ModelAttribute DateVo dateVo, @AuthUser UserVo authUser,
+			@RequestParam(value="id",required=true, defaultValue="")String id, UserVo userVo, PositionVo postionVo) {
+		if (dateVo.getDate() == null || id==null) {
+			return JSONResult.error("날짜와 아이디가 넘어오지 않았습니다.");
+		}else if("".equals(id))
+		{
+			return JSONResult.error("아이디가 정상적이지 않습니다.");
+		}
+		else {
+			dateVo.setId(id);
 			System.out.println(dateVo);
 			dateVo = datePlanService.selectDate(dateVo);
 			if (dateVo == null) {
