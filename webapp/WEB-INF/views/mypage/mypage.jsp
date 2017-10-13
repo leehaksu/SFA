@@ -28,7 +28,7 @@
 		</h3>
 	</div>
 	<form class="form-horizontal">
-		<table class="table">
+		<table class="table table-hover">
 			<tbody>
 				<tr>
 					<td>
