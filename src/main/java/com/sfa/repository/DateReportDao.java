@@ -97,10 +97,11 @@ public class DateReportDao {
 		return sqlSession.update("datereport.updateApproval",map);
 	}
 
-	public WeekVo selectReport(String date,String id) {
+	public WeekVo selectReport(String start_date,String end_date, String id) {
 		// TODO Auto-generated method stub
 		HashMap<String, Object> map = new HashMap<String,Object>();
-		map.put("date", date);
+		map.put("start_date", start_date);
+		map.put("end_date", end_date);	
 		map.put("id", id);
 		return sqlSession.selectOne("datereport.reportByDate", map);
 	}

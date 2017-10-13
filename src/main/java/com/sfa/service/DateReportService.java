@@ -119,8 +119,8 @@ public class DateReportService {
 		// TODO Auto-generated method stub
 		return dateReportDao.selectTotalReport(id, date);
 	}
-	public WeekVo selectReport(String date, String id) {
+	public WeekVo selectReport(String start_date, String end_date, String id) {
 		// TODO Auto-generated method stub
-		return dateReportDao.selectReport(date, id);
+		return dateReportDao.selectReport(start_date, end_date,id);
 	}
 }

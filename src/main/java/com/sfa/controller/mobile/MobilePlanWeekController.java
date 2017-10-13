@@ -127,13 +127,14 @@ public class MobilePlanWeekController {
 		} else {
 			weekVo.setFirst_date(first_date);
 		}
+		String [] dateArray = ChangeDate.five_date(weekVo.getFirst_date());
 		WeekVo weekVo2 = weekPlanService.selectWeek(weekVo);
 		if (weekVo2 == null) {
 			return JSONResult.fail(ChangeDate.getWeekNo(ChangeDate.CheckDate(weekVo)));
 		} else if (weekVo2.getWeek_no() == null) {
 			return JSONResult.fail(ChangeDate.getWeekNo(ChangeDate.CheckDate(weekVo)));
 		} else {
-			WeekVo temp_weekVo = dateReportService.selectReport(weekVo.getFirst_date(), weekVo.getId());
+			WeekVo temp_weekVo = dateReportService.selectReport(dateArray[0],dateArray[4], weekVo.getId());
 			if (temp_weekVo == null) {
 				weekVo2.setAchive_rank(0.0);
 				weekVo2.setWeek_sale((long) 0);
