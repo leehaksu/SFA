@@ -20,6 +20,7 @@ import com.sfa.security.AuthUser;
 import com.sfa.service.DateReportService;
 import com.sfa.service.UserService;
 import com.sfa.service.WeekPlanService;
+import com.sfa.util.ChangeDate;
 import com.sfa.util.Push;
 import com.sfa.vo.DayVo;
 import com.sfa.vo.UserVo;
@@ -171,7 +172,7 @@ public class PlanWeekController {
 	public JSONResult selectWeek(@AuthUser UserVo authUser,
 			@RequestParam(value = "date", required = true, defaultValue = "") String Date,
 			@RequestParam(value = "id", required = true, defaultValue = "") String id, WeekVo weekVo, UserVo userVo) {
-
+		
 		if (authUser == null) {
 			return JSONResult.error("로그인 되지 않았습니다.");
 		} else if ("".equals(id)) {
@@ -182,7 +183,6 @@ public class PlanWeekController {
 		} else {
 			weekVo.setId(authUser.getId());
 		}
-
 		Calendar cal = Calendar.getInstance();
 		if ("".equals(Date)) {
 			String calendar = String.valueOf(cal.get(Calendar.YEAR)) + "-" + String.valueOf(cal.get(Calendar.MONTH) + 1)
@@ -191,7 +191,9 @@ public class PlanWeekController {
 		} else {
 			weekVo.setFirst_date(Date);
 		}
-		WeekVo temp_weekVo = dateReportService.selectReport(weekVo.getFirst_date(), weekVo.getId());
+		String [] dateArray = ChangeDate.five_date(weekVo.getFirst_date());
+		
+		WeekVo temp_weekVo = dateReportService.selectReport(dateArray[0],dateArray[4], weekVo.getId());
 		System.out.println("[controller_temp_weekVo2]" + temp_weekVo);
 
 		weekVo = weekPlanService.selectWeek(weekVo);
@@ -204,9 +206,9 @@ public class PlanWeekController {
 			weekVo.setAchive_rank(0.0);
 			weekVo.setWeek_sale((long) 0);
 		} else {
-			System.out.println("여기는 들어와??");
+			System.out.println("여기는 들어와??!!!!!");
 			weekVo.setWeek_sale(temp_weekVo.getWeek_sale());
-			if (weekVo.getTarget_figure() == 0) {
+			if (weekVo.getTarget_figure()==null || weekVo.getTarget_figure() == 0) {
 				if (temp_weekVo.getWeek_sale() == 0) {
 					weekVo.setAchive_rank(0.0);
 				} else {
@@ -217,7 +219,6 @@ public class PlanWeekController {
 				weekVo.setAchive_rank((temp_weekVo.getWeek_sale() / weekVo.getTarget_figure()) * 100);
 			}
 		}
-		/* System.out.println(weekVo); */
 		return JSONResult.success(weekVo);
 	}
 }
