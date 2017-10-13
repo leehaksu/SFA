@@ -86,13 +86,13 @@
 								<div class="input-group">
 									<select class="form-control" id="inputDepartment" name="dept"
 									 required>
-										<option value="영업1팀">영업 1팀</option>
-										<option value="영업2팀">영업 2팀</option>
-										<option value="영업3팀">영업 3팀</option>
-										<option value="영업4팀">영업 4팀</option>
-										<option value="영업5팀">영업 5팀</option>
-										<option value="영업6팀">영업 6팀</option>
-										<option value="영업7팀">영업 7팀</option>
+										<option value="영업 1팀">영업 1팀</option>
+										<option value="영업 2팀">영업 2팀</option>
+										<option value="영업 3팀">영업 3팀</option>
+										<option value="영업 4팀">영업 4팀</option>
+										<option value="영업 5팀">영업 5팀</option>
+										<option value="영업 6팀">영업 6팀</option>
+										<option value="영업 7팀">영업 7팀</option>
 									</select>
 								</div>
 							</div>

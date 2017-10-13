@@ -9,9 +9,6 @@ var thisweekdate;
 var goalmoneyindex;
 
 
-/*
- * 
- */
 function ajaxChallenge(){
 	$.get("challenge/", function(response, status){
 		console.log("도전 데이터 크기"+response.data.length);
