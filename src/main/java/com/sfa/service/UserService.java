@@ -41,7 +41,7 @@ public class UserService {
 
 		System.out.println("[service] 아이디 체크 : " + id);
 		UserVo userVo=userDao.get(id);
-		
+		System.out.println(userVo);
 		return userVo;
 	}
 

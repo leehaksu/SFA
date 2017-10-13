@@ -16,7 +16,7 @@
 	<select id="getByIdAndPassword" resultType="uservo"
 		parameterType="MAP">
 		<![CDATA[
-		select id,name,dept,company_email,grade,level
+		select id,name,dept,company_email,grade,level,email
 		  from user 
 		 where id=#{id}
 		   and passwd =password(#{password})
