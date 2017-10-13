@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.sfa.repository.DateReportDao;
 import com.sfa.repository.PlanDateDao;
 import com.sfa.vo.DateReportVo;
+import com.sfa.vo.WeekVo;
 
 @Service
 public class DateReportService {
@@ -117,5 +118,9 @@ public class DateReportService {
 	public List<DateReportVo> selectTotalReport(String id, String date) {
 		// TODO Auto-generated method stub
 		return dateReportDao.selectTotalReport(id, date);
+	}
+	public WeekVo selectReport(String date, String id) {
+		// TODO Auto-generated method stub
+		return dateReportDao.selectReport(date, id);
 	}
 }

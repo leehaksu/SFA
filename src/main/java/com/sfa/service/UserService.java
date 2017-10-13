@@ -77,7 +77,7 @@ public class UserService {
 	return userDao.getLeader(id);
 	}
 
-	public String getId(String email, String name) {
+	public UserVo getId(String email, String name) {
 		// TODO Auto-generated method stub
 		return userDao.getId(email,name);
 	}
@@ -125,5 +125,10 @@ public class UserService {
 	public int updatePasswd(String id, String passwd) {
 		// TODO Auto-generated method stub
 		return userDao.updatePasswd(id,passwd);
+	}
+
+	public UserVo getUserByName(String id, String email) {
+		// TODO Auto-generated method stub
+		return userDao.getgetUserByName(id,email);
 	}
 }

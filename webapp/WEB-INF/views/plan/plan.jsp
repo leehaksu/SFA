@@ -255,7 +255,7 @@
 				for(i=0; i < response.data.length; i++){
 					var mapinfo =new Object();					
 					mapinfo.id = response.data[i].id; 
-// 					mapinfo.customerCode = response.data[i].customerCode;
+ 					mapinfo.customerCode = response.data[i].customerCode;
 					mapinfo.name = response.data[i].name;
 					mapinfo.positionX = response.data[i].positionX;
 					mapinfo.positionY = response.data[i].positionY;
@@ -356,26 +356,8 @@
         		 startY: 4508640.36061872
         		};
          var road ="startX="+startX+"&startY="+startY+"&endX="+endX+"&endY="+endY+"&reqCoordType=WGS84GEO"+"&passList="+passList; 	 
-        	
-         	/* $.ajax({
-             url: "https://apis.skplanetx.com/tmap/routes?version=1&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b",
-             type: 'post',
-             data: road,
-             contentType: "application/x-www-form-urlencoded;charset=utf-8",
-             data:  "startX : "+startX+
-             "startY :"+startY+
-             +"endX : "+endX+
-             +"endY :"+endY,
-             success: function( data, textStatus, jQxhr ){
-                 console.log(data);
-             },
-             error: function( jqXhr, status, errorThroxwn ){
-            	 console.log(jqXhr);
-                 console.log( errorThroxwn + "," + status);
-             }
-         }); */
          	
-         	$.ajax({
+          	$.ajax({
          		method : "POST",
          		    url : "https://apis.skplanetx.com/tmap/routes?version=1",
          		    data: road,
@@ -385,10 +367,13 @@
          		    },
          		    success: function( data, textStatus, jQxhr ){
          		    	console.log(data.features[0].properties.totalDistance/1000);
+         		    	console.log(typeof data.features[0].properties.totalDistance);
+         		    	$("#datetable-distance").val(Math.floor(data.features[0].properties.totalDistance/1000));
          		    },
                     error: function( jqXhr, status, errorThroxwn ){
                    	 console.log(jqXhr);
                         console.log( errorThroxwn + "," + status);
+                        alert("오류 발생!! 다시 시도해 주세요.");
                     }
 
          		});
@@ -869,7 +854,7 @@
 											</td>
 											<td>
 												<div class="form-group">
-													<span><strong>예상 주행거리량</strong></span> <input
+													<span><strong>예상 주행거리량(km)</strong></span> <input
 														id="datetable-distance"
 														class="form-control dayplanform-input" type="text" name="estimate_distance"
 														placeholder="방문 지점 거리 측정하여 표시" readonly>
@@ -1072,7 +1057,7 @@
 						</tr>
 						<tr>
 							<td>
-								<div class="form gorup" week-user-info>
+								<div class="form gorup week-user-info" >
 									<label id="weeklabel" for="target_figure">주간 목표액</label> <input
 										class="well well-sm  weekinput" id="target_figure"
 										name="target_figure" type="text" readonly>

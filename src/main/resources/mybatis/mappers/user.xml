@@ -127,6 +127,18 @@
 	]]>
 	</select>
 	<update id="updatePasswd" parameterType="MAP">
+		<![CDATA[
 	update user set passwd =password(#{passwd}) where id=#{id};
+	]]>
 	</update>
+	<select id="getUser" parameterType="MAP" resultType="uservo">
+	<![CDATA[
+	select id,name,dept,company_email,grade,email from user where id=#{id} and email=#{email};
+	]]>
+	</select>
+	<select id="getUserByName" parameterType="MAP" resultType="uservo">
+	<![CDATA[
+	select id,name,dept,company_email,grade,email from user where id=#{id} and email=#{email};
+	]]>
+	</select>
 </mapper>

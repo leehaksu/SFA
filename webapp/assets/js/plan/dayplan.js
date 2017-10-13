@@ -144,7 +144,9 @@
 	function getCustomerPosition(){
 		$.post("/sfa/customer/position",
 	        	function(data,status){
-	            //console.log(data );
+	            console.log(data);
+	            console.log(status);
+	            
 	        });
 	}
 	

@@ -20,7 +20,7 @@ span.desc { display:inline-block; padding-bottom:30px; font-size:14px; color:#55
 .find_id > p > a { color:#c61f1f; font-weight:bold; }
 th { height:35px; text-align:left; padding-right:10px; font-size:15px; color:#666; font-weight:bold; }
 td { height:35px; padding:5px 0; }
-.find-input-id,.find-input-pw{ display:inline-block; width:250px; height:35px; border:1px solid #ccc; font-size:13px; }
+.find-input-id,.find-input-pw{ margin-left: 10px; display:inline-block; width:250px; height:35px; border:1px solid #ccc; font-size:13px; }
 .button-check { display:inline-block; margin-left:10px; border:0 none; width:90px; height:84px; cursor:pointer; font-size:15px; color:#fff; background-color:#2a7cb6; }
 
 .list_butt { margin:0 auto; width:147px; padding-bottom:50px; padding-top:15px; }

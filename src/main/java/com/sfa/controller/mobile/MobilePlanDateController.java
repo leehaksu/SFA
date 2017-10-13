@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sfa.dto.JSONResult;
 import com.sfa.service.ChallengeService;
 import com.sfa.service.DatePlanService;
+import com.sfa.service.WeekPlanService;
 import com.sfa.vo.DateVo;
 
 @RequestMapping("/m/date")
@@ -19,10 +20,13 @@ import com.sfa.vo.DateVo;
 public class MobilePlanDateController {
 
 	@Autowired
-	DatePlanService datePlanService;
+	private DatePlanService datePlanService;
 	
 	@Autowired
-	ChallengeService challengeService;
+	private ChallengeService challengeService;
+	
+	@Autowired
+	private WeekPlanService weekPlanService;
 	
 	@ResponseBody
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
@@ -57,6 +61,8 @@ public class MobilePlanDateController {
 			if (dateVo == null ) {
 				return JSONResult.fail();
 			} else {
+				Long goal_sale = weekPlanService.selectGoal_sale(dateVo.getDate(),dateVo.getId());
+				dateVo.setGoal_sale(goal_sale);
 				return JSONResult.success(dateVo);
 			}
 		}

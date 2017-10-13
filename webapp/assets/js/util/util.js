@@ -20,7 +20,7 @@
 	//1000자리마다 ,찍기
 	function addThousandSeparatorCommas(num) {
 		if (typeof num == "undefined" || num == null || num == "") {
-			return "";
+			return "0";
 		}
 		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}

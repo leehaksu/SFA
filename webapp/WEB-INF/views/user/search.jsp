@@ -7,7 +7,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <c:import url="/WEB-INF/views/common/uncommon.jsp"></c:import>
  <script>
  	$(document).ready(function(){

@@ -23,9 +23,6 @@ public class WeekPlanService {
 	private PlanWeekDao weekplanDao;
 
 	@Autowired
-	private DateReportDao dateReportDao;
-
-	@Autowired
 	private ChangeDate changeDate;
 
 	@Autowired
@@ -272,10 +269,7 @@ public class WeekPlanService {
 		return list;
 	}
 
-	public WeekVo selectReport(String date, String id) {
-		// TODO Auto-generated method stub
-		return dateReportDao.selectReport(date, id);
-	}
+
 
 	public List<WeekVo> selectTotalWeek(String id, String date) {
 		// TODO Auto-generated method stub
@@ -323,5 +317,9 @@ public class WeekPlanService {
 			}
 		}
 		return week_list;
+	}
+	public Long selectGoal_sale(String date, String id) {
+		// TODO Auto-generated method stub
+		return weekplanDao.selectGoal_sale(date,id);
 	}
 }

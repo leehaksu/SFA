@@ -33,13 +33,13 @@ public class UserController {
 
 	@Autowired
 	private AffirmationService affirmationService;
-	
+
 	@Autowired
 	private Push push;
-	
+
 	@Autowired
 	private CreatePasswd cratePasswd;
-	
+
 	@RequestMapping(value = { "", "/login" }, method = RequestMethod.GET)
 	public String login(@AuthUser UserVo authUser, Model model) {
 		// login 페이지 forward
@@ -65,8 +65,8 @@ public class UserController {
 
 	@Auth(value = Auth.Role.팀장)
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String join(@ModelAttribute UserVo userVo, Model model,BindingResult result,@AuthUser UserVo authUser) {
-		
+	public String join(@ModelAttribute UserVo userVo, Model model, BindingResult result, @AuthUser UserVo authUser) {
+
 		// 정상적인 접근이 아닐 경우
 		if (userVo == null) {
 			System.out.println("error_0x1");
@@ -80,19 +80,17 @@ public class UserController {
 		} else {
 			// 정상적으로 회원가입 되었을 경우
 			if (userService.join(userVo) == true) {
-				
+
 				try {
-					push.Mail(userVo.getCompany_email(), "["+userVo.getId()+"]님 회원가입을 축하합니다.", 
-					"사원 아이디 : " +userVo.getId()+"\n"
-					+"사원 이름 : "+userVo.getName()+"\n"
-					+"사원 부서 : "+userVo.getDept()+"\n"
-					+"사원 이메일 : " + userVo.getCompany_email()+"\n"
-					+ "사원 직급 :" +userVo.getGrade()+"\n"
-					+ "회원 가입을 진심으로 축하합니다.\n", "admin");
-					
-					UserVo userVo2= userService.getLeader(userVo.getId());
+					push.Mail(userVo.getCompany_email(), "[" + userVo.getId() + "]님 회원가입을 축하합니다.",
+							"사원 아이디 : " + userVo.getId() + "\n" + "사원 이름 : " + userVo.getName() + "\n" + "사원 부서 : "
+									+ userVo.getDept() + "\n" + "사원 이메일 : " + userVo.getCompany_email() + "\n"
+									+ "사원 직급 :" + userVo.getGrade() + "\n" + "회원 가입을 진심으로 축하합니다.\n",
+							"admin");
+
+					UserVo userVo2 = userService.getLeader(userVo.getId());
 					push.Message(userVo.getId(), userVo2.getId(), 0);
-					
+
 				} catch (MessagingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -154,6 +152,7 @@ public class UserController {
 		}
 
 	}
+
 	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/check", method = RequestMethod.GET)
@@ -171,7 +170,7 @@ public class UserController {
 		}
 		return JSONResult.success(id);
 	}
-	
+
 	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/checkEmail", method = RequestMethod.GET)
@@ -229,100 +228,107 @@ public class UserController {
 			return "user/list";
 		}
 	}
-	//회원 아이디/비밀번호 찾기 페이지 들어가기
-	@RequestMapping(value="/search", method=RequestMethod.GET)
-	public String search()
-	{
+
+	// 회원 아이디/비밀번호 찾기 페이지 들어가기
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String search() {
 		return "user/search";
 	}
-	//id 찾기 부분 통신 구현
+
+	// id 찾기 부분 통신 구현
 	@ResponseBody
-	@RequestMapping(value="/search/id", method=RequestMethod.POST)
-	public JSONResult searchbyId(@RequestParam(value="email",required=true, defaultValue="") String email, 
-			@RequestParam(value="name",required=true, defaultValue="") String name)
-	{
-		String id=null;
-		if("".equals(email)|| "".equals(name))
-		{
+	@RequestMapping(value = "/search/id", method = RequestMethod.POST)
+	public JSONResult searchbyId(@RequestParam(value = "email", required = true, defaultValue = "") String email,
+			@RequestParam(value = "name", required = true, defaultValue = "") String name) {
+		if ("".equals(email) || "".equals(name)) {
 			return JSONResult.error("이메일과 이름이 전달되지 않았습니다.");
-		}else
-		{
-			id = userService.getId(email,name);
+		} else {
+			UserVo userVo = userService.getId(email, name);
+			if (userVo == null) {
+				return JSONResult.fail("가입되어 잇는 정보가 없습니다.");
+			} else {
+				return JSONResult.success(userVo.getId());
+			}
 		}
-		return JSONResult.success(id);
 	}
-	
-	//pw 찾기 부분 통신 구현
-	@RequestMapping(value="/search/pw", method=RequestMethod.POST)
-	public String searchbyPw(@RequestParam("id") String id, @RequestParam("name") String name)
-	{
-		if("".equals(name)|| "".equals(name))
-		{
-			return "redirect:/search";
-		}else
-		{
-			//비밀번호 초기화 후 보내기.
+
+	// pw 찾기 부분 통신 구현
+	@ResponseBody
+	@RequestMapping(value = "/search/pw", method = RequestMethod.POST)
+	public JSONResult searchbyPw(@RequestParam("id") String id, @RequestParam("email") String email) {
+		if ("".equals(id) || "".equals(email)) {
+			return JSONResult.error("아이디와 이름이 전달되지 않았습니다.");
+		} else {
+			UserVo userVo = userService.getUserByName(id, email);
+			if (userVo != null) {
+				String passwd = cratePasswd.create();
+				int no = userService.updatePasswd(id, passwd);
+				if (no == 1) {
+					try {
+						push.Mail(userVo.getEmail(), id + "님 임시비밀번호 보내드립니다.", "임시 비밀번호는" + passwd + "입니다.", "admin");
+						return JSONResult.success();
+					} catch (MessagingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return JSONResult.success();
+					}
+				} else {
+					return JSONResult.fail("임시비밀번호 생성이 실패하였습니다.");
+				}
+			}
 		}
-		return null;
+		return JSONResult.error("서버에서 오류가 발생하였습니다.");
 	}
-	
+
 	@Auth
-	@RequestMapping(value="/mypage", method=RequestMethod.GET)
-	public String mypage(@AuthUser UserVo authUSer,Model model)
-	{
+	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
+	public String mypage(@AuthUser UserVo authUSer, Model model) {
 		model.addAttribute("user", authUSer);
 		return "mypage/mypage";
 	}
-	
+
 	@Auth
-	@RequestMapping(value="/mypage", method=RequestMethod.POST)
-	public String mypage(@AuthUser UserVo authUser,Model model,@ModelAttribute UserVo userVo,HttpServletRequest request)
-	{
-		if(authUser==null)
-		{
+	@RequestMapping(value = "/mypage", method = RequestMethod.POST)
+	public String mypage(@AuthUser UserVo authUser, Model model, @ModelAttribute UserVo userVo,
+			HttpServletRequest request) {
+		if (authUser == null) {
 			return "user/login";
-		}else if (userVo==null)
-		{
+		} else if (userVo == null) {
 			return "mypage/mypage";
 		}
 		userVo.setId(authUser.getId());
 		int no = userService.modify(userVo);
-		if(no==1)
-		{
+		if (no == 1) {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("authUser", userVo);
 			return "redirect:mypage?result=success";
-		}else
-		{
+		} else {
 			return "redirect:mypage?result=fail";
 		}
 	}
-	
+
 	@Auth(value = Auth.Role.팀장)
 	@ResponseBody
-	@RequestMapping(value="/pwd/reset", method=RequestMethod.POST)
-	public JSONResult SendEmail(@RequestParam(value="id", required=true, defaultValue="") String id)
-	{
-		if("".equals(id))
-		{
+
+	@RequestMapping(value = "/pwd/reset", method = RequestMethod.POST)
+	public JSONResult SendEmail(@RequestParam(value = "id", required = true, defaultValue = "") String id) {
+		if ("".equals(id)) {
 			return JSONResult.error("아이디값 넘겨주라고!!!!");
 		}
 		UserVo userVo = userService.getId(id);
-		String passwd=cratePasswd.create();
-		int no = userService.updatePasswd(id,passwd);
-		
-		if(no==1)
-		{
+		String passwd = cratePasswd.create();
+		int no = userService.updatePasswd(id, passwd);
+
+		if (no == 1) {
 			try {
-				push.Mail(userVo.getEmail(), id+"님 임시비밀번호 보내드립니다.", "임시 비밀번호는" + passwd +"입니다.", "admin");
+				push.Mail(userVo.getEmail(), id + "님 임시비밀번호 보내드립니다.", "임시 비밀번호는" + passwd + "입니다.", "admin");
 				return JSONResult.success();
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return JSONResult.success();
-			}	
-		}else
-		{
+			}
+		} else {
 			return JSONResult.fail("임시비밀번호 생성이 실패하였습니다.");
 		}
 	}

@@ -111,17 +111,36 @@ function changeweekplan(dayClick,changeID){
 
 					//주간 테이블 주간 목표액 넣기
 					$("#target_figure").attr("type","text");
-					weektotaltargetmoney = addThousandSeparatorCommas(response.data.target_figure);
-					$('#target_figure').val(weektotaltargetmoney+"");
+					if (typeof response.data.target_figure == "undefined" || response.data.target_figure == null || response.data.target_figure == "" || response.data.target_figure == 0) {	
+						$('#target_figure').val("0원");
+					}
+					else{
+						weektotaltargetmoney = addThousandSeparatorCommas(response.data.target_figure);
+						$('#target_figure').val(weektotaltargetmoney+"원");						
+					}
 					
 
 					//주간 테이블 주간 매출액 넣기
-					(typeof response.data.week_sale == "undefined" || response.data.week_sale == null || response.data.week_sale == "") 
-					? $('#week_sale').text("매출액이 없습니다."): $('#week_sale').text(addThousandSeparatorCommas(response.data.week_sale));
+					if(response.data.week_sale == 0){
+						$('#week_sale').text("0")
+					}
+					else if(typeof response.data.week_sale == "undefined" || response.data.week_sale == null || response.data.week_sale == ""){
+						$('#week_sale').text("매출액이 없습니다.")	
+					}else{
+						 $('#week_sale').text(addThousandSeparatorCommas(response.data.week_sale));
+					} 
 
 					//주간 테이블 주간 달성율 넣기
-					(typeof response.data.achive_rank == "undefined" || response.data.achive_rank == null || response.data.achive_rank == "") 
-					? $('#achive_rank').text("%"): $('#achive_rank').text(response.data.achive_rank + "%");
+					if(response.data.achive_rank == 0)
+					{
+						$('#achive_rank').text("0%")
+					}
+					else if(typeof response.data.achive_rank == "undefined" || response.data.achive_rank == null || response.data.achive_rank == "") 
+					{
+						$('#achive_rank').text("0%")
+					}else{
+						 $('#achive_rank').text(response.data.achive_rank + "%");
+					}
 
 					//주간 테이블 제목 넣기
 					if (typeof response.data.week_no == "undefined"
@@ -263,7 +282,7 @@ function setTargetmoney(){
 				+ Number($("#wednesday_money").val())
 				+ Number($("#thursday_money").val())
 				+ Number($("#friday_money").val());
-		$("#target_figure").val(addThousandSeparatorCommas(weektotaltargetmoney));
+		$("#target_figure").val(addThousandSeparatorCommas(weektotaltargetmoney) + "원");
 	});
 }
 
@@ -361,19 +380,24 @@ function weekplanDayContentSave(){
 	});
 
 }
-
 function weekplanSaveButtonClick(){
 	$("#insertDB_button").on("click",function() {
 		var form = document.getElementById("weekform");
 
 		// 첫째날 담아 보내기
 		$("#first_date").val(thisweekdate[0]);
-		//console.log(thisweekdate[0].data);
-		alert(thisweekdate[0]);
-		// , 빼고 보내기
-		$("#target_figure").attr("type","Number");
-		$("#target_figure").val(new Number(removeComma(weektotaltargetmoney)));
+		if(typeof weektotaltargetmoney =="undefined"|| weektotaltargetmoney == null || weektotaltargetmoney =="")
+		{
+			console.log("주간목표액: "+weektotaltargetmoney + "입니다");
+			$("#target_figure").attr("type","Number");
+			$("#target_figure").val(0);
+		}
+		else{
+			console.log("주간목표액: "+weektotaltargetmoney + "입니다");
+			$("#target_figure").attr("type","Number");
+			$("#target_figure").val(new Number(removeComma(weektotaltargetmoney)));
 
+		}
 		if (weekno != null) {
 			//action 설정 및 submit
 			form.action = "update"; // action에 해당하는 jsp 경로를 넣어주세요.

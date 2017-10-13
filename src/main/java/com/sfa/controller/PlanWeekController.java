@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sfa.dto.JSONResult;
 import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
+import com.sfa.service.DateReportService;
 import com.sfa.service.UserService;
 import com.sfa.service.WeekPlanService;
 import com.sfa.util.Push;
@@ -33,6 +34,9 @@ public class PlanWeekController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private DateReportService dateReportService;
 
 	@Autowired
 	private Push push;
@@ -193,7 +197,7 @@ public class PlanWeekController {
 		if (weekVo == null) {
 			JSONResult.error("서버에 error 발생");
 		}
-		WeekVo temp_weekVo = weekPlanService.selectReport(Date, weekVo.getId());
+		WeekVo temp_weekVo = dateReportService.selectReport(Date, weekVo.getId());
 		System.out.println("[controller]" + temp_weekVo);
 
 		if (temp_weekVo == null) {
