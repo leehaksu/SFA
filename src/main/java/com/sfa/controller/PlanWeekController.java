@@ -207,7 +207,7 @@ public class PlanWeekController {
 			weekVo.setAchive_rank(temp_weekVo.getAchive_rank());
 			weekVo.setWeek_sale(temp_weekVo.getWeek_sale());
 		}
-		System.out.println(weekVo);
+/*		System.out.println(weekVo);*/
 		return JSONResult.success(weekVo);
 	}
 }

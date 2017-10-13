@@ -77,7 +77,7 @@
 	</update>
 	<select id="reportByDate" parameterType="MAP" resultType="weekvo">
 	<![CDATA[
-	select report_sale, achive_rank from day_report where date=#{date} and id=#{id};
+	select report_sale as week_sale,achive_rank from day_report where date=#{date} and id=#{id};
 	]]>
 	</select>
 	<select id="selectTotalReport" parameterType="MAP" resultType="datereportvo">

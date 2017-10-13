@@ -19,6 +19,7 @@ import com.sfa.security.AuthUser;
 import com.sfa.service.DatePlanService;
 import com.sfa.service.DateReportService;
 import com.sfa.service.UserService;
+import com.sfa.service.WeekPlanService;
 import com.sfa.util.Push;
 import com.sfa.vo.DateReportVo;
 import com.sfa.vo.UserVo;
@@ -38,6 +39,9 @@ public class DateReportController {
 
 	@Autowired
 	private Push push;
+	
+	@Autowired
+	private WeekPlanService weekPlanService;
 	
 
 	
@@ -64,7 +68,6 @@ public class DateReportController {
 		} else {
 			dateReportVo.setId(authUser.getId());
 			int no = dateReprotService.insert(dateReportVo);
-
 			if (no == 1) {
 				UserVo userVo2 = userService.getLeader(authUser.getId());	
 				try {
