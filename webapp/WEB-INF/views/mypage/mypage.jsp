@@ -7,6 +7,8 @@
 <html>
 <head>
 <c:import url="/WEB-INF/views/common/common.jsp"></c:import>
+
+
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -27,7 +29,7 @@
 			<strong>회원 정보</strong>
 		</h3>
 	</div>
-	<form class="form-horizontal">
+	<form class="form-horizontal" method="post" action="${pageContext.servletContext.contextPath}/mypage">
 		<table class="table table-hover">
 			<tbody>
 				<tr>
@@ -68,8 +70,8 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="password">PASSWORD</label>
 							<div class="col-md-4">
-								<input id="password" name="passwd" placeholder="PASSWORD"
-									class="form-control" required pattern="^[a-z0-9_]{5,12}$"
+								<input id="password" name="passwd" placeholder="비밀번호는 8자 이상"
+									class="form-control" required pattern="^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-]|.*[0-9]).{8,24}$"
 									type="password">
 							</div>
 						</div>
