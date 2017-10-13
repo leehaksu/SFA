@@ -97,4 +97,11 @@ public class MobileCustomerController {
 			}
 		}
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/position")
+	public JSONResult getPosition(@ModelAttribute CustomerVo customerVo)
+	{
+		return null;
+	}
 }

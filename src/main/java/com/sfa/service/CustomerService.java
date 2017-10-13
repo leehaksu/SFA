@@ -51,4 +51,9 @@ public class CustomerService {
 		// TODO Auto-generated method stub
 		return customerDao.selectByName(name);
 	}
+
+	public List<CustomerVo> getPosition(CustomerVo customerVo) {
+		// TODO Auto-generated method stub
+		return customerDao.getPosition(customerVo);
+	}
 }

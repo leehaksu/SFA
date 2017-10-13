@@ -17,21 +17,6 @@
 	select customer_code,name,contact,manager_name,manager_grade,manager_contact,manager_email,manager_birth,time,address,positionX,positionY,state from user as a, customer as b where a.id=b.id and dept=#{dept} and name=#{name};
 	]]>
 	</select>
-	<select id="selectOrderByRegister" parameterType="MAP" resultType="customervo">
-	<![CDATA[
-	
-	]]>	
-	</select >
-	<select id="selectOrderByCustomerCode" parameterType="MAP" resultType="customervo">
-		<![CDATA[
-	
-	]]>
-	</select>
-		<select id="selectOrderByName" parameterType="MAP" resultType="customervo">
-		<![CDATA[
-	
-	]]>
-	</select>
 	<select id="last_select" resultType="customervo">
 	<![CDATA[
 	select customer_code from customer order by customer_code desc limit 1;
@@ -47,10 +32,9 @@
 	update customer set name=#{name}, contact=#{contact},manager_name=#{manager_name}, manager_grade=#{manager_grade},manager_contact=#{manager_contact},manager_birth=#{manager_birth},time=#{time},address=#{address},positionX=#{positionX},positionY=#{positionY} where customer_code=#{customer_code};
 		]]>
 	</update>
-	<select id="getPositionById" resultType="positionvo"
-		parameterType="positionvo">
+	<select id="getPosition" resultType="customervo" parameterType="customervo">
 	<![CDATA[
-	select name,positionX, positionY from customer where id=#{id};
+	select a.customer_code,a.name,a.positionX,a.positionY from customer as a,user as b where a.id=b.id and b.dept=(select dept from user where id=#{id});
 	]]>
 	</select>
 </mapper>

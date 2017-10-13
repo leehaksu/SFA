@@ -44,4 +44,8 @@ public class CustomerDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("customer.selectByName",name);
 	}
+	public List<CustomerVo> getPosition(CustomerVo customerVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("customer.getPosition", customerVo);
+	}
 }

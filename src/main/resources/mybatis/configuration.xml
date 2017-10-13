@@ -7,7 +7,6 @@
 		<typeAlias alias="weekvo" type="com.sfa.vo.WeekVo" />
 		<typeAlias alias="dayvo" type="com.sfa.vo.DayVo" />
 		<typeAlias alias="datevo" type="com.sfa.vo.DateVo" />
-		<typeAlias alias="positionvo" type="com.sfa.vo.PositionVo" />
 		<typeAlias alias="customervo" type="com.sfa.vo.CustomerVo" />
 		<typeAlias alias="datereportvo" type="com.sfa.vo.DateReportVo" />
 		<typeAlias alias="advicevo" type="com.sfa.vo.AdviceVo" />
@@ -20,7 +19,6 @@
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/weekplan.xml" />
 		<mapper resource="mybatis/mappers/dateplan.xml" />
-		<mapper resource="mybatis/mappers/position.xml" />
 		<mapper resource="mybatis/mappers/customer.xml" />
 		<mapper resource="mybatis/mappers/datereport.xml" />
 		<mapper resource="mybatis/mappers/advice.xml" />

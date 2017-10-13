@@ -16,11 +16,10 @@ import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
 import com.sfa.service.ChallengeService;
 import com.sfa.service.DatePlanService;
-import com.sfa.service.PositionService;
 import com.sfa.service.UserService;
 import com.sfa.util.Push;
+import com.sfa.vo.CustomerVo;
 import com.sfa.vo.DateVo;
-import com.sfa.vo.PositionVo;
 import com.sfa.vo.UserVo;
 
 @RequestMapping("/date")
@@ -30,8 +29,6 @@ public class PlanDateController {
 	@Autowired
 	DatePlanService datePlanService;
 
-	@Autowired
-	PositionService positionService;
 
 	@Autowired
 	ChallengeService challengeService;
@@ -83,7 +80,7 @@ public class PlanDateController {
 	@ResponseBody
 	@RequestMapping(value = "/select", method = RequestMethod.POST)
 	public JSONResult select(@ModelAttribute DateVo dateVo, @AuthUser UserVo authUser,
-			@RequestParam(value="id",required=true, defaultValue="")String id, UserVo userVo, PositionVo postionVo) {
+			@RequestParam(value="id",required=true, defaultValue="")String id, UserVo userVo, CustomerVo customernVo) {
 		if (dateVo.getDate() == null || id==null) {
 			return JSONResult.error("날짜와 아이디가 넘어오지 않았습니다.");
 		}else if("".equals(id))
@@ -91,7 +88,13 @@ public class PlanDateController {
 			return JSONResult.error("아이디가 정상적이지 않습니다.");
 		}
 		else {
-			dateVo.setId(id);
+			if(authUser.getLevel().equals("팀장"))
+			{
+				dateVo.setId(id);
+			}else
+			{
+				dateVo.setId(authUser.getId());
+			}
 			System.out.println(dateVo);
 			dateVo = datePlanService.selectDate(dateVo);
 			if (dateVo == null) {

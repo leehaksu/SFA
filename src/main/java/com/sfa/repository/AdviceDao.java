@@ -13,6 +13,7 @@ public class AdviceDao {
 
 	@Autowired
 	SqlSession sqlSession;
+	
 	public int insert(AdviceVo adviceVo) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("advice.insert",adviceVo);

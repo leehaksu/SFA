@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfa.dto.JSONResult;
 import com.sfa.service.UserService;
+import com.sfa.util.CreatePasswd;
 import com.sfa.util.Push;
 import com.sfa.vo.UserVo;
 
@@ -29,6 +30,8 @@ public class MobileUserController {
 	@Autowired
 	private Push push;
 	
+	@Autowired
+	private CreatePasswd cratePasswd;
 	
 	@ResponseBody
 	@RequestMapping(value="/auth")
@@ -196,4 +199,49 @@ public class MobileUserController {
 			}
 		}
 	}
+	
+	// id 찾기 부분 통신 구현
+		@ResponseBody
+		@RequestMapping(value = "/search/id", method = RequestMethod.POST)
+		public JSONResult searchbyId(@RequestParam(value = "email", required = true, defaultValue = "") String email,
+				@RequestParam(value = "name", required = true, defaultValue = "") String name) {
+			if ("".equals(email) || "".equals(name)) {
+				return JSONResult.error("이메일과 이름이 전달되지 않았습니다.");
+			} else {
+				UserVo userVo = userService.getId(email, name);
+				if (userVo == null) {
+					return JSONResult.fail("가입되어 잇는 정보가 없습니다.");
+				} else {
+					return JSONResult.success(userVo.getId());
+				}
+			}
+		}
+
+		// pw 찾기 부분 통신 구현
+		@ResponseBody
+		@RequestMapping(value = "/search/pw", method = RequestMethod.POST)
+		public JSONResult searchbyPw(@RequestParam("id") String id, @RequestParam("email") String email) {
+			if ("".equals(id) || "".equals(email)) {
+				return JSONResult.error("아이디와 이름이 전달되지 않았습니다.");
+			} else {
+				UserVo userVo = userService.getUserByName(id, email);
+				if (userVo != null) {
+					String passwd = cratePasswd.create();
+					int no = userService.updatePasswd(id, passwd);
+					if (no == 1) {
+						try {
+							push.Mail(userVo.getEmail(), id + "님 임시비밀번호 보내드립니다.", "임시 비밀번호는" + passwd + "입니다.", "admin");
+							return JSONResult.success();
+						} catch (MessagingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							return JSONResult.success();
+						}
+					} else {
+						return JSONResult.fail("임시비밀번호 생성이 실패하였습니다.");
+					}
+				}
+			}
+			return JSONResult.error("서버에서 오류가 발생하였습니다.");
+		}
 }
