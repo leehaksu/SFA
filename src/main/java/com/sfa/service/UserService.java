@@ -70,7 +70,6 @@ public class UserService {
 	public String getDept(String id) {
 		// TODO Auto-generated method stub
 		String dept= (userDao.getDept(id)).getDept();
-	
 		return dept;
 	}
 	
