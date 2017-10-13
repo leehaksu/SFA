@@ -112,7 +112,7 @@ public class UserController {
 		}
 		int no = userService.delete(userVo);
 		if (no == 1) {
-			return "redirect:/modify?result=success";
+			return "redirect:list";
 		} else {
 			return "redirect:/modify?result=fail";
 		}
@@ -144,7 +144,7 @@ public class UserController {
 
 		int no = userService.modify(userVo);
 		if (no == 1) {
-			return "redirect:modify?result=success&id=" + userVo.getId();
+			return "redirect:list";
 		} else {
 			return "redirect:modify?result=fail&id=" + userVo.getId();
 		}

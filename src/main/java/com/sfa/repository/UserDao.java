@@ -78,7 +78,7 @@ public class UserDao {
 	}
 	public int delete(UserVo userVo) {
 		// TODO Auto-generated method stub
-		return sqlSession.delete("user.delete",userVo);
+		return sqlSession.update("user.delete",userVo);
 	}
 
 	public UserVo getDept(String id) {

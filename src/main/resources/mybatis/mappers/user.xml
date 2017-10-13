@@ -57,9 +57,9 @@
 	<select id="selectTotalMember" resultType="uservo"
 		parameterType="MAP">
 		<![CDATA[
-		select id,name,dept,company_email,grade,level,email
+		select id,name,dept,company_email,grade,level,email,status
 		  from user 
-		 where dept=#{dept}
+		 where dept=#{dept};
 		]]>
 	</select>
 	<select id="selectDept" resultType="uservo" parameterType="MAP">
@@ -81,11 +81,11 @@
 			</when>
 		</choose>
 	</update>
-	<delete id="delete" parameterType="uservo">
+	<update id="delete" parameterType="uservo">
 	<![CDATA[
-	delete from user where id=#{id};
+	update user set status=0 where id=#{id};
 		]]>
-	</delete>
+	</update>
 	<select id="selectLeader" parameterType="MAP" resultType="uservo">
 	<![CDATA[
 	select id,company_email from user where level='팀장' and dept =(select dept from user where id=#{id});
