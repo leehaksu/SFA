@@ -77,7 +77,7 @@
 	</update>
 	<select id="reportByDate" parameterType="MAP" resultType="weekvo">
 	<![CDATA[
-	select report_sale, achive_rank from day_report where date=#{date} and id=#{id};
+	select sum(report_sale) as week_sale,achive_rank from day_report where id=#{id} and DATE_SUB(#{date}, INTERVAL 5 day) order by date;
 	]]>
 	</select>
 	<select id="selectTotalReport" parameterType="MAP" resultType="datereportvo">

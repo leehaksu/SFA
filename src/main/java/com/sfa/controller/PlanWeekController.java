@@ -34,7 +34,7 @@ public class PlanWeekController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private DateReportService dateReportService;
 
@@ -86,9 +86,11 @@ public class PlanWeekController {
 		if (authUser == null) {
 			return "redirect:/user/login";
 		}
-
 		weekVo.setId(authUser.getId());
+		WeekVo temp_weekVo = weekPlanService.selectWeek(weekVo);
+		if (weekVo.getTarget_figure() == temp_weekVo.getTarget_figure()) {
 
+		}
 		int no = weekPlanService.update(weekVo);
 		if (no == 6) {
 			UserVo userVo = userService.getLeader(authUser.getId());
@@ -167,12 +169,9 @@ public class PlanWeekController {
 	@ResponseBody
 	@RequestMapping(value = { "/select" }, method = RequestMethod.POST)
 	public JSONResult selectWeek(@AuthUser UserVo authUser,
-			@RequestParam(value = "date", required = true, defaultValue = "") String Date, 
-			@RequestParam(value = "id", required = true, defaultValue = "") String id, WeekVo weekVo,
-			UserVo userVo) {
-		
-		System.out.println("[Controller]"+Date+","+id);
-		
+			@RequestParam(value = "date", required = true, defaultValue = "") String Date,
+			@RequestParam(value = "id", required = true, defaultValue = "") String id, WeekVo weekVo, UserVo userVo) {
+
 		if (authUser == null) {
 			return JSONResult.error("로그인 되지 않았습니다.");
 		} else if ("".equals(id)) {
@@ -183,7 +182,7 @@ public class PlanWeekController {
 		} else {
 			weekVo.setId(authUser.getId());
 		}
-		
+
 		Calendar cal = Calendar.getInstance();
 		if ("".equals(Date)) {
 			String calendar = String.valueOf(cal.get(Calendar.YEAR)) + "-" + String.valueOf(cal.get(Calendar.MONTH) + 1)
@@ -192,22 +191,33 @@ public class PlanWeekController {
 		} else {
 			weekVo.setFirst_date(Date);
 		}
+		WeekVo temp_weekVo = dateReportService.selectReport(weekVo.getFirst_date(), weekVo.getId());
+		System.out.println("[controller_temp_weekVo2]" + temp_weekVo);
+
 		weekVo = weekPlanService.selectWeek(weekVo);
 		System.out.println(weekVo);
 		if (weekVo == null) {
-			JSONResult.error("서버에 error 발생");
+			JSONResult.fail();
 		}
-		WeekVo temp_weekVo = dateReportService.selectReport(Date, weekVo.getId());
-		System.out.println("[controller]" + temp_weekVo);
 
 		if (temp_weekVo == null) {
 			weekVo.setAchive_rank(0.0);
 			weekVo.setWeek_sale((long) 0);
 		} else {
-			weekVo.setAchive_rank(temp_weekVo.getAchive_rank());
+			System.out.println("여기는 들어와??");
 			weekVo.setWeek_sale(temp_weekVo.getWeek_sale());
+			if (weekVo.getTarget_figure() == 0) {
+				if (temp_weekVo.getWeek_sale() == 0) {
+					weekVo.setAchive_rank(0.0);
+				} else {
+					weekVo.setAchive_rank(100);
+				}
+
+			} else {
+				weekVo.setAchive_rank((temp_weekVo.getWeek_sale() / weekVo.getTarget_figure()) * 100);
+			}
 		}
-		System.out.println(weekVo);
+		/* System.out.println(weekVo); */
 		return JSONResult.success(weekVo);
 	}
 }

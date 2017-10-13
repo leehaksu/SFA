@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfa.dto.JSONResult;
+import com.sfa.service.DateReportService;
 import com.sfa.service.UserService;
 import com.sfa.service.WeekPlanService;
 import com.sfa.util.ChangeDate;
@@ -25,13 +26,16 @@ import com.sfa.vo.WeekVo;
 public class MobilePlanWeekController {
 
 	@Autowired
-	WeekPlanService weekPlanService;
+	private WeekPlanService weekPlanService;
 	
 	@Autowired
-	Push push;
+	private Push push;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
+	
+	@Autowired
+	private DateReportService dateReportService;
 
 	@ResponseBody
 	@RequestMapping(value = "/insert")
@@ -112,11 +116,9 @@ public class MobilePlanWeekController {
 		System.out.println("[mobile] select 접속");
 		weekVo.setFirst_date(first_date);
 		weekVo.setId(id);
-		System.out.println(weekVo.getFirst_date());
 		if ("".equals(weekVo.getId())) {
 			return JSONResult.error("error_Plan_0x4");
 		}
-
 		Calendar cal = Calendar.getInstance();
 		if ("".equals(first_date)) {
 			String calendar = String.valueOf(cal.get(Calendar.YEAR)) + "-" + String.valueOf(cal.get(Calendar.MONTH) + 1)
@@ -126,12 +128,25 @@ public class MobilePlanWeekController {
 			weekVo.setFirst_date(first_date);
 		}
 		WeekVo weekVo2 = weekPlanService.selectWeek(weekVo);
-		System.out.println(weekVo2);
 		if (weekVo2 == null) {
 			return JSONResult.fail(ChangeDate.getWeekNo(ChangeDate.CheckDate(weekVo)));
 		} else if (weekVo2.getWeek_no() == null) {
 			return JSONResult.fail(ChangeDate.getWeekNo(ChangeDate.CheckDate(weekVo)));
 		} else {
+			WeekVo temp_weekVo = dateReportService.selectReport(weekVo.getFirst_date(), weekVo.getId());
+			if (temp_weekVo == null) {
+				weekVo2.setAchive_rank(0.0);
+				weekVo2.setWeek_sale((long) 0);
+			} else {
+				weekVo2.setWeek_sale(temp_weekVo.getWeek_sale());
+				if(weekVo2.getTarget_figure()==0)
+				{
+					weekVo2.setAchive_rank(0.0);
+				}else
+				{
+					weekVo2.setAchive_rank((temp_weekVo.getAchive_rank()/weekVo.getTarget_figure())*100);
+				}
+			}
 			return JSONResult.success(weekVo2);
 		}
 
