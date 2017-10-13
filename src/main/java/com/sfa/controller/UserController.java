@@ -246,6 +246,7 @@ public class UserController {
 		}
 		return JSONResult.success(id);
 	}
+	
 	//pw 찾기 부분 통신 구현
 	@RequestMapping(value="/search/pw", method=RequestMethod.POST)
 	public String searchbyPw(@RequestParam("id") String id, @RequestParam("name") String name)
@@ -260,6 +261,7 @@ public class UserController {
 		return null;
 	}
 	
+	@Auth
 	@RequestMapping(value="/mypage", method=RequestMethod.GET)
 	public String mypage(@AuthUser UserVo authUSer,Model model)
 	{
@@ -267,29 +269,24 @@ public class UserController {
 		return "mypage/mypage";
 	}
 	
-	@RequestMapping(value="/mypage/update", method=RequestMethod.GET)
-	public String updateMypage(@AuthUser UserVo authUSer,Model model)
+	@Auth
+	@RequestMapping(value="/mypage", method=RequestMethod.POST)
+	public String mypage(@AuthUser UserVo authUser,Model model,@ModelAttribute UserVo userVo)
 	{
-		model.addAttribute("authuser", authUSer);
-		return "mypage/mypage_update";
-	}
-	
-	@RequestMapping(value="/mypage/update", method=RequestMethod.POST)
-	public String updateMypage(@AuthUser UserVo authUSer,@ModelAttribute UserVo userVo,Model model)
-	{
-		if(userVo==null)
+		if(authUser==null || userVo==null)
 		{
-			return "mypage/mypage_update";
+			return "user/login";
 		}
-		
-		int no= userService.modify(userVo);
+		userVo.setId(authUser.getId());
+		int no = userService.modify(userVo);
 		if(no==1)
 		{
-			return "";
+			return "redirect:mypage?result=sucess";
 		}else
 		{
-			return "";
+			return "redirect:mypage?result=fail";
 		}
+		
+		
 	}
-	
 }
