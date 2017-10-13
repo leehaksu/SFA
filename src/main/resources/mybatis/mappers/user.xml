@@ -33,23 +33,23 @@
 		<choose>
 			<when test="name == null">
 		<![CDATA[
-		select id,name,dept,company_email,grade,email,stauts
+		select id,name,dept,company_email,grade,email,status
 		  from user  
-		 where grade=#{grade} and dept=#{dept}
+		 where grade=#{grade} and dept=#{dept} and level='팀원';
 		]]>
 			</when>
 			<when test="grade ==null">
 		<![CDATA[
-		select id,name,dept,company_email,grade,email,stauts
+		select id,name,dept,company_email,grade,email,status
 		  from user  
-		 where name=#{name} and dept=#{dept}
+		 where name=#{name} and dept=#{dept} and level='팀원';
 		]]>
 			</when>
 			<otherwise>
 		<![CDATA[
 		select id,name,dept,company_email,grade,email,status
 		  from user  
-		 where name=#{name} and grade=#{grade} and dept=#{dept}
+		 where name=#{name} and grade=#{grade} and dept=#{dept} and level='팀원';
 		]]>
 			</otherwise>
 		</choose>
@@ -59,7 +59,7 @@
 		<![CDATA[
 		select id,name,dept,company_email,grade,level,email,status
 		  from user 
-		 where dept=#{dept};
+		 where dept=#{dept} and level='팀원';
 		]]>
 	</select>
 	<select id="selectDept" resultType="uservo" parameterType="MAP">
