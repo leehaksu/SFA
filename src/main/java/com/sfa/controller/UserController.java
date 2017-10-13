@@ -273,18 +273,21 @@ public class UserController {
 	@RequestMapping(value="/mypage", method=RequestMethod.POST)
 	public String mypage(@AuthUser UserVo authUser,Model model,@ModelAttribute UserVo userVo)
 	{
-		if(authUser==null || userVo==null)
+		if(authUser==null)
 		{
 			return "user/login";
+		}else if (userVo==null)
+		{
+			return "mypage/mypage";
 		}
 		userVo.setId(authUser.getId());
 		int no = userService.modify(userVo);
 		if(no==1)
 		{
-			return "redirect:mypage?result=sucess";
+			return "redirect:mypage?id="+authUser.getId()+"&result=sucess";
 		}else
 		{
-			return "redirect:mypage?result=fail";
+			return "redirect:mypage?id="+authUser.getId()+"&result=sucess";
 		}
 		
 		
