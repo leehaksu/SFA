@@ -32,6 +32,14 @@
 		
 		$("#reset_password").click(function() {
 			check = true;
+			var id = $("#ModifyinputId").val();
+			
+			$.post("pwd/reset",
+					id,
+			function(data,status){
+				 alert("Data: " + data + "\nStatus: " + status);
+			});
+			
 			$("#modify_inputPassword").show();
 			$("#passwordReset-image").show();
 			console.log(check);
