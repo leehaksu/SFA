@@ -299,7 +299,8 @@ public class UserController {
 	}
 	
 	@Auth(value = Auth.Role.팀장)
-	@RequestMapping(value="/pwd/reset", method=RequestMethod.POST)
+	@ResponseBody
+	@RequestMapping(value="/pwd", method=RequestMethod.POST)
 	public JSONResult SendEmail(@RequestParam(value="id", required=true, defaultValue="") String id)
 	{
 		if("".equals(id))

@@ -34,7 +34,7 @@
 			check = true;
 			var id = $("#ModifyinputId").val();
 			console.log(id);
-			$.post("/pwd/reset",
+			$.post("pwd",
 					id,
 			function(data,status){
 				 alert("Data: " + data + "\nStatus: " + status);
