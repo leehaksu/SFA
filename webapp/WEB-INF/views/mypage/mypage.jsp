@@ -45,9 +45,9 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="user_name">이름</label>
 							<div class="col-md-4" style="margin-top: 8px;">
-								<input id="user_e_mail" name="user_e_mail" placeholder="개인 이메일"
+								<input id="user_e_mail" name="user_e_mail" 
 									class="form-control input-md" value="${authUser.name}" required
-									type="email">
+									type="text">
 							</div>
 						</div>
 					</td>
