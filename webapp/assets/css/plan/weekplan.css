@@ -14,10 +14,6 @@
 #weektable {
 	clear: both;
 }
-#week {
-	clear: both;
-	margin: 0 0 0 0;
-}
 
 .weektable-userinfo {
 	display: inline-block;
@@ -64,9 +60,16 @@
 	width: 20%;
 	display: inline-block;
 	float: right;
-	margin: 25px 10px 10px 10px;
+	margin-right: 15px;
+	margin-top: 5px;
 }
-
+#weekplan-header{
+	width: 100%;
+    height: 15%;
+    background-color: lavender;
+    margin-bottom: 15px;
+    border-bottom: 3px solid lightgray;
+}
 
 
 .tg {

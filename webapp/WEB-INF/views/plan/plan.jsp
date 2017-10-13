@@ -483,9 +483,9 @@
 		ajaxChallenge();
 		//텍스트 에디터 초기화
 		initEditor();
-		//현재위치 정보 가져오기.
+		/* //현재위치 정보 가져오기.
 			getLocation();
-		//dayplan 위치 검색 자동완성
+		 *///dayplan 위치 검색 자동완성
 			positionsAutocomplete();
 			
 			//달력 생성 
@@ -555,6 +555,8 @@
 			/////////////////////////////////////////////////////////////////////////////
 			/* 수정이 필요한 부분 ~~~~~~~~~~~~~~~~~*/
 			$('#side-dayplan-open-button').click(function() {
+				getLocation();
+				
 				//현재 날짜와 클릭한 날짜 비교 
 				var plandatecheck = moment(ClickedDay).isSameOrAfter(today);
 				
@@ -569,7 +571,6 @@
 					dayplanmodalShow();	
 				}
 				
-				alert(authUserID +","+selectID);
 				//회원에 권한에 따라 input 태그의 활성화 상태 적용
 				if(authUserID != selectID){
 					alert("여기 탐");
@@ -871,7 +872,7 @@
 										</tr>
 										<tr>
 											<td colspan="3">
-												<div>
+												<div id="map_content">
 													<span id="mapsearch"><strong>지도 검색</strong> </span>
 													<ul style="display: -webkit-box;">
 														<li><button id="dateplan-searchRoutes" type="button"
@@ -1003,12 +1004,14 @@
 			</div>
 		</div>
 	</div>
+	
 
 	<div id="weekplan_main">
+		<div id="weekplan-header">
 		<div id="week_title">
 			<h3>
 				<strong>주간계획 </strong>
-			</h3>
+ 			</h3> 
 		</div>
 		<div id="week_btn">
 			<div class="btn-group btn-group-justified " role="group">
@@ -1022,9 +1025,8 @@
 				</div>
 			</div>
 		</div>
-		<div id="week">
-			<hr>
 		</div>
+
 		<form id="weekform" name="weekform" class="form-horizontal"
 			method="post">
 			<div class="form gorup">

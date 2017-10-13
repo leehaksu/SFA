@@ -142,16 +142,20 @@
 	}
 	
 	function getCustomerPosition(){
-		$.post("/sfa/customer/position",
+		$.post("customer/position",
 	        	function(data,status){
 	            console.log(data);
 	            console.log(status);
 	            
 	        });
 	}
-	
+	function resetmap(){
+		$("#map_div").remove();
+		$("#map_content").append("<div id='map_div'></div>");
+	}
 	function dayplanModalClose(){
 		$("#dayplanmodalclose").on("click",function() {
+			resetmap();
 			$('#datetable-branch').tooltip('disable');
 			$('html, body').css({'overflow' : 'auto','height' : '100%'}); //scroll hidden 해제 
 			$('#element').off('scroll touchmove mousewheel'); // 터치무브 및 마우스휠 스크롤 가능
@@ -167,6 +171,7 @@
 			$('#date-textarea').froalaEditor('html.set', '');
 
 			$("#dayplanmodal").attr("class","modal fade");
+		
 		});
 	}
 	function dayplanModalSearchPositionClose(){
@@ -190,6 +195,8 @@
 	}
 	function dayplanModalSave(){
 		$("#dayplan-savebutton").click(function(){
+			//지도 삭제 후 다시 생성
+			resetmap();
 			if($("#dayplantable-title").val() == null || $("#dayplantable-title").val() =="")
 			{
 				return ;	
@@ -221,6 +228,8 @@
 	
 	function dayplanModalUpdate(){
 		$("#dayplan-updatebutton").click(function(){
+			//지도 삭제후 재생성
+			resetmap();
 			if($("#dayplantable-title").val() == null || $("#dayplantable-title").val() =="")
 			{
 				return ;	
@@ -254,6 +263,8 @@
 	
 	function dayplanModalDelete(){
 		$("#dayplan-deletebutton").click(function(){
+			//지도 삭제후 재생성
+			resetmap();
 			  $.post("/sfa/date/delete",
 		        { 
 		  		  date : dayClick, 
