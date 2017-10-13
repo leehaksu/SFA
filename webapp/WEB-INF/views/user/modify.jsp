@@ -35,11 +35,10 @@
 			var id = $("#ModifyinputId").val();
 			console.log(id);
 			$.post("pwd/reset",
-					id,
+					{"id":id},
 			function(data,status){
-				 alert("Data: " + data + "\nStatus: " + status);
+				 console.log(data);
 			}).done(function() {
-			    alert( "second success" );
 			    $("#passwordReset-image").show();
 			  })
 			  .fail(function() {

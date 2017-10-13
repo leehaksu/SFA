@@ -21,6 +21,7 @@ import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
 import com.sfa.service.AffirmationService;
 import com.sfa.service.UserService;
+import com.sfa.util.CreatePasswd;
 import com.sfa.util.Push;
 import com.sfa.vo.UserVo;
 
@@ -35,6 +36,9 @@ public class UserController {
 	
 	@Autowired
 	private Push push;
+	
+	@Autowired
+	private CreatePasswd cratePasswd;
 	
 	@RequestMapping(value = { "", "/login" }, method = RequestMethod.GET)
 	public String login(@AuthUser UserVo authUser, Model model) {
@@ -292,7 +296,34 @@ public class UserController {
 		{
 			return "redirect:mypage?result=fail";
 		}
+	}
+	
+	@Auth(value = Auth.Role.팀장)
+	@ResponseBody
+	@RequestMapping(value="/pwd/reset", method=RequestMethod.POST)
+	public JSONResult SendEmail(@RequestParam(value="id", required=true, defaultValue="") String id)
+	{
+		if("".equals(id))
+		{
+			return JSONResult.error("아이디값 넘겨주라고!!!!");
+		}
+		UserVo userVo = userService.getId(id);
+		String passwd=cratePasswd.create();
+		int no = userService.updatePasswd(id,passwd);
 		
-		
+		if(no==1)
+		{
+			try {
+				push.Mail(userVo.getEmail(), id+"님 임시비밀번호 보내드립니다.", "임시 비밀번호는" + passwd +"입니다.", "admin");
+				return JSONResult.success();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return JSONResult.success();
+			}	
+		}else
+		{
+			return JSONResult.fail("임시비밀번호 생성이 실패하였습니다.");
+		}
 	}
 }
