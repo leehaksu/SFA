@@ -12,7 +12,7 @@ import com.sfa.vo.UserVo;
 @RequestMapping(value="/chart")
 public class ChartController {
 
-	@Auth(value = Auth.Role.팀장)
+	@Auth
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String chart(@AuthUser UserVo authUser)
 	{
