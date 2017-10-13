@@ -45,7 +45,7 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="user_name">이름</label>
 							<div class="col-md-4" style="margin-top: 8px;">
-								<input id="user_e_mail" name="user_e_mail" 
+								<input id="user_e_mail" name="name" 
 									class="form-control input-md" value="${authUser.name}" required
 									type="text">
 							</div>
@@ -57,7 +57,7 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="user_e_mail">이메일</label>
 							<div class="col-md-4">
-								<input id="user_e_mail" name="user_e_mail" placeholder="개인 이메일"
+								<input id="user_e_mail" name="email" placeholder="개인 이메일"
 									class="form-control input-md" required type="email">
 							</div>
 						</div>
@@ -68,7 +68,7 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="password">PASSWORD</label>
 							<div class="col-md-4">
-								<input id="password" name="password" placeholder="PASSWORD"
+								<input id="password" name="passwd" placeholder="PASSWORD"
 									class="form-control" required pattern="^[a-z0-9_]{5,12}$"
 									type="password">
 							</div>
@@ -94,7 +94,7 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="user_status">부서</label>
 							<div class="col-md-4">
-								<select id="user_status" name="user_status"
+								<select id="user_status" name="dept"
 									class="form-control " required>
 									<option value="부서" selected>부서</option>
 									<option value="영업  1팀">영업 1팀</option>
