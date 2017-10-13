@@ -22,12 +22,12 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div class="container">
-		<div class="page-header">
-			<h3 class="dayreport">
+	<div class="page-header">
+			<h3>
 				<strong>차트 조회</strong>
 			</h3>
 		</div>
+	<div class="container">
 		<h4>2017년</h4>
 		<table>
 			<thead>

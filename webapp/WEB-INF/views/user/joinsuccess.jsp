@@ -23,12 +23,12 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
+		<div class="page-header">
+			<h3 >
+				<strong>회원 가입 완료</strong>
+			</h3>
+		</div>
 		<div class="joinsuccess_container">
-			<div class="page-header">
-					<h3 class="dayreport">
-						<strong>회원 가입 완료</strong>
-					</h3>
-				</div>
 			<div class="pageContent">
 				<h4>사원 가입을 진심으로 축하드립니다.</h4>
 				<label> 사원 아이디는 ${userVo.id} 입니다.</label>

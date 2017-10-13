@@ -23,6 +23,11 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
+	<div class="page-header">
+			<h3>
+				<strong>통합 게시판</strong>
+			</h3>
+	</div>
 	<div class="main_box">
 		<img
 			src="${pageContext.servletContext.contextPath}/assets/image/mainbg_02.jpg"

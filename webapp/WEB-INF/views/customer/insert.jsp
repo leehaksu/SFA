@@ -65,7 +65,7 @@
 </script>
 
 </head>
-<body onload="init()" > 
+<body onload="init()">
 	<nav class="navbar navbar-default">
 		<c:import url="/WEB-INF/views/include/header.jsp">
 			<c:param name="menu" value="main" />
@@ -81,7 +81,7 @@
 	<main id="page-content-wrapper" role="main">
 	<div class="customer-container">
 		<div class="page-header">
-			<h3 class="dayreport">
+			<h3>
 				<strong>고객 등록</strong>
 			</h3>
 		</div>
@@ -143,13 +143,20 @@
 							</td>
 						</tr>
 					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="3"><input id="customer-submit-button" type="submit"
+								value="저장" class="btn btn-default" onclick="getLocation()">
+							</td>
+						<tr>
+					</tfoot>
 				</table>
-				<br> <input id="customer-submit-button" type="submit" value="저장"
-					class="btn btn-default" onclick="getLocation()">
+
 			</form>
 		</div>
 	</div>
-	<div id="search_customer_map" class="modal fade  modal-lg" role="dialog">
+	<div id="search_customer_map" class="modal fade  modal-lg"
+		role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -158,8 +165,8 @@
 				</div>
 				<div class="modal-body">
 					<div>
-					<input type="text" name="position">
-					<button type="button">검색</button>
+						<input type="text" name="position">
+						<button type="button">검색</button>
 					</div>
 					<br>
 					<div id="map_div"></div>

@@ -82,7 +82,7 @@
 	<main id="page-content-wrapper" role="main">
 	<div class="customer-container">
 		<div class="page-header">
-			<h3 class="dayreport">
+			<h3 >
 				<strong>고객 등록</strong>
 			</h3>
 		</div>

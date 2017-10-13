@@ -68,7 +68,6 @@ function getWeeks(current,selectID,callback){
 }
 
 function resetweekplan(){
-	alert("resetweekplan() 수행");
 	$(".dayedit-content").val("");
 	$(".to-do-list").children().remove(); // 현재 모달에 입력된 값 다 날리고
 	$(".target-money").val("");

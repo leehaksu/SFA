@@ -357,7 +357,7 @@
         		};
          var road ="startX="+startX+"&startY="+startY+"&endX="+endX+"&endY="+endY+"&reqCoordType=WGS84GEO"+"&passList="+passList; 	 
         	
-         	$.ajax({
+         	/* $.ajax({
              url: "https://apis.skplanetx.com/tmap/routes?version=1&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b",
              type: 'post',
              data: road,
@@ -373,7 +373,25 @@
             	 console.log(jqXhr);
                  console.log( errorThroxwn + "," + status);
              }
-         });
+         }); */
+         	
+         	$.ajax({
+         		method : "POST",
+         		    url : "https://apis.skplanetx.com/tmap/routes?version=1",
+         		    data: road,
+         		    headers : {
+         		        "Content-Type" : "application/x-www-form-urlencoded",
+         		        "appKey" : "2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"
+         		    },
+         		    success: function( data, textStatus, jQxhr ){
+         		    	console.log(data.features[0].properties.totalDistance/1000);
+         		    },
+                    error: function( jqXhr, status, errorThroxwn ){
+                   	 console.log(jqXhr);
+                        console.log( errorThroxwn + "," + status);
+                    }
+
+         		});
 
       
         var prtcl = new Tmap.Protocol.HTTP({
@@ -413,55 +431,7 @@
     	console.log(data);   	
     }
    
-   /*  function searchRoute(){
-    	if(routecheck == false){
-	    	map.addLayers([vector_layer]);
-	    	
-	    	//좌표 배열 객체화
-	    	 lineString = new Tmap.Geometry.LineString(routeList);
-	    	 console.log("루트들");
-	    	console.log(routeList);
-	    	//vector feature 객체화
-	    	mLineFeature = new Tmap.Feature.Vector(lineString, null, style_red);
-	  
-	    	//벡터 레이어에 등록
-	    	vector_layer.addFeatures([mLineFeature]);
-			
-	    	console.log("경로탐색~");
-	    	
-	    	routecheck= true;
-	    	var routes =""; 
-	    	for(i=0; i < routeNames.length; i++){
-	   		 		routes += routeNames[i] +"->";		
-	    		}
-    			routes = routes.substring(0,routes.length-2);
-    			$("#datetable-branch").val(routes);
-	    		$("#datetable-branch").attr("title",routes);	    			    		
-	    		$('#datetable-branch').tooltip(); 
-	    	
-	    	//출발 지점과 도착지점 일때 	
-	    	 if(routeList.length == 2){
-	    		console.log(routeList.length);
-		    	loadGetAddressFromLonLat(routeList);		
-	    	} 
-	    		$.ajax({
-	    			url : 'https://apis.skplanetx.com/tmap/routes?version=1',
-	    			type : 'POST',
-	    			data : {'startX': 14140669.59746090,'startY': 4508640.36061872,'endX': 14135428.84691669,'endY':4505733.44979528},
-	    			dataType : 'json',
-	    			contentType: "application/json; charset=UTF-8",
-	    			success : function(response) {
-	    				console.log(response);
-	    			},
-	    			error : function(xhr,status,error) {
-	    				alert(xhr + " 와 " + status + " 와 " + error);
-	    			}
-	        	});
-    	}
-    	else{
-    		alert("이미 검색된 경로 결과가 존재합니다.");
-    	}
-    } */
+ 
     
     function deleteRoute(){
     	
@@ -757,7 +727,11 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-
+	<div class="page-header">
+		<h3 >
+			<strong>영업 계획서</strong>
+		</h3>
+	</div>
 	<div id="calendar_main">
 		<div id=calendar></div>
 	</div>

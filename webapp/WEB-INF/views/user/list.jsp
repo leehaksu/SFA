@@ -23,12 +23,12 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-		<div id="list_container">
-			<div class="page-header">
-					<h3 class="dayreport">
-						<strong>사원 정보 조회</strong>
-					</h3>
-				</div>
+		<div class="page-header">
+			<h3 >
+				<strong>사원 정보 조회</strong>
+			</h3>
+		</div>
+		<div id="list_container">			
 			<form name="joinform" class="form-horizontal" method="post"
 				action="${pageContext.servletContext.contextPath}/list">
 				<div class="search_box">

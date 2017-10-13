@@ -56,7 +56,7 @@
 		<div>
 			<div>
 				<div class="page-header">
-					<h3 class="dayreport">
+					<h3 >
 						<strong>일일 보고서</strong>
 					</h3>
 				</div>

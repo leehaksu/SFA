@@ -247,14 +247,14 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
+	<div class="page-header">
+		<h3 >
+			<strong>일일 보고서</strong>
+		</h3>
+	</div>
 	<article>
 		<div>
-			<div>
-				<div class="page-header">
-					<h3 class="dayreport">
-						<strong>일일 보고서</strong>
-					</h3>
-				</div>
+			<div>			
 				<div id="reportmain_content">
 				<form name="dayreport" id="dayreport-form"  onsubmit="return validateForm()" method="post">
 					<table id="dayreporttable">

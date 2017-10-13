@@ -30,11 +30,11 @@
 			</div>
 		</div>
 		<main id="page-content-wrapper" role="main">
+			<div class="page-header">
+						<h3><strong>회원 가입</strong></h3>
+			</div>
 			<div class="join_container">
 				<div>
-					<div class="page-header">
-						<h3>회원 가입</h3>
-					</div>
 					<form name="joinform" class="form-horizontal" method="post" 
 						action="${pageContext.servletContext.contextPath}/join" >
 						<div class="form-group">

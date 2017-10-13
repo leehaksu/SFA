@@ -24,7 +24,7 @@
 	<main id="page-content-wrapper" role="main">
 	<div>
 		<div class="page-header">
-			<h3 class="dayreport">
+			<h3 >
 				<strong>고객 조회</strong>
 			</h3>
 		</div>

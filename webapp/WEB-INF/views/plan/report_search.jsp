@@ -140,13 +140,13 @@ $(document).ready(function() {
 	</div>
 	</div>
 		<main id="page-content-wrapper" role="main">
+		<div class="page-header">
+			<h3 >
+				<strong>보고서 조회</strong>
+			</h3>
+		</div>
 		<article id="reportsearch-content">
 			<div>
-				<div class="page-header">
-					<h3 class="dayreport">
-						<strong>보고서 조회</strong>
-					</h3>
-				</div>
 				<button type="button" class="btn btn-default"
 					onclick="location.href='insert'"
 					style="float: right; display: inline-block;">보고서 추가</button>
