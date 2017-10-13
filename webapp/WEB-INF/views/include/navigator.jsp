@@ -45,17 +45,17 @@ $(document).ready(function() {
 						class="accordion-toggle collapsed toggle-switch"
 						 href="${pageContext.servletContext.contextPath}/chart/"> <span
 							class="sidebar-icon"><i class="fa fa-line-chart"
-								aria-hidden="true"></i></span> <span class="sidebar-title">통계 현황</span>
+								aria-hidden="true"></i></span> <span class="sidebar-title">영업 통계 </span>
 					</a>
 					</li>
-					<li>
+				<%-- 	<li>
 					<a id="menu4" a href="${pageContext.servletContext.contextPath}/board/"> 
 						<span class="sidebar-icon">
 							<i class="fa fa-bell" aria-hidden="true"></i>
 						</span> 
 							<span class="sidebar-title">공지사항</span>
 					</a>
-					</li>	
+					</li>	 --%>
 					
 					<li><a id="menu5" a href="#"> 
 						<span class="sidebar-icon">
