@@ -1,7 +1,7 @@
 #list_container{
 	width:800px;
 }
-#search_input{
+.search_input{
 	width: 15%;
 	text-align: center;
 }

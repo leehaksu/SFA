@@ -35,28 +35,26 @@
 					<table id="search_table">
 						<tr>
 							<th id="search_label">이름 :</th>
-							<td id="search_input"><input class="form-control"
+							<td class="search_input"><input class="form-control"
 								id="inputName" name="name" type="text" placeholder="이름"></td>
 							<th id="search_label">직급 :</th>
-							<td id="search_input"><select class="form-control"
+							<td class="search_input"><select class="form-control"
 								id="inputGrade" name="grade">
-									<option>부장</option>
-									<option>차장</option>
-									<option>과장</option>
-									<option>대리</option>
-									<option>사원</option>
+									<option value="부장">부장</option>
+									<option value="차장">차장</option>
+									<option value="과장">과장</option>
+									<option value="대리">대리</option>
+									<option value="사원">사원</option>
 									<option selected="selected">전체 </option>
 							</select></td>
-							<th id="search_input">
+							<th class="search_input">
 								<button class="btn btn-info" type="submit">사원 찾기</button>
 							</th>
 						</tr>
 					</table>
 				</div>
 			</form>
-			<div class="page-header">
-				<h3>팀원 목록</h3>
-			</div>
+	
 			<div id="search_list">
 				<div>
 					<table class="table">
@@ -66,7 +64,7 @@
 								<th id="search_td">이 름</th>
 								<th id="search_td">부 서</th>
 								<th id="search_td">직 급</th>
-								<th id="search_td">등 급</th>
+
 								<th id="search_td">이 메 일</th>
 								<th id="search_td"></th>
 							</tr>
@@ -78,11 +76,10 @@
 										<td id="search_td">${vo.name}</td>
 										<td id="search_td">${vo.dept}</td>
 										<td id="search_td">${vo.grade}</td>
-										<td id="search_td">${vo.level}</td>
 										<td id="search_td">${vo.email}</td>
 										<td id="search_td"><a id="search_userid"
 											href="modify?id=${vo.id}" class="btn btn-info" role="button"
-											target="_blank">수정</a></td>
+											>수정</a></td>
 									</tr>
 							</c:forEach>
 						</tbody>

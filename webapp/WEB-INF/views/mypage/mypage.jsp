@@ -8,25 +8,9 @@
 <head>
 <c:import url="/WEB-INF/views/common/common.jsp"></c:import>
 <script>
-	var dept='<c:out value="${authUser.dept}"/>';
-	var grade='<c:out value="${authUser.grade}"/>';
-	console.log(dept);
-	console.log(grade);
-	
-	$(document).ready(function() {
- 		$("#user_dept").find("option").each(function() {				 
-			
- 			if(this.value == dept){
- 				$(this).prop('selected', true);
- 			}
- 		});
- 		
-		$("#user_grade").find("option").each(function() {				 
- 			if(this.value == grade){
- 				$(this).prop('selected', true);
- 			}
- 		});
-		
+	var email = '<c:out value="${authUser.email}"/>';
+
+	$(document).ready(function() {		
 		$("#password").focusin(function(){
 			$("#inputPasswordCheck").val("");
 		});
@@ -131,40 +115,6 @@
 									<i class='fa fa-times' aria-hidden='true'></i>
 									&nbsp; 비밀번호가 일치 하지 않습니다.
 								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="form-group">
-							<label class="col-md-4 control-label" for="user_status">부서</label>
-							<div class="col-md-6">
-								<select id="user_dept" name="dept" class="form-control mypage_input"
-									required>
-									<option value="부서" selected>부서</option>
-									<option value="영업  1팀">영업 1팀</option>
-									<option value="영업  2팀">영업 2팀</option>
-									<option value="영업  3팀">영업 3팀</option>
-								</select>
-
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="form-group">
-							<label class="col-md-4 control-label" for="grade">직급</label>
-							<div class="col-md-6">
-								<select id="user_grade" name="grade" class="form-control mypage_input" required>
-									<option value="부서" selected>직급</option>
-									<option value="사원">사원</option>
-									<option value="대리">대리</option>
-									<option value="과장">과장</option>
-									<option value="차장">차장</option>
-									<option value="부장">부장</option>
-								</select>
 							</div>
 						</div>
 					</td>

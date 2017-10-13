@@ -102,6 +102,8 @@
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/user/join.js"></script>
 <script
+	src="${pageContext.servletContext.contextPath}/assets/js/user/list.js"></script>
+<script
 	src="${pageContext.servletContext.contextPath}/assets/js/plan/calendar.js"></script>
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/plan/dayplan.js"></script>

@@ -62,7 +62,7 @@
 		</ul>
 		<br>
 		<div id="user-info">
-			<p class="small">${authUser.name}[${authUser.dept}] 환영합니다.</p>
+			<p class="small">${authUser.name}&nbsp;[${authUser.dept}]</p>
 		</div>
 	</div>
 </div>

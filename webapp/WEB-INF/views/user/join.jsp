@@ -7,129 +7,7 @@
 	<html>
 	<head>
 	 <c:import url="/WEB-INF/views/common/common.jsp"></c:import>
-	<script type="text/javascript">
-		
-	$(document).ready(function(){
-		$("#Idcheck-button").click(function() {
-			var id = $("#inputId").val();
-			
-			console.log(id+"입니다");
-			
-			if (typeof id == "undefined" || id == null || id == "") {
-				alert("아이디가 입력되지 않았습니다. 다시 확인해 주세요.");
-				return;
-			}
-			
-			if (reg_uid.test(id) != true) {
-				alert("아이디 형식이 잘못 되었습니다. 다시 확인해 주세요.");
-				return ;
-			}
 
-			//ajax 통신
-			$.ajax({
-				url : "/sfa/check?id=" + id,
-				type : "get",
-				dataType : "json",
-				success : function(response) {
-
-					// 통신 에러(서버 에러)
-					if (response.result == "error") {
-						//console.log(response.message);
-						return;
-					}
-
-					if (response.result == "success") {
-						alert("이미 존재하는 아이디 입니다.");
-						$("#inputId").val("");
-						$("#inputId").focus();
-						idcheck=false;
-					} else {
-						alert("사용 가능한 아이디 입니다.");
-						$("#Idcheck-image").show();
-						$("#Idcheck-button").hide();
-						idcheck=true;
-					}
-				},
-				error : function(jqXHR, status, error) {
-					console.error(status + " : " + error);
-				}
-			});
-		});
-		
-		$("#Emailcheck-button").click(function() {
-			var email = $("#inputEmail").val();
-			
-			if (typeof email == "undefined" || email == null || email == "") {
-				alert("이메일 입력되지 않았습니다. 다시 확인해 주세요.");
-				return;
-			}
-			
-			if (reg_email.test(email) != true) {
-				alert("이메일 형식이 잘못 되었습니다. 다시 확인해 주세요.");
-				return "";
-			}
-
-			//ajax 통신
-			$.ajax({
-				url : "/sfa/checkEmail?email="+email,
-				type : "GET",
-				dataType : "json",
-				data : "",
-				success : function(response) {
-
-					// 통신 에러(서버 에러)
-					if (response.result == "error") {
-						console.log(response.message);
-						return;
-					}
-
-					if (response.result == "fail") {
-						alert("이미 존재하는 이메일 입니다.");
-						$("#inputEmail").val("");
-						$("#inputEmail").focus();	
-						emailcheck=false;
-					} else {
-						alert("사용 가능한 이메일 입니다.");	
-						$("#Emailcheck-image").show();
-						$("#Emailcheck-button").hide();
-						emailcheck=true;
-					}
-				},
-				error : function(jqXHR, status, error) {
-					console.error(status + " : " + error);
-				}
-			});
-		});	
-		
-		$("#inputId").change(function(){
-			$("#Idcheck-button").show();
-			$("#Idcheck-image").hide();	
-			idcheck= false;
-		});
-		
-		$("#inputEmail").change(function(){
-			$("#Emailcheck-button").show();
-			$("#Emailcheck-image").hide();	
-			idcheck= false;
-		});
-		
-	//비밀번호 변경시 비밀번호 확인 칸 초기화
-	$("#inputPassword").focusin(function(){
-		$("#inputPasswordCheck").val("");
-	});
-	
-	$("#inputPasswordCheck").keyup(function(){	
-		//3-1. 비밀번호와 비밀번호 체크 비교
-		if ($("#inputPassword").val() != $("#inputPasswordCheck").val()) {
-			$("#passwordcheck").show();
-			return false;
-		}
-		else{
-			$("#passwordcheck").hide();
-		}
-	});
-});
-		</script>
 	</head>
 	
 	<body>
@@ -208,13 +86,13 @@
 								<div class="input-group">
 									<select class="form-control" id="inputDepartment" name="dept"
 									 required>
-										<option>영업 1팀</option>
-										<option>영업 2팀</option>
-										<option>영업 3팀</option>
-										<option>영업 4팀</option>
-										<option>영업 5팀</option>
-										<option>영업 6팀</option>
-										<option>영업 7팀</option>
+										<option value="영업1팀">영업 1팀</option>
+										<option value="영업2팀">영업 2팀</option>
+										<option value="영업3팀">영업 3팀</option>
+										<option value="영업4팀">영업 4팀</option>
+										<option value="영업5팀">영업 5팀</option>
+										<option value="영업6팀">영업 6팀</option>
+										<option value="영업7팀">영업 7팀</option>
 									</select>
 								</div>
 							</div>
@@ -224,11 +102,11 @@
 							<div class="col-sm-8">
 								<div class="input-group">
 									<select class="form-control" id="inputGrade" name="grade" required>
-										<option>부장</option>
-										<option>차장</option>
-										<option>과장</option>
-										<option>대리</option>
-										<option selected="selected">사원 </option>
+										<option value="부장">부장</option>
+										<option value="차장">차장</option>
+										<option value="과장">과장</option>
+										<option value="대리">대리</option>
+										<option value="사원" selected="selected">사원 </option>
 									</select>
 								</div>
 							</div>
