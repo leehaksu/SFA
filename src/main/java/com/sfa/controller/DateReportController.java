@@ -23,6 +23,7 @@ import com.sfa.service.WeekPlanService;
 import com.sfa.util.Push;
 import com.sfa.vo.DateReportVo;
 import com.sfa.vo.UserVo;
+import com.sfa.vo.WeekVo;
 
 @Controller
 @RequestMapping("/report")
@@ -67,6 +68,7 @@ public class DateReportController {
 			return "plan/report_insert";
 		} else {
 			dateReportVo.setId(authUser.getId());
+		
 			int no = dateReprotService.insert(dateReportVo);
 			if (no == 1) {
 				UserVo userVo2 = userService.getLeader(authUser.getId());	
