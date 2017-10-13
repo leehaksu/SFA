@@ -240,7 +240,6 @@ public class UserController {
 	@RequestMapping(value = "/search/id", method = RequestMethod.POST)
 	public JSONResult searchbyId(@RequestParam(value = "email", required = true, defaultValue = "") String email,
 			@RequestParam(value = "name", required = true, defaultValue = "") String name) {
-		String id = null;
 		if ("".equals(email) || "".equals(name)) {
 			return JSONResult.error("이메일과 이름이 전달되지 않았습니다.");
 		} else {
@@ -256,7 +255,7 @@ public class UserController {
 	// pw 찾기 부분 통신 구현
 	@ResponseBody
 	@RequestMapping(value = "/search/pw", method = RequestMethod.POST)
-	public JSONResult searchbyPw(@RequestParam("id") String id, @RequestParam("eamil") String email) {
+	public JSONResult searchbyPw(@RequestParam("id") String id, @RequestParam("email") String email) {
 		if ("".equals(id) || "".equals(email)) {
 			return JSONResult.error("아이디와 이름이 전달되지 않았습니다.");
 		} else {

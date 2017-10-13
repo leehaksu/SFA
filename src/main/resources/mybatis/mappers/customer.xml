@@ -44,7 +44,7 @@
 	</insert>
 	<update id="update" parameterType="customervo">
 		<![CDATA[
-	update customer set name=#{name}, contact=#{contact},manager_name=#{manager_name}, manager_grade=#{manager_grade},manager_contact=#{manager_contact},manager_birth=#{manager_birth},time=#{time},positionX=#{positionX},positionY=#{positionY} where customer_code=#{customer_code};
+	update customer set name=#{name}, contact=#{contact},manager_name=#{manager_name}, manager_grade=#{manager_grade},manager_contact=#{manager_contact},manager_birth=#{manager_birth},time=#{time},address=#{address},positionX=#{positionX},positionY=#{positionY} where customer_code=#{customer_code};
 		]]>
 	</update>
 	<select id="getPositionById" resultType="positionvo"

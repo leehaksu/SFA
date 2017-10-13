@@ -88,4 +88,7 @@
 	select * from day_plan as a, user as b where a.id=b.id and b. dept=(select dept from user where id=#{id}) and week_no=#{week_no};
 	]]>
 	</select>
+	<select id="selctSale" parameterType="map" resultType="dayvo">
+	select day_sale from day_plan where id=#{id} and date=#{date};
+	</select>
 </mapper>

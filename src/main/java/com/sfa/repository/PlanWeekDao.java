@@ -116,4 +116,22 @@ public class PlanWeekDao {
 		return sqlSession.selectList("weekplan.selectTotalDay", map);
 		// TODO Auto-generated method stub
 	}
+
+	public Long selectGoal_sale(String date, String id) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("date", date);
+		map.put("id", id);
+		DayVo dayVo=sqlSession.selectOne("weekplan.selctSale",map);
+		Long goal_sale;
+		if(dayVo==null || dayVo.getDay_sale()==null)
+		{
+			goal_sale=(long) 0;
+		}else
+		{
+			 goal_sale= dayVo.getDay_sale();	
+		}
+		
+		return goal_sale;
+	}
 }

@@ -56,7 +56,7 @@ public class MobileLeaderController {
 		if (no == 1) {
 			List<WeekVo> list = weekPlanService.selectTotalWeek(id, date);
 			weekVo.setFirst_date(date);
-			if(list==null)
+			if(list.isEmpty())
 			{
 				return JSONResult.fail(ChangeDate.getWeekNo(ChangeDate.CheckDate(weekVo)));
 			}
