@@ -126,4 +126,7 @@
 	slect id from user where user_key=#{user_key}
 	]]>
 	</select>
+	<update id="updatePasswd" parameterType="MAP">
+	update user set passwd =password(#{passwd}) where id=#{id};
+	</update>
 </mapper>

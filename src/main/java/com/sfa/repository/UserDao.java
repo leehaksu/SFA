@@ -160,4 +160,12 @@ public class UserDao {
 		map.put("user_key", user_key);
 		return sqlSession.selectOne("user.getKey", map);
 	}
+
+	public int updatePasswd(String id, String passwd) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		map.put("passwd", passwd);
+		return sqlSession.update("user.updatePasswd",map);
+	}
 }

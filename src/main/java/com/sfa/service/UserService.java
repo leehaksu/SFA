@@ -47,7 +47,6 @@ public class UserService {
 
 	public int modify(UserVo userVo) {
 		// TODO Auto-generated method stub
-		
 		int no=userDao.modify(userVo);
 		return no;
 	}
@@ -121,5 +120,10 @@ public class UserService {
 	public UserVo getKey(String user_key) {
 		// TODO Auto-generated method stub
 		return userDao.getKey(user_key);
+	}
+
+	public int updatePasswd(String id, String passwd) {
+		// TODO Auto-generated method stub
+		return userDao.updatePasswd(id,passwd);
 	}
 }
