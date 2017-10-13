@@ -33,21 +33,21 @@
 		<choose>
 			<when test="name == null">
 		<![CDATA[
-		select id,name,dept,company_email,grade,email
+		select id,name,dept,company_email,grade,email,stauts
 		  from user  
 		 where grade=#{grade} and dept=#{dept}
 		]]>
 			</when>
 			<when test="grade ==null">
 		<![CDATA[
-		select id,name,dept,company_email,grade,email
+		select id,name,dept,company_email,grade,email,stauts
 		  from user  
 		 where name=#{name} and dept=#{dept}
 		]]>
 			</when>
 			<otherwise>
 		<![CDATA[
-		select id,name,dept,company_email,grade,email
+		select id,name,dept,company_email,grade,email,status
 		  from user  
 		 where name=#{name} and grade=#{grade} and dept=#{dept}
 		]]>
