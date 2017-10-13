@@ -25,7 +25,7 @@
 	<main id="page-content-wrapper" role="main">
 		<div class="page-header">
 			<h3 >
-				<strong>사원 정보 조회</strong>
+				<strong>팀원 정보 조회</strong>
 			</h3>
 		</div>
 		<div id="list_container">			
@@ -65,6 +65,7 @@
 								<th id="search_td">부 서</th>
 								<th id="search_td">직 급</th>
 								<th id="search_td">이 메 일</th>
+								<th id="search_td">상태</th>
 								<th id="search_td"></th>
 							</tr>
 						</thead>
@@ -76,6 +77,14 @@
 										<td id="search_td">${vo.dept}</td>
 										<td id="search_td">${vo.grade}</td>
 										<td id="search_td">${vo.email}</td>
+										<c:choose>
+										<c:when test="${vo.status == 1}">	
+										<td id="search_td">재직</td>
+										</c:when>
+										<c:otherwise>	
+											<td id="search_td">퇴사</td>
+										</c:otherwise>
+										</c:choose>
 										<td id="search_td"><a id="search_userid"
 											href="modify?id=${vo.id}" class="btn btn-info" role="button"
 											>수정</a></td>
