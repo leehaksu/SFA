@@ -59,7 +59,6 @@
 							<div class="col-md-4">
 								<input id="user_e_mail" name="user_e_mail" placeholder="개인 이메일"
 									class="form-control input-md" required type="email">
-
 							</div>
 						</div>
 					</td>
@@ -72,7 +71,6 @@
 								<input id="password" name="password" placeholder="PASSWORD"
 									class="form-control" required pattern="^[a-z0-9_]{5,12}$"
 									type="password">
-
 							</div>
 						</div>
 					</td>
@@ -99,9 +97,9 @@
 								<select id="user_status" name="user_status"
 									class="form-control " required>
 									<option value="부서" selected>부서</option>
-									<option value="1">영업1팀</option>
-									<option value="2">영업2팀</option>
-									<option value="3">영업3팀</option>
+									<option value="영업  1팀">영업 1팀</option>
+									<option value="영업  2팀">영업 2팀</option>
+									<option value="영업  3팀">영업 3팀</option>
 								</select>
 
 							</div>
@@ -115,11 +113,12 @@
 							<div class="col-md-4">
 								<select id="grade" name="grade" class="form-control " required>
 									<option value="부서" selected>직급</option>
-									<option value="1">사원</option>
-									<option value="2">대리</option>
-									<option value="3">과장</option>
+									<option value="사원">사원</option>
+									<option value="대리">대리</option>
+									<option value="과장">과장</option>
+									<option value="차장">차장</option>
+									<option value="부장">부장</option>
 								</select>
-
 							</div>
 						</div>
 					</td>
@@ -133,7 +132,6 @@
 							<div class="col-md-4">
 								<input type="submit" value="저장하기" id="" name=""
 									class="btn btn-primary">
-								</button>
 							</div>
 						</div>
 					</td>
