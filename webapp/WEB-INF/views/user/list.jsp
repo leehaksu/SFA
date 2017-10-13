@@ -64,7 +64,6 @@
 								<th id="search_td">이 름</th>
 								<th id="search_td">부 서</th>
 								<th id="search_td">직 급</th>
-
 								<th id="search_td">이 메 일</th>
 								<th id="search_td"></th>
 							</tr>
