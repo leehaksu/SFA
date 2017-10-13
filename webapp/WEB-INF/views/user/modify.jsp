@@ -11,7 +11,6 @@
 	var reg_uid = /^[A-Za-z]{1}[A-Za-z0-9]{3,19}$/;
 	var reg_upw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-]|.*[0-9]).{8,24}$/;
 	var check = false;
-	var password_check = false;
 	
 	var userdept='<c:out value="${userVo.grade}"/>';
 	var usergrade='<c:out value="${userVo.grade}"/>';
@@ -31,54 +30,32 @@
  			}
  		});
 		
-						$("#reset_password").click(function() {
-							check = true;
-							$("#modify_inputPassword").show();
-							$("#passwordReset-image").show();
-							console.log(check);
-						});
+		$("#reset_password").click(function() {
+			check = true;
+			$("#modify_inputPassword").show();
+			$("#passwordReset-image").show();
+			console.log(check);
+		});
 
-						password_check = $("#modify_confirm_button").click(function() {
-											//4. 이름이 비어있는지 체크 
-											if ($("#inputName").val() == "") {
-												alert("이름이 비어있습니다.");
-												$("#inputName").focus();
-												return false;
-											}
-											return true;
-										});
-
-						$("#modify_confirm_button").click(
-								function() {
-									if (password_check == true) {
-										var form = document
-												.getElementById("modifyform");
-										form.action = "modify"; // action에 해당하는 jsp 경로를 넣어주세요.
-										form.submit();
-									}
-								});
-						$("#modify_delete_button").click(function() {
-							var form = document.getElementById("modifyform");
-							form.action = "delete"; // action에 해당하는 jsp 경로를 넣어주세요.
-							form.submit();
-						});
-						var url = window.location.href;// 현재 URL을 가지고 옴
-						var url2 = url.substring(40);//URL의 40번째기준으로 자름
-						if (url2 == "fail") {//Fail 경우
-							new Noty({
-								type : "info",
-								text : "수정에 실패하였습니다.",
-								timeout : 4500,
-							}).show();
-
-						} else {//success일 경우
-							new Noty({
-								type : "info",
-								text : "수정에 성공하였습니다.",
-								timeout : 4500,
-							}).show(); 
-						}
-					});
+		$("#modify_update_button").click(function() {
+					if ($("#inputName").val() == "") {
+						alert("이름이 비어있습니다.");
+						$("#inputName").focus();
+						return;
+					}
+					else
+					{
+						var form = document.getElementById("modifyform");
+						form.action = "modify"; // action에 해당하는 jsp 경로를 넣어주세요.
+						form.submit();
+					}
+				});
+		$("#modify_delete_button").click(function() {
+			var form = document.getElementById("modifyform");
+			form.action = "delete"; // action에 해당하는 jsp 경로를 넣어주세요.
+			form.submit();
+		});
+	});
 </script>
 
 </head>
@@ -109,7 +86,7 @@
 			</div>
 			<div class="modify_box">
 				<form id="modifyform" name="joinform" class="form-horizontal"
-					method="post"<%-- action="${pageContext.servletContext.contextPath}/modify" --%>>
+					method="post">
 					<div class="form-group">
 						<label class="col-sm-3 control-label" for="inputId">아이디</label>
 						<div class="col-sm-6">
@@ -128,10 +105,11 @@
 							<button id="reset_password" class="btn btn-primary" type="button">
 								비밀번호 초기화 &nbsp;<i class="fa fa-check spaceLeft"></i>
 							</button>
-							 <i id="passwordReset-image" class="fa fa-check" aria-hidden="true" style="display: none;">메일 발송 완료</i>
+							<i id="passwordReset-image" class="fa fa-check"
+								aria-hidden="true" style="display: none;">메일 발송 완료</i>
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label class="col-sm-3 control-label" for="inputName">이름</label>
 						<div class="col-sm-6">
@@ -144,13 +122,13 @@
 						<div class="col-sm-6">
 							<div class="input-group">
 								<select class="form-control" id="inputDepartment" name="dept">
-											<option value="영업 1팀">영업 1팀</option>
-											<option value="영업 2팀">영업 2팀</option>
-											<option value="영업 3팀">영업 3팀</option>
-											<option value="영업 4팀">영업 4팀</option>
-											<option value="영업 5팀">영업 5팀</option>
-											<option value="영업 6팀">영업 6팀</option>
-											<option value="영업 7팀">영업 7팀</option>
+									<option value="영업 1팀">영업 1팀</option>
+									<option value="영업 2팀">영업 2팀</option>
+									<option value="영업 3팀">영업 3팀</option>
+									<option value="영업 4팀">영업 4팀</option>
+									<option value="영업 5팀">영업 5팀</option>
+									<option value="영업 6팀">영업 6팀</option>
+									<option value="영업 7팀">영업 7팀</option>
 								</select>
 							</div>
 						</div>
@@ -160,12 +138,12 @@
 						<div class="col-sm-6">
 							<div class="input-group">
 								<select class="form-control" id="inputGrade" name="grade">
-											<option value="부장">부장</option>
-											<option value="차장">차장</option>
-											<option value="과장">과장</option>
-											<option value="대리">대리</option>
-											<option value="사원">사원 </option>
-									</select>
+									<option value="부장">부장</option>
+									<option value="차장">차장</option>
+									<option value="과장">과장</option>
+									<option value="대리">대리</option>
+									<option value="사원">사원 </option>
+								</select>
 							</div>
 						</div>
 					</div>
@@ -176,14 +154,10 @@
 								type="button">
 								<i class="fa fa-times spaceLeft"></i>&nbsp;탈퇴하기
 							</button>
-							<button id="modify_confirm_button" class="btn btn-primary"
+							<button id="modify_update_button" class="btn btn-primary"
 								type="button">
 								수정하기 &nbsp;<i class="fa fa-check spaceLeft"></i>
 							</button>
-							<button id="modify_cancel_button" class="btn btn-primary"
-								type="button"
-								onClick="location.href='http://localhost:8080/sfa/main'">
-								취소</button>
 						</div>
 					</div>
 				</form>

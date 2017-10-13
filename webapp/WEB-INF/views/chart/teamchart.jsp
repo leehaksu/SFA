@@ -23,12 +23,16 @@
 	</div>
 	<main id="page-content-wrapper" role="main">
 	<div class="page-header">
-			<h3>
-				<strong>차트 조회</strong>
-			</h3>
-		</div>
+		<h3>
+			<strong>차트 조회</strong>
+		</h3>
+	</div>
 	<div class="container">
-		<h4>2017년</h4>
+		 <h4> 
+			 <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+					2017년
+		  	 <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+		</h4>
 		<table>
 			<thead>
 				<tr>
@@ -37,10 +41,24 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td><canvas id="performanceChart" width="400" height="400"></canvas></td>
-					<td><canvas id="distanceDriven" width="400" height="400"></canvas></td>
-				</tr>
+				<c:choose>
+					<c:when test="${authUser.level == '팀원'}">
+						<tr>
+							<td><canvas id="performanceChart" width="400" height="400"></canvas></td>
+							<td><canvas id="distanceDriven" width="400" height="400"></canvas></td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<tr>
+							<td><canvas id="performanceChart" width="400" height="400"></canvas></td>
+							<td><canvas id="distanceDriven" width="400" height="400"></canvas></td>
+						</tr>
+						<tr>
+							<td><canvas id="performanceChart" width="400" height="400"></canvas></td>
+							<td><canvas id="distanceDriven" width="400" height="400"></canvas></td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
 			</tbody>
 		</table>
 	</div>
