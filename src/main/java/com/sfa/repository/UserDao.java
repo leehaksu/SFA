@@ -96,12 +96,12 @@ public class UserDao {
 		return sqlSession.selectOne("user.selectLeader", map);
 	}
 
-	public String getId(String email, String name) {
+	public UserVo getId(String email, String name) {
 		// TODO Auto-generated method stub
 		Map<String, String> map = new HashMap<String, String>();
 		map.put( "email", email );
 		map.put("name", name);
-		return sqlSession.selectOne(email, name);
+		return sqlSession.selectOne("user.getUser", map);
 	}
 
 	public int insertToken(String token, String id) {
@@ -167,5 +167,13 @@ public class UserDao {
 		map.put("id", id);
 		map.put("passwd", passwd);
 		return sqlSession.update("user.updatePasswd",map);
+	}
+
+	public UserVo getgetUserByName(String id, String email) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		map.put("email", email);
+		return sqlSession.selectOne("user.getUserByName", map);
 	}
 }
