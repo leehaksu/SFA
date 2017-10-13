@@ -140,7 +140,7 @@ $(document).ready(function() {
 	</div>
 	</div>
 		<main id="page-content-wrapper" role="main">
-		<div class="page-header">
+		<div class="content-header">
 			<h3 >
 				<strong>보고서 조회</strong>
 			</h3>

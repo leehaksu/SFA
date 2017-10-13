@@ -23,7 +23,7 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div class="page-header">
+	<div class="content-header">
 			<h3>
 				<strong>통합 게시판</strong>
 			</h3>

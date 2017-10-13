@@ -247,7 +247,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div class="page-header">
+	<div class="content-header">
 		<h3 >
 			<strong>일일 보고서</strong>
 		</h3>

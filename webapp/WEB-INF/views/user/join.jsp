@@ -24,7 +24,7 @@
 			</div>
 		</div>
 		<main id="page-content-wrapper" role="main">
-			<div class="page-header">
+			<div class="content-header">
 						<h3><strong>회원 가입</strong></h3>
 			</div>
 			<div class="join_container">

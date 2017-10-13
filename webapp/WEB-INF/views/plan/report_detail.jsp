@@ -55,7 +55,7 @@
 	<article>
 		<div>
 			<div>
-				<div class="page-header">
+				<div class="content-header">
 					<h3 >
 						<strong>일일 보고서</strong>
 					</h3>
@@ -191,12 +191,13 @@
 							</div>
 						</div>
 					</div>
+					
 					<div id="advice_contianer"
-						style="padding: 5px;">
-						<div class="page-header">
-							<h4 style="width: 70%; display: inline-block;">
+						style="padding-top: 20px;">
+						<div class="content-header">
+							<h3>
 								<Strong>상담일지</Strong>
-							</h4>
+							</h3>
 						</div>
 						<div id="advice_content1" class="advice_content">
 							<form id="advice_form">
