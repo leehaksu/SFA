@@ -3,6 +3,7 @@ package com.sfa.controller;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -271,7 +272,7 @@ public class UserController {
 	
 	@Auth
 	@RequestMapping(value="/mypage", method=RequestMethod.POST)
-	public String mypage(@AuthUser UserVo authUser,Model model,@ModelAttribute UserVo userVo)
+	public String mypage(@AuthUser UserVo authUser,Model model,@ModelAttribute UserVo userVo,HttpServletRequest request)
 	{
 		if(authUser==null)
 		{
@@ -284,10 +285,12 @@ public class UserController {
 		int no = userService.modify(userVo);
 		if(no==1)
 		{
-			return "redirect:mypage?id="+authUser.getId()+"&result=sucess";
+			HttpSession session = request.getSession(true);
+			session.setAttribute("authUser", userVo);
+			return "redirect:mypage?result=success";
 		}else
 		{
-			return "redirect:mypage?id="+authUser.getId()+"&result=sucess";
+			return "redirect:mypage?result=fail";
 		}
 		
 		
