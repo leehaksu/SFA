@@ -33,15 +33,19 @@
 		$("#reset_password").click(function() {
 			check = true;
 			var id = $("#ModifyinputId").val();
-			
-			$.post("pwd/reset",
+			console.log(id);
+			$.post("/pwd/reset",
 					id,
 			function(data,status){
 				 alert("Data: " + data + "\nStatus: " + status);
-			});
+			}).done(function() {
+			    alert( "second success" );
+			    $("#passwordReset-image").show();
+			  })
+			  .fail(function() {
+			    alert( "초기화 실패" );
+			  });
 			
-			$("#modify_inputPassword").show();
-			$("#passwordReset-image").show();
 			console.log(check);
 		});
 
