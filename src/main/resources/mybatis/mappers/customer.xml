@@ -37,4 +37,7 @@
 	select a.customer_code,a.name,a.positionX,a.positionY from customer as a,user as b where a.id=b.id and b.dept=(select dept from user where id=#{id});
 	]]>
 	</select>
+	<select id="getCustomer" resultType="customervo" parameterType="MAP">
+	select * from customer where customer_code=#{customer_code};
+	</select>
 </mapper>

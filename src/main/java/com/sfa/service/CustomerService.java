@@ -56,4 +56,9 @@ public class CustomerService {
 		// TODO Auto-generated method stub
 		return customerDao.getPosition(customerVo);
 	}
+
+	public CustomerVo selectCustomer(String customer_code) {
+		// TODO Auto-generated method stub
+		return customerDao.getCustomer(customer_code);
+	}
 }
