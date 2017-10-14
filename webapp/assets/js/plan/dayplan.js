@@ -62,7 +62,8 @@
 		$.ajax({
 			url : "/sfa/date/select",
 			type : 'POST',
-			data : "date="+ dayClick +"id=" +id, //2017-09-08
+			data : {"date": dayClick ,
+				   "id" : id}, //2017-09-08
 			dataType : "json",
 			success : function(response) {
 					console.log(response.data);
@@ -241,6 +242,7 @@
 			var title = $("#dayplantable-title").val();	
 			var content = $('#date-textarea').froalaEditor('html.get');
 			var challenge = $("#challenge").val();	
+			var estimate_distance = $("#datetable-distance").val();
 			console.log(title);
 			console.log(content);
 			console.log(challenge);
@@ -254,7 +256,7 @@
 					  		 goal_sale: dateGoalMoney,
 					  		 content: content,
 					  		 date:ClickedDay,
-					  		 estimate_distance: 100,
+					  		 estimate_distance: estimate_distance,
 					  		 estimate_course:routes,
 					  		 challenge_content:challenge
 					        },
