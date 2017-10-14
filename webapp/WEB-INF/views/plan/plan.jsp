@@ -245,7 +245,7 @@
         var currentmarker = new Tmap.Markers(cLonLat, icon, currentlabel);		        
         markerLayer.addMarker(currentmarker);	
     	$.ajax({
-			url : '/sfa/position/',
+			url : '/sfa/customer/position/',
 			type : 'POST',
 			dataType : 'json',
 			contentType: "application/json; charset=UTF-8",
@@ -255,7 +255,7 @@
 				for(i=0; i < response.data.length; i++){
 					var mapinfo =new Object();					
 					mapinfo.id = response.data[i].id; 
- 					mapinfo.customerCode = response.data[i].customerCode;
+ 					mapinfo.customerCode = response.data[i].customer_code;
 					mapinfo.name = response.data[i].name;
 					mapinfo.positionX = response.data[i].positionX;
 					mapinfo.positionY = response.data[i].positionY;
@@ -563,11 +563,9 @@
 				//선택한 날짜가 있는지 없는지 유무 확인
 				if (typeof ClickedDay == "undefined" || ClickedDay == null || ClickedDay == "") {
 					$("#dayplancheckmodal").modal('show');
-					getCustomerPosition();
 				} else {
 					//날짜 클릭 이벤트 일일 계획 데이터 ajax
 					changedayplan(ClickedDay,selectID,plandatecheck);
-					getCustomerPosition();
 					dayplanmodalShow();	
 				}
 				

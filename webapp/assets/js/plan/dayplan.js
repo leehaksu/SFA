@@ -141,14 +141,9 @@
 		});
 	}
 	
-	function getCustomerPosition(){
-		$.post("/sfa/customer/position",
-	        	function(data,status){
-	            console.log(data);
-	            console.log(status);
-	            
-	        });
-	}
+	/*function getCustomerPosition(){
+		
+	}*/
 	function resetmap(){
 		$("#map_div").remove();
 		$("#map_content").append("<div id='map_div'></div>");
