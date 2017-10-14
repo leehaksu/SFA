@@ -81,6 +81,7 @@ public class PlanDateController {
 	@RequestMapping(value = "/select", method = RequestMethod.POST)
 	public JSONResult select(@ModelAttribute DateVo dateVo, @AuthUser UserVo authUser,
 			 UserVo userVo, CustomerVo customernVo) {
+		System.out.println(dateVo);
 		if (dateVo.getDate() == null ) {
 			return JSONResult.error("날짜와 아이디가 넘어오지 않았습니다.");
 		}else if("".equals(dateVo.getId()))
@@ -148,6 +149,7 @@ public class PlanDateController {
 	@ResponseBody
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public JSONResult delete(@ModelAttribute DateVo dateVo, @AuthUser UserVo authUser, UserVo userVo) {
+		dateVo.setId(authUser.getId());
 		if (dateVo.getDate() == null) {
 			return JSONResult.error("날짜 넘어오지 않았습니다.");
 		} else {
