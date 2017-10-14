@@ -162,6 +162,7 @@ public class DateReportController {
 		dateReportVo.setId(authUser.getId());
 		Long goal_sale = datePlanService.getGoal_sale(dateReportVo);
 		dateReportVo.setGoal_sale(goal_sale);
+		System.out.println(dateReportVo);
 		model.addAttribute("dateReportVo", dateReportVo);
 
 		return "plan/report_detail";

@@ -30,4 +30,20 @@ public class ChartDao {
 		map.put("date", date);
 		return sqlSession.selectList("chart.getMileByYear", map);
 	}
+
+	public List<ChartVo> getEstiMateMileByYear(String id, String date) {
+		// TODO Auto-generated method stub
+		HashMap<String,String> map= new HashMap<String,String>();
+		map.put("id", id);
+		map.put("date", date);
+		return sqlSession.selectList("chart.getEstimateDistanceByYear", map);
+	}
+
+	public List<ChartVo> getEstimateSaleByYear(String id, String date) {
+		// TODO Auto-generated method stub
+		HashMap<String,String> map= new HashMap<String,String>();
+		map.put("id", id);
+		map.put("date", date);
+		return sqlSession.selectList("chart.getEstimateSaleByYear", map);
+	}
 }

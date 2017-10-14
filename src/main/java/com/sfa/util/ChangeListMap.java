@@ -30,17 +30,22 @@ public class ChangeListMap {
 
 	public HashMap<String, Long> change(List<ChartVo> list) {
 		HashMap<String, Long> map = defaultMap();
-		if (list.get(0).getEstimate_distance() != null) {
-			map = changeEstimate_distance(list);
-		} else if (list.get(0).getEstimate_sale() != null) {
-			map = changeEstimate_sale(list);
-		} else if (list.get(0).getTotal_mile() != null) {
-			map = changeMile(list);
-		} else if (list.get(0).getTotal_sale() != null) {
-			System.out.println("여기 들어와??");
-			map = changeSale(list);
+		if (list == null || list.isEmpty()) {
+			return map;
+		} else {
+			if (list.get(0).getEstimate_distance() != null) {
+				map = changeEstimate_distance(list);
+			} else if (list.get(0).getEstimate_sale() != null) {
+				map = changeEstimate_sale(list);
+			} else if (list.get(0).getTotal_mile() != null) {
+				map = changeMile(list);
+			} else if (list.get(0).getTotal_sale() != null) {
+				System.out.println("여기 들어와??");
+				map = changeSale(list);
+			}
+			return map;
 		}
-		return map;
+
 	}
 
 	public HashMap<String, Long> changeSale(List<ChartVo> list) {
@@ -48,40 +53,40 @@ public class ChangeListMap {
 		for (int i = 0; i < list.size(); i++) {
 			switch (list.get(i).getMonth()) {
 			case "1":
-				map.put("Jan", list.get(i).getTotal_sale());
+				map.put("Jan", list.get(i).getTotal_sale() / 10000);
 				break;
 			case "2":
-				map.put("Feb", list.get(i).getTotal_sale());
+				map.put("Feb", list.get(i).getTotal_sale() / 10000);
 				break;
 			case "3":
-				map.put("Mar", list.get(i).getTotal_sale());
+				map.put("Mar", list.get(i).getTotal_sale() / 10000);
 				break;
 			case "4":
-				map.put("Apr", list.get(i).getTotal_sale());
+				map.put("Apr", list.get(i).getTotal_sale() / 10000);
 				break;
 			case "5":
-				map.put("May", list.get(i).getTotal_sale());
+				map.put("May", list.get(i).getTotal_sale() / 10000);
 				break;
 			case "6":
-				map.put("Jun", list.get(i).getTotal_sale());
+				map.put("Jun", list.get(i).getTotal_sale() / 10000);
 				break;
 			case "7":
-				map.put("Jul", list.get(i).getTotal_sale());
+				map.put("Jul", list.get(i).getTotal_sale() / 10000);
 				break;
 			case "8":
-				map.put("Aug", list.get(i).getTotal_sale());
+				map.put("Aug", list.get(i).getTotal_sale() / 10000);
 				break;
 			case "9":
-				map.put("Sep", list.get(i).getTotal_sale());
+				map.put("Sep", list.get(i).getTotal_sale() / 10000);
 				break;
 			case "10":
-				map.put("Oct", list.get(i).getTotal_sale());
+				map.put("Oct", list.get(i).getTotal_sale() / 10000);
 				break;
 			case "11":
-				map.put("Nov", list.get(i).getTotal_sale());
+				map.put("Nov", list.get(i).getTotal_sale() / 10000);
 				break;
 			case "12":
-				map.put("Dec", list.get(i).getTotal_sale());
+				map.put("Dec", list.get(i).getTotal_sale() / 10000);
 				break;
 			}
 		}
@@ -138,40 +143,40 @@ public class ChangeListMap {
 		for (int i = 0; i < list.size(); i++) {
 			switch (list.get(i).getMonth()) {
 			case "1":
-				map.put("Jan", list.get(i).getEstimate_sale());
+				map.put("Jan", list.get(i).getEstimate_sale() / 10000);
 				break;
 			case "2":
-				map.put("Feb", list.get(i).getEstimate_sale());
+				map.put("Feb", list.get(i).getEstimate_sale() / 10000);
 				break;
 			case "3":
-				map.put("Mar", list.get(i).getEstimate_sale());
+				map.put("Mar", list.get(i).getEstimate_sale() / 10000);
 				break;
 			case "4":
-				map.put("Apr", list.get(i).getEstimate_sale());
+				map.put("Apr", list.get(i).getEstimate_sale() / 10000);
 				break;
 			case "5":
-				map.put("May", list.get(i).getEstimate_sale());
+				map.put("May", list.get(i).getEstimate_sale() / 10000);
 				break;
 			case "6":
-				map.put("Jun", list.get(i).getEstimate_sale());
+				map.put("Jun", list.get(i).getEstimate_sale() / 10000);
 				break;
 			case "7":
-				map.put("Jul", list.get(i).getEstimate_sale());
+				map.put("Jul", list.get(i).getEstimate_sale() / 10000);
 				break;
 			case "8":
-				map.put("Aug", list.get(i).getEstimate_sale());
+				map.put("Aug", list.get(i).getEstimate_sale() / 10000);
 				break;
 			case "9":
-				map.put("Sep", list.get(i).getEstimate_sale());
+				map.put("Sep", list.get(i).getEstimate_sale() / 10000);
 				break;
 			case "10":
-				map.put("Oct", list.get(i).getEstimate_sale());
+				map.put("Oct", list.get(i).getEstimate_sale() / 10000);
 				break;
 			case "11":
-				map.put("Nov", list.get(i).getEstimate_sale());
+				map.put("Nov", list.get(i).getEstimate_sale() / 10000);
 				break;
 			case "12":
-				map.put("Dec", list.get(i).getEstimate_sale());
+				map.put("Dec", list.get(i).getEstimate_sale() / 10000);
 				break;
 			}
 		}
