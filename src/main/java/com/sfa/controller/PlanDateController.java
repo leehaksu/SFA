@@ -130,7 +130,7 @@ public class PlanDateController {
 							+"예상 주행거리 :" + dateVo.getEstimate_distance()+"\n"
 							+"예상 목표 액 : " + dateVo.getGoal_sale()+"\n"
 							+"내용 : " +dateVo.getContent()+"\n"
-							+"<a herf='localhost:8080/sfa/date'> 내용 확인하러 가기 </a>", authUser.getId());
+							+"<a herf='http://52.78.199.76:8080/sfa/date'> 내용 확인하러 가기 </a>", authUser.getId());
 				} catch (MessagingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

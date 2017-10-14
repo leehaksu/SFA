@@ -12,7 +12,7 @@ public class DateVo {
 	private String estimate_course; // 예상 코스
 	private Long challenge_no; // 도전과제 번호
 	private String challenge_content; // 도전과제 내용
-	
+	private String route;//경로 
 	public String getTitle() {
 		return title;
 	}
@@ -79,11 +79,17 @@ public class DateVo {
 	public void setChallenge_content(String challenge_content) {
 		this.challenge_content = challenge_content;
 	}
+	public String getRoute() {
+		return route;
+	}
+	public void setRoute(String route) {
+		this.route = route;
+	}
 	@Override
 	public String toString() {
 		return "DateVo [title=" + title + ", goal_sale=" + goal_sale + ", opinion=" + opinion + ", content=" + content
 				+ ", reg_date=" + reg_date + ", id=" + id + ", date=" + date + ", estimate_distance="
 				+ estimate_distance + ", estimate_course=" + estimate_course + ", challenge_no=" + challenge_no
-				+ ", challenge_content=" + challenge_content + "]";
+				+ ", challenge_content=" + challenge_content + ", route=" + route + "]";
 	}
 }
