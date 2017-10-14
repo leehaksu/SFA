@@ -518,6 +518,8 @@
 										changeweekplan(ClickedDay,selectID,authUserID);	
 									}
 									
+									getsidedayplancontent(ClickedDay,selectID);
+									
 								},
 								eventRender : function(e, elm) {
 									elm.popover({

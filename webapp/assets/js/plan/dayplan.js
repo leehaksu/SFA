@@ -57,6 +57,24 @@
 		$('#date-textarea').froalaEditor('edit.on');
 	}
 	
+	function getsidedayplancontent(ClickedDay,selectID){
+		$.post("/sfa/date/",
+				{"date": dayClick,
+			   "id" : id},
+			   function(data,status){
+		            alert("Data: " + data + "\nStatus: " + status);
+		            console.log(data);
+		            console.log(data.content);
+		            
+		            if(data == null){
+		            	$("#side-dayplan-content").text("입력된 계획이 없습니다.");						
+		            } 
+		            else{
+		            	
+		            }
+		       });
+	}
+	
 	//달력 클릭시 일일계획서 데이터  ajax
 	function changedayplan(dayClick,id,authUserID,plandatecheck){
 		$.ajax({
@@ -67,12 +85,13 @@
 			dataType : "json",
 			success : function(response) {
 					console.log(response.data);
-				
+					console.log(response.result);
+
 					//금일 일일 계획서 내용 초기화
 					$("#side-dayplan-content").empty();
 					
 					////금일 일일 계획서 내용 존재 여부 확인
-					if(response.data == null){
+					if(response.data == null ){
 							//alert("작성된 일일 계획서가 없습니다.");
 							$("#side-dayplan-content").text("입력된 계획이 없습니다.");
 							$("#dayplantable-title").val("");
@@ -226,6 +245,8 @@
 			  		},
 			        function(data,status){
 			            alert("Data: " + data + "\nStatus: " + status);
+			            
+						$("#dayplanmodal").attr("class","modal fade");
 			        });
 				 		
 		});	
