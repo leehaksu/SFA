@@ -1,5 +1,5 @@
 //일일 계획서 모달 show() 및 css
-   	function dayplanmodalShow(){
+   	function dayplanmodalShow(dateGoalMoney){
 		$("#dayplanmodal").attr("class","modal show");
 		$('html, body').css({
 			'overflow' : 'hidden',
@@ -40,13 +40,25 @@
 		$("#dateplan-searchRoutes").attr('disabled',true);
 		$("#dateplan-deleteRoutes").attr('disabled',true);
 		$("#dateplan-searchPosition").attr('disabled',true);
-		$("#write-btn").hide();
-		$("#update-btn").hide();
-		$("#delete-btn").hide();
+		$("#dayplan-write-btn").hide();
+		$("#dayplan-update-btn").hide();
+		$("#dayplan-delete-btn").hide();
+		$('#date-textarea').froalaEditor('edit.off');
+	}
+	function availabledayplan(){
+		$("#dayplantable-title").removeAttr('disabled');
+		$("#challenge").removeAttr('disabled');
+		$("#dateplan-searchRoutes").removeAttr('disabled');
+		$("#dateplan-deleteRoutes").removeAttr('disabled');
+		$("#dateplan-searchPosition").removeAttr('disabled');
+		$("#dayplan-write-btn").hide();
+		$("#dayplan-update-btn").show();
+		$("#dayplan-delete-btn").show();
+		$('#date-textarea').froalaEditor('edit.on');
 	}
 	
 	//달력 클릭시 일일계획서 데이터  ajax
-	function changedayplan(dayClick,id,plandatecheck){
+	function changedayplan(dayClick,id,authUserID,plandatecheck){
 		$.ajax({
 			url : "/sfa/date/select",
 			type : 'POST',
@@ -79,13 +91,12 @@
 							else{
 								blockdayplan();
 							}
-							
 							return ;
 						}
 					else{
 							var tempcontent = response.data.content.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
-							console.log();
-							$("#side-dayplan-content").html();
+							
+						$("#side-dayplan-content").html();
 						$("#dayplantable-title").val(response.data.title);
 							$("#date-reg-date").text(response.data.reg_date);
 							$("#date-reg-date").css("background-color","");
@@ -110,27 +121,15 @@
 							$('#datetable-branch').tooltip('enable'); 
 						
 							if(plandatecheck){ 
-								$("#dayplantable-title").removeAttr('disabled');
-								$("#challenge").removeAttr('disabled');
-								$("#dateplan-searchRoutes").removeAttr('disabled');
-								$("#dateplan-deleteRoutes").removeAttr('disabled');
-								$("#dateplan-searchPosition").removeAttr('disabled');
-								$("#write-btn").hide();
-								$("#update-btn").show();
-							$("#delete-btn").show();	
+								availabledayplan();
 							}
+							
 							//지난 날짜에 대하여 예외처리(모든 입력과 이벤트를 불가능하게 한다.)
 							else{
-								$("#dayplantable-title").attr('disabled',true);
-								$("#challenge").attr('disabled',true);
-								$("#dateplan-searchRoutes").attr('disabled',true);
-								$("#dateplan-deleteRoutes").attr('disabled',true);
-								$("#dateplan-searchPosition").attr('disabled',true);
-								$("#write-btn").hide();
-								$("#update-btn").hide();
-							$("#delete-btn").hide();
+								blockdayplan();
 							}
-			}
+					}
+							
 			},
 			error : function(
 					xhr,
@@ -199,18 +198,21 @@
 			var title = $("#dayplantable-title").val();	
 			var content = $('#date-textarea').froalaEditor('html.get');
 			var challenge = $("#challenge").val();	
+			var estimate_distance = $("#datetable-distance").val();
 			console.log(title);
 			console.log(content);
 			console.log(challenge);
-			//var temp = '<p><b>글자진하게</b></p><p>평범하게</p><p><i>기울게</i></p><p><h1>h1이다</h1></p><p><h2>h2다</h2></p><p><h3>h3다</h3></p>';
+			console.log(dateGoalMoney);
+			console.log(estimate_distance);
+			
 			//$('#date-textarea').froalaEditor('html.set', temp);
 			
 			  $.post("/sfa/date/insert",{
 			  		 title:title,
-			  		 goal_sale: dateGoalMoney,
+			  		 target_money: dateGoalMoney,
 			  		 content: content,
 			  		 date:dayClick,
-			  		 estimate_distance: 100,
+			  		 estimate_distance: estimate_distance,
 			  		 estimate_course:routes,
 			  		 challenge_content:challenge
 			  		},
@@ -241,7 +243,7 @@
 				  $.post("/sfa/date/update",
 					        {
 					  		 title:title,
-					  		 goal_sale: dateGoalMoney,
+					  		 target_money: dateGoalMoney,
 					  		 content: content,
 					  		 date:dayClick,
 					  		 estimate_distance: 100,

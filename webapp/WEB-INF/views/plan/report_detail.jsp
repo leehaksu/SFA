@@ -137,7 +137,7 @@
 											style="width: 430px; margin-right: 6px;" required>
 									</div>
 									 <label for="day"
-										style="width: 115px; text-align: center">제출일&nbsp;</label> <input
+										style="width: 115px; text-align: center">보고날짜&nbsp;</label> <input
 										id="submitDay-datepicker" class="form-control" 
 										type="text"  placeholder="작성날짜"
 										 required>

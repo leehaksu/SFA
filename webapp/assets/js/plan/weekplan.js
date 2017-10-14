@@ -72,7 +72,7 @@ function resetweekplan(){
 	$("#weektabletitle").val("");
 }
 
-function changeweekplan(dayClick,changeID){
+function changeweekplan(dayClick,changeID,defaultID){
 	//주간계획
 	$.ajax({
 				url : "/sfa/week/select",
@@ -266,11 +266,21 @@ function changeweekplan(dayClick,changeID){
 						}
 					});
 					
-					//plan 페이지 오른쪽 일일 계획
+					alert("달력 날짜 클릭:"+changeID+","+defaultID);
+				
+					//weektable 수정여부 
+					if(changeID !=defaultID)
+					{
+						weekplandisabled();
+					}
+					else{
+						weekplanable();
+					}
 					
 				},
 				error : function(xhr,status,error) {
-					alert(xhr + " 와 " + status + " 와 " + error);
+					alert("주간 계획 load 실패!!!");
+					console.log(xhr + " 와 " + status + " 와 " + error);
 				}
 			});
 }
@@ -424,3 +434,17 @@ function weekplanResetButton(){
 		}
 	});
 }
+
+
+function weekplandisabled(){
+	$(".target-money").attr("disabled",true);
+	$(".dayedit-content").attr("disabled",true);
+	$("#week_btn").hide();
+}
+
+function weekplanable(){
+	$(".target-money").attr("disabled",false);
+	$(".dayedit-content").attr("disabled",false);
+	$("#week_btn").show();
+}
+

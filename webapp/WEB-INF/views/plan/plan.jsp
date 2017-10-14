@@ -366,8 +366,8 @@
          		        "appKey" : "2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"
          		    },
          		    success: function( data, textStatus, jQxhr ){
-         		    	console.log(data.features[0].properties.totalDistance/1000);
-         		    	console.log(typeof data.features[0].properties.totalDistance);
+         		    	//console.log(data.features[0].properties.totalDistance/1000);
+         		    	//console.log(typeof data.features[0].properties.totalDistance);
          		    	$("#datetable-distance").val(Math.floor(data.features[0].properties.totalDistance/1000));
          		    },
                     error: function( jqXhr, status, errorThroxwn ){
@@ -512,11 +512,12 @@
 									//날짜 클릭 이벤트 주간 계획 데이터 ajax
 									if(typeof selectID == "undefined" || selectID == null || selectID == "")
 									{
-										changeweekplan(ClickedDay,authUserID);
+										changeweekplan(ClickedDay,authUserID,selectID);
 									}
 									else{
-										changeweekplan(ClickedDay,selectID);	
+										changeweekplan(ClickedDay,selectID,authUserID);	
 									}
+									
 								},
 								eventRender : function(e, elm) {
 									elm.popover({
@@ -555,7 +556,6 @@
 			/////////////////////////////////////////////////////////////////////////////
 			/* 수정이 필요한 부분 ~~~~~~~~~~~~~~~~~*/
 			$('#side-dayplan-open-button').click(function() {
-				getLocation();
 				
 				//현재 날짜와 클릭한 날짜 비교 
 				var plandatecheck = moment(ClickedDay).isSameOrAfter(today);
@@ -564,17 +564,19 @@
 				if (typeof ClickedDay == "undefined" || ClickedDay == null || ClickedDay == "") {
 					$("#dayplancheckmodal").modal('show');
 				} else {
+					getLocation();					
 					//날짜 클릭 이벤트 일일 계획 데이터 ajax
-					changedayplan(ClickedDay,selectID,plandatecheck);
+					changedayplan(ClickedDay,selectID,authUserID,plandatecheck);
 					dayplanmodalShow();	
 				}
 				
 				//회원에 권한에 따라 input 태그의 활성화 상태 적용
 				if(authUserID != selectID){
-					alert("여기 탐");
+					//alert("여기 탐");
 					blockdayplan();
 				}
-				
+				//계획서 날짜 입력
+				$("#dateplan-date").attr("value",ClickedDay);
 			});
 			/////////////////////////////////////////////////////////////////////////////
 			//dayplanmodal close 이벤트
@@ -634,6 +636,9 @@
 			//weektable 초기화
 			resetweekplan();
 			
+			//map 초기화
+			resetmap();
+			
 			//  날짜 초기화.
 			ClickedDay="";
 			$(".dayplan-date").text("날짜 미지정");
@@ -643,15 +648,16 @@
 			var selectUserInfo = $("#side-dayplan-coworker-button option:selected").text().trim();
 			selectUserInfo = selectUserInfo.split("/");  
 			
-			
 			$("#name").text(selectUserInfo[0]);
 			$("#dept").text(selectUserInfo[1]);
+			
+			
 			
 			$.get("select?id="+selectID+"&date="+today, 
 		    	function(response, status){
 				if(status == "success"){
 					console.log(response.data);
-					
+	
 					var events = [];
 
 					$(response.data).each(function(index) {
@@ -683,6 +689,18 @@
 					});
 					$('#calendar').fullCalendar('removeEvents');
 		            $('#calendar').fullCalendar('addEventSource', events);
+		            
+		            
+		            //	alert("아이디 변경"+selectID +", 현재 계정 아이디"+authUserID);
+		            if(selectID !=authUserID)
+					{
+						console.log("수정불가");
+						weekplandisabled();
+					}
+					else{
+						console.log("수정가능");
+						weekplanable();
+					}
 				}
 				else{
 					alert("오류 발생: "+status)
@@ -827,6 +845,7 @@
 														value="${authUser.id}"> <label for="day" style="width: 50px;">작성일&nbsp;</label>
 													<div id="date-reg-date" class="form-control"
 														style="width: 120px;"></div>
+													<input type="hidden" id="dateplan-date" name="date" class="dayplanform-input">	
 												</div>
 											</td>
 										</tr>
@@ -949,34 +968,29 @@
 									<div class="panel-heading">
 										<strong>팀장 의견</strong>
 									</div>
-									<div class="panel-body">일 이따구로 할꺼야?</div>
+									<div class="panel-body">팀장의견을 입력받을것.</div>
 								</div>
 								</c:when>
 								<c:otherwise>
-								<div class="panel panel-info">
-									<div class="panel-heading">
-										<strong>팀장 의견</strong>
-									</div>
-									<textarea class="panel-body"></textarea>
-								</div>
+								
 								</c:otherwise>
 								</c:choose>
 								<div class="modal-footer">
 									<div class="btn-group btn-group-justified" role="group"
 										style="width: 240px; float: right;">
-										<div id="write-btn" class="btn-group" role="group">
+										<div id="dayplan-write-btn" class="btn-group" role="group">
 											<button id="dayplan-savebutton" class="btn btn-primary"
 												type="submit">
 												<strong>저장하기</strong>
 											</button>
 										</div>
-										<div id="update-btn" class="btn-group" role="group">
+										<div id="dayplan-update-btn" class="btn-group" role="group">
 											<button id="dayplan-updatebutton" class="btn btn-info"
 												type="submit" data-dismiss="modal">
 												<strong>수정하기</strong>
 											</button>
 										</div>
-										<div id="delete-btn" class="btn-group" role="group">
+										<div id="dayplan-delete-btn" class="btn-group" role="group">
 											<button id="dayplan-deletebutton" class="btn btn-default"
 												type="submit" data-dismiss="modal">
 												<strong>삭제하기</strong>
@@ -1032,7 +1046,7 @@
 					name="first_date">
 			</div>
 			<div>
-				<div>
+				<div style="margin-left: 37px;">
 					<table>
 						<tr>
 							<td>

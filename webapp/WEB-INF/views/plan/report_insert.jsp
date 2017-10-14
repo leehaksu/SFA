@@ -57,7 +57,7 @@ function removeComma(n) { // 콤마제거
 // form의 submit 수행시 validate 하는 함수
 function validateForm(){
 	if(dayClickCheck == false){
-		alert("제출일를 선택해주세요");
+		alert("보고날짜를 선택해주세요");
 	}
 }
 
@@ -332,9 +332,9 @@ $(document).ready(function() {
 											style="width: 430px; margin-right: 6px;" required>
 									</div>
 									 <label for="day"
-										style="width: 115px; text-align: center">제출일&nbsp;</label> <input
+										style="width: 115px; text-align: center">보고날짜&nbsp;</label> <input
 										id="submitDay-datepicker" class="form-control"
-										type="text"  placeholder="작성날짜"
+										type="text"  placeholder="보고날짜"
 										 required>
 										<input id="dayreport-date" type="hidden" name="date" class="dayreportform-input">
 								</div>
@@ -454,10 +454,10 @@ $(document).ready(function() {
 																data-toggle="modal" data-target="#AdviceModal" autocomplete="off">
 														</div>
 														<div style="display: inline-block; margin-top: 20px;">
-															<label for="day" style="width: 100px; text-align: center">제출일&nbsp;</label>
+															<label for="day" style="width: 100px; text-align: center">보고날짜&nbsp;</label>
 															<input id="advicereporttable-date"
 																class="form-control advicereporttable-input" type="text"
-																name="date" placeholder="작성날짜"
+																name="date" placeholder="보고날짜"
 																style="width: 220px; margin-right: 6px;" required
 																readonly>
 														</div>
