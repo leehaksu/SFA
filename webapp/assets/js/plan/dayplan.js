@@ -147,25 +147,32 @@
 		$("#map_div").remove();
 		$("#map_content").append("<div id='map_div'></div>");
 	}
+	
+	//dayplanModal 닫힘
+	function dayplanModalClosed(){
+		resetmap();
+		$('#datetable-branch').tooltip('disable');
+		$('html, body').css({'overflow' : 'auto','height' : '100%'}); //scroll hidden 해제 
+		$('#element').off('scroll touchmove mousewheel'); // 터치무브 및 마우스휠 스크롤 가능
+		$('.editor').remove();
+		$('.dayplanform-input').each(function() {
+			$(this).val("");
+		});
+		; 
+		$('#dayplantable-weekplan > tbody> tr > td > ul').each(function() {
+				$(this).children('li').remove();
+				$(this).children('br').remove();
+			});
+		$('#date-textarea').froalaEditor('html.set', '');
+
+		$("#dayplanmodal").attr("class","modal fade");
+	
+	}
+	
+	//dayplanModal 모달 닫기
 	function dayplanModalClose(){
 		$("#dayplanmodalclose").on("click",function() {
-			resetmap();
-			$('#datetable-branch').tooltip('disable');
-			$('html, body').css({'overflow' : 'auto','height' : '100%'}); //scroll hidden 해제 
-			$('#element').off('scroll touchmove mousewheel'); // 터치무브 및 마우스휠 스크롤 가능
-			$('.editor').remove();
-			$('.dayplanform-input').each(function() {
-				$(this).val("");
-			});
-			; 
-			$('#dayplantable-weekplan > tbody> tr > td > ul').each(function() {
-					$(this).children('li').remove();
-					$(this).children('br').remove();
-				});
-			$('#date-textarea').froalaEditor('html.set', '');
-
-			$("#dayplanmodal").attr("class","modal fade");
-		
+			dayplanModalClosed();
 		});
 	}
 	function dayplanModalSearchPositionClose(){
@@ -209,7 +216,7 @@
 			
 			  $.post("/sfa/date/insert",{
 			  		 title:title,
-			  		 target_money: dateGoalMoney,
+			  		 goal_sale: dateGoalMoney,
 			  		 content: content,
 			  		 date:ClickedDay,
 			  		 estimate_distance: estimate_distance,
@@ -244,7 +251,7 @@
 				  $.post("/sfa/date/update",
 					        {
 					  		 title:title,
-					  		 target_money: dateGoalMoney,
+					  		 goal_sale: dateGoalMoney,
 					  		 content: content,
 					  		 date:ClickedDay,
 					  		 estimate_distance: 100,
