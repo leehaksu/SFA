@@ -48,4 +48,8 @@ public class CustomerDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("customer.getPosition", customerVo);
 	}
+	public CustomerVo getCustomer(String customer_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("customer.getCustomer", customer_code);
+	}
 }
