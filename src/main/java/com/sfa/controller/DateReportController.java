@@ -45,7 +45,7 @@ public class DateReportController {
 	public String insert(@RequestParam(value = "id", required = true, defaultValue = "") String id,
 			@RequestParam(value = "date", required = true, defaultValue = "") String date, @AuthUser UserVo authUser,
 			DateReportVo dateReportVo, Model model) {
-		
+
 		if ("".equals(date)) {
 			date = ChangeDate.today();
 		}
@@ -62,7 +62,7 @@ public class DateReportController {
 		model.addAttribute("goal_sale", goal_sale);
 		return "plan/report_insert";
 	}
-	
+
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public String insertDateReport(@ModelAttribute DateReportVo dateReportVo, @AuthUser UserVo authUser) {
@@ -106,8 +106,13 @@ public class DateReportController {
 	@Auth
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public String select(@AuthUser UserVo authUser, Model model) {
+		if (authUser.getLevel().equals("팀장")) {
+			List<UserVo> members = userService.getTotalMember(authUser.getDept());
+			model.addAttribute("members", members);
+		}
 		List<DateReportVo> list = dateReprotService.selectWeek(authUser.getId());
 		model.addAttribute("list", list);
+		
 		return "plan/report_search";
 	}
 
@@ -117,16 +122,15 @@ public class DateReportController {
 	public JSONResult select(@AuthUser UserVo authUser,
 			@RequestParam(value = "startDate", required = true, defaultValue = "") String startDate,
 			@RequestParam(value = "endDate", required = true, defaultValue = "") String endDate,
-			@RequestParam(value="approval", required= true, defaultValue="10")Long approval,
-			@RequestParam(value="id", required=true, defaultValue="") String id) {
+			@RequestParam(value = "approval", required = true, defaultValue = "10") Long approval,
+			@RequestParam(value = "id", required = true, defaultValue = "") String id) {
 		if ("".equals(startDate) || "".equals(endDate)) {
 			return JSONResult.error("기간 설정이 정상적으로 되지 않았습니다.");
-		} else if (approval==10 || approval==4){
+		} else if (approval == 10 || approval == 4) {
 			List<DateReportVo> list = dateReprotService.selectByPeriod(authUser.getId(), startDate, endDate);
 			return JSONResult.success(list);
-		}else
-		{
-			List<DateReportVo> list = dateReprotService.selectByPeriod(authUser.getId(), startDate, endDate,approval);
+		} else {
+			List<DateReportVo> list = dateReprotService.selectByPeriod(authUser.getId(), startDate, endDate, approval);
 			System.out.println(list);
 			return JSONResult.success(list);
 		}
@@ -149,16 +153,16 @@ public class DateReportController {
 
 	@Auth
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public String select(@RequestParam(value = "report_no", required = true, defaultValue ="0") Long report_no,
+	public String select(@RequestParam(value = "report_no", required = true, defaultValue = "0") Long report_no,
 			@AuthUser UserVo authUser, Model model) {
-		if(report_no==0)
-		{
+		if (report_no == 0) {
 			return "plan/report_search";
 		}
 		DateReportVo dateReportVo = dateReprotService.selectReport(report_no);
 		dateReportVo.setId(authUser.getId());
 		Long goal_sale = datePlanService.getGoal_sale(dateReportVo);
 		dateReportVo.setGoal_sale(goal_sale);
+		System.out.println(dateReportVo);
 		model.addAttribute("dateReportVo", dateReportVo);
 
 		return "plan/report_detail";

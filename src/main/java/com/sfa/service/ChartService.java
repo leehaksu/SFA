@@ -24,4 +24,14 @@ public class ChartService {
 		return chartDao.getMileByYear(id,date);
 	}
 
+	public List<ChartVo> getEstimateByYear(String id, String date) {
+		// TODO Auto-generated method stub
+		return chartDao.getEstiMateMileByYear(id,date);
+	}
+
+	public List<ChartVo> getEstimateSaleByYear(String id, String date) {
+		// TODO Auto-generated method stub
+		return chartDao.getEstimateSaleByYear(id,date);
+	}
+
 }

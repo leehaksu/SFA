@@ -13,12 +13,30 @@
 		group by month;
 	]]>
 	</select>
-	
 	<select id="getMileByYear" parameterType="MAP" resultType="chartvo">
 	<![CDATA[
 	select month, sum(mile) as total_mile 
 from (select date_format(date,'%m') as month , mile from day_report as a, guage as b where a.report_no=b.report_no and date_format(date,'%Y') = #{date} and id=#{id}
 )A group by month;
 	]]>
+	</select>
+	<select id="getEstimateSaleByYear" parameterType="MAP"
+		resultType="chartvo">
+	<![CDATA[
+	select month, sum(goal_sale) as estimate_sale 
+from  (select date_format(date,'%m') as month , goal_sale from plan
+		where date_format(date,'%Y') = #{date} and id=#{id})A group by month;
+		]]>
+	</select>
+	<select id="getEstimateDistanceByYear" parameterType="MAP" resultType="chartvo">
+	<![CDATA[
+	select month, sum(estimate_distance) as estimate_distance
+		from(
+		select date_format(date,'%m') as month , estimate_distance
+		from plan
+		where date_format(date,'%Y') = #{date} and id=#{id}
+		)A
+		group by month;
+		]]>
 	</select>
 </mapper>

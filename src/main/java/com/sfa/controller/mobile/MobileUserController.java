@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfa.dto.JSONResult;
+import com.sfa.security.AuthUser;
 import com.sfa.service.UserService;
 import com.sfa.util.CreatePasswd;
 import com.sfa.util.Push;
@@ -244,5 +248,22 @@ public class MobileUserController {
 				}
 			}
 			return JSONResult.error("서버에서 오류가 발생하였습니다.");
+		}
+		
+		@ResponseBody
+		@RequestMapping(value = "/mypage", method = RequestMethod.POST)
+		public JSONResult mypage(@AuthUser UserVo authUser, Model model, @ModelAttribute UserVo userVo) {
+			if (userVo == null) {
+				return JSONResult.error("정상적인 접근이 아닙니다.");
+			}else if (userVo.getId()==null || userVo.getPasswd()==null)
+			{
+				return JSONResult.error("아이디랑 비밀번호 들어오지 않았습니다.");
+			}
+			int no = userService.modify(userVo);
+			if (no == 1) {
+				return JSONResult.success("수정에 성공하였습니다.");
+			} else {
+				return JSONResult.fail("저장에 실패하였습니다.");
+			}
 		}
 }
