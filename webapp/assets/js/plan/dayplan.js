@@ -204,14 +204,14 @@
 			console.log(challenge);
 			console.log(dateGoalMoney);
 			console.log(estimate_distance);
-			
+			console.log(ClickedDay);
 			//$('#date-textarea').froalaEditor('html.set', temp);
 			
 			  $.post("/sfa/date/insert",{
 			  		 title:title,
 			  		 target_money: dateGoalMoney,
 			  		 content: content,
-			  		 date:dayClick,
+			  		 date:ClickedDay,
 			  		 estimate_distance: estimate_distance,
 			  		 estimate_course:routes,
 			  		 challenge_content:challenge
@@ -237,6 +237,7 @@
 			console.log(title);
 			console.log(content);
 			console.log(challenge);
+			console.log(ClickedDay);
 			//var temp = '<p><b>글자진하게</b></p><p>평범하게</p><p><i>기울게</i></p><p><h1>h1이다</h1></p><p><h2>h2다</h2></p><p><h3>h3다</h3></p>';
 			//$('#date-textarea').froalaEditor('html.set', temp);
 			
@@ -245,7 +246,7 @@
 					  		 title:title,
 					  		 target_money: dateGoalMoney,
 					  		 content: content,
-					  		 date:dayClick,
+					  		 date:ClickedDay,
 					  		 estimate_distance: 100,
 					  		 estimate_course:routes,
 					  		 challenge_content:challenge
@@ -264,7 +265,7 @@
 			resetmap();
 			  $.post("/sfa/date/delete",
 		        { 
-		  		  date : dayClick, 
+		  		  date : ClickedDay, 
 		        },
 		        function(data,status){
 		            console.log("Data: " + data + "\nStatus: " + status);

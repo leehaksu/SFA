@@ -616,13 +616,13 @@
 			dayplanModalSearchPosition(client_map_info);
 			
 			//dayplan savebutton 클릭 이벤트
-			dayplanModalSave();
+			dayplanModalSave(ClickedDay);
 			
 			//dayplan updatebutton 클릭 이벤트
-			dayplanModalUpdate();
+			dayplanModalUpdate(ClickedDay);
 			
 			//dayplan deletebutton 클릭 이벤트	
-			dayplanModalDelete();
+			dayplanModalDelete(ClickedDay);
 	
 	
 			/* $("#dayplan-cheif-sendbutton").on("click",function(){
