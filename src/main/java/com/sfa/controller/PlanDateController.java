@@ -81,6 +81,7 @@ public class PlanDateController {
 	@RequestMapping(value = "/select", method = RequestMethod.POST)
 	public JSONResult select(@ModelAttribute DateVo dateVo, @AuthUser UserVo authUser,
 			 UserVo userVo, CustomerVo customernVo) {
+		System.out.println(dateVo);
 		if (dateVo.getDate() == null ) {
 			return JSONResult.error("날짜와 아이디가 넘어오지 않았습니다.");
 		}else if("".equals(dateVo.getId()))
@@ -148,6 +149,7 @@ public class PlanDateController {
 	@ResponseBody
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public JSONResult delete(@ModelAttribute DateVo dateVo, @AuthUser UserVo authUser, UserVo userVo) {
+		dateVo.setId(authUser.getId());
 		if (dateVo.getDate() == null) {
 			return JSONResult.error("날짜 넘어오지 않았습니다.");
 		} else {
@@ -156,6 +158,36 @@ public class PlanDateController {
 				return JSONResult.success();
 			} else {
 				return JSONResult.fail();
+			}
+		}
+	}
+	
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/", method = RequestMethod.POST)
+	public JSONResult getContent(@ModelAttribute DateVo dateVo, @AuthUser UserVo authUser, UserVo userVo)
+	{
+		System.out.println(dateVo);
+		if (dateVo.getDate() == null ) {
+			return JSONResult.error("날짜와 아이디가 넘어오지 않았습니다.");
+		}else if("".equals(dateVo.getId()))
+		{
+			return JSONResult.error("아이디가 정상적이지 않습니다.");
+		}
+		else {
+			if(authUser.getLevel().equals("팀장"))
+			{
+				dateVo.setId(dateVo.getId());
+			}else
+			{
+				dateVo.setId(authUser.getId());
+			}
+			System.out.println(dateVo);
+			dateVo = datePlanService.selectDate(dateVo);
+			if (dateVo == null) {
+				return JSONResult.fail();
+			} else {
+				return JSONResult.success(dateVo.getContent());
 			}
 		}
 	}
