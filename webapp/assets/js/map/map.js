@@ -1,4 +1,5 @@
-	//tmap 변수
+
+//tmap 변수
 	var map;
     var mapW, mapH;     // 지도의 가로, 세로 크기(Pixel단위) 를 지정 합니다. 
     var cLonLat, zoom;      //중심 좌표와 지도레벨을 정의 합니다. 
@@ -9,7 +10,14 @@
     
     var size = new Tmap.Size(24,38);
 	var offset = new Tmap.Pixel(-(size.w/2), -size.h);
-	    
+	
+	//현재 위치를 담기 위한 변수
+	var default_latitude ="37.49349134";
+	var default_longitude="127.02785193" ;
+	
+	//경로 position 정보를 ajax로 받기 위한 변수 
+	var route;
+	
     
     //현재 위치를 담기 위한 변수
 	var current_latitude;
@@ -36,7 +44,7 @@
  	
  	//일일 계획서 일일 목표액 저장 변수 
  	var dateGoalMoney;
- 	
+ 
  	var positions=[];
  	
 	var routecheck=false;
@@ -60,32 +68,30 @@
                        labelOutlineColor: "white",
                        labelOutlineWidth: 3 
                   };
- 	
-	//map sample data 
-	// 비트 아카데미
-    //cLonLat = new Tmap.LonLat(default_longitude,default_latitude).transform(pr_4326,pr_3857)
- 	
+
 	function getLocation() {
-			//console.log("1번째 실행");
+		console.log("1번째 실행");
         if (navigator.geolocation) {        
-            navigator.geolocation.getCurrentPosition(showPosition,showError);
+              navigator.geolocation.getCurrentPosition(showPosition,showError);
         } else { 
           	alert("위치 기반 서비스를 지원하지 않는 브라우저 입니다.")
+          	
         }
     }
 
      function showPosition(position) {
-    	 //console.log("2번째 실행");
+    	 console.log("2번째 실행");
     	current_latitude = position.coords.latitude; 
     	current_longitude= position.coords.longitude;
+    	
     	//map 생성
 		init(); 
     } 
      function showError(error) {
-    	 
+    	 	init();
     	    switch(error.code) {
     	        case error.PERMISSION_DENIED:
-    	            alert("User denied the request for Geolocation.");
+    	        	alert("User denied the request for Geolocation.");
     	            break;
     	        case error.POSITION_UNAVAILABLE:
     	            alert("Location information is unavailable.");
@@ -104,7 +110,11 @@
         zoom = 16;  // zoom level입니다.  0~19 레벨을 서비스 하고 있습니다. 
         mapW = '682px';  // 지도의 가로 크기 입니다. 
         mapH = '240px';  // 지도의 세로 크기 입니다. 
-        cLonLat = new Tmap.LonLat(current_longitude,current_latitude).transform(pr_4326,pr_3857);
+        if(typeof current_longitude == "undefined" || current_longitude == null || current_longitude == ""){
+        	cLonLat = new Tmap.LonLat(default_longitude,default_latitude).transform(pr_4326,pr_3857);  
+        }else{
+        	cLonLat = new Tmap.LonLat(current_longitude,current_latitude).transform(pr_4326,pr_3857);     	
+        }
     }
     
     function onMouseMarker (evt){
@@ -128,11 +138,9 @@
   		//클릭한 순서대로 지점 좌표가 배열에 삽입된다.		
       	routeList.push(tempLonLat);
       	//routeList.push(new Tmap.Geometry.Point(this.lonlat.lon,this.lonlat.lat));
+	} 
 
-	}
-
-    function init() {	
-	 	//setTimeout(function(){ alert("Hello"); }, 100000);
+function init() {	
 	 	console.log("3번째 실행");
       	setVariables();
         map = new Tmap.Map({div:'map_div', width:mapW, height:mapH, animation:true}); 
@@ -157,7 +165,7 @@
 				for(i=0; i < response.data.length; i++){
 					var mapinfo =new Object();					
 					mapinfo.id = response.data[i].id; 
-// 					mapinfo.customerCode = response.data[i].customerCode;
+ 					mapinfo.customerCode = response.data[i].customer_code;
 					mapinfo.name = response.data[i].name;
 					mapinfo.positionX = response.data[i].positionX;
 					mapinfo.positionY = response.data[i].positionY;
@@ -205,150 +213,158 @@
           
     }
     
-    function searchRoute(){
-    	//클릭한 list의 좌표 업체 별로 passList에 넣어 줄것. 문자열로! 끝은 G,0으로 통일할 것이며, 최대 5개의 경유지만 가능
-    	//그러므로 route list의 length가 5개 이상이면 검색이 불가능 하거나 5개 까지만 검색이 되게 해야함.
-    	//그리고 5개 까지만 검색이 가능함을 사전에 미리 알려줘야한다.
-    	
-    	var startX = current_longitude;
-        var startY = current_latitude;
-    	
-    	if(routecheck == false && routeList.length > 0 ){
-    	routecheck= true;
-    	//console.log(templonlat.lat+","+templonlat.lon);
-    	var routeFormat = new Tmap.Format.KML({extractStyles:true, extractAttributes:true});
-        var endX = routeList[routeList.length-1].lon;
-        var endY = routeList[routeList.length-1].lat;
-        
-        var passList="";
-        //"126.96491216,37.53093031,280110,G,0_126.86525408,37.54834317,4298932,G,0";
-        if(routeList.length>1){
+ 
+ /* // 이 함수는 픽셀의 값을 좌표 값으로 변환해주는 기능을 합니다.
+ function LonLatFromPixel(){
+     alert(map.getLonLatFromPixel(
+         new Tmap.Pixel(document.getElementById('x').value,document.getElementById('y').value)));
+ } */
+ 
+
+ function drawRoute(route,routeFormat,map){
+	 if(route != null){
+	    var prtcl = new Tmap.Protocol.HTTP({
+            url: route,
+            format:routeFormat
+            });
+	    routeLayer = new Tmap.Layer.Vector("route", {protocol:prtcl, strategies:[new Tmap.Strategy.Fixed()]});
+	routeLayer.events.register("featuresadded", routeLayer, onDrawnFeatures);
+	map.addLayer(routeLayer);
+	 }
+	 else{
+		 alert("기존 경로를 부를 수 없습니다.");
+	 }	 
+ }
+ 
+ function searchRoute(){
+ 	//클릭한 list의 좌표 업체 별로 passList에 넣어 줄것. 문자열로! 끝은 G,0으로 통일할 것이며, 최대 5개의 경유지만 가능
+ 	//그러므로 route list의 length가 5개 이상이면 검색이 불가능 하거나 5개 까지만 검색이 되게 해야함.
+ 	//그리고 5개 까지만 검색이 가능함을 사전에 미리 알려줘야한다.
+	 
+	 var routevalue = $("#dayplan-route").val();
+	/*//ajax 변수로 날라갈 route 데이터를 담고 있는 input의 value 초기화
+	 $("#dayplan-route").removeAttr("value");
+	*/
+	 alert(routevalue);
+ 	var startX = current_longitude;
+    var startY = current_latitude;
+ 	
+ 	if(routecheck == false && routeList.length > 0 && routeList.length < 6){
+ 	routecheck= true;
+ 	//console.log(templonlat.lat+","+templonlat.lon);
+ 	var routeFormat = new Tmap.Format.KML({extractStyles:true, extractAttributes:true});
+     var endX = routeList[routeList.length-1].lon;
+     var endY = routeList[routeList.length-1].lat;
+     
+     var passList="";
+     //"126.96491216,37.53093031,280110,G,0_126.86525408,37.54834317,4298932,G,0";
+     if(routeList.length>1){
 	        for(i=0;i<routeList.length-1;i++){
 	        	passList +=routeList[i].lon+","+routeList[i].lat+"_"; 
 	      	}
-        }
-        console.log(passList.substring(0,passList.length-1));
-       /*  동작대리점 / 1582792 / 37.50418360 / 126.97535640 / 4
-        용산대리점 / 280110 / 37.53093031 /126.96491216 / 16	
-        양천대리점 / 4298932 / 37.54834317 /126.86525408 / 16 */
-        var urlStr = "https://apis.skplanetx.com/tmap/routes?version=1&format=xml";
-        urlStr += "&startX="+startX;
-        urlStr += "&startY="+startY;
-        urlStr += "&endX="+endX;
-        urlStr += "&endY="+endY;
-        urlStr += "&reqCoordType=WGS84GEO"
-        urlStr += "&passList="+passList;
-        urlStr += "&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"; 
-        console.log(urlStr);   
-      
-         var road ="startX="+startX+"&startY="+startY+"&endX="+endX+"&endY="+endY+"&reqCoordType=WGS84GEO"+"&passList="+passList; 	 
-        
-         	$.ajax({
-             url: "https://apis.skplanetx.com/tmap/routes?version=1&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b",
-             type: 'post',
-             data: road,
-             success: function( data, textStatus, jQxhr ){
-                 console.log(data);
-             },
-             error: function( jqXhr, status, errorThroxwn ){
-            	 console.log(jqXhr);
-                 console.log( errorThroxwn + "," + status);
-             }
-         });
+     } else if(routeList.length > 5){
+    	 alert("경유지는 최대 5곳 까지만 가능합니다.");
+     }
+     
+     console.log(passList.substring(0,passList.length-1));
+    /*  동작대리점 / 1582792 / 37.50418360 / 126.97535640 / 4
+     용산대리점 / 280110 / 37.53093031 /126.96491216 / 16	
+     양천대리점 / 4298932 / 37.54834317 /126.86525408 / 16 */
+     route = "https://apis.skplanetx.com/tmap/routes?version=1&format=xml";
+     route += "&startX="+startX;
+     route += "&startY="+startY;
+     route += "&endX="+endX;
+     route += "&endY="+endY;
+     route += "&reqCoordType=WGS84GEO"
+     route += "&passList="+passList;
+     route += "&appKey=2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"; 
 
-      
-        var prtcl = new Tmap.Protocol.HTTP({
-                                            url: urlStr,
-                                            format:routeFormat
-                                            });
-        routeLayer = new Tmap.Layer.Vector("route", {protocol:prtcl, strategies:[new Tmap.Strategy.Fixed()]});
-        routeLayer.events.register("featuresadded", routeLayer, onDrawnFeatures);
-        map.addLayer(routeLayer);
-    
-        
-        routes =""; 
-    	for(i=0; i < routeNames.length; i++){
-   		 		routes += routeNames[i] +"->";		
-    		}
+     console.log(route);
+   
+     drawRoute(route,routeFormat,map);
+ 
+     
+     
+      var road ="startX="+startX+"&startY="+startY+"&endX="+endX+"&endY="+endY+"&reqCoordType=WGS84GEO"+"&passList="+passList; 	 
+   	
+    	$.ajax({
+   		method : "POST",
+   		    url : "https://apis.skplanetx.com/tmap/routes?version=1",
+   		    data: road,
+   		    headers : {
+   		        "Content-Type" : "application/x-www-form-urlencoded",
+   		        "appKey" : "2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"
+   		    },
+   		    success: function( data, textStatus, jQxhr ){
+   		    	//console.log(data.features[0].properties.totalDistance/1000);
+   		    	//console.log(typeof data.features[0].properties.totalDistance);
+   		    	$("#datetable-distance").val(Math.floor(data.features[0].properties.totalDistance/1000));
+   		    	$("#dayplan-route").attr("value",route);
+   		    },
+              error: function( jqXhr, status, errorThroxwn ){
+             	 console.log(jqXhr);
+                  console.log( errorThroxwn + "," + status);
+                  alert("오류 발생!! 다시 시도해 주세요.");
+              }
+
+   		});
+
+     routes =""; 
+ 	for(i=0; i < routeNames.length; i++){
+		 		routes += routeNames[i] +"->";		
+ 		}
 			routes = routes.substring(0,routes.length-2);
 			$("#datetable-branch").val(routes);
-    		$("#datetable-branch").attr("title",routes);	    			    		
-    		$('#datetable-branch').tooltip(); 
-    	}
-    	else{
-    		if(routecheck == true){
-    	    		alert("이미 검색된 경로가 존재 합니다.");
-    	    }
-    		else if(routeList.length <= 0){
-    	    		alert("선택된 경로가 하나도 존재 하지 않습니다.");
-    	    }
-    	}
-    }
-    
-    //경로 삭제
-    function deleteRoute(){
-    	
-    	if((vector_layer != null || routeList.lenth >1) && routecheck == true){
-    		map.removeLayer(routeLayer);
-    		routecheck= false;
-    		routeList=[];
-    		routeNames=[];
-           	console.log(routeList);            
-    		routes ="";
-    		$("#datetable-branch").val(routes);
-    		$("#datetable-branch").attr("title",routes);	    			    		
-    		$('#datetable-branch').tooltip('destroy'); 
-        	console.log("경로삭제~");
-    	}
-    	else{
-    		alert("선택된 경로가 없거나 잘못된 경로입니다.");
-    	}
-    }
-    
-    
-    //경로 그리기 후 해당영역으로 줌
-    function onDrawnFeatures(e){
-        map.zoomToExtent(this.getDataExtent());
-    }
-    
-    function complete(data){
-    	console.log("진짜됨");
-    	console.log(data);   	
-    }
+ 		$("#datetable-branch").attr("title",routes);	    			    		
+ 		$('#datetable-branch').tooltip(); 
+ 	}
+ 	else{
+ 		if(routecheck == true || routevalue != null && routevalue.length != 0 ){
+ 	    		alert("이미 검색된 경로가 존재 합니다.");
+ 	    }
+ 		else if(routeList.length <= 0){
+ 	    		alert("선택된 경로가 하나도 존재 하지 않습니다.");
+ 	    }
+ 	}
+ }
+ //경로 그리기 후 해당영역으로 줌
+ function onDrawnFeatures(e){
+     map.zoomToExtent(this.getDataExtent());
+ }
+ 
+ function complete(data){
+ 	console.log("진짜됨");
+ 	console.log(data);   	
+ }
 
-    
-    
-    
-    /* // 2개 사이의 거리 계산 
-    function loadGetAddressFromLonLat(routeList){
-      var tdata = new Tmap.TData();
-      console.log(routeList);
-      var s_lonLat = new Tmap.LonLat(routeList[0].x,routeList[0].y);
-      var e_lonLat = new Tmap.LonLat(routeList[1].x,routeList[1].y);
-      tdata.getRoutePlan(s_lonLat,e_lonLat);
 
-      tdata.events.register("onComplete", tdata, onComplete);
-      tdata.events.register("onProgress", tdata, onProgress);
-      tdata.events.register("onError", tdata, onError);
-  }
-   function onComplete(){
-  	  console.log(this.responseXML);
-  	  console.log(jQuery(this.responseXML).find("fullAddress").text());
-  	  console.log(jQuery(this.responseXML).find("totalDistance").text());
-  	}
-  	 
-  	function onProgress(){
-  	   console.log("준비중");
-  	}
-  	 
-  	function onError(){
-  	    alert("onError");
-  	} 
-*/    	
-
-  /* // 이 함수는 픽셀의 값을 좌표 값으로 변환해주는 기능을 합니다.
-  function LonLatFromPixel(){
-      alert(map.getLonLatFromPixel(
-          new Tmap.Pixel(document.getElementById('x').value,document.getElementById('y').value)));
-  } */
-  
+ 
+ function deleteRoute(){
+	
+	 var routevalue = $("#dayplan-route").val();
+	 //ajax 변수로 날라갈 route 데이터를 담고 있는 input의 value 초기화
+	 $("#dayplan-route").removeAttr("value");
+	
+ 	if((vector_layer != null || routeList.length >0) && routecheck == true){
+ 		map.removeLayer(routeLayer);
+ 		routecheck= false;
+ 		routeList=[];
+ 		routeNames=[];
+        	console.log(routeList);            
+ 		routes ="";
+ 		$("#datetable-branch").val(routes);
+ 		$("#datetable-branch").attr("title",routes);	    			    		
+ 		$('#datetable-branch').tooltip('destroy'); 
+     	console.log("경로삭제~");
+ 	}
+ 	else{
+ 		if(routevalue != "" || routevalue != null && routevalue.length != 0 ){
+ 			map.removeLayer(routeLayer);	 		
+ 		}else{
+ 		alert("선택된 경로가 없거나 잘못된 경로입니다.");
+ 		}
+ 	}
+ 	
+ 	
+ }
+ 
