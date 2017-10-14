@@ -7,16 +7,7 @@
 <html>
 <head>
 <c:import url="/WEB-INF/views/common/common.jsp"></c:import>
-	<script
-	src="${pageContext.servletContext.contextPath}/assets/js/util/util.js"></script>
-	<script
-	src="${pageContext.servletContext.contextPath}/assets/js/plan/calendar.js"></script>
-	<script
-	src="${pageContext.servletContext.contextPath}/assets/js/plan/weekplan.js"></script>
-	<script
-	src="${pageContext.servletContext.contextPath}/assets/js/map/map.js"></script>
-	<script
-	src="${pageContext.servletContext.contextPath}/assets/js/plan/dayplan.js"></script>	
+	
 <script>
 	var date = new Date();
 	var today = moment().format("YYYY-MM-DD");
@@ -46,77 +37,7 @@
 	// dayplantable에 클릭한 날짜의 목표액을 주간테이블에서 가져오기 위한 변수
 	var goalmoneyindex;
 
-	//경로 position 정보를 ajax로 받기 위한 변수 
-	var route;
-	
-	//tmap 변수
-	var map;
-    var mapW, mapH;     // 지도의 가로, 세로 크기(Pixel단위) 를 지정 합니다. 
-    var cLonLat, zoom;      //중심 좌표와 지도레벨을 정의 합니다. 
-    var pr_3857 = new Tmap.Projection("EPSG:3857"); //Tmap default
-    var pr_4326 = new Tmap.Projection("EPSG:4326"); // wgs84
 
-    var client_map_info = []; // 마커들을 관할하는 변수
-    
-    var size = new Tmap.Size(24,38);
-	var offset = new Tmap.Pixel(-(size.w/2), -size.h);
-	
-	//현재 위치를 담기 위한 변수
-	var default_latitude ="37.49349134";
-	var default_longitude="127.02785193" ;
-   
-    
-    //현재 위치를 담기 위한 변수
-	var current_latitude;
-	var current_longitude;
-   
-	//마커을 그리는 layer변수 
-	var markerLayer;
-	
-	//그림을 그리는 layer변수 
-	var vector_layer = new Tmap.Layer.Vector(
-  			  'Vector_Layer',
-  			  {renderers: ['SVG', 'Canvas', 'VML']}
-   		);
-	//경로를 그리는 layer 변수
-	var routeLayer;
-	//이동 할 경로를 담는 변수 
- 	var routeList = [];
-	
- 	//이동 할 경로의 이름을 담는 변수 
- 	var routeNames = [];
- 	
- 	// 전체 경로 저장 변수
- 	var routes;
- 	
- 	//일일 계획서 일일 목표액 저장 변수 
- 	var dateGoalMoney;
- 
- 	var positions=[];
- 	
-	var routecheck=false;
-	
- 	//좌표 배열 객체화
- 	var lineString;
-	var mLineFeature;
- 	//라인의 css 설정
-	var style_red = {
-                   fillColor:"#FF0000",
-                   fillOpacity:0.2,
-                   strokeColor: "#FF0000",
-                   strokeWidth: 1,
-                   strokeDashstyle: "solid",
-                   label:"500m",
-                   labelAlign: "lm",
-                   fontColor: "black",
-                       fontSize: "9px",
-                       fontFamily: "Courier New, monospace",
-                       fontWeight: "bold",
-                       labelOutlineColor: "white",
-                       labelOutlineWidth: 3 
-                  };
- 	
-  	
      
 	
 	//moment('2016-06','YYYY-MM').diff('2015-01','month');     //17 시간차
@@ -202,6 +123,7 @@
 			/* 수정이 필요한 부분 ~~~~~~~~~~~~~~~~~*/
 			$('#side-dayplan-open-button').click(function() {
 				
+				
 				//현재 날짜와 클릭한 날짜 비교 
 				var plandatecheck = moment(ClickedDay).isSameOrAfter(today);
 				
@@ -209,9 +131,14 @@
 				if (typeof ClickedDay == "undefined" || ClickedDay == null || ClickedDay == "") {
 					$("#dayplancheckmodal").modal('show');
 				} else {
-					getLocation();					
+					getLocation();	
+					 
 					//날짜 클릭 이벤트 일일 계획 데이터 ajax
-					changedayplan(ClickedDay,selectID,authUserID,plandatecheck);
+					setTimeout(function() {
+						console.log(map);
+						changedayplan(ClickedDay,selectID,authUserID,plandatecheck,map)
+						}, 500);
+					
 					dayplanmodalShow();	
 				}
 				
@@ -335,7 +262,7 @@
 					$('#calendar').fullCalendar('removeEvents');
 		            $('#calendar').fullCalendar('addEventSource', events);
 		            
-		            
+		         
 		            //	alert("아이디 변경"+selectID +", 현재 계정 아이디"+authUserID);
 		            if(selectID !=authUserID)
 					{
@@ -374,10 +301,12 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
+	<div class="panel-info" style="clear: both; margin-top : 10px;">
 	<div class="content-header">
 		<h3>
 			<strong>영업 계획서</strong>
 		</h3>
+	</div>
 	</div>
 	<div id="calendar_main">
 		<div id=calendar></div>
@@ -414,12 +343,6 @@
 					</button>
 					</c:otherwise>
 					</c:choose>
-					<%-- <button id="side-dayplan-coworker-button"
-						class="btn btn-default btn-sm dropdown-toggle" type="button"
-						data-toggle="dropdown" aria-expanded="false">
-						${authUser.name} / ${authUser.dept} &nbsp; &nbsp; &nbsp;<span
-							class="caret"></span>
-					</button> --%>
 					<ul id="side-dayplan-coworker_list" class="dropdown-menu"
 						role="menu">
 
@@ -535,6 +458,7 @@
 										<tr>
 											<td colspan="3">
 												<div id="map_content">
+												<input type="hidden" id="dayplan-route" name="route" value="">												
 													<span id="mapsearch"><strong>지도 검색</strong> </span>
 													<ul style="display: -webkit-box;">
 														<li><button id="dateplan-searchRoutes" type="button"

@@ -58,6 +58,15 @@
 				<div class="content-header">
 					<h3 >
 						<strong>일일 보고서</strong>
+						<span style="float: right;">
+							<a href="#" onclick="">
+								<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+							</a>
+							&nbsp;
+							<a href="#" onclick="">
+								<i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+							</a>
+						</span>
 					</h3>
 				</div>
 				<div id="reportmain_content">
@@ -206,9 +215,9 @@
 									<div class="panel-heading" style="color: #fff; ">
 										<strong>상담카드</strong>
 										<div style="float: right;">
-										 <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+										 <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
 										 &nbsp;
-										 <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+										 <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
 										</div>
 									</div>
 									<div class="panel-body">

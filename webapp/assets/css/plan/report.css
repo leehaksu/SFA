@@ -17,3 +17,11 @@
 #advicereporttable-title{
 	width: 500px; margin-right: 6px;
 }
+
+#dayreporttable{
+	border-collapse: separate;
+    border-spacing: 10px 17px;
+}
+.reporttable-label{
+	width: 110px; text-align: center;
+}

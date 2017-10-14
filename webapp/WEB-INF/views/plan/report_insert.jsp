@@ -22,52 +22,98 @@ var submitdate;
 //선택된 상담카드
 var clickedAdviceId;
 
-function onlyNumber(event) {
-	event = event || window.event;
-	var keyID = (event.which) ? event.which : event.keyCode;
-	if ((keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105)|| keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39)
-		return;
-	else
-		return false;
+
+function setAchiveRank(){
+	var goalSale = $("#dayreporttable-goal-sale").val();
+	var reportSale = $("#dayreporttable-report-sale").val();
+	var achiveRank =reportSale/goalSale * 100;
+	
+	if(confInfinity(achiveRank))
+	{
+		$("#dayreporttable-achive-rank").val(100+"%");
+		$("#achive-rank").val(100);	
+	}else if(confisNaN(achiveRank)){
+		$("#dayreporttable-achive-rank").val("0%");
+		$("#achive-rank").val("");
+	}else	
+	{
+		achiveRank=Math.floor(achiveRank);	
+		$("#dayreporttable-achive-rank").val(achiveRank+"%");
+		$("#achive-rank").val(achiveRank);		
+	}
 }
-function removeChar(event) {
-	event = event || window.event;
-	var keyID = (event.which) ? event.which : event.keyCode;
-	if (keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39)
-		return;
-	else
-		event.target.value = event.target.value.replace(/[^0-9]/g, "");
+function setmile(){
+	var startGauge = $("#dayreporttable-startGauge").val();
+	var endGauge = $("#dayreporttable-endGauge").val();
+	console.log(typeof startGauge);
+	console.log(typeof endGauge);
+	console.log(startGauge.length);
+	console.log(endGauge.length);
+	
+	
+	if((startGauge >=0 && startGauge.length != 0) && (endGauge.length != 0 && endGauge >=0 )){
+		if(endGauge-startGauge < 0){
+			$("#dayreporttable-mile").val("잘못된 입력값");
+		}else{
+			$("#dayreporttable-mile").val(endGauge-startGauge); 	
+			$("#mile").val(endGauge-startGauge);	
+		}	
+	}else{
+		$("#dayreporttable-mile").val(""); 
+		$("#mile").val(""); 		
+	}
+	
 }
 
-function addThousandSeparatorCommas(num) {
-	if (typeof num == "undefined" || num == null || num == "") {
-		return "";
+
+function validateForm() {
+	for(i =0; i < document.forms["dayreport-form"].length; i++){
+		var input = document.forms["dayreport-form"][i];
+		console.log(input);
+		console.log(input.hasAttribute("required"));
+		 if(input.hasAttribute("required")){
+			if(input.value == ""){
+				 alert("필수 입력 항목이 입력되지 않았습니다.");
+				 input.focus();
+				 return false;
+			}
+			if($("#report-content").froalaEditor('html.get').length == 0){
+				alert($("#report-content").froalaEditor('html.get'));
+				alert($("#report-content").froalaEditor('html.get').length);
+				alert("업무 내용이 비어있습니다.");
+				return false;
+			}
+		} 
 	}
-	return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	
+	return true;
 }
 
-function removeComma(n) { // 콤마제거
-	if (typeof n == "undefined" || n == null || n == "") {
-		return "";
+function reportSubmit(){
+	
+	var dayreportForm = document.getElementById("dayreport-form");
+	dayreportForm.action = "insert"; // action에 해당하는 jsp 경로를 넣어주세요.
+	if(validateForm()){
+		dayreportForm.submit();  	
 	}
-	var txtNumber = '' + n;
-	return txtNumber.replace(/(,)/g, "");
-}
-
-// form의 submit 수행시 validate 하는 함수
-function validateForm(){
-	if(dayClickCheck == false){
-		alert("보고날짜를 선택해주세요");
-	}
+	
 }
 
 $(document).ready(function() {
-	  $("#dayreporttable-files").fileinput({showCaption: false});	
+	
+	$("#dayreporttable-report-sale").focusout(function(){
+		setAchiveRank();
+	});
+	$("#dayreporttable-startGauge, #dayreporttable-endGauge").focusout(function(){
+		setmile();
+	});
+	
 	  
 	  $("#dayreport-date").attr("value", today);
 
 	  $("#advicereporttable-date").attr("value", today);	
-	 $.post("select",
+	 //alert(today);
+	  $.post("select",
 	    {
  			Date:today
 	    },
@@ -157,12 +203,12 @@ $(document).ready(function() {
 						}
 					});
 		});
-		
+	/* 	
 		$("#dayreport-savebutton").click(function(){
 			var dayreportForm = document.getElementById("dayreport-form");
 			dayreportForm.action = "insert"; // action에 해당하는 jsp 경로를 넣어주세요.
 			dayreportForm.submit(); 
-		});
+		}); */
 		
 	
 		$(document).on("click",".cancle-btn",function(){			 
@@ -247,31 +293,37 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div class="content-header">
+	<div class="panel-info" style="clear: both; margin-top : 10px;">
+	<div class="content-header panel-heading">
 		<h3 >
 			<strong>일일 보고서</strong>
-		</h3>
+			<span style="float: right;">						
+			<a href="#" onclick="reportSubmit()">
+			 <i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i>
+			</a>
+			&nbsp;	
+			</span>
+		</h3>	
+	</div>
 	</div>
 	<article>
 		<div>
 			<div>			
 				<div id="reportmain_content">
-				<form name="dayreport" id="dayreport-form"  onsubmit="return validateForm()" method="post">
+				<form name="dayreport" id="dayreport-form" method="post">
 					<table id="dayreporttable">
-						<tr>
-							<td colspan="3" id="rpt-content1">
-								<div class="form-group">
+						<tr id="rpt-content1">
+							<td>
 									<div style="display: inline-block;">
-										<label for="show-day-title"
-											style="width: 100px; text-align: center;">예상
-											목표액&nbsp;</label> 
+										<label class="reporttable-label" for="show-day-title">예상 목표액&nbsp;</label> 
 											<input id="dayreporttable-goal-sale"
-											class="form-control dayreportform-input" type="text" name="goal_sale"
-											placeholder="ajax통신" value="${goal_sale}">
+											class="form-control dayreportform-input" type="Number" name="goal_sale"
+											placeholder="ajax통신" value="${goal_sale}" min="0" readonly>
 									</div>
-									<div style="display: inline-block;">
-										<label for="day" style="width: 110px; text-align: center;">매
-											출 액 &nbsp;</label> 
+							</td>
+							<td>
+							<div style="display: inline-block;">
+										<label class="reporttable-label" for="day" >매 출 액 &nbsp;</label> 
 											<input id="dayreporttable-report-sale"
 											class="form-control dayreportform-input" type="Number" name="report_sale"
 											placeholder="일일 매출액" 
@@ -279,65 +331,66 @@ $(document).ready(function() {
 											onkeyup='removeChar(event)'
 											min="0" required >
 									</div>
-									<div style="display: inline-block;">
-										<label for="day" style="width: 110px; text-align: center;">달
-											성 률 &nbsp;</label> <input id="dayreporttable-achive-rank"
-											class="form-control dayreportform-input" type="text" name=""
+							</td>
+							<td>
+							<div style="display: inline-block;">
+										<label class="reporttable-label" for="day">달 성 률(%) &nbsp;</label> <input id="dayreporttable-achive-rank"
+											class="form-control dayreportform-input" type="text" 
 											placeholder="일일 달성률" 
 											required readonly>
+											<input type="hidden" id="achive-rank" name="achive_rank">
 									</div>
-								</div>
 							</td>
 						</tr>
-						<tr>
-							<td colspan="3" id="rpt-content2">
-								<div class="form-group">
+						<tr id="rpt-content2">
+							<td>
 									<div style="display: inline-block;">
-										<label for="show-day-title"
-											style="width: 100px; text-align: center;">출발 계기판
+										<label class="reporttable-label" for="show-day-title">출발 계기판
 											&nbsp;</label> 
-											<input id="dayreporttable-startGauge" class="form-control dayreportform-input" type="text" name="start_gauge"
+											<input id="dayreporttable-startGauge" class="form-control dayreportform-input" type="Number" name="start_gauge"
 											placeholder="출발 계기판" 
+											onkeydown='return onlyNumber(event)'
+											onkeyup='removeChar(event)'
 											required >
-											<a href="#" style="text-decoration: none" data-toggle="modal" data-target="#myModal"><i
-											class="fa fa-camera" aria-hidden="true"></i></a>
 									</div>
-									<div style="display: inline-block;">
-										<label for="day" style="width: 100px; text-align: center;">도착
-											계기판 </label> <input id="dayreporttable-endGauge"
-											class="form-control dayreportform-input" type="text" name="end_gauge"
+							</td>
+							<td>
+							<div style="display: inline-block;">
+										<label class="reporttable-label" for="day">도착 계기판 </label> <input id="dayreporttable-endGauge"
+											class="form-control dayreportform-input" type="Number" name="end_gauge"
 											placeholder="도착 계기판" 
-											required ><a href="#AdviceModal"
-											style="text-decoration: none" data-toggle="modal" data-target="#myModal"><i class="fa fa-camera"></i></a>
+											onkeydown='return onlyNumber(event)'
+											onkeyup='removeChar(event)'
+											required >
 									</div>
-									<div style="display: inline-block;">
-										<label for="day" style="width: 100px; text-align: center;">주행거리
+							</td>
+							<td>
+							<div style="display: inline-block;">
+										<label class="reporttable-label" for="day">주행거리(km)
 											&nbsp;</label> <input id="dayreporttable-mile"
 											class="form-control dayreportform-input" type="text" name="mile"
 											placeholder="주행거리" 
-											required >
-									</div>
-								</div>
+											required readonly>
+											<input type="hidden" id="mile" name="mile">
+									</div>	
 							</td>
 						</tr>
-						<tr>
-							<td colspan="3" id="rpt-content3">
-								<div class="form-group">
+						<tr id="rpt-content3">	
+							<td colspan="2" >
 									<div style="display: inline-block;">
-										<label for="show-day-title"
-											style="width: 100px; text-align: center">제목&nbsp;</label> 
+										<label class="reporttable-label" for="show-day-title">제목&nbsp;</label> 
 											<input id="dayreporttable-title"
 											class="form-control dayreportform-input" type="text" name="title"
 											placeholder="제목을 입력해 주세요"
 											style="width: 430px; margin-right: 6px;" required>
 									</div>
-									 <label for="day"
-										style="width: 115px; text-align: center">보고날짜&nbsp;</label> <input
+							</td>
+							<td>
+							 <label class="reporttable-label" for="day">보고날짜&nbsp;</label> <input
 										id="submitDay-datepicker" class="form-control"
 										type="text"  placeholder="보고날짜"
 										 required>
 										<input id="dayreport-date" type="hidden" name="date" class="dayreportform-input">
-								</div>
 							</td>
 						</tr>
 					</table>
@@ -346,46 +399,17 @@ $(document).ready(function() {
 						<div class="panel-heading">
 							<strong>업무 보고 내용</strong>
 						</div>
-						<textarea name="content" class="date-textarea"></textarea>	
+						<textarea id="report-content" name="content" class="date-textarea"></textarea>	
 					</div>
-					<div class="form-group">
-						<input id="dayreporttable-files" class="form-control" multiple type="file">
-					</div>
-					<div class="panel panel-info" style="clear: both;">
+					<!-- <div class="panel panel-info" style="clear: both;">
 						<div class="panel-heading">
 							<strong>팀장 의견</strong>
 						</div>
 						<div class="panel-body">일 이따구로 할꺼야?</div>
 					</div>
-					</form>
-					<div>
-						<div class="btn-group btn-group-justified" role="group"
-							style="width: 240px; float: right;">
-							<div id="write-btn" class="btn-group" role="group">
-								<button id="dayreport-savebutton" class="btn btn-primary"
-									type="submit">
-									<strong>저장하기</strong>
-								</button>
-							</div>
-						</div>
-					</div>				
-					<div class="modal fade" id="myModal" role="dialog" style="z-index:1000000">
-						<div class="modal-dialog modal-sm">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">계기판 사진</h4>
-								</div>
-								<div class="modal-body">
-									존나 달리셨네요?
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal">Close</button>
-								</div>
-							</div>
-						</div>
-					</div>
+					 -->
+					 </form>
+				
 					<div id="advice_contianer"
 						style="padding: 5px;">
 						<div class="page-header">
@@ -400,9 +424,10 @@ $(document).ready(function() {
 									<div class="panel-heading" style="color: #fff; ">
 										<strong>상담카드</strong>
 										<div style="float: right;">
-										<i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i>
+										<a href="#" onclick="adviceSubmit()">
+										<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
+										</a>
 										&nbsp;
-										 <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
 										</div>
 									</div>
 									<div class="panel-body">
@@ -490,19 +515,19 @@ $(document).ready(function() {
 
 									</div>
 								</div>
-								<div class="btn-group btn-group-justified" role="group"
+								<!-- <div class="btn-group btn-group-justified" role="group"
 									style="width: 150px; float: right; margin: 10px;">
 									<div id="write-btn" class="btn-group" role="group">
 										<button class="btn btn-info advicereporttable-savebutton" type="button">
 											<strong>저장하기</strong>
 										</button>
 									</div>
-									<!-- <div id="delete-btn" class="btn-group" role="group">
+									<div id="delete-btn" class="btn-group" role="group">
 										<button class="btn btn-danger advicereporttable-deletebutton" type="submit">
 											<strong>삭제하기</strong>
 										</button>
-									</div> -->
-								</div>
+									</div>
+								</div> -->
 								<div style=" clear:both; border-bottom: 1px solid #eee;"></div>
 							</form>
 						</div>

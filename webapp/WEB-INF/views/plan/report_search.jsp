@@ -52,10 +52,14 @@ $(document).ready(function() {
 	});
 	
 	$("#search-report").on("click", function(){
+		$("#report-content > ul").empty();
+		
 		var date1 = $("#end-date").val();
 		var date2 = $("#start-date").val();
 
 		var approval=$("#approval option:selected").val();
+		var teamid = $("#teamselect option:selected").val();
+		
 		console.log(approval);
 		
 		if(moment(date2).isBefore(date1)){
@@ -68,11 +72,11 @@ $(document).ready(function() {
 		    {
 			 startDate: date1,
 			 endDate: date2,
-			 approval: approval
+			 approval: approval,
+			 id:teamid
 		    },
 		    function(response, status){
 		        console.log(response.data);
-		        $("#content > ul").empty();
 		        if(response.data==null)
 		       {
 		        	$("#search-count").html("조회: 0건");
@@ -81,8 +85,8 @@ $(document).ready(function() {
 		    	   $("#search-count").html("조회: "+ response.data.length+" 건");
 			        
 			        for(i=0; i<response.data.length;i++){	
-			        	$("#content > ul").append('<li class="report-thumnail"></li>');
-			        	$("#content > ul > li").eq(i).append('<a class="report-detail hvr-wobble-horizontal" href="${pageContext.servletContext.contextPath}/report/search?report_no='+response.data.report_no+'"></a>');		        	
+			        	$("#report-content > ul").append('<li class="report-thumnail"></li>');
+			        	$("#report-content > ul > li").eq(i).append('<a class="report-detail hvr-wobble-horizontal" href="${pageContext.servletContext.contextPath}/report/search?report_no='+response.data[i].report_no+'"></a>');		        	
 			        	        	
 			        	if(response.data[i].approval == 0){
 			        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/write.png" alt="레포트 상태 이미지">');		
@@ -100,16 +104,14 @@ $(document).ready(function() {
 			        	}
 			        	$(".report-detail").eq(i).append('<table class="table report-list"><thead><tr><th>보고 일자:'+response.data[i].date+'</th></tr></thead><tbody><tr><td>제목: '+response.data[i].title+'</td></tr><tr><td>작성일자: '+response.data[i].reg_date+'</td></tr><tr><td>팀장의견: '+opinion+'</td></tr></tbody></table>');
 			        	
-			        	
-			        	
 			        	if(response.data[i].approval == 0){
-			            	$("#content > ul > li").eq(i).append('<div><button type="button" class="btn btn-default submit-btn hvr-shadow-radial">제출</button> <form class="reportnoform" action="submit" method="POST"><input type="hidden" id="report_no" name="report_no" value="'+response.data[i].report_no+'"><input type="hidden" id="approval" name="approval" value=1></form>');		
+			            	$("#report-content > ul > li").eq(i).append('<div><button type="button" class="btn btn-default submit-btn hvr-shadow-radial">제출</button> <form class="reportnoform" action="submit" method="POST"><input type="hidden" id="report_no" name="report_no" value="'+response.data[i].report_no+'"><input type="hidden" id="approval" name="approval" value=1></form>');		
 			        	}else if(response.data[i].approval == 1){
-			            	$("#content > ul > li").eq(i).append('<div><div class="btn btn-default report-stat">제출 완료</div></div>');		
+			            	$("#report-content > ul > li").eq(i).append('<div><div class="btn btn-default report-stat">제출 완료</div></div>');		
 	 		        	}else if(response.data[i].approval == 2){
-	 		        		$("#content > ul > li").eq(i).append('<div><div class="btn btn-default report-stat">승인 완료</div></div>');		
+	 		        		$("#report-content > ul > li").eq(i).append('<div><div class="btn btn-default report-stat">승인 완료</div></div>');		
 			        	}else{
-			        		$("#content > ul > li").eq(i).append('<div><div class="btn btn-default report-stat">반려</div></div>'); 
+			        		$("#report-content > ul > li").eq(i).append('<div><div class="btn btn-default report-stat">반려</div></div>'); 
 			        	}
 			        }
 		    	   }
@@ -120,7 +122,6 @@ $(document).ready(function() {
 		        $(".report-list").css({"margin-left": "100px", "width": "auto"});
 		        $(".submit-btn").css({"margin-left": "-100px", "float": "right", "z-index": "100", "margin-top": "25px", "position": "absolute"});
 		        $(".report-stat").css({"margin-left": "-100px", "float": "right", "z-index": "100", "margin-top": "25px", "position": "absolute"});
-		         
 		    });
 	});
 	
@@ -159,9 +160,11 @@ $(document).ready(function() {
 	</div>
 	<article id="reportsearch-content">
 		<div>
+			<c:if test="${authUser.level =='팀원'}">
 			<button type="button" class="btn btn-default"
 				onclick="location.href='insert'"
 				style="float: right; display: inline-block;">보고서 추가</button>
+			</c:if>
 		</div>
 		<form>
 			<table
@@ -175,10 +178,24 @@ $(document).ready(function() {
 					<td><select class="form-control" id="approval">
 							<option value="4" selected>전체</option>
 							<option value="2">승인</option>
-							<option value="1">제출</option>
+							<option value="1">승인대기</option>
 							<option value="0">미제출</option>
 							<option value="3">반려</option>
 					</select></td>
+					<td>
+					<c:if test="${authUser.level == '팀장'}">
+					<select id="teamselect" class="form-control">
+						<option>
+							팀원
+						</option>
+						<c:forEach var="i" items="${members}" varStatus="status">
+						<option value="${i.id}">
+							${i.name}
+						</option>
+						</c:forEach>
+					</select>
+					</c:if>						
+					</td>
 					<td>
 						<button id="search-report" type="button" class="btn btn-default">조회</button>
 					</td>
@@ -219,8 +236,7 @@ $(document).ready(function() {
 										alt="승인/미승인 이미지" style="width: 77px; float: left">
 								</c:otherwise>
 							</c:choose>
-							<table class="table report-list"
-								style="margin-left: 100px; width: auto;">
+							<table class="table report-list">
 								<thead>
 									<tr>
 										<th>보고 일자:${dayreportVo.date}</th>
@@ -239,7 +255,8 @@ $(document).ready(function() {
 									<!-- 팀장 페이지에서 조회엔 누가 썻는지 알아야 하므로 부서,이름,직급이 표기 되어야 하기 때문에 tr이 한줄 더 필요하다. -->
 								</tbody>
 							</table>
-					</a> <c:choose>
+					</a> 
+					<c:choose>
 							<c:when test="${dayreportVo.approval == 0}">
 								<div>
 									<button type="button"
@@ -272,7 +289,8 @@ $(document).ready(function() {
 										style="margin-left: -100px; float: right; z-index: 100; margin-top: 25px; position: absolute;">반려됨</div>
 								</div>
 							</c:otherwise>
-						</c:choose></li>
+						</c:choose>
+						</li>
 				</c:forEach>
 			</ul>
 		</div>

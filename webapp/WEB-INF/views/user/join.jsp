@@ -24,9 +24,11 @@
 			</div>
 		</div>
 		<main id="page-content-wrapper" role="main">
+		<div class="panel-info" style="clear: both; margin-top : 10px;">
 			<div class="content-header">
 						<h3><strong>회원 가입</strong></h3>
 			</div>
+		</div>
 			<div class="join_container">
 				<div>
 					<form name="joinform" class="form-horizontal" method="post" 

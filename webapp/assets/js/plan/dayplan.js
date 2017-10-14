@@ -32,6 +32,13 @@
 					  	}
 				}); 
 	}
+	function dayplanbuttonhide(){
+		$("#dayplan-write-btn").hide();
+		$("#dayplan-update-btn").hide();
+		$("#dayplan-delete-btn").hide();
+	}
+	
+	
 	
 	//일일 계획서의 모든 입력 block
 	function blockdayplan(){
@@ -40,9 +47,7 @@
 		$("#dateplan-searchRoutes").attr('disabled',true);
 		$("#dateplan-deleteRoutes").attr('disabled',true);
 		$("#dateplan-searchPosition").attr('disabled',true);
-		$("#dayplan-write-btn").hide();
-		$("#dayplan-update-btn").hide();
-		$("#dayplan-delete-btn").hide();
+		dayplanbuttonhide();
 		$('#date-textarea').froalaEditor('edit.off');
 	}
 	function availabledayplan(){
@@ -51,9 +56,6 @@
 		$("#dateplan-searchRoutes").removeAttr('disabled');
 		$("#dateplan-deleteRoutes").removeAttr('disabled');
 		$("#dateplan-searchPosition").removeAttr('disabled');
-		$("#dayplan-write-btn").hide();
-		$("#dayplan-update-btn").show();
-		$("#dayplan-delete-btn").show();
 		$('#date-textarea').froalaEditor('edit.on');
 	}
 	
@@ -79,7 +81,10 @@
 	}
 	
 	//달력 클릭시 일일계획서 데이터  ajax
-	function changedayplan(dayClick,id,authUserID,plandatecheck){
+	function changedayplan(dayClick,id,authUserID,plandatecheck,map){
+
+		dayplanbuttonhide();
+			
 		$.ajax({
 			url : "/sfa/date/select",
 			type : 'POST',
@@ -90,12 +95,12 @@
 					console.log("dayplan 데이터 확인");
 					console.log(response.data);
 					console.log(response.result);
-
+							
 					//금일 일일 계획서 내용 초기화
 					$("#side-dayplan-content").empty();
 					
 					////금일 일일 계획서 내용 존재 여부 확인
-					if(response.data == null ){
+					if(response.data == null || response.result == "fail"){
 							//alert("작성된 일일 계획서가 없습니다.");
 							$("#side-dayplan-content").text("입력된 계획이 없습니다.");
 							$("#dayplantable-title").val("");
@@ -104,11 +109,7 @@
 							$("#goalmoney").css("background-color","#eee");
 							//날짜를 기준으로 클릭한 날짜가 현재 날짜와 같거나 이후이면 새로 작성가능(저장버튼 show).
 							if(plandatecheck){ 
-								$("#dayplantable-title").removeAttr('disabled');
-								$("#challenge").removeAttr('disabled');
-								$("#dateplan-searchRoutes").removeAttr('disabled');
-								$("#dateplan-deleteRoutes").removeAttr('disabled');
-								$("#dateplan-searchPosition").removeAttr('disabled');
+								availabledayplan();
 								$("#write-btn").show();	
 							}
 							//지난 날짜에 대하여 예외처리(모든 입력과 이벤트를 불가능하게 한다.)
@@ -118,6 +119,7 @@
 							return ;
 						}
 					else{
+						$("#dayplan-route").attr("value",response.data.route);
 						$("#dayplantable-title").val(response.data.title);
 							$("#date-reg-date").text(response.data.reg_date);
 							$("#date-reg-date").css("background-color","");
@@ -143,6 +145,8 @@
 						
 							if(plandatecheck){ 
 								availabledayplan();
+								$("#dayplan-update-btn").show();
+								$("#dayplan-delete-btn").show();
 							}
 							
 							//지난 날짜에 대하여 예외처리(모든 입력과 이벤트를 불가능하게 한다.)
@@ -150,6 +154,9 @@
 								blockdayplan();
 							}
 					}
+					
+					 var routeFormat = new Tmap.Format.KML({extractStyles:true, extractAttributes:true});
+					 drawRoute(response.data.route,routeFormat,map);
 							
 			},
 			error : function(
@@ -161,9 +168,6 @@
 		});
 	}
 	
-	/*function getCustomerPosition(){
-		
-	}*/
 	function resetmap(){
 		$("#map_div").remove();
 		$("#map_content").append("<div id='map_div'></div>");
@@ -221,7 +225,8 @@
 	}
 	function dayplanModalSave(){
 		$("#dayplan-savebutton").click(function(){
-			//지도 삭제 후 다시 생성
+			
+			//지도 삭제후 재생성
 			resetmap();
 			if($("#dayplantable-title").val() == null || $("#dayplantable-title").val() =="")
 			{
@@ -231,12 +236,16 @@
 			var content = $('#date-textarea').froalaEditor('html.get');
 			var challenge = $("#challenge").val();	
 			var estimate_distance = $("#datetable-distance").val();
+			var route = $("#dayplan-route").val();
+			
 			console.log(title);
 			console.log(content);
 			console.log(challenge);
 			console.log(dateGoalMoney);
 			console.log(estimate_distance);
 			console.log(ClickedDay);
+			console.log(route);
+			
 			//$('#date-textarea').froalaEditor('html.set', temp);
 			
 			  $.post("/sfa/date/insert",{
@@ -246,7 +255,8 @@
 			  		 date:ClickedDay,
 			  		 estimate_distance: estimate_distance,
 			  		 estimate_course:routes,
-			  		 challenge_content:challenge
+			  		 challenge_content:challenge,
+			  		 route:route
 			  		},
 			        function(data,status){
 			            alert("Data: " + data + "\nStatus: " + status);
@@ -274,10 +284,13 @@
 			var content = $('#date-textarea').froalaEditor('html.get');
 			var challenge = $("#challenge").val();	
 			var estimate_distance = $("#datetable-distance").val();
+			var route = $("#dayplan-route").val();
 			console.log(title);
 			console.log(content);
 			console.log(challenge);
 			console.log(ClickedDay);
+			console.log(route);
+			
 			//var temp = '<p><b>글자진하게</b></p><p>평범하게</p><p><i>기울게</i></p><p><h1>h1이다</h1></p><p><h2>h2다</h2></p><p><h3>h3다</h3></p>';
 			//$('#date-textarea').froalaEditor('html.set', temp);
 			
@@ -289,7 +302,8 @@
 					  		 date:ClickedDay,
 					  		 estimate_distance: estimate_distance,
 					  		 estimate_course:routes,
-					  		 challenge_content:challenge
+					  		 challenge_content:challenge,
+					  		 route:route
 					        },
 					        function(data,status){
 					            console.log("Data: " + data + "\nStatus: " + status);
