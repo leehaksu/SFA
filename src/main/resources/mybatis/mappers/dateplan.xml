@@ -6,16 +6,16 @@
 		<![CDATA[
 		 insert 
 		   into plan  
-		 values(#{id},#{date},#{title},#{goal_sale},#{opinion},#{content},now(),#{estimate_distance},#{estimate_course},#{challenge_no})
+		 values(#{id},#{date},#{title},#{goal_sale},#{opinion},#{content},now(),#{estimate_distance},#{estimate_course},#{challenge_no},#{route})
 		]]>
 	</insert>
 	<select id="select_date" parameterType="datevo" resultType="datevo">
 		<![CDATA[
-    select a.title,a.goal_sale,a.opinion,a.content,a.reg_date,a.id,a.date,a.estimate_distance,a.estimate_course,a.challenge_no,b.content as challenge_content from plan as a, challenge as b where  a.challenge_no=b.challenge_no and a.id=#{id} and a.date=#{date};			]]>
+    select a.title,a.goal_sale,a.opinion,a.content,a.reg_date,a.id,a.date,a.estimate_distance,a.estimate_course,a.route,a.challenge_no,b.content as challenge_content from plan as a, challenge as b where  a.challenge_no=b.challenge_no and a.id=#{id} and a.date=#{date};			]]>
 	</select>
 	<update id="update_date" parameterType="datevo">
 		<![CDATA[
-		update plan set title=#{title} ,goal_sale=#{goal_sale},opinion=#{opinion},content=#{content},reg_date=now(),estimate_distance=#{estimate_distance},estimate_course=#{estimate_course},challenge_no=#{challenge_no}
+		update plan set title=#{title} ,goal_sale=#{goal_sale},opinion=#{opinion},content=#{content},reg_date=now(),estimate_distance=#{estimate_distance},estimate_course=#{estimate_course},challenge_no=#{challenge_no}, route=#{route}
 		where id=#{id} and date=#{date};
 			]]>
 	</update>
@@ -29,15 +29,10 @@
 		select goal_sale from plan where id=#{id} and date=#{date};	
 		]]>
 	</select>
-		<update id="updateByChallenge" parameterType="MAP">
-	<![CDATA[
-	
-	]]>
-	</update>
 	
 	<select id="selectTotalDate" parameterType="MAP" resultType="datevo">
 	<![CDATA[	
-	select a.title,a.goal_sale,a.opinion,a.content,a.reg_date,a.date,a.estimate_distance,a.estimate_course,a.challenge_no,b.content as challenge_content from plan as a, challenge as b, user as c where a.challenge_no=b.challenge_no and a.id=c.id and c.dept=(select dept from user where id=#{id}) and a.date=#{date};
+	select a.title,a.goal_sale,a.opinion,a.content,a.reg_date,a.date,a.estimate_distance,a.estimate_course,a.challenge_no,b.content as challenge_content,a.route from plan as a, challenge as b, user as c where a.challenge_no=b.challenge_no and a.id=c.id and c.dept=(select dept from user where id=#{id}) and a.date=#{date};
 	]]>
 	</select>
 </mapper>
