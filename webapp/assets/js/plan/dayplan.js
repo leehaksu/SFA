@@ -1,5 +1,5 @@
 //일일 계획서 모달 show() 및 css
-   	function dayplanmodalShow(dateGoalMoney){
+   	function dayplanmodalShow(){
 		$("#dayplanmodal").attr("class","modal show");
 		$('html, body').css({
 			'overflow' : 'hidden',
@@ -57,20 +57,23 @@
 		$('#date-textarea').froalaEditor('edit.on');
 	}
 	
+	//html string에서 태그 제거하는 정규식함수
+	function removeTag( html ) {
+	     return html.replace(/(<([^>]+)>)/gi, "");
+	}
 	function getsidedayplancontent(ClickedDay,selectID){
 		$.post("/sfa/date/",
-				{"date": dayClick,
-			   "id" : id},
-			   function(data,status){
-		            alert("Data: " + data + "\nStatus: " + status);
-		            console.log(data);
-		            console.log(data.content);
+				{"date": ClickedDay,
+			   "id" : selectID},
+			   function(response,status){
+		            alert("Data: " + response + "\nStatus: " + status);
+		            console.log(response);
 		            
-		            if(data == null){
+		            if(response.result == "fail" || response.data =="" ){
 		            	$("#side-dayplan-content").text("입력된 계획이 없습니다.");						
 		            } 
-		            else{
-		            	
+		            else{	            	
+		            	$("#side-dayplan-content").html(response.data);
 		            }
 		       });
 	}
@@ -84,6 +87,7 @@
 				   "id" : id}, //2017-09-08
 			dataType : "json",
 			success : function(response) {
+					console.log("dayplan 데이터 확인");
 					console.log(response.data);
 					console.log(response.result);
 
@@ -114,9 +118,6 @@
 							return ;
 						}
 					else{
-							var tempcontent = response.data.content.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
-							
-						$("#side-dayplan-content").html();
 						$("#dayplantable-title").val(response.data.title);
 							$("#date-reg-date").text(response.data.reg_date);
 							$("#date-reg-date").css("background-color","");
@@ -168,17 +169,21 @@
 		$("#map_content").append("<div id='map_div'></div>");
 	}
 	
-	//dayplanModal 닫힘
-	function dayplanModalClosed(){
-		resetmap();
+	function dayplanout(){
 		$('#datetable-branch').tooltip('disable');
 		$('html, body').css({'overflow' : 'auto','height' : '100%'}); //scroll hidden 해제 
 		$('#element').off('scroll touchmove mousewheel'); // 터치무브 및 마우스휠 스크롤 가능
+	}
+	
+	//dayplanModal 닫힘
+	function dayplanModalClosed(){
+		resetmap();
+		dayplanout();
 		$('.editor').remove();
 		$('.dayplanform-input').each(function() {
 			$(this).val("");
 		});
-		; 
+		 
 		$('#dayplantable-weekplan > tbody> tr > td > ul').each(function() {
 				$(this).children('li').remove();
 				$(this).children('br').remove();
@@ -245,7 +250,12 @@
 			  		},
 			        function(data,status){
 			            alert("Data: " + data + "\nStatus: " + status);
-			            
+			            alert(content);
+			            if(content == "")
+			            {
+			            	  $("#side-dayplan-content").text("입력된 계획이 없습니다.");
+			            }
+			            dayplanout();
 						$("#dayplanmodal").attr("class","modal fade");
 			        });
 				 		
@@ -283,7 +293,12 @@
 					        },
 					        function(data,status){
 					            console.log("Data: " + data + "\nStatus: " + status);
-					           
+					            alert(content);
+					            if(content == "")
+					            {
+					            	  $("#side-dayplan-content").text("입력된 계획이 없습니다.");
+					            }
+					            dayplanout();
 								$("#dayplanmodal").attr("class","modal fade");
 					        });
 		});
@@ -295,25 +310,12 @@
 			resetmap();
 			  $.post("/sfa/date/delete",
 		        { 
-		  		  date : ClickedDay, 
+		  		  date : ClickedDay 
 		        },
 		        function(data,status){
 		            console.log("Data: " + data + "\nStatus: " + status);
-		            $('#datetable-branch').tooltip('disable');
-					$('html, body').css({'overflow' : 'auto','height' : '100%'}); //scroll hidden 해제 
-					$('#element').off('scroll touchmove mousewheel'); // 터치무브 및 마우스휠 스크롤 가능
-					$('.editor').remove();
-					$('.dayplanform-input').each(function() {
-						$(this).val("");
-					});
-					; 
-					$('#dayplantable-weekplan > tbody> tr > td > ul').each(function() {
-							$(this).children('li').remove();
-							$(this).children('br').remove();
-						});
-					$('#date-textarea').froalaEditor('html.set', '');
-
-		            $("#dayplanmodal").attr("class","modal fade");
+		            $("#side-dayplan-content").text("입력된 계획이 없습니다.");
+		            dayplanModalClosed();
 		        });
 			});
 	}
