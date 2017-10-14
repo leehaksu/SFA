@@ -31,11 +31,12 @@ public class CustomerController {
 		return "customer/insert";
 	}
 	
-	//TEST detail
 	@Auth
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public String detail(@ModelAttribute CustomerVo customerVo) {
-		return "customer/customer_detail";
+	public String detail(@ModelAttribute CustomerVo customerVo,@AuthUser UserVo athUser,Model model) {
+		customerVo = customerService.selectCustomer(customerVo.getCustomer_code());
+		model.addAttribute("customerVo", customerVo);
+		return "customer/detail";
 	}
 
 	@Auth

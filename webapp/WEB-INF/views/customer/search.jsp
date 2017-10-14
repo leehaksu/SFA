@@ -59,19 +59,21 @@
 			</div>
 		</div>
 		<hr>
+		
+		<c:forEach items="${list}" var="customerVo" varStatus="status">
 		<div id="customer-info" class="well">
-			<a href="#">
-			<h4>알리딘 슈퍼</h4>
-			<small>서울시 동작구 신대방동 <i class="glyphicon glyphicon-map-marker"></i>			
+			<a href="${pageContext.servletContext.contextPath}/customer/detail?customer_code=${customerVo.customer_code}">
+			<h4>${customerVo.name}</h4>
+			<small>${customerVo.address}<i class="glyphicon glyphicon-map-marker"></i>			
 			</small>
-			
 			<p>
-				<i class="fa fa-user" aria-hidden="true"></i>담당자:김삼순<br /> <i
-					class="glyphicon glyphicon-envelope"></i>email@example.com <br />
-				<i class="fa fa-phone" aria-hidden="true"></i>010-1234-5678
+				<i class="fa fa-user" aria-hidden="true"></i>담당자:${customerVo.manager_name}<br/> <i
+					class="glyphicon glyphicon-envelope"></i>${customerVo.manager_email} <br />
+				<i class="fa fa-phone" aria-hidden="true"></i>${customerVo.manager_contact}
 			</p>
 			</a>
 		</div>
+		</c:forEach>
 		<%-- <c:forEach items="${customerList}" var="dayreportVo" varStatus="status">
 		<div id="customer-info" class="well">
 			<a href="${pageContext.servletContext.contextPath}/customer/customer_detail">

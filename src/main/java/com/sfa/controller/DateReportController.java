@@ -96,7 +96,7 @@ public class DateReportController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				return "redirect:/report/";
+				return "pln/report_insert";
 			} else {
 				return "plan/report_insert";
 			}

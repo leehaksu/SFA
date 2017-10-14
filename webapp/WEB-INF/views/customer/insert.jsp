@@ -92,10 +92,6 @@
 					<table class="table customer-table">
 						<tbody>
 							<tr>
-								<th>고객 코드</th>
-								<td><자동 기입></td>
-							</tr>
-							<tr>
 								<th>고객명</th>
 								<td><input type="text" class="form-control"
 									name="customer-name"></td>
@@ -103,7 +99,13 @@
 							<tr>
 								<th>고객 연락처</th>
 								<td><input class="form-control" type="text"
-									class="form-control" name="customer-phone"></td>
+									class="form-control" name="customer-phone" style="width:32%">
+									<span style='width: 20%; text-align:center;'>-</span>
+									<input class="form-control" type="text"
+									class="form-control" name="customer-phone" style="width:32%">
+									<span style='width: 20%; text-align:center;'>-</span>
+									<input class="form-control" type="text"
+									class="form-control" name="customer-phone" style="width:32%"></td>
 							</tr>
 							<tr>
 								<th>고객 영업시간</th>
@@ -112,7 +114,7 @@
 							</tr>
 							<tr>
 								<th>업체 주소</th>
-								<td><input id="customer-address-input" type="input"
+								<td><input id="customer-address-input" type="text"
 									class="form-control" name="name">
 									<button type="button" class="btn btn-info btn-md"
 										data-toggle="modal" data-target="#search_customer_map">맵
@@ -130,16 +132,22 @@
 						<tr>
 							<th>이름</th>
 							<td><input id="name" type="text" class="form-control"
-								name="name" placeholer="휴대전화 번호 "></td>
+								name="name" placeholer="이름 "></td>
 						</tr>
 						<tr>
 							<th>연락처</th>
 							<td><input id="cellPhone" type="text" class="form-control"
-								name="cellphone" placeholer="휴대전화 번호 "></td>
+								name="cellphone" placeholer="연락처 " style="width: 32%;">
+								<span style='width: 20%; text-align:center;'>-</span>
+								<input id="cellPhone" type="text" class="form-control"
+								name="cellphone" placeholer="연락처 " style="width: 32%;">
+								<span style='width: 20%; text-align:center;'>-</span>
+								<input id="cellPhone" type="text" class="form-control"
+								name="cellphone" placeholer="연락처 " style="width: 32%;"></td>
 						</tr>
 						<tr>
 							<th>이메일</th>
-							<td><input type="email" class="form-control" name="name">
+							<td><input id="email" type="email" class="form-control" name="name" placeholer="이메일">
 							</td>
 						</tr>
 					</tbody>

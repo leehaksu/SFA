@@ -10,7 +10,31 @@
 <script>
 	var current_latitude;
 	var current_longitude;
+	var click_number=0;
+	var temp_contact='<c:out value="${customerVo.contact}"/>';
+	var array=temp_contact.split("-");
+	var temp_contact='<c:out value="${customerVo.manager_contact}"/>';
+	var manager_array=temp_contact.split("-");
+	
+	function change()
+	{document.getElementById( '#modify_btn' ).setAttribute('class','fa fa-floppy-o fa-lg' );
+	$('.form-control').attr('readonly',false);
+	$('#MapSearch_btn').show();
 
+$('.fa fa-floppy-o fa-lg').click(function(){
+	$.ajax({
+		url : '/sfa/customer/update',
+		type : 'POST',
+		dataType : 'json',
+		data :      ,
+		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		success : function(doc) {
+			//console.log(doc.data);
+		}
+	});
+	
+	});
+}
 	function getLocation() {
 		//console.log("1번째 실행");
 		if (navigator.geolocation) {
@@ -60,7 +84,13 @@
 	$(document).ready(function() {
 		$('input[name=cellphone]').mask('000-0000-0000');
 		$('input[name=customer-phone]').mask('00-000-0000');
-		
+		$('#contact1').attr("value",array[0]);
+		$('#contact2').attr("value",array[1]);
+		$('#contact3').attr("value",array[2]);
+		$('#manager_contact1').attr("value",array[0]);
+		$('#manager_contact2').attr("value",array[1]);
+		$('#manager_contact3').attr("value",array[2]);
+		$('#MapSearch_btn').hide();
 	});
 </script>
 
@@ -82,42 +112,60 @@
 	<main id="page-content-wrapper" role="main">
 	<div class="customer-container">
 		<div class="content-header">
-			<h3 >
+			<h3>
 				<strong>고객 등록</strong>
 			</h3>
+			<div style="float: right;">
+				<a href="#"> <i id="#modify_btn" class="fa fa-pencil fa-lg"
+					aria-hidden="true" onClick="change()"></i>
+				</a> &nbsp; <a
+					href="${pageContext.servletContext.contextPath}/customer/delete?customer=${customer_code}">
+					<i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+				</a>
+			</div>
+
 		</div>
-		<div id="custominertmain-content">
-			<div class="customer">
-				<h3>고객사 정보</h3>
-				<form>
+		<form action="${pageContext.servletContext.contextPath}/customer"
+			method="post">
+			<div id="custominertmain-content">
+				<div class="customer">
+					<h3>고객사 정보</h3>
 					<table class="table customer-table">
 						<tbody>
 							<tr>
-								<th>고객 코드</th>
-								<td><자동 기입></td>
-							</tr>
-							<tr>
 								<th>고객명</th>
 								<td><input type="text" class="form-control"
-									name="customer-name" readonly></td>
+									name="customer_name" value="${customerVo.name}"
+									style="text-align: center" readonly></td>
 							</tr>
 							<tr>
 								<th>고객 연락처</th>
-								<td><input class="form-control" type="text"
-									class="form-control" name="customer-phone"readonly></td>
+								<td><input id="contact1" class="form-control" type="text"
+									class="form-control" name="customer-phone"
+									style="width: 32%; text-align: center;" readonly> <span
+									style='width: 20%; text-align: center;'>-</span> <input
+									id="contact2" class="form-control" type="text"
+									class="form-control" name="customer-phone"
+									style="width: 32%; text-align: center;" readonly> <span
+									style='width: 20%; text-align: center;'>-</span> <input
+									id="contact3" class="form-control" type="text"
+									class="form-control" name="customer-phone"
+									style="width: 32%; text-align: center;" readonly></td>
 							</tr>
 							<tr>
 								<th>고객 영업시간</th>
 								<td><input type="text" class="form-control"
-									name="opening-hours"readonly></td>
+									name="opening-hours" value="${customerVo.time}"
+									style="text-align: center" readonly></td>
 							</tr>
 							<tr>
 								<th>업체 주소</th>
 								<td><input id="customer-address-input" type="input"
-									class="form-control" name="name"readonly>
-									<button type="button" class="btn btn-info btn-md"
-										data-toggle="modal" data-target="#search_customer_map">맵
-										검색</button>
+									class="form-control" name="name" value="${customerVo.address}"
+									style="text-align: center" readonly>
+									<button id="MapSearch_btn" type="button"
+										class="btn btn-info btn-md" data-toggle="modal"
+										data-target="#search_customer_map">맵 검색</button>
 									<div id="search_customer_map" class="modal fade" role="dialog">
 										<div class="modal-dialog">
 											<div class="modal-content">
@@ -135,38 +183,45 @@
 											</div>
 
 										</div>
-								</div></td>
+									</div></td>
 							</tr>
 						</tbody>
 					</table>
-				</form>
-			</div>
-			<br>
-			<h3>당담자</h3>
-			<form>
+				</div>
+				<br>
+				<h3>당담자</h3>
 				<table class="table customer-table">
 					<tbody>
 						<tr>
 							<th>이름</th>
 							<td><input id="name" type="text" class="form-control"
-								name="name" placeholer="휴대전화 번호 " readonly></td>
+								name="name" placeholer="이름 " value="${customerVo.manager_name}"
+								style="text-align: center" readonly></td>
 						</tr>
 						<tr>
 							<th>연락처</th>
-							<td><input id="cellPhone" type="text" class="form-control"
-								name="cellphone" placeholer="휴대전화 번호 " readonly></td>
+							<td><input id="manager_contact1" class="form-control"
+								type="text" class="form-control" name="customer-phone"
+								style="width: 32%; text-align: center;" readonly> <span
+								style='width: 20%; text-align: center;'>-</span> <input
+								id="manager_contact2" class="form-control" type="text"
+								class="form-control" name="customer-phone"
+								style="width: 32%; text-align: center;" readonly> <span
+								style='width: 20%; text-align: center;'>-</span> <input
+								id="manager_contact3" class="form-control" type="text"
+								class="form-control" name="customer-phone"
+								style="width: 32%; text-align: center;" readonly></td>
 						</tr>
 						<tr>
 							<th>이메일</th>
-							<td><input type="email" class="form-control" name="name" readonly>
-							</td>
+							<td><input type="email" class="form-control" name="name"
+								value="${customerVo.manager_email}" style="text-align: center"
+								readonly></td>
 						</tr>
 					</tbody>
 				</table>
-				<br> <input id="customer-submit-button" type="submit"
-					class="btn btn-default" readonly>
-			</form>
-		</div>
+		</form>
+	</div>
 	</div>
 	</main>
 </body>
