@@ -28,10 +28,9 @@
 		</h3>
 	</div>
 	<div class="container">
-		 <h4> 
-			 <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
-					2017년
-		  	 <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+		<h4>
+			<i class="fa fa-chevron-circle-left" aria-hidden="true"></i> 2017년 <i
+				class="fa fa-chevron-circle-right" aria-hidden="true"></i>
 		</h4>
 		<table>
 			<thead>
@@ -66,6 +65,22 @@
 
 
 	<script>
+	$(document).ready( function() {
+		$.ajax({
+			url : '/sfa/chart/sale',
+			type : 'POST',
+			dataType : 'json',
+			data : "date=2017",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			success : function(doc) {
+				console.log(doc);
+				console.log(doc.data);
+				console.log(doc.data.Jun);
+				var array1=[doc.data.Jun];
+				var array=new Array();
+
+			}		
+		});
 		var ctx = document.getElementById("performanceChart");
 		var myChart = new Chart(
 				ctx,
@@ -144,6 +159,7 @@
 				}
 			}
 		});
+	});
 	</script>
 </body>
 </html>
