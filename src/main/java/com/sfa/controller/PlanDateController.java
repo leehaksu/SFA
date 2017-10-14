@@ -43,8 +43,8 @@ public class PlanDateController {
 	@ResponseBody
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public JSONResult insert(@ModelAttribute DateVo dateVo, @AuthUser UserVo authUser, UserVo userVo, Model model) {
-		
-		if (dateVo.getDate()==null || dateVo.getTitle() == null || dateVo.getGoal_sale() == -1 || dateVo.getChallenge_content()==null) {
+		System.out.println(dateVo);
+		if (dateVo.getDate()==null || dateVo.getTitle() == null || dateVo.getGoal_sale() == null || dateVo.getChallenge_content()==null) {
 			return JSONResult.error("날짜,제목,목표액,도전과제 설정 바랍니다.");
 		} else {
 			dateVo.setId(authUser.getId());
@@ -80,17 +80,17 @@ public class PlanDateController {
 	@ResponseBody
 	@RequestMapping(value = "/select", method = RequestMethod.POST)
 	public JSONResult select(@ModelAttribute DateVo dateVo, @AuthUser UserVo authUser,
-			@RequestParam(value="id",required=true, defaultValue="")String id, UserVo userVo, CustomerVo customernVo) {
-		if (dateVo.getDate() == null || id==null) {
+			 UserVo userVo, CustomerVo customernVo) {
+		if (dateVo.getDate() == null ) {
 			return JSONResult.error("날짜와 아이디가 넘어오지 않았습니다.");
-		}else if("".equals(id))
+		}else if("".equals(dateVo.getId()))
 		{
 			return JSONResult.error("아이디가 정상적이지 않습니다.");
 		}
 		else {
 			if(authUser.getLevel().equals("팀장"))
 			{
-				dateVo.setId(id);
+				dateVo.setId(dateVo.getId());
 			}else
 			{
 				dateVo.setId(authUser.getId());

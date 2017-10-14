@@ -794,14 +794,14 @@
 
 						<!-- Modal content-->
 						<div class="modal-content">
-							<div class="modal-header">
+							<div class="modal-header" style="border-bottom : 1px solid #fff">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">우선 사항</h4>
+								<h4 class="modal-title">알 림</h4>
 							</div>
 							<div class="modal-body">
 								<p>달력에서 날짜를 먼저 클릭해 주세요.</p>
 							</div>
-							<div class="modal-footer">
+							<div class="modal-footer" style="border-top : 1px solid #fff">
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">확인</button>
 							</div>
