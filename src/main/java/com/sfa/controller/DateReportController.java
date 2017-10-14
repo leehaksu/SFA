@@ -19,7 +19,6 @@ import com.sfa.security.AuthUser;
 import com.sfa.service.DatePlanService;
 import com.sfa.service.DateReportService;
 import com.sfa.service.UserService;
-import com.sfa.service.WeekPlanService;
 import com.sfa.util.ChangeDate;
 import com.sfa.util.Push;
 import com.sfa.vo.DateReportVo;
@@ -46,10 +45,8 @@ public class DateReportController {
 	public String insert(@RequestParam(value = "id", required = true, defaultValue = "") String id,
 			@RequestParam(value = "date", required = true, defaultValue = "") String date, @AuthUser UserVo authUser,
 			DateReportVo dateReportVo, Model model) {
-
-		if ("".equals(id)) {
-			return "plan/report_search";
-		} else if ("".equals(date)) {
+		
+		if ("".equals(date)) {
 			date = ChangeDate.today();
 		}
 
@@ -70,9 +67,7 @@ public class DateReportController {
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public String insertDateReport(@ModelAttribute DateReportVo dateReportVo, @AuthUser UserVo authUser) {
 
-		if (authUser == null) {
-			return "user/login";
-		} else if (dateReportVo == null) {
+		if (dateReportVo == null) {
 			return "plan/report_insert";
 		} else {
 			dateReportVo.setId(authUser.getId());

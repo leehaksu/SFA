@@ -2,15 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="chart">
-	<select id="getByYear" parameterType="MAP" resultType="chatvo">
+	<select id="getSaleByYear" parameterType="MAP" resultType="chartvo">
 	<![CDATA[
-		select month, sum(report_sale) as total
+		select month, sum(report_sale) as total_sale
 		from(
 		select date_format(date,'%m') as month , report_sale
 		from day_report
-		where date_format(date,'%Y') = '2017' and id='nonono123'
+		where date_format(date,'%Y') = #{date} and id=#{id}
 		)A
 		group by month;
+	]]>
+	</select>
+	
+	<select id="getMileByYear" parameterType="MAP" resultType="chartvo">
+	<![CDATA[
+	select month, sum(mile) as total_mile 
+from (select date_format(date,'%m') as month , mile from day_report as a, guage as b where a.report_no=b.report_no and date_format(date,'%Y') = #{date} and id=#{id}
+)A group by month;
 	]]>
 	</select>
 </mapper>

@@ -266,12 +266,11 @@ public class UserController {
 				if (no == 1) {
 					try {
 						push.Mail(userVo.getEmail(), id + "님 임시비밀번호 보내드립니다.", "임시 비밀번호는" + passwd + "입니다.", "admin");
-						return JSONResult.success();
 					} catch (MessagingException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						return JSONResult.success();
 					}
+					return JSONResult.success(userVo.getEmail());
 				} else {
 					return JSONResult.fail("임시비밀번호 생성이 실패하였습니다.");
 				}

@@ -33,6 +33,7 @@ public class MobileUserController {
 	@Autowired
 	private CreatePasswd cratePasswd;
 	
+
 	@ResponseBody
 	@RequestMapping(value="/auth")
 	public JSONResult log(@ModelAttribute UserVo vo)

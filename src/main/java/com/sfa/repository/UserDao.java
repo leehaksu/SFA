@@ -46,7 +46,7 @@ public class UserDao {
 		// TODO Auto-generated method stub
 		
 		System.out.println(userVo);
-		return sqlSession.update("user.update", userVo);
+		return sqlSession.update("user.updatePasswd", userVo);
 	}
 
 	public List<UserVo> getMember(String name,String grade,String dept) {
@@ -101,7 +101,7 @@ public class UserDao {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put( "email", email );
 		map.put("name", name);
-		return sqlSession.selectOne("user.getUser", map);
+		return sqlSession.selectOne("user.getUserByName", map);
 	}
 
 	public int insertToken(String token, String id) {
@@ -174,6 +174,6 @@ public class UserDao {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("id", id);
 		map.put("email", email);
-		return sqlSession.selectOne("user.getUserByName", map);
+		return sqlSession.selectOne("user.getUserByEmail", map);
 	}
 }

@@ -121,7 +121,7 @@ public class DateReportDao {
 		map.put("end_date", end_date);	
 		map.put("id", id);
 		map.put("approval",approval);
-		return sqlSession.selectOne("datereport.reportByDateApproval", map);
+		return sqlSession.selectList("datereport.reportByDateApproval", map);
 	}
 
 

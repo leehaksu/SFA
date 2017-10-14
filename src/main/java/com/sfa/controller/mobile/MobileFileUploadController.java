@@ -34,6 +34,11 @@ public class MobileFileUploadController {
 	public JSONResult upload(@ModelAttribute("file") FileFormVo multipartFile,
 			@ModelAttribute DateReportVo dateReportVo) {
 		DefaultReport defaultReport = new DefaultReport();
+	
+		if(dateReportVo.getStart_gauge()==null && dateReportVo.getEnd_gauge()==null)
+		{
+			return JSONResult.error("계기판값이 입력되지 않았습니다.");
+		}
 		System.out.println("dateRportVo"+dateReportVo);
 		// 파일 업로드의 URL주소를 가지고 온다.
 		int file_number = 0;
@@ -46,6 +51,7 @@ public class MobileFileUploadController {
 		if (files.size() == 0) {
 			return JSONResult.error("첨부된 파일이 없습니다.");
 		}
+		
 		// 작성중인 결과 보고서가 있는지 확인
 		List<DateReportVo> list = dateReportService.select(dateReportVo.getId(), dateReportVo.getDate());
 
