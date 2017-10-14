@@ -34,7 +34,7 @@ public class MobileFileUploadController {
 	public JSONResult upload(@ModelAttribute("file") FileFormVo multipartFile,
 			@ModelAttribute DateReportVo dateReportVo) {
 		DefaultReport defaultReport = new DefaultReport();
-
+		System.out.println("dateRportVo"+dateReportVo);
 		// 파일 업로드의 URL주소를 가지고 온다.
 		int file_number = 0;
 		int check_no = 0;

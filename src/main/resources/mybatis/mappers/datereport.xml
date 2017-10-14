@@ -32,6 +32,11 @@
 	from day_report as a, user as b where a.id=b.id and b.dept=#{dept};
 		]]>
 	</select>
+		<select id="getByDeptApproval" parameterType="datereportvo" resultType="datereportvo">
+		<![CDATA[
+		select report_no,title, report_sale,content,achive_rank,approval,opinion,reg_date,date from day_report as a, user as b where b.dept=(select dept from user where id=#{id}) and approval=#{approval} and date between #{start_date} and #{end_date} order by date desc;	
+		]]>
+	</select>
 	<delete id="delete" parameterType="datereportvo">
 		delete from day_report where report_no=#{report_no} and id=#{id} and approval=0;
 	</delete>
@@ -84,5 +89,10 @@
 	<![CDATA[
 	select * from day_report as a, user as b where a.id=b.id and b.dept=(select dept from user where id=#{id}) and date=#{date};
 	]]>	
+	</select>
+	<select id="reportByDateApproval" parameterType="MAP" resultType="datereportvo">
+	<![CDATA[
+	select report_no,title, report_sale,content,achive_rank,approval,opinion,reg_date,date from day_report where id=#{id} and approval=#{approval} and date between #{start_date} and #{end_date} order by date desc;	
+	]]>
 	</select>
 </mapper>

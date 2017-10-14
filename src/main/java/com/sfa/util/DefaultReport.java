@@ -11,7 +11,8 @@ public class DefaultReport {
 		dateReportVo.setContent("내용없음");
 		// 날짜를 받아오지 않는 경우 오늘 날짜로 세팅한다.
 		if (dateReportVo.getDate() == null) {
-			dateReportVo.setDate(ChangeDate.today());
+			dateReportVo.setDate("2017-10-16");
+			/*dateReportVo.setDate(ChangeDate.today());*/
 		} else {
 			dateReportVo.setDate(dateReportVo.getDate());
 		}

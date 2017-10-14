@@ -72,7 +72,7 @@
 											목표액&nbsp;</label> 
 											<input id="dayreporttable-goal-sale"
 											class="form-control dayreportform-input" type="text" name="goal_sale"
-											placeholder="ajax통신" >
+											placeholder="ajax통신">
 									</div>
 									<div style="display: inline-block;">
 										<label for="day" style="width: 110px; text-align: center;">매

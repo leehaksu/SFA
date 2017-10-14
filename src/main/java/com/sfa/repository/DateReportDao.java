@@ -105,13 +105,23 @@ public class DateReportDao {
 		map.put("id", id);
 		return sqlSession.selectOne("datereport.reportByDate", map);
 	}
-
+	
 	public List<DateReportVo> selectTotalReport(String id, String date) {
 		// TODO Auto-generated method stub
 		HashMap<String, Object> map = new HashMap<String,Object>();
 		map.put("date", date);
 		map.put("id", id);
 		return sqlSession.selectList("datereport.selectTotalReport", map);
+	}
+
+	public List<DateReportVo> selectReportByPeriodApproval(String start_date,String end_date, String id,Long approval) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("start_date", start_date);
+		map.put("end_date", end_date);	
+		map.put("id", id);
+		map.put("approval",approval);
+		return sqlSession.selectOne("datereport.reportByDateApproval", map);
 	}
 
 
