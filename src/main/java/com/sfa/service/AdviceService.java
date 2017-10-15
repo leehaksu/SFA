@@ -34,4 +34,9 @@ public class AdviceService {
 		return adviceDao.select(adviceVo);
 	}
 
+	public List<AdviceVo> selectByAdviceNo(AdviceVo adviceVo) {
+		// TODO Auto-generated method stub
+		return adviceDao.selectByAdviceNo(adviceVo);
+	}
+
 }

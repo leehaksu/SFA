@@ -6,6 +6,9 @@
 	<![CDATA[
 	insert into advice values (null,#{title},#{content},#{date},#{manager_name},now(),#{id},#{customer_code}); 
 	]]>
+			<selectKey keyProperty="advice_no" resultType="long" order="AFTER">
+			select	last_insert_id();
+		</selectKey>
 	</insert>
 	<update id="update" parameterType="advicevo">
 	<![CDATA[
@@ -20,6 +23,11 @@
 	<select id="select" parameterType="advicevo" resultType="advicevo">
 	<![CDATA[
 	select advice_no, title,content,date,manager_name,reg_date,customer_code from advice where id=#{id} and date=#{date} ;
+	]]>
+	</select>
+		<select id="selectByadviceNo" parameterType="advicevo" resultType="advicevo">
+	<![CDATA[
+	select advice_no, title,content,date,manager_name,reg_date,customer_code from advice where id=#{id} and advice_no=#{advice_no} ;
 	]]>
 	</select>
 </mapper>
