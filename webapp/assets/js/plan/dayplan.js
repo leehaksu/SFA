@@ -110,7 +110,7 @@
 							//날짜를 기준으로 클릭한 날짜가 현재 날짜와 같거나 이후이면 새로 작성가능(저장버튼 show).
 							if(plandatecheck){ 
 								availabledayplan();
-								$("#write-btn").show();	
+								$("#dayplan-write-btn").show();	
 							}
 							//지난 날짜에 대하여 예외처리(모든 입력과 이벤트를 불가능하게 한다.)
 							else{

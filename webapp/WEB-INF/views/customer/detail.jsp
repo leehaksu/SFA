@@ -16,17 +16,17 @@
 	var temp_contact='<c:out value="${customerVo.manager_contact}"/>';
 	var manager_array=temp_contact.split("-");
 	
-	function change()
-	{document.getElementById( '#modify_btn' ).setAttribute('class','fa fa-floppy-o fa-lg' );
+	function change(){
+	document.getElementById( '#modify_btn' ).setAttribute('class','fa fa-floppy-o fa-lg' );
 	$('.form-control').attr('readonly',false);
 	$('#MapSearch_btn').show();
 
-$('.fa fa-floppy-o fa-lg').click(function(){
+	$('.fa fa-floppy-o fa-lg').click(function(){
 	$.ajax({
 		url : '/sfa/customer/update',
 		type : 'POST',
 		dataType : 'json',
-		data :      ,
+		/* data : , */
 		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 		success : function(doc) {
 			//console.log(doc.data);
@@ -82,14 +82,18 @@ $('.fa fa-floppy-o fa-lg').click(function(){
 	}
 
 	$(document).ready(function() {
-		$('input[name=cellphone]').mask('000-0000-0000');
-		$('input[name=customer-phone]').mask('00-000-0000');
 		$('#contact1').attr("value",array[0]);
+		$('#contact1').mask('000');
 		$('#contact2').attr("value",array[1]);
+		$('#contact2').mask('0000');
 		$('#contact3').attr("value",array[2]);
+		$('#contact3').mask('0000');
 		$('#manager_contact1').attr("value",array[0]);
+		$('#manager_contact1').mask('000');
 		$('#manager_contact2').attr("value",array[1]);
+		$('#manager_contact2').mask('0000');
 		$('#manager_contact3').attr("value",array[2]);
+		$('#manager_contact3').mask('0000');
 		$('#MapSearch_btn').hide();
 	});
 </script>
@@ -110,20 +114,19 @@ $('.fa fa-floppy-o fa-lg').click(function(){
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div class="customer-container">
-		<div class="content-header">
+	<div class="panel-info" style="clear: both; margin-top: 10px;">
+		<div class="content-header panel-heading">
 			<h3>
 				<strong>고객 등록</strong>
-			</h3>
-			<div style="float: right;">
+				<span style="float: right;">
 				<a href="#"> <i id="#modify_btn" class="fa fa-pencil fa-lg"
-					aria-hidden="true" onClick="change()"></i>
+					aria-hidden="true" onclick="change()"></i>
 				</a> &nbsp; <a
 					href="${pageContext.servletContext.contextPath}/customer/delete?customer=${customer_code}">
 					<i class="fa fa-trash fa-lg" aria-hidden="true"></i>
 				</a>
-			</div>
-
+ 				</span> 
+			</h3>
 		</div>
 		<form action="${pageContext.servletContext.contextPath}/customer"
 			method="post">
@@ -142,14 +145,14 @@ $('.fa fa-floppy-o fa-lg').click(function(){
 								<th>고객 연락처</th>
 								<td><input id="contact1" class="form-control" type="text"
 									class="form-control" name="customer-phone"
-									style="width: 32%; text-align: center;" readonly> <span
+									style="width: 32%; text-align: center;" max="3" readonly> <span
 									style='width: 20%; text-align: center;'>-</span> <input
 									id="contact2" class="form-control" type="text"
-									class="form-control" name="customer-phone"
+									class="form-control" name="customer-phone" max="4"
 									style="width: 32%; text-align: center;" readonly> <span
 									style='width: 20%; text-align: center;'>-</span> <input
 									id="contact3" class="form-control" type="text"
-									class="form-control" name="customer-phone"
+									class="form-control" name="customer-phone" max="4"
 									style="width: 32%; text-align: center;" readonly></td>
 							</tr>
 							<tr>
@@ -202,14 +205,14 @@ $('.fa fa-floppy-o fa-lg').click(function(){
 							<th>연락처</th>
 							<td><input id="manager_contact1" class="form-control"
 								type="text" class="form-control" name="customer-phone"
-								style="width: 32%; text-align: center;" readonly> <span
+								style="width: 32%; text-align: center;" max="3" readonly> <span
 								style='width: 20%; text-align: center;'>-</span> <input
 								id="manager_contact2" class="form-control" type="text"
-								class="form-control" name="customer-phone"
+								class="form-control" name="customer-phone" max="4"
 								style="width: 32%; text-align: center;" readonly> <span
 								style='width: 20%; text-align: center;'>-</span> <input
 								id="manager_contact3" class="form-control" type="text"
-								class="form-control" name="customer-phone"
+								class="form-control" name="customer-phone" max="4"
 								style="width: 32%; text-align: center;" readonly></td>
 						</tr>
 						<tr>

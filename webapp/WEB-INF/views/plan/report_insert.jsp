@@ -83,9 +83,12 @@ function validateForm() {
 				alert("업무 내용이 비어있습니다.");
 				return false;
 			}
+			if($("#dayreporttable-mile").val() == "잘못된 입력값"){
+				alert("계기판 정보가 잘못 입력되었습니다.");
+				return false;
+			}
 		} 
 	}
-	
 	return true;
 }
 
