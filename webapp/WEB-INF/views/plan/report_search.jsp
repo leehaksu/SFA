@@ -86,7 +86,7 @@ $(document).ready(function() {
 			        
 			        for(i=0; i<response.data.length;i++){	
 			        	$("#report-content > ul").append('<li class="report-thumnail"></li>');
-			        	$("#report-content > ul > li").eq(i).append('<a class="report-detail hvr-wobble-horizontal" href="${pageContext.servletContext.contextPath}/report/search?report_no='+response.data[i].report_no+'"></a>');		        	
+			        	$("#report-content > ul > li").eq(i).append('<a class="report-detail hvr-wobble-horizontal" href="${pageContext.servletContext.contextPath}/report/detail?report_no='+response.data[i].report_no+'"></a>');		        	
 			        	        	
 			        	if(response.data[i].approval == 0){
 			        		$(".report-detail").eq(i).append('<img class="report-state" src="${pageContext.servletContext.contextPath}/assets/image/write.png" alt="레포트 상태 이미지">');		

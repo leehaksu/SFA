@@ -59,9 +59,15 @@
 	}
 
 	$(document).ready(function() {
-		$('input[name=cellphone]').mask('000-0000-0000');
-		$('input[name=customer-phone]').mask('00-000-0000');
+		$('#contact1').mask('000');
+		$('#contact2').mask('0000');
+		$('#contact3').mask('0000');
+		$('#manager_contact1').mask('000');
+		$('#manager_contact2').mask('0000');
+		$('#manager_contact3').mask('0000');
 	});
+	
+	
 </script>
 
 </head>
@@ -79,10 +85,14 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div class="customer-container">
-		<div class="content-header">
+	<div class="panel-info" style="clear: both; margin-top: 10px;">
+		<div class="content-header panel-heading">
 			<h3>
-				<strong>고객 등록</strong>
+				<strong>고객 등록</strong> <span style="float: right;"> <a
+					href="#" onclick=""> <i
+						class="fa fa-floppy-o fa-lg" aria-hidden="true"></i>
+				</a> &nbsp;
+				</span>
 			</h3>
 		</div>
 		<div id="custominertmain-content">
@@ -98,14 +108,13 @@
 							</tr>
 							<tr>
 								<th>고객 연락처</th>
-								<td><input class="form-control" type="text"
-									class="form-control" name="customer-phone" style="width:32%">
-									<span style='width: 20%; text-align:center;'>-</span>
-									<input class="form-control" type="text"
-									class="form-control" name="customer-phone" style="width:32%">
-									<span style='width: 20%; text-align:center;'>-</span>
-									<input class="form-control" type="text"
-									class="form-control" name="customer-phone" style="width:32%"></td>
+								<td>
+								<input class="form-control" type="text" id="contact1" name="customer-phone" style="width: 32%; text-align: center;" max="3"> 
+								<span style="width: 20%; text-align: center;">-</span>
+								<input class="form-control" type="text" id="contact2" name="customer-phone" style="width: 32%; text-align: center;" max="4">
+								<span style="width: 20%; text-align: center;">-</span> 
+								<input class="form-control" type="text" id="contact3" name="customer-phone" style="width: 32%; text-align: center;"   max="4">
+								</td>
 							</tr>
 							<tr>
 								<th>고객 영업시간</th>
@@ -132,32 +141,24 @@
 						<tr>
 							<th>이름</th>
 							<td><input id="name" type="text" class="form-control"
-								name="name" placeholer="이름 "></td>
+								name="name" placeholder="이름 "></td>
 						</tr>
 						<tr>
 							<th>연락처</th>
-							<td><input id="cellPhone" type="text" class="form-control"
-								name="cellphone" placeholer="연락처 " style="width: 32%;">
-								<span style='width: 20%; text-align:center;'>-</span>
-								<input id="cellPhone" type="text" class="form-control"
-								name="cellphone" placeholer="연락처 " style="width: 32%;">
-								<span style='width: 20%; text-align:center;'>-</span>
-								<input id="cellPhone" type="text" class="form-control"
-								name="cellphone" placeholer="연락처 " style="width: 32%;"></td>
+							<td>
+							<input id="manager_contact1" type="text" class="form-control" name="cellphone" style="width: 32%; text-align: center;" max="3">
+							<span style='width: 20%; text-align: center;'>-</span> 
+							<input id="manager_contact2" type="text" class="form-control" name="cellphone" style="width: 32%; text-align: center;" max="4"> 
+							<span style='width: 20%; text-align: center;'>-</span> 
+							<input id="manager_contact3" type="text" class="form-control" name="cellphone" style="width: 32%; text-align: center;" max="4">
+							 </td>
 						</tr>
 						<tr>
 							<th>이메일</th>
-							<td><input id="email" type="email" class="form-control" name="name" placeholer="이메일">
-							</td>
+							<td><input id="email" type="email" class="form-control"
+								name="name" placeholer="이메일"></td>
 						</tr>
 					</tbody>
-					<tfoot>
-						<tr>
-							<td colspan="3"><input id="customer-submit-button" type="submit"
-								value="저장" class="btn btn-default" onclick="getLocation()">
-							</td>
-						<tr>
-					</tfoot>
 				</table>
 
 			</form>
