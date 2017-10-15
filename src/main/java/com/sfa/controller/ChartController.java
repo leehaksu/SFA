@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfa.dto.JSONResult;
 import com.sfa.security.Auth;
+import com.sfa.security.Auth.Role;
 import com.sfa.security.AuthUser;
 import com.sfa.service.ChartService;
 import com.sfa.util.ChangeDate;
@@ -105,5 +106,19 @@ public class ChartController {
 		} else {
 			return JSONResult.success(map);
 		}
+	}
+	
+/*	@Auth(value = Auth.Role.팀장)*/
+	@ResponseBody
+	@RequestMapping(value="/sale/id", method=RequestMethod.POST)
+	public JSONResult getSaleById (@AuthUser UserVo authUser,@RequestParam(value="date",required=true, defaultValue="")String date,
+			@RequestParam(value="id",required=true, defaultValue="")String id)
+	{
+		if ("".equals(date)) {
+			date=((ChangeDate.today()).substring(0, 4));
+		}
+		List<ChartVo> list = chartService.getSaleById("test01", date);
+		System.out.println(list);
+		return JSONResult.success(list);
 	}
 }

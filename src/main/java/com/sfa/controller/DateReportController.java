@@ -19,10 +19,12 @@ import com.sfa.security.AuthUser;
 import com.sfa.service.DatePlanService;
 import com.sfa.service.DateReportService;
 import com.sfa.service.UserService;
+import com.sfa.service.WeekPlanService;
 import com.sfa.util.ChangeDate;
 import com.sfa.util.Push;
 import com.sfa.vo.DateReportVo;
 import com.sfa.vo.UserVo;
+import com.sfa.vo.WeekVo;
 
 @Controller
 @RequestMapping("/report")
@@ -39,6 +41,9 @@ public class DateReportController {
 
 	@Autowired
 	private Push push;
+	
+	@Autowired
+	private WeekPlanService weekPlanService;
 
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
@@ -56,6 +61,7 @@ public class DateReportController {
 			id = authUser.getId();
 			dateReportVo.setId(id);
 		}
+		
 		dateReportVo.setDate(date);
 		Long goal_sale = datePlanService.getGoal_sale(dateReportVo);
 		System.out.println("goal_sale=" + goal_sale);
@@ -96,7 +102,7 @@ public class DateReportController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				return "pln/report_insert";
+				return "plan/report_insert";
 			} else {
 				return "plan/report_insert";
 			}
@@ -239,7 +245,7 @@ public class DateReportController {
 	}
 
 	@Auth
-	@RequestMapping(value = "/submit")
+	@RequestMapping(value = "/submit",method=RequestMethod.POST)
 	public String submit(@RequestParam(value = "report_no", required = true, defaultValue = "0") Long report_no,
 			@RequestParam(value = "approval", required = true, defaultValue = "0") Long approval,
 			@AuthUser UserVo authUser) {
@@ -255,5 +261,23 @@ public class DateReportController {
 			}
 		}
 	}
-
+	
+	@Auth
+	@RequestMapping(value = "/check",method=RequestMethod.POST)
+	public JSONResult check(@RequestParam(value="date",required=true, defaultValue="")String date,@AuthUser UserVo authUser)
+	{
+		if("".equals(date))
+		{
+			return JSONResult.error("날짜가 입력되지 않았습니다.");
+		}
+		List<WeekVo> list= weekPlanService.check(authUser.getId(),date);
+		
+		if(list.isEmpty())
+		{
+			return JSONResult.fail();
+		}else
+		{
+			return JSONResult.success();
+		}
+	}
 }

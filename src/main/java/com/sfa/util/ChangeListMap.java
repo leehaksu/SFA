@@ -42,9 +42,27 @@ public class ChangeListMap {
 			} else if (list.get(0).getTotal_sale() != null) {
 				System.out.println("여기 들어와??");
 				map = changeSale(list);
-			}
-			return map;
+			}		
 		}
+		return map;
+	}
+		public HashMap<String, Long> changeById(List<ChartVo> list) {
+			HashMap<String, Long> map = defaultMap();
+			if (list == null || list.isEmpty()) {
+				return map;
+			} else {
+				if (list.get(0).getEstimate_distance() != null) {
+					map = changeEstimate_distance(list);
+				} else if (list.get(0).getEstimate_sale() != null) {
+					map = changeEstimate_sale(list);
+				} else if (list.get(0).getTotal_mile() != null) {
+					map = changeMile(list);
+				} else if (list.get(0).getTotal_sale() != null) {
+					System.out.println("여기 들어와??");
+					map = changeSale(list);
+				}
+				return map;
+			}
 
 	}
 
@@ -226,6 +244,16 @@ public class ChangeListMap {
 			}
 		}
 		return map;
+	}
+	
+	public HashMap<String, HashMap<String,Long>> changeddcd(List<ChartVo> list) {
+			if(list==null)
+			{
+				return null;
+			}
+
+	
+	return null;
 	}
 
 }
