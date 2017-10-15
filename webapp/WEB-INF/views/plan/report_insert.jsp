@@ -102,6 +102,18 @@ function reportSubmit(){
 	
 }
 
+function addAdvice(response.result){
+	if(response.result == "success"){
+		adviceCount += 1;
+		var div = document.createElement('div');
+		div.setAttribute("id","advice_content"+adviceCount);
+		div.setAttribute("class","advice_content");
+
+		div.innerHTML = document.getElementById('advice_content1').innerHTML;
+		document.getElementById('advice_contianer').appendChild(div);
+}
+
+
 $(document).ready(function() {
 	
 	$("#dayreporttable-report-sale").focusout(function(){
@@ -116,10 +128,7 @@ $(document).ready(function() {
 
 	  $("#advicereporttable-date").attr("value", today);	
 	 //alert(today);
-	  $.post("select",
-	    {
- 			Date:today
-	    },
+	  $.get("select?date="+today,
 	    function(response, status){
 	        console.log(response.data);
 	    });
@@ -155,10 +164,7 @@ $(document).ready(function() {
 				        $("#advicereporttable-date").attr("value", dateText);				        
 				    });
 				 
-				 $.post("/sfa/advice/select",
-						    {
-					 			date:dateText
-						    },
+				 $.get("/sfa/advice/select?date="+dateText,
 						    function(response, status){
 						    	console.log(status);
 						    	console.log(response);
@@ -171,6 +177,8 @@ $(document).ready(function() {
 						    		console.log(response.data);
 						    	}
 						    	
+						    	console.log("현재 날짜의 상담일지 load");
+								console.log(response);	
 						    /* 	$("#dayreport-date").attr("value", dateText);
 						        $("#advicereporttable-date").attr("value", dateText); */				        
 						    });
@@ -281,15 +289,16 @@ $(document).ready(function() {
 				content:$("#advice-textarea").froalaEditor('html.get')
 			},
 			function(response,status){
-				console.log(response);
-				if(response.result == "success"){
-					adviceCount += 1;
-					var div = document.createElement('div');
-					div.setAttribute("id","advice_content"+adviceCount);
-					div.setAttribute("class","advice_content");
-
-					div.innerHTML = document.getElementById('advice_content1').innerHTML;
-					document.getElementById('advice_contianer').appendChild(div);					
+					console.log(response);
+					
+					addAdvice(response.result);
+					
+					$.post("/advice/select",{
+						advice_no:response.advice_no
+					},function(response,status){
+						console.log("새로 추가된 상담일지 정보");
+						console.log(response);	
+					});
 				}
 			});
 		     
