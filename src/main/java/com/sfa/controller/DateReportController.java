@@ -69,8 +69,10 @@ public class DateReportController {
 		
 		dateReportVo.setDate(date);
 		Long goal_sale = datePlanService.getGoal_sale(dateReportVo);
+		adviceVo.setId(id);
 		adviceVo.setDate(date);
 		List<AdviceVo> list = adviceService.select(adviceVo);
+		System.out.println(list.size());
 		System.out.println("goal_sale=" + goal_sale);
 		model.addAttribute("goal_sale", goal_sale);
 		model.addAttribute("date", date);
