@@ -160,9 +160,16 @@
 									label : '영업 매출액',
 									data : [80,40,30,40,50,60,70,80,90,100,110,120],
 									backgroundColor : 'rgba(54, 162, 235, 0.2)',
+									borderColor : 'rgba(255,99,132,1)',
+									borderWidth : 1
+								},
+								{
+									label : '예상 매출액',
+									data : [80,40,30,40,50,60,70,80,90,100,110,120],
+									backgroundColor : 'rgba(255, 99, 132, 0.2)',
 									borderColor : 'rgba(54, 162, 235, 1)',
 									borderWidth : 1
-								} ]
+								}]
 					},
 					options : {
 						scales : {
@@ -321,6 +328,25 @@
 						sale_array.push(doc.data[i].total_sale)
 				}
 				updateDate(myChart3,0,label_array,sale_array);
+								}
+			});
+			$.ajax({
+				url : '/sfa/chart/sale/dept/estimate',
+				type : 'POST',
+				dataType : 'json',
+				data : "date="+date,
+				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+				success : function(doc) {
+					console.log(doc);
+				var label_array = new Array();
+				var sale_array= new Array();
+					for(i=0;i<doc.data.length;i++)
+				{
+						
+						label_array.push(doc.data[i].dept);
+						sale_array.push(doc.data[i].total_sale)
+				}
+				updateDate(myChart3,1,label_array,sale_array);
 								}
 			});
 			

@@ -135,5 +135,18 @@ public class ChartController {
 		return JSONResult.success(list);
 	}
 	
+	@Auth(value = Auth.Role.팀장)
+	@ResponseBody
+	@RequestMapping(value="/sale/dept/estimate", method=RequestMethod.POST)
+	public JSONResult getEstimateSaleBydept (@AuthUser UserVo authUser,@RequestParam(value="date",required=true, defaultValue="")String date)
+	{
+		if ("".equals(date)) {
+			date=((ChangeDate.today()).substring(0, 4));
+		}
+		List<ChartVo> list = chartService.getEstimateSaleBydept(date);
+		System.out.println(list);
+		return JSONResult.success(list);
+	}
+	
 	
 }

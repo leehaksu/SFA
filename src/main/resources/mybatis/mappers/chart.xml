@@ -4,11 +4,11 @@
 <mapper namespace="chart">
 	<select id="getSaleByYear" parameterType="MAP" resultType="chartvo">
 	<![CDATA[
-		select month, sum(report_sale) as total_sale
+		select month, sum(report_sale)/10000 as total_sale
 		from(
 		select date_format(date,'%m') as month , report_sale
 		from day_report
-		where date_format(date,'%Y') = #{date} and id=#{id}
+		where date_format(date,'%Y') = #{date} and id=#{id} and approval=2
 		)A
 		group by month;
 	]]>
@@ -16,14 +16,14 @@
 	<select id="getMileByYear" parameterType="MAP" resultType="chartvo">
 	<![CDATA[
 	select month, sum(mile) as total_mile 
-from (select date_format(date,'%m') as month , mile from day_report as a, guage as b where a.report_no=b.report_no and date_format(date,'%Y') = #{date} and id=#{id}
+from (select date_format(date,'%m') as month , mile from day_report as a, guage as b where a.report_no=b.report_no and date_format(date,'%Y') = #{date} and id=#{id} and approval=2
 )A group by month;
 	]]>
 	</select>
 	<select id="getEstimateSaleByYear" parameterType="MAP"
 		resultType="chartvo">
 	<![CDATA[
-	select month, sum(goal_sale) as estimate_sale 
+	select month, sum(goal_sale)/10000 as estimate_sale 
 from  (select date_format(date,'%m') as month , goal_sale from plan
 		where date_format(date,'%Y') = #{date} and id=#{id})A group by month;
 		]]>
@@ -50,13 +50,25 @@ from  (select date_format(date,'%m') as month , goal_sale from plan
 	</select>
 		<select id="getSaleByDept" parameterType="MAP" resultType="chartvo">
 	<![CDATA[
-select dept,sum(report_sale) as total_sale
+select dept,sum(report_sale)/10000 as total_sale
       from(
          select report_sale,dept
          from day_report as a, user as b
+         where date_format(date,'%Y') = #{date} and a.id=b.id and a.approval=2
+      )A  
+      group by dept;
+	]]>
+	</select>
+			<select id="getEstimateSaleByDept" parameterType="MAP" resultType="chartvo">
+	<![CDATA[
+select dept,sum(goal_sale) as estimate_sale
+      from(
+         select goal_sale,dept
+         from plan as a, user as b
          where date_format(date,'%Y') = #{date} and a.id=b.id
       )A  
       group by dept;
 	]]>
 	</select>
+	
 </mapper>

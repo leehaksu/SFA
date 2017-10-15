@@ -50,4 +50,9 @@ public class ChartService {
 		return chartDao.getSaleByDept(date);
 	}
 
+	public List<ChartVo> getEstimateSaleBydept(String date) {
+		// TODO Auto-generated method stub
+		return chartDao.getEstimateSaleBydept(date);
+	}
+
 }
