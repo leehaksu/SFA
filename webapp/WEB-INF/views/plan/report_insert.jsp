@@ -145,7 +145,7 @@ $(document).ready(function() {
 			 			date:dateText
 				    },
 				    function(response, status){
-				    	console.log(response.result);  //계획이 있으면 success 없으면 fail
+				    	//console.log(response.result);  //계획이 있으면 success 없으면 fail
 				        
 				    	if(response.result =="fail"){
 				    		alert("주간계획 미작성!");
@@ -155,15 +155,20 @@ $(document).ready(function() {
 				        $("#advicereporttable-date").attr("value", dateText);				        
 				    });
 				 
-				 $.post("/advice/select",
+				 $.post("/sfa/advice/select",
 						    {
 					 			date:dateText
 						    },
 						    function(response, status){
-						    	console.log(response.data);  //계획이 있으면 success 없으면 fail
+						    	console.log(status);
+						    	console.log(response);
+						    	console.log(response.data.length);  //계획이 있으면 success 없으면 fail
 						        
-						    	if(response.result =="fail"){
-						    		alert("주간계획 미작성!");
+						    	if(response.data.length == 0){
+						    		console.log("작성된 상담일지가 존재하지 않습니다.");
+						    	}
+						    	else{
+						    		console.log(response.data);
 						    	}
 						    	
 						    /* 	$("#dayreport-date").attr("value", dateText);
@@ -255,7 +260,7 @@ $(document).ready(function() {
 
 		});
 	
-		$(document).on("click","#advicereporttable-savebutton",function(){			
+		$(document).on("click",".advice-submit",function(){			
 			var advice = [];  
 			$("#advice_content1").find('input').each(function(index){
 				var content={};
@@ -269,14 +274,14 @@ $(document).ready(function() {
 			
 			$.post("${pageContext.servletContext.contextPath}/advice/insert",
 			{
-				code:advice[0].code,
+				customer_code:advice[0].code,
 				manager_name:advice[2].manager_name,
 				date:advice[4].date,
 				title:advice[5].title,
 				content:$("#advice-textarea").froalaEditor('html.get')
 			},
 			function(response,status){
-				
+				console.log(response);
 				if(response.result == "success"){
 					adviceCount += 1;
 					var div = document.createElement('div');
@@ -447,7 +452,7 @@ $(document).ready(function() {
 									<div class="panel-heading" style="color: #fff; ">
 										<strong>상담카드</strong>
 										<div style="float: right;">
-										<a id="advice-submit" href="#" >
+										<a class="advice-submit" href="#" >
 										<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
 										</a>
 										&nbsp;
@@ -485,7 +490,7 @@ $(document).ready(function() {
 																style="width: 100px; text-align: center;">담당자
 																&nbsp;</label> <input id="advicereporttable-manager_name"
 																class="form-control advicereporttable-input" type="text"
-																name="manager_name" placeholder="담당자"
+																name="manager_name" placeholder="담당자" pattern="^[가-힣a-zA-Z]+$;"
 																required
 																>
 														</div>
@@ -541,19 +546,6 @@ $(document).ready(function() {
 
 									</div>
 								</div>
-								<!-- <div class="btn-group btn-group-justified" role="group"
-									style="width: 150px; float: right; margin: 10px;">
-									<div id="write-btn" class="btn-group" role="group">
-										<button class="btn btn-info advicereporttable-savebutton" type="button">
-											<strong>저장하기</strong>
-										</button>
-									</div>
-									<div id="delete-btn" class="btn-group" role="group">
-										<button class="btn btn-danger advicereporttable-deletebutton" type="submit">
-											<strong>삭제하기</strong>
-										</button>
-									</div>
-								</div> -->
 								<div style=" clear:both; border-bottom: 1px solid #eee;"></div>
 							</form>
 						</div>
