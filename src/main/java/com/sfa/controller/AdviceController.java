@@ -36,7 +36,7 @@ public class AdviceController {
 	adviceVo.setId(authUser.getId());
 	int no = adviceService.insert(adviceVo);
 		if (no == 1) {
-			return JSONResult.success();
+			return JSONResult.success(adviceVo.getAdvice_no());
 		} else {
 			return JSONResult.fail();
 		}
@@ -50,13 +50,26 @@ public class AdviceController {
 
 	@Auth
 	@ResponseBody
-	@RequestMapping(value = "/select", method = RequestMethod.POST)
+	@RequestMapping(value = "/select", method = RequestMethod.GET)
 	public JSONResult selectAdvice(@AuthUser UserVo authUser, @ModelAttribute AdviceVo adviceVo) {
 
 		if (adviceVo == null) {
-			return JSONResult.error("상담일지 내용이 없습니다.");
+			return JSONResult.error("입력값이 없습니다.");
 		} else {
+			adviceVo.setId(authUser.getId());
 			List<AdviceVo> list = adviceService.select(adviceVo);
+			return JSONResult.success(list);
+		}
+	}
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/select", method = RequestMethod.POST)
+	public JSONResult selectAdviceByAdviceNo(@AuthUser UserVo authUser, @ModelAttribute AdviceVo adviceVo) {
+		if (adviceVo == null) {
+			return JSONResult.error("입력값이 없습니다.");
+		} else {
+			adviceVo.setId(authUser.getId());
+			List<AdviceVo> list = adviceService.selectByAdviceNo(adviceVo);
 			return JSONResult.success(list);
 		}
 	}

@@ -30,5 +30,9 @@ public class AdviceDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("advice.select",adviceVo);
 	}
+	public List<AdviceVo> selectByAdviceNo(AdviceVo adviceVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("advice.selectByadviceNo", adviceVo);
+	}
 
 }
