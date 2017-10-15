@@ -21,7 +21,7 @@
 	$('.form-control').attr('readonly',false);
 	$('#MapSearch_btn').show();
 
-	$('.fa fa-floppy-o fa-lg').click(function(){
+	$('.fa fa-floppy-o fa-lg').on("click",function(){
 	$.ajax({
 		url : '/sfa/customer/update',
 		type : 'POST',
@@ -163,7 +163,7 @@
 							</tr>
 							<tr>
 								<th>업체 주소</th>
-								<td><input id="customer-address-input" type="input"
+								<td><input id="customer-address-input" type="text"
 									class="form-control" name="name" value="${customerVo.address}"
 									style="text-align: center" readonly>
 									<button id="MapSearch_btn" type="button"
@@ -223,9 +223,10 @@
 						</tr>
 					</tbody>
 				</table>
+			</div>
 		</form>
 	</div>
-	</div>
+	
 	</main>
 </body>
 </html>

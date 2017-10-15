@@ -23,6 +23,8 @@ var submitdate;
 var clickedAdviceId;
 
 
+
+
 function addNewAddviceInfo(advice_no)
 {
 	$.post("/sfa/advice/select",
@@ -35,10 +37,23 @@ function addNewAddviceInfo(advice_no)
 	});
 }
 
+
+
+function setContentAndProtect(listLength){
+	alert("상담일자 갯수: "+listLength);
+	for(i=1; i < listLength+1; i++){
+		var content = $("#advice-textarea"+i).data("value");
+		$("#advice-textarea"+i).froalaEditor('html.set',content);	
+		$("#advice-textarea"+i).froalaEditor('edit.off');
+		$("#advice_content"+i).attr("diabled",true);
+	}
+}
+
 $(document).ready(function() {
 	var listLength = '<c:out value="${fn:length(list)}"/>';
 	var list = '<c:out value="${list}"/>';
 	console.log(list);
+
 	$("#dayreporttable-report-sale").focusout(function(){
 		setAchiveRank();
 	});
@@ -207,13 +222,7 @@ $(document).ready(function() {
 			//form.submit();
 			
 		});
-		
-		alert("상담일자 갯수: "+listLength);
-		for(i=1; i < listLength+1; i++){
-			var content = $("#advice-textarea"+i).val();
-			$("#advice-textarea"+i).froalaEditor('html.set',content);			
-		}
-		
+		setContentAndProtect(listLength);
 	});
 </script>
 </head>
