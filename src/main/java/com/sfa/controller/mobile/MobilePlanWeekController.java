@@ -114,6 +114,7 @@ public class MobilePlanWeekController {
 			@RequestParam(value = "first_date", required = true, defaultValue = "") String first_date,
 			HttpSession authUser, WeekVo weekVo, UserVo userVo) {
 		System.out.println("[mobile] select 접속");
+		System.out.println("weekVo" + weekVo);
 		//weekVo에 월요일 날짜를 입력
 		weekVo.setFirst_date(first_date);
 		//weekVo에 아이디 입력

@@ -24,11 +24,14 @@ public class ChangeDate {
 		String one_day = calDay(checkDay(temp_date));
 		
 		//1일의 요일이 목,금,토,일 일 경우에는 week_no가 0부터 시작
-		if ("목".equals(one_day) || "금".equals(one_day) || "토".equals(one_day) || "일".equals(one_day)) {
+		if ("목".equals(one_day) || "금".equals(one_day)) {
 			week_no = getWeek(date) - 1;
-		} else {
+		} else if("토".equals(one_day) || "일".equals(one_day)) 
+			week_no = getWeek(date) - 1;
+		else{
 			//1일의 요일이 월,화,수일 경우에는 week_no가 1부터 시작
 			week_no = getWeek(date);
+			System.out.println("여기값 확인 :" +week_no);
 		}
 		//week_no가 0일경우에는 그 전달의 5주차로 변경
 		if (week_no == 0) {
