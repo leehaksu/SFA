@@ -140,7 +140,7 @@ $(document).ready(function() {
 			onSelect: function(dateText,inst){
 				submitdate=dateText;
 				$("#dayreport-date").val(dateText);
-				 $.post("select",
+				 $.post("check",
 				    {
 			 			Date:dateText
 				    },
@@ -180,12 +180,12 @@ $(document).ready(function() {
 						dataType : 'json',
 						contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 						success : function(doc) {
-							//console.log(doc.data);
+							console.log(doc.data);
 
 							for (index = 0; index < doc.data.length; index++) {
 								$('#modal_table > tbody').append(
 								"<tr><td class='tg-yw4l customer-info'>"
-										+ doc.data[index].code
+										+ doc.data[index].customer_code
 										+ "</td>"
 										+ "<td class='tg-yw4l customer-info'>"
 										+ doc.data[index].name
@@ -235,7 +235,7 @@ $(document).ready(function() {
 
 		});
 	
-		$(document).on("click",".advicereporttable-savebutton",function(){			
+		$(document).on("click","#advicereporttable-savebutton",function(){			
 			var advice = [];  
 			$("#advice_content1").find('input').each(function(index){
 				var content={};
@@ -427,10 +427,13 @@ $(document).ready(function() {
 									<div class="panel-heading" style="color: #fff; ">
 										<strong>상담카드</strong>
 										<div style="float: right;">
-										<a href="#" onclick="adviceSubmit()">
+										<a id="advice-submit" href="#" >
 										<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
 										</a>
 										&nbsp;
+										<a id="advice-delete" href="#" onclick=""> 
+											<i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+										</a>
 										</div>
 									</div>
 									<div class="panel-body">

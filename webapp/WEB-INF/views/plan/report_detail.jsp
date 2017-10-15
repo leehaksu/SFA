@@ -14,25 +14,23 @@
 	$(document).ready(function() {
 		
 		var content ='<c:out value="${dateReportVo.content}"/>'; 
-		$(function() {
-			$('.date-textarea').froalaEditor({
-				toolbarButtons : [ 'bold', 'italic', 'paragraphFormat' ],
-				paragraphFormat : {
-					N : 'Normal',
-					H1 : 'Heading 1',
-					H2 : 'Heading 2',
-					H3 : 'Heading 3'
-				}
-			});
+		
+			
+	$('.date-textarea').froalaEditor({
+			toolbarButtons : [ 'bold', 'italic', 'paragraphFormat' ],
+			paragraphFormat : {
+				N : 'Normal',
+				H1 : 'Heading 1',
+				H2 : 'Heading 2',
+				H3 : 'Heading 3'
+			}
 		});
-		
-		$('#date-textarea').froalaEditor('html.set',content);
-		
-			$('.date-textarea').froalaEditor('edit.off');
-		$(".dayreportform-input").attr("readonly", true);
-		$(".advicereporttable-input").attr("readonly", true);
-		$("#submitDay-datepicker").attr("readonly", true);
-	});
+	$('#date-textarea').froalaEditor('html.set', content);
+	$('.date-textarea').froalaEditor('edit.off');
+	$(".dayreportform-input").attr("readonly", true);
+	$(".advicereporttable-input").attr("readonly", true);
+	$("#submitDay-datepicker").attr("readonly", true);
+});
 
 	function update() {
 		$(".dayreportform-input").attr("readonly", false);
@@ -171,11 +169,12 @@
 						<div class="panel panel-info"
 							style="clear: both; margin-top: 10px;">
 							<div class="panel-heading" style="color: #fff;">
-								<strong>상담카드</strong> <span style="float: right;"> <a
-									href="#" onclick=""> <i class="fa fa-pencil fa-2x"
-										aria-hidden="true"></i>
-								</a> &nbsp; <a href="#" onclick=""> <i class="fa fa-trash fa-2x"
-										aria-hidden="true"></i>
+								<strong>상담카드</strong> <span style="float: right;"> 
+								<a href="#" onclick=""> 
+								<i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+								</a> &nbsp; 
+								<a href="#" onclick=""> 
+								<i class="fa fa-trash fa-2x" aria-hidden="true"></i>
 								</a>
 								</span>
 							</div>
