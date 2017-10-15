@@ -130,11 +130,13 @@ public class MobilePlanWeekController {
 		String [] dateArray = ChangeDate.five_date(weekVo.getFirst_date());
 		WeekVo weekVo2 = weekPlanService.selectWeek(weekVo);
 		if (weekVo2 == null) {
+			System.out.println(ChangeDate.CheckDate(weekVo));
 			return JSONResult.fail(ChangeDate.getWeekNo(ChangeDate.CheckDate(weekVo)));
 		} else if (weekVo2.getWeek_no() == null) {
 			return JSONResult.fail(ChangeDate.getWeekNo(ChangeDate.CheckDate(weekVo)));
 		} else {
 			WeekVo temp_weekVo = dateReportService.selectReport(dateArray[0],dateArray[4], weekVo.getId());
+			System.out.println("temp_weekVo"+temp_weekVo);
 			if (temp_weekVo == null) {
 				weekVo2.setAchive_rank(0.0);
 				weekVo2.setWeek_sale((long) 0);
@@ -145,7 +147,7 @@ public class MobilePlanWeekController {
 					weekVo2.setAchive_rank(0.0);
 				}else
 				{
-					weekVo2.setAchive_rank((temp_weekVo.getAchive_rank()/weekVo.getTarget_figure())*100);
+					weekVo2.setAchive_rank((temp_weekVo.getWeek_sale()/weekVo2.getTarget_figure())*100);
 				}
 			}
 			return JSONResult.success(weekVo2);

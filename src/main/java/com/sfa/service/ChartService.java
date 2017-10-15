@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sfa.repository.ChartDao;
+import com.sfa.repository.UserDao;
 import com.sfa.vo.ChartVo;
+import com.sfa.vo.UserVo;
 
 @Service
 public class ChartService {
 	
 	@Autowired
 	private ChartDao chartDao;
+	
+	@Autowired
+	private UserDao userDao;
 	
 	public List<ChartVo> getSaleByYear(String id, String date)
 	{
@@ -32,6 +37,12 @@ public class ChartService {
 	public List<ChartVo> getEstimateSaleByYear(String id, String date) {
 		// TODO Auto-generated method stub
 		return chartDao.getEstimateSaleByYear(id,date);
+	}
+
+	public List<ChartVo> getSaleById(String id, String date) {
+		// TODO Auto-generated method stub
+		UserVo userVo= userDao.getDept(id);
+		return chartDao.getSaleById(id,date,userVo.getDept());
 	}
 
 }

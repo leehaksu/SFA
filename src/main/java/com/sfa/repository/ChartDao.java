@@ -46,4 +46,13 @@ public class ChartDao {
 		map.put("date", date);
 		return sqlSession.selectList("chart.getEstimateSaleByYear", map);
 	}
+
+	public List<ChartVo> getSaleById(String id, String date, String dept) {
+		// TODO Auto-generated method stub
+		HashMap<String,String> map= new HashMap<String,String>();
+		map.put("id", id);
+		map.put("date", date);
+		map.put("dept", dept);
+		return sqlSession.selectList("chart.getSaleById", map);
+	}
 }

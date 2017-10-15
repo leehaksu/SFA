@@ -39,4 +39,13 @@ from  (select date_format(date,'%m') as month , goal_sale from plan
 		group by month;
 		]]>
 	</select>
+	<select id="getSaleById" parameterType="MAP" resultType="chartvo">
+	<![CDATA[
+	select id,month, sum(report_sale) as total_sale
+      from( select date_format(date,'%m') as month , report_sale,id from day_report where date_format(date,'%Y') = '2017' 
+    and id in(select id from user  where dept='영업 1팀' and id !=('test01') ) 
+      )A  
+      group by month, id;
+	]]>
+	</select>
 </mapper>
