@@ -114,12 +114,17 @@ public class MobilePlanWeekController {
 			@RequestParam(value = "first_date", required = true, defaultValue = "") String first_date,
 			HttpSession authUser, WeekVo weekVo, UserVo userVo) {
 		System.out.println("[mobile] select 접속");
+		//weekVo에 월요일 날짜를 입력
 		weekVo.setFirst_date(first_date);
+		//weekVo에 아이디 입력
 		weekVo.setId(id);
+		//아이디가 입력이 되지 않았을때 에러코드 보내기
 		if ("".equals(weekVo.getId())) {
 			return JSONResult.error("error_Plan_0x4");
 		}
+		// calendar 생성
 		Calendar cal = Calendar.getInstance();
+		//날짜가 날라오지 않을경우 오늘날짜는 처음 날짜로 입력
 		if ("".equals(first_date)) {
 			String calendar = String.valueOf(cal.get(Calendar.YEAR)) + "-" + String.valueOf(cal.get(Calendar.MONTH) + 1)
 					+ "-" + String.valueOf(cal.get(Calendar.DATE));
@@ -127,13 +132,14 @@ public class MobilePlanWeekController {
 		} else {
 			weekVo.setFirst_date(first_date);
 		}
+		//5일치 날짜를 가지고 옴
 		String [] dateArray = ChangeDate.five_date(weekVo.getFirst_date());
+		
 		WeekVo weekVo2 = weekPlanService.selectWeek(weekVo);
 		if (weekVo2 == null) {
-			System.out.println(ChangeDate.CheckDate(weekVo));
-			return JSONResult.fail(ChangeDate.getWeekNo(ChangeDate.CheckDate(weekVo)));
+			return JSONResult.fail(weekVo.getWeek_no());
 		} else if (weekVo2.getWeek_no() == null) {
-			return JSONResult.fail(ChangeDate.getWeekNo(ChangeDate.CheckDate(weekVo)));
+			return JSONResult.fail(weekVo.getWeek_no());
 		} else {
 			WeekVo temp_weekVo = dateReportService.selectReport(dateArray[0],dateArray[4], weekVo.getId());
 			System.out.println("temp_weekVo"+temp_weekVo);
