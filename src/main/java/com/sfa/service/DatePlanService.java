@@ -43,4 +43,8 @@ public class DatePlanService {
 		// TODO Auto-generated method stub
 		return planDateDao.selectTotalDate(id,date);
 	}
+	public List<DateVo> selectMainDate(String id) {
+		// TODO Auto-generated method stub
+		return planDateDao.selectMainDate(id);
+	}
 }

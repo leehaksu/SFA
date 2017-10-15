@@ -74,4 +74,11 @@ public class PlanDateDao {
 		map.put("id", id);
 		return sqlSession.selectList("dateplan.selectTotalDate", map);
 	}
+
+	public List<DateVo> selectMainDate(String id) {
+		// TODO Auto-generated method stub
+		HashMap<String , Object> map = new HashMap<String,Object>();
+		map.put("id", id);
+		return sqlSession.selectList("dateplan.selectMainDate", map);
+	}
 }

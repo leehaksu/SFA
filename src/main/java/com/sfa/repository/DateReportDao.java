@@ -124,5 +124,12 @@ public class DateReportDao {
 		return sqlSession.selectList("datereport.reportByDateApproval", map);
 	}
 
+	public List<DateReportVo> seletMainDate(String id) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("id", id);
+		return sqlSession.selectList("datereport.seletMainDate", map);
+	}
+
 
 }

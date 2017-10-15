@@ -35,4 +35,8 @@
 	select a.id,a.title,a.goal_sale,a.opinion,a.content,a.reg_date,a.date,a.estimate_distance,a.estimate_course,a.challenge_no,b.content as challenge_content,a.route from plan as a, challenge as b, user as c where a.challenge_no=b.challenge_no and a.id=c.id and c.dept=(select dept from user where id=#{id}) and a.date=#{date};
 	]]>
 	</select>
+	<select id="selectMainDate" parameterType="MAP" resultType="datevo">
+	<![CDATA[
+	 select a.title,a.goal_sale,a.opinion,a.content,a.reg_date,a.id,a.date,a.estimate_distance,a.estimate_course,a.route,a.challenge_no,b.content as challenge_content from plan as a, challenge as b where  a.challenge_no=b.challenge_no and a.id=#{id} order by reg_date desc limit 5;]]>
+	</select>
 </mapper>

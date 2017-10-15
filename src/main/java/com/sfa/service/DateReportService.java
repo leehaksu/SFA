@@ -128,4 +128,9 @@ public class DateReportService {
 		// TODO Auto-generated method stub
 		return dateReportDao.selectReportByPeriodApproval(startDate, endDate,id,approval);
 	}
+
+	public List<DateReportVo> seletMainDate(String id) {
+		// TODO Auto-generated method stub
+		return dateReportDao.seletMainDate(id);
+	}
 }
