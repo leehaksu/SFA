@@ -67,7 +67,6 @@ public class ChartDao {
 		// TODO Auto-generated method stub
 		HashMap<String,String> map= new HashMap<String,String>();
 		map.put("date", date);
-		System.out.println(map);
 		return sqlSession.selectList("chart.getEstimateSaleBydept",map);
 	}
 }

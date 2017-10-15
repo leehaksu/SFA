@@ -59,7 +59,7 @@ select dept,sum(report_sale)/10000 as total_sale
       group by dept;
 	]]>
 	</select>
-			<select id="getEstimateSaleByDept" parameterType="MAP" resultType="chartvo">
+			<select id="getEstimateSaleBydept" parameterType="MAP" resultType="chartvo">
 	<![CDATA[
 select dept,sum(goal_sale) as estimate_sale
       from(
