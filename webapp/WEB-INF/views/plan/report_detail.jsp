@@ -92,8 +92,8 @@
 								<label class="reporttable-label" for="day">달 성 률(%)
 									&nbsp;</label> <input id="dayreporttable-achive-rank"
 									class="form-control dayreportform-input" type="text"
-									placeholder="일일 달성률" required readonly> <input
-									type="hidden" id="achive-rank" value="${dateReportVo.achive_rank}"  name="achive_rank">
+									placeholder="일일 달성률" required readonly value="${dateReportVo.achive_rank}%"> 
+									<input type="hidden" id="achive-rank" value="${dateReportVo.achive_rank}"  name="achive_rank">
 							</div>
 						</td>
 					</tr>
@@ -105,26 +105,26 @@
 									class="form-control dayreportform-input" type="Number"
 									name="start_gauge" placeholder="출발 계기판"
 									onkeydown='return onlyNumber(event)'
-									onkeyup='removeChar(event)' value="${dateReportVo.start_gauge}" required>
+									onkeyup='removeChar(event)' readonly required value="${dateReportVo.start_gauge}" >
 							</div>
 						</td>
 						<td>
 							<div style="display: inline-block;">
-								<label class="reporttable-label" for="day">도착 계기판 </label> <input
-									id="dayreporttable-endGauge"
+								<label class="reporttable-label" for="day">도착 계기판 </label>
+								 <input id="dayreporttable-endGauge"
 									class="form-control dayreportform-input" type="Number"
 									name="end_gauge" placeholder="도착 계기판"
 									onkeydown='return onlyNumber(event)'
-									onkeyup='removeChar(event)' value="${dateReportVo.end_gauge}" required>
+									onkeyup='removeChar(event)'  required readonly value="${dateReportVo.end_gauge}">
 							</div>
 						</td>
 						<td>
 							<div style="display: inline-block;">
-								<label class="reporttable-label" for="day">주행거리(km)
-									&nbsp;</label> <input id="dayreporttable-mile"
+								<label class="reporttable-label" for="day">주행거리(km)&nbsp;</label>
+									<input id="dayreporttable-mile"
 									class="form-control dayreportform-input" type="text"
-									name="mile" placeholder="주행거리" required readonly> <input
-									type="hidden" id="mile" value="${dateReportVo.mile}" name="mile">
+									name="mile" placeholder="주행거리" required readonly value="${dateReportVo.mile}"> 
+									
 							</div>
 						</td>
 					</tr>
@@ -135,13 +135,13 @@
 								<input id="dayreporttable-title"
 									class="form-control dayreportform-input" type="text"
 									name="title" placeholder="제목을 입력해 주세요"
-									style="width: 430px; margin-right: 6px;" value="${dateReportVo.title}"required>
+									style="width: 430px; margin-right: 6px;" value="${dateReportVo.title}" required readonly>
 							</div>
 						</td>
 						<td><label class="reporttable-label" for="day">보고날짜&nbsp;</label>
 							<input id="submitDay-datepicker" class="form-control" type="text"
-							placeholder="보고날짜" required> <input id="dayreport-date"
-							type="hidden" name="date" value="${dateReportVo.date}" class="dayreportform-input"></td>
+							name="data" placeholder="보고날짜" required readonly value="${dateReportVo.date}"> 
+							
 					</tr>
 				</table>
 				<div class=" panel panel-default form-group"
@@ -149,7 +149,7 @@
 					<div class="panel-heading">
 						<strong>업무 보고 내용</strong>
 					</div>
-					<textarea id="report-content" name="content" class="date-textarea"></textarea>
+					<textarea id="report-content" name="content" class="date-textarea" data-value=""${dateReportVo.content}"></textarea>
 				</div>
 				<div class="panel panel-info" style="clear: both;">
 					<div class="panel-heading">

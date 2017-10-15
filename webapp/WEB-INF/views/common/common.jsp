@@ -98,7 +98,11 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
 
 <!-- 내부 자바스크립트 -->
- <script
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/util/util.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath}/assets/js/util/validate.js"></script>	
+<script
 	src="${pageContext.servletContext.contextPath}/assets/js/map/map.js"></script>
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/user/join.js"></script>
@@ -111,9 +115,7 @@
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/plan/weekplan.js"></script>
 <script
-	src="${pageContext.servletContext.contextPath}/assets/js/util/util.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/assets/js/util/validate.js"></script>	
+	src="${pageContext.servletContext.contextPath}/assets/js/plan/report.js"></script>
 
 
 <!-- mo.js 파일 다운로드 -->

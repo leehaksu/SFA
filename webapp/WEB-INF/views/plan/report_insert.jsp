@@ -23,124 +23,40 @@ var submitdate;
 var clickedAdviceId;
 
 
-function setAchiveRank(){
-	var goalSale = $("#dayreporttable-goal-sale").val();
-	var reportSale = $("#dayreporttable-report-sale").val();
-	var achiveRank =reportSale/goalSale * 100;
-	
-	if(confInfinity(achiveRank))
+function addNewAddviceInfo(advice_no)
+{
+	$.post("/sfa/advice/select",
 	{
-		$("#dayreporttable-achive-rank").val(100+"%");
-		$("#achive-rank").val(100);	
-	}else if(confisNaN(achiveRank)){
-		$("#dayreporttable-achive-rank").val("0%");
-		$("#achive-rank").val("");
-	}else	
-	{
-		achiveRank=Math.floor(achiveRank);	
-		$("#dayreporttable-achive-rank").val(achiveRank+"%");
-		$("#achive-rank").val(achiveRank);		
+	   advice_no:advice_no
 	}
+	,function(response,status){
+		console.log("새로 추가된 상담일지 정보");
+		console.log(response);	
+	});
 }
-function setmile(){
-	var startGauge = $("#dayreporttable-startGauge").val();
-	var endGauge = $("#dayreporttable-endGauge").val();
-	console.log(typeof startGauge);
-	console.log(typeof endGauge);
-	console.log(startGauge.length);
-	console.log(endGauge.length);
-	
-	
-	if((startGauge >=0 && startGauge.length != 0) && (endGauge.length != 0 && endGauge >=0 )){
-		if(endGauge-startGauge < 0){
-			$("#dayreporttable-mile").val("잘못된 입력값");
-		}else{
-			$("#dayreporttable-mile").val(endGauge-startGauge); 	
-			$("#mile").val(endGauge-startGauge);	
-		}	
-	}else{
-		$("#dayreporttable-mile").val(""); 
-		$("#mile").val(""); 		
-	}
-	
-}
-
-
-function validateForm() {
-	for(i =0; i < document.forms["dayreport-form"].length; i++){
-		var input = document.forms["dayreport-form"][i];
-		console.log(input);
-		console.log(input.hasAttribute("required"));
-		 if(input.hasAttribute("required")){
-			if(input.value == ""){
-				 alert("필수 입력 항목이 입력되지 않았습니다.");
-				 input.focus();
-				 return false;
-			}
-			if($("#report-content").froalaEditor('html.get').length == 0){
-				alert($("#report-content").froalaEditor('html.get'));
-				alert($("#report-content").froalaEditor('html.get').length);
-				alert("업무 내용이 비어있습니다.");
-				return false;
-			}
-			if($("#dayreporttable-mile").val() == "잘못된 입력값"){
-				alert("계기판 정보가 잘못 입력되었습니다.");
-				return false;
-			}
-		} 
-	}
-	return true;
-}
-
-function reportSubmit(){
-	
-	var dayreportForm = document.getElementById("dayreport-form");
-	dayreportForm.action = "insert"; // action에 해당하는 jsp 경로를 넣어주세요.
-	if(validateForm()){
-		dayreportForm.submit();  	
-	}
-	
-}
-
-function addAdvice(response.result){
-	if(response.result == "success"){
-		adviceCount += 1;
-		var div = document.createElement('div');
-		div.setAttribute("id","advice_content"+adviceCount);
-		div.setAttribute("class","advice_content");
-
-		div.innerHTML = document.getElementById('advice_content1').innerHTML;
-		document.getElementById('advice_contianer').appendChild(div);
-}
-
 
 $(document).ready(function() {
-	
+	var listLength = '<c:out value="${fn:length(list)}"/>';
+	var list = '<c:out value="${list}"/>';
+	console.log(list);
 	$("#dayreporttable-report-sale").focusout(function(){
 		setAchiveRank();
 	});
+	
 	$("#dayreporttable-startGauge, #dayreporttable-endGauge").focusout(function(){
 		setmile();
 	});
-	
 	  
 	  $("#dayreport-date").attr("value", today);
 
 	  $("#advicereporttable-date").attr("value", today);	
-	 //alert(today);
-	  $.get("select?date="+today,
-	    function(response, status){
-	        console.log(response.data);
-	    });
-
-    	 $("#dayreport-date").attr("value", today);
+      $("#dayreport-date").attr("value", today);
 		
     	 adviceCount=1;				
 		$( "#submitDay-datepicker" ).val(today);
 		$( "#submitDay-datepicker" ).datepicker({
 			dateFormat: 'yy-mm-dd', 
 			minDate: 0,
-		    //comment the beforeShow handler if you want to see the ugly overlay
 		    beforeShow: function() {
 		        setTimeout(function(){
 		            $('.ui-datepicker').css('z-index', 99);
@@ -185,21 +101,8 @@ $(document).ready(function() {
 			}
 		});
 		
-		$(function() { $('.date-textarea').froalaEditor(
-				{
-				  toolbarButtons: ['bold', 'italic','paragraphFormat'],
-					paragraphFormat: 
-					{
-					    N: 'Normal',
-					    H1: 'Heading 1',
-					    H2: 'Heading 2',
-						H3: 'Heading 3'
-				  	}
-				});
-		});
+		makefloaraEditor();
 
-		
-	
 		//고객코드,고객명,주소 input태그 focus 될때  modal show
 		$(document).on("focus",'#advicereporttable-customer, #advicereporttable-code, #advicereporttable-address',function() {
 				//init modal_table
@@ -214,7 +117,6 @@ $(document).ready(function() {
 						contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 						success : function(doc) {
 							console.log(doc.data);
-
 							for (index = 0; index < doc.data.length; index++) {
 								$('#modal_table > tbody').append(
 								"<tr><td class='tg-yw4l customer-info'>"
@@ -270,10 +172,10 @@ $(document).ready(function() {
 	
 		$(document).on("click",".advice-submit",function(){			
 			var advice = [];  
-			$("#advice_content1").find('input').each(function(index){
+			$("#advice_content").find('input').each(function(index){
 				var content={};
-				var key = $("#advice_content1").find('input').eq(index).attr('name'); 
-				var value = $("#advice_content1").find('input').eq(index).val();
+				var key = $("#advice_content").find('input').eq(index).attr('name'); 
+				var value = $("#advice_content").find('input').eq(index).val();
 				content[key] = value;
 				advice.push(content);	
 			});
@@ -287,24 +189,17 @@ $(document).ready(function() {
 				date:advice[4].date,
 				title:advice[5].title,
 				content:$("#advice-textarea").froalaEditor('html.get')
-			},
-			function(response,status){
+			},function(response,status){
 					console.log(response);
-					
-					addAdvice(response.result);
-					
-					$.post("/advice/select",{
-						advice_no:response.advice_no
-					},function(response,status){
-						console.log("새로 추가된 상담일지 정보");
-						console.log(response);	
-					});
-				}
-			});
+					var result =response.result;
+					var advice_no =response.advice_no;
+					addAdvice(result);
+					addNewAddviceInfo(advice_no);
+				});
 		     
-			$("#advice_content1").children('#advice_form').each(function() {  
+			/* $("#advice_content").children('#advice_form').each(function() {  
             	this.reset();  
-         	});  
+         	}); */  
 
 			//var index = $(".advicereporttable-savebutton").index(this);
 			//console.log(index);
@@ -312,6 +207,12 @@ $(document).ready(function() {
 			//form.submit();
 			
 		});
+		
+		alert("상담일자 갯수: "+listLength);
+		for(i=1; i < listLength+1; i++){
+			var content = $("#advice-textarea"+i).val();
+			$("#advice-textarea"+i).froalaEditor('html.set',content);			
+		}
 		
 	});
 </script>
@@ -374,7 +275,7 @@ $(document).ready(function() {
 										<label class="reporttable-label" for="day">달 성 률(%) &nbsp;</label> <input id="dayreporttable-achive-rank"
 											class="form-control dayreportform-input" type="text" 
 											placeholder="일일 달성률" 
-											required readonly>
+											required readonly value="${dateReportVo.achive_rank}%">
 											<input type="hidden" id="achive-rank" name="achive_rank">
 									</div>
 							</td>
@@ -388,7 +289,7 @@ $(document).ready(function() {
 											placeholder="출발 계기판" 
 											onkeydown='return onlyNumber(event)'
 											onkeyup='removeChar(event)'
-											required >
+											required value="${dateReportVo.start_gauge}">
 									</div>
 							</td>
 							<td>
@@ -398,7 +299,7 @@ $(document).ready(function() {
 											placeholder="도착 계기판" 
 											onkeydown='return onlyNumber(event)'
 											onkeyup='removeChar(event)'
-											required >
+											required value="${dateReportVo.end_gauge}">
 									</div>
 							</td>
 							<td>
@@ -407,8 +308,8 @@ $(document).ready(function() {
 											&nbsp;</label> <input id="dayreporttable-mile"
 											class="form-control dayreportform-input" type="text" name="mile"
 											placeholder="주행거리" 
-											required readonly>
-											<input type="hidden" id="mile" name="mile">
+											required readonly value="${dateReportVo.end_gauge}">
+											<input type="hidden" id="mile" name="mile" value="${dateReportVo.end_gauge}">
 									</div>	
 							</td>
 						</tr>
@@ -438,15 +339,8 @@ $(document).ready(function() {
 						</div>
 						<textarea id="report-content" name="content" class="date-textarea"></textarea>	
 					</div>
-					<!-- <div class="panel panel-info" style="clear: both;">
-						<div class="panel-heading">
-							<strong>팀장 의견</strong>
-						</div>
-						<div class="panel-body">일 이따구로 할꺼야?</div>
-					</div>
-					 -->
 					 </form>
-				
+					
 					<div id="advice_contianer"
 						style="padding: 5px;">
 						<div class="page-header">
@@ -454,7 +348,7 @@ $(document).ready(function() {
 								<Strong>상담일지</Strong>
 							</h4>
 						</div>
-						<div id="advice_content1" class="advice_content">
+						<div id="advice_content"class="advice_content">
 							<form id="advice_form">
 								<div class="panel panel-info"
 									style="clear: both; margin-top : 10px;">
@@ -555,9 +449,115 @@ $(document).ready(function() {
 
 									</div>
 								</div>
-								<div style=" clear:both; border-bottom: 1px solid #eee;"></div>
+								<div style="clear:both; border-bottom: 1px solid #eee;"></div>
 							</form>
 						</div>
+						<c:forEach items="${list}" var="adviceVo" varStatus="status">
+						<div id="advice_content${status.count}"class="advice_content">
+							<form id="advice_form">
+								<div class="panel panel-info"
+									style="clear: both; margin-top : 10px;">
+									<div class="panel-heading" style="color: #fff; ">
+										<strong>상담카드</strong>
+										<div style="float: right;">
+										<a class="advice-submit" href="#" >
+										<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
+										</a>
+										&nbsp;
+										<a id="advice-delete" href="#" onclick=""> 
+											<i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+										</a>
+										</div>
+									</div>
+									<div class="panel-body">
+										<table id="advicereporttable"
+											style="background-color: #fff; width: 100%; border-radius: 5px;">
+											<tr style="margin-top: 5px;">
+												<td colspan="3" id="adv-content1">
+													<div class="form-group" style="margin-top: 15px;">
+														<div style="display: inline-block;">
+															<label for="show-day-title"
+																style="width: 100px; text-align: center;">고객 코드
+																&nbsp;</label> <input id="advicereporttable-code"
+																class="form-control advicereporttable-input" type="text"
+																name="code" placeholder="고객 코드"
+																required value="${adviceVo.customer_code}"
+																data-toggle="modal" data-target="#AdviceModal" autocomplete="off">
+														</div>
+														<div style="display: inline-block;">
+															<label for="day"
+																style="width: 100px; text-align: center;">고객명</label> <input
+																id="advicereporttable-customer"
+																class="form-control advicereporttable-input" type="text"
+																name="customer" placeholder="고객명"
+																required value="${adviceVo.name}"
+																data-toggle="modal" data-target="#AdviceModal" autocomplete="off">
+														</div>
+														<div style="display: inline-block;">
+															<label for="day"
+																style="width: 100px; text-align: center;">담당자
+																&nbsp;</label> <input id="advicereporttable-manager_name"
+																class="form-control advicereporttable-input" type="text"
+																name="manager_name" placeholder="담당자" pattern="^[가-힣a-zA-Z]+$;"
+																required value="${adviceVo.manager_name}"
+																>
+														</div>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="3" id="adv-content2">
+													<div class="form-group">
+														<div style="display: inline-block;">
+															<label for="show-day-title"
+																style="width: 100px; text-align: center">주소&nbsp;</label>
+															<input id="advicereporttable-address"
+																class="form-control advicereporttable-input" type="text"
+																name="address" placeholder="주소 자동입력 "
+																style="width: 415px; margin-right: 6px;" required value="${adviceVo.address}"
+																data-toggle="modal" data-target="#AdviceModal" autocomplete="off">
+														</div>
+														<div style="display: inline-block; margin-top: 20px;">
+															<label for="day" style="width: 100px; text-align: center">보고날짜&nbsp;</label>
+															<input id="advicereporttable-date"
+																class="form-control advicereporttable-input" type="text"
+																name="date" placeholder="보고날짜"
+																style="width: 220px; margin-right: 6px;" required value="${adviceVo.date}"
+																readonly>
+														</div>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="3" id="adv-content3">
+													<div class="form-group">
+														<div style="display: inline-block;">
+															<label for="show-day-title"
+																style="width: 100px; text-align: center">제목&nbsp;</label>
+															<input id="advicereporttable-title"
+																class="form-control advicereporttable-input" type="text"
+																name="title" placeholder="제목을 입력해 주세요"
+																required value="${adviceVo.title}" autocomplete="off">
+														</div>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="3" id="adv-content4">
+													<div class="panel panel-default form-group"
+														style="width: 95%; text-align: center; margin: 10px;">
+														<textarea id="advice-textarea${status.count}" class="date-textarea" data-value="${adviceVo.content}" ></textarea>	
+													</div>
+												</td>
+											</tr>
+										</table>
+
+									</div>
+								</div>
+								<div style="clear:both; border-bottom: 1px solid #eee;"></div>
+							</form>
+						</div>
+						</c:forEach>												
 					</div>
 				</div>
 			</div>
