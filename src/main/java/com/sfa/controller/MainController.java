@@ -41,13 +41,14 @@ public class MainController {
 	{
 		List<DateVo> date_list= datePlanService.selectMainDate(authUser.getId());
 		List<DateReportVo>report_list =dateReportService.seletMainDate(authUser.getId());
-		
+		List<WeekVo> week_list = weekPlanService.selectMainDate(authUser.getId());
 		
 		
 		model.addAttribute("date_list", date_list);
 		model.addAttribute("report_list", report_list);
-		
-		System.out.println(date_list+""+report_list);
+		model.addAttribute("week_list", week_list);
+
+		System.out.println(date_list+""+report_list+""+week_list);
 		//처음 들어왔을 때 화면
 			return "main/main";	
 	}

@@ -331,4 +331,9 @@ public class WeekPlanService {
 		List<WeekVo> week_list = weekplanDao.selectTotalWeek(id, week_no);
 		return week_list;
 	}
+
+	public List<WeekVo> selectMainDate(String id) {
+		// TODO Auto-generated method stub
+		return weekplanDao.selectMainDate(id);
+	}
 }

@@ -134,4 +134,11 @@ public class PlanWeekDao {
 		
 		return goal_sale;
 	}
+
+	public List<WeekVo> selectMainDate(String id) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("id", id);
+		return sqlSession.selectList("weekplan.selectMainDate", map);
+	}
 }

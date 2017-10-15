@@ -91,5 +91,8 @@
 	<select id="selctSale" parameterType="map" resultType="dayvo">
 	select day_sale from day_plan where id=#{id} and date=#{date};
 	</select>
+	<select id="selectMainDate" parameterType="map" resultType="weekvo">
+	select * from week_plan where id='test01' order by reg_date limit 5;
+	</select>
 	
 </mapper>
