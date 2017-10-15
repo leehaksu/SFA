@@ -29,14 +29,16 @@
 	</div>
 	<div class="container">
 		<h4>
-			<i class="fa fa-chevron-circle-left" aria-hidden="true" onClick="subValue()"></i><span id="date"></span>년<i
-				class="fa fa-chevron-circle-right" aria-hidden="true" onClick="addValue()"></i>
+			<i class="fa fa-chevron-circle-left" aria-hidden="true"
+				onClick="subValue()"></i><span id="date"></span>년<i
+				class="fa fa-chevron-circle-right" aria-hidden="true"
+				onClick="addValue()"></i>
 		</h4>
 		<table>
 			<thead>
 				<tr>
-					<th>영업 매출 실적</th>
-					<th>주행 거리량</th>
+					<th style="text-align:center;">월 별 영업 매출 실적</th>
+					<th style="text-align:center;">월 별주행 거리량</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -48,16 +50,25 @@
 						</tr>
 					</c:when>
 					<c:otherwise>
+						
 						<tr>
 							<td><canvas id="performanceChart" width="400" height="400"></canvas></td>
 							<td><canvas id="distanceDriven" width="400" height="400"></canvas></td>
 						</tr>
 						<tr>
-							<td><canvas id="performanceChart2" width="400" height="400"></canvas></td>
+						<td></td>
+						<td></td>
 						</tr>
 						<tr>
+						<th style="text-align:center;">부서별 영업 매출 실적</th>
+						<th style="text-align:center;">부서별 주행 거리량</th>
+						</tr>
+						<tr>
+							<td><canvas id="performanceChart2" width="400" height="400"></canvas></td>
 							<td><canvas id="distanceDriven2" width="400" height="400"></canvas></td>
 						</tr>
+
+
 					</c:otherwise>
 				</c:choose>
 			</tbody>
@@ -80,14 +91,14 @@
 						datasets : [
 								{
 									label : '영업 매출액',
-									data : [80,40,30,40,50,60,70,80,90,100,110,120],
+									data : [0],
 									backgroundColor : 'rgba(54, 162, 235, 0.2)',
 									borderColor : 'rgba(54, 162, 235, 1)',
 									borderWidth : 1
 								},
 								{
 									label : '예상 매출액',
-									data : [10,20,30,40,50,60,70,80,90,100,110,120],
+									data : [0],
 									backgroundColor : 'rgba(255, 99, 132, 0.2)',
 									borderColor : 'rgba(255,99,132,1)',
 									borderWidth : 1
@@ -118,13 +129,13 @@
 						"9월", "10월", "11월", "12월" ],
 				datasets : [ {
 					label : '월 주행거리',
-					data : [ 12, 19, 3, 5, 2, 3, 8, 9, 12, 65, 88, 18 ],
+					data : [ 0 ],
 					backgroundColor : 'rgba(54, 162, 235, 0.2)',
 					borderColor : 'rgba(54, 162, 235, 1)',
 					borderWidth : 1
 				}, {
 					label : '월 예상거리',
-					data : [ 1, 3, 4, 7, 2, 4, 8, 2, 4, 35, 0, 0 ],
+					data : [ 0 ],
 					backgroundColor : 'rgba(255, 99, 132, 0.2)',
 					borderColor : 'rgba(255,99,132,1)',
 					borderWidth : 1
@@ -158,14 +169,14 @@
 						datasets : [
 								{
 									label : '영업 매출액',
-									data : [80,40,30,40,50,60,70,80,90,100,110,120],
+									data : [0],
 									backgroundColor : 'rgba(54, 162, 235, 0.2)',
 									borderColor : 'rgba(255,99,132,1)',
 									borderWidth : 1
 								},
 								{
 									label : '예상 매출액',
-									data : [80,40,30,40,50,60,70,80,90,100,110,120],
+									data : [0],
 									backgroundColor : 'rgba(255, 99, 132, 0.2)',
 									borderColor : 'rgba(54, 162, 235, 1)',
 									borderWidth : 1
@@ -195,13 +206,13 @@
 						"9월", "10월", "11월", "12월" ],
 				datasets : [ {
 					label : '월 주행거리',
-					data : [ 12, 19, 3, 5, 2, 3, 8, 9, 12, 65, 88, 18 ],
+					data : [ 0 ],
 					backgroundColor : 'rgba(54, 162, 235, 0.2)',
 					borderColor : 'rgba(54, 162, 235, 1)',
 					borderWidth : 1
 				}, {
 					label : '월 예상거리',
-					data : [ 1, 3, 4, 7, 2, 4, 8, 2, 4, 35, 0, 0 ],
+					data : [ 0 ],
 					backgroundColor : 'rgba(255, 99, 132, 0.2)',
 					borderColor : 'rgba(255,99,132,1)',
 					borderWidth : 1
@@ -253,20 +264,11 @@
 			date = date-1;
 			$("#date").text(date);
 			getChart(date);
-			
-			
 		}
 		function addValue(){
 			date = date+1;
 			$("#date").text(date);
 			getChart(date);
-		}
-		function addData(chart, label, data) {
-		    chart.data.labels.push(label);
-		    chart.data.datasets.forEach((dataset) => {
-		        dataset.data.push(data);
-		    });
-		    chart.update();
 		}
 		
 		function getChart(date){
@@ -322,13 +324,12 @@
 				var label_array = new Array();
 				var sale_array= new Array();
 					for(i=0;i<doc.data.length;i++)
-				{
-						
+				{						
 						label_array.push(doc.data[i].dept);
 						sale_array.push(doc.data[i].total_sale)
 				}
 				updateDate(myChart3,0,label_array,sale_array);
-								}
+				}
 			});
 			$.ajax({
 				url : '/sfa/chart/sale/dept/estimate',
@@ -341,12 +342,50 @@
 				var label_array = new Array();
 				var sale_array= new Array();
 					for(i=0;i<doc.data.length;i++)
-				{
-						
+				{						
 						label_array.push(doc.data[i].dept);
 						sale_array.push(doc.data[i].total_sale)
 				}
 				updateDate(myChart3,1,label_array,sale_array);
+				}
+			});
+			
+			$.ajax({
+				url : '/sfa/chart/mile/dept',
+				type : 'POST',
+				dataType : 'json',
+				data : "date="+date,
+				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+				success : function(doc) {
+					console.log(doc);
+				var label_array = new Array();
+				var mile_array= new Array();
+					for(i=0;i<doc.data.length;i++)
+				{		
+						label_array.push(doc.data[i].dept);
+						mile_array.push(doc.data[i].total_mile)
+				}
+				updateDate(myChart4,0,label_array,mile_array);
+				}
+			});
+			
+			$.ajax({
+				url : '/sfa/chart/mile/dept/estimate',
+				type : 'POST',
+				dataType : 'json',
+				data : "date="+date,
+				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+				success : function(doc) {
+					console.log(doc);
+				var label_array = new Array();
+				var mile_array= new Array();
+					for(i=0;i<doc.data.length;i++)
+				{
+						
+						label_array.push(doc.data[i].dept);
+						mile_array.push(doc.data[i].estimate_distance)
+				}
+				 updateDate(myChart4,1,label_array,mile_array);
 								}
 			});
 			
