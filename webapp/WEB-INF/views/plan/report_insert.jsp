@@ -142,13 +142,33 @@ $(document).ready(function() {
 				$("#dayreport-date").val(dateText);
 				 $.post("check",
 				    {
-			 			Date:dateText
+			 			date:dateText
 				    },
 				    function(response, status){
-				        console.log(response.data);
-				        $("#dayreport-date").attr("value", dateText);
+				    	console.log(response.result);  //계획이 있으면 success 없으면 fail
+				        
+				    	if(response.result =="fail"){
+				    		alert("주간계획 미작성!");
+				    	}
+				    	
+				    	$("#dayreport-date").attr("value", dateText);
 				        $("#advicereporttable-date").attr("value", dateText);				        
 				    });
+				 
+				 $.post("/advice/select",
+						    {
+					 			date:dateText
+						    },
+						    function(response, status){
+						    	console.log(response.data);  //계획이 있으면 success 없으면 fail
+						        
+						    	if(response.result =="fail"){
+						    		alert("주간계획 미작성!");
+						    	}
+						    	
+						    /* 	$("#dayreport-date").attr("value", dateText);
+						        $("#advicereporttable-date").attr("value", dateText); */				        
+						    });
 			}
 		});
 		

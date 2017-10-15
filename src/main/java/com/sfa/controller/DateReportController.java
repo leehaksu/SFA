@@ -263,6 +263,7 @@ public class DateReportController {
 	}
 	
 	@Auth
+	@ResponseBody
 	@RequestMapping(value = "/check",method=RequestMethod.POST)
 	public JSONResult check(@RequestParam(value="date",required=true, defaultValue="")String date,@AuthUser UserVo authUser)
 	{
