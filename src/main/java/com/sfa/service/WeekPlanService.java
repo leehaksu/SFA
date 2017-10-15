@@ -322,4 +322,13 @@ public class WeekPlanService {
 		// TODO Auto-generated method stub
 		return weekplanDao.selectGoal_sale(date,id);
 	}
+
+	public List<WeekVo> check(String id, String date) {
+		// TODO Auto-generated method stub
+		
+		ArrayList<Integer> date2 = changeDate.parserDate(date);
+		String week_no = changeDate.getWeekNo(date2);
+		List<WeekVo> week_list = weekplanDao.selectTotalWeek(id, week_no);
+		return week_list;
+	}
 }

@@ -91,4 +91,5 @@
 	<select id="selctSale" parameterType="map" resultType="dayvo">
 	select day_sale from day_plan where id=#{id} and date=#{date};
 	</select>
+	
 </mapper>
