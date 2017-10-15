@@ -54,6 +54,16 @@ $(document).ready(function() {
 	var list = '<c:out value="${list}"/>';
 	console.log(list);
 
+	$("#advice-delete").on("click",function(){
+		var adviceNo= $(this).next("input").val();
+		
+		$.post("delete",{
+			advice_no : adviceNo
+		},function(response,status){
+			alert("삭제 성공!");
+		});
+	});
+	
 	$("#dayreporttable-report-sale").focusout(function(){
 		setAchiveRank();
 	});
@@ -367,10 +377,6 @@ $(document).ready(function() {
 										<a class="advice-submit" href="#" >
 										<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
 										</a>
-										&nbsp;
-										<a id="advice-delete" href="#" onclick=""> 
-											<i class="fa fa-trash fa-2x" aria-hidden="true"></i>
-										</a>
 										</div>
 									</div>
 									<div class="panel-body">
@@ -469,13 +475,10 @@ $(document).ready(function() {
 									<div class="panel-heading" style="color: #fff; ">
 										<strong>상담카드</strong>
 										<div style="float: right;">
-										<a class="advice-submit" href="#" >
-										<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
-										</a>
-										&nbsp;
-										<a id="advice-delete" href="#" onclick=""> 
+										<a id="advice-delete" href="#" > 
 											<i class="fa fa-trash fa-2x" aria-hidden="true"></i>
 										</a>
+										<input id="advice_no" type="hidden" value="${adviceVo.advice_no}">
 										</div>
 									</div>
 									<div class="panel-body">
