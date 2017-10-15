@@ -21,7 +21,6 @@ body {
 }
 
 .main_box {
-	width: 800px;
 	padding: 7px;
 	border-radius: 10px;
 }
@@ -330,7 +329,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 }
 
  main{
-  margin-left: 10%;
-  width: 66%;
-  background-color: RGB(250, 251, 240);
+    margin-left: 2%;
+    width: 98%;
+    background-color: RGB(250, 251, 240);
  }  

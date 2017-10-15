@@ -85,8 +85,8 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div class="panel-info" style="clear: both; margin-top : 10px;">
-	<div class="content-header">
+	<div class="panel-info">
+	<div class="content-header panel-heading">
 		<h3>
 			<strong>회원 정보수정</strong>
 		</h3>

@@ -23,6 +23,8 @@ var submitdate;
 var clickedAdviceId;
 
 
+
+
 function addNewAddviceInfo(advice_no)
 {
 	$.post("/sfa/advice/select",
@@ -35,10 +37,33 @@ function addNewAddviceInfo(advice_no)
 	});
 }
 
+
+
+function setContentAndProtect(listLength){
+	alert("상담일자 갯수: "+listLength);
+	for(i=1; i < listLength+1; i++){
+		var content = $("#advice-textarea"+i).data("value");
+		$("#advice-textarea"+i).froalaEditor('html.set',content);	
+		$("#advice-textarea"+i).froalaEditor('edit.off');
+		$("#advice_content"+i).attr("diabled",true);
+	}
+}
+
 $(document).ready(function() {
 	var listLength = '<c:out value="${fn:length(list)}"/>';
 	var list = '<c:out value="${list}"/>';
 	console.log(list);
+
+	$("#advice-delete").on("click",function(){
+		var adviceNo= $(this).next("input").val();
+		
+		$.post("delete",{
+			advice_no : adviceNo
+		},function(response,status){
+			alert("삭제 성공!");
+		});
+	});
+	
 	$("#dayreporttable-report-sale").focusout(function(){
 		setAchiveRank();
 	});
@@ -207,13 +232,7 @@ $(document).ready(function() {
 			//form.submit();
 			
 		});
-		
-		alert("상담일자 갯수: "+listLength);
-		for(i=1; i < listLength+1; i++){
-			var content = $("#advice-textarea"+i).val();
-			$("#advice-textarea"+i).froalaEditor('html.set',content);			
-		}
-		
+		setContentAndProtect(listLength);
 	});
 </script>
 </head>
@@ -231,7 +250,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div class="panel-info" style="clear: both; margin-top : 10px;">
+	<div class="panel-info">
 	<div class="content-header panel-heading">
 		<h3 >
 			<strong>일일 보고서</strong>
@@ -358,10 +377,6 @@ $(document).ready(function() {
 										<a class="advice-submit" href="#" >
 										<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
 										</a>
-										&nbsp;
-										<a id="advice-delete" href="#" onclick=""> 
-											<i class="fa fa-trash fa-2x" aria-hidden="true"></i>
-										</a>
 										</div>
 									</div>
 									<div class="panel-body">
@@ -460,13 +475,10 @@ $(document).ready(function() {
 									<div class="panel-heading" style="color: #fff; ">
 										<strong>상담카드</strong>
 										<div style="float: right;">
-										<a class="advice-submit" href="#" >
-										<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
-										</a>
-										&nbsp;
-										<a id="advice-delete" href="#" onclick=""> 
+										<a id="advice-delete" href="#" > 
 											<i class="fa fa-trash fa-2x" aria-hidden="true"></i>
 										</a>
+										<input id="advice_no" type="hidden" value="${adviceVo.advice_no}">
 										</div>
 									</div>
 									<div class="panel-body">

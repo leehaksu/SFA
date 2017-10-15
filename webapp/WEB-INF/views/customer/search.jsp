@@ -22,8 +22,8 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div>
-		<div class="content-header">
+	<div class="panel-info">
+		<div class="content-header panel-heading">
 			<h3 >
 				<strong>고객 조회</strong>
 			</h3>

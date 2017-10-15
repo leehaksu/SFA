@@ -23,7 +23,8 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div class="content-header">
+	<div class="panel-info">
+	<div class="content-header panel-heading">
 			<h3>
 				<strong>통합 게시판</strong>
 			</h3>
@@ -137,6 +138,7 @@
 				</table>
 			</div>
 		</div>
+	</div>
 	</div>
 	</main>
 </body>

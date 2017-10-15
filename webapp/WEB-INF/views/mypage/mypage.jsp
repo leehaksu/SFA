@@ -43,7 +43,8 @@
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div class="content-header">
+	<div class="panel-info">
+	<div class="content-header panel-heading">
 		<h3>
 			<strong>회원 정보</strong>
 		</h3>
@@ -134,6 +135,7 @@
 			</tfoot>
 		</table>
 	</form>
+	</div>
 	</main>
 </body>
 </html>
