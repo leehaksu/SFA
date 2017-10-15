@@ -62,4 +62,12 @@ public class ChartDao {
 		map.put("date", date);
 		return sqlSession.selectList("chart.getSaleByDept",map);
 	}
+
+	public List<ChartVo> getEstimateSaleBydept(String date) {
+		// TODO Auto-generated method stub
+		HashMap<String,String> map= new HashMap<String,String>();
+		map.put("date", date);
+		System.out.println(map);
+		return sqlSession.selectList("chart.getEstimateSaleBydept",map);
+	}
 }
