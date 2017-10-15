@@ -70,5 +70,26 @@ select dept,sum(goal_sale) as estimate_sale
       group by dept;
 	]]>
 	</select>
-	
+	<select id="getMileBydept" parameterType="MAP" resultType="chartvo">
+	<![CDATA[
+	select dept,sum(mile) as total_mile
+      from(
+         select mile,dept
+         from day_report as a, user as b,guage as c 
+         where date_format(date,'%Y') = #{date} and a.id=b.id and a.report_no=c.report_no and approval=2
+      )A  
+      group by dept;
+      ]]>
+	</select>
+	<select id="getEstimateDistanceBydept" parameterType="MAP" resultType="chartvo">
+	<![CDATA[
+	select dept,sum(estimate_distance) as estimate_distance
+      from(
+         select estimate_distance,dept
+         from plan as a, user as b 
+         where date_format(date,'%Y') = #{date} and a.id=b.id 
+      )A  
+      group by dept;
+      ]]>
+	</select>
 </mapper>

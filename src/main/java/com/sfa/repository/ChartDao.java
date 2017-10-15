@@ -69,4 +69,18 @@ public class ChartDao {
 		map.put("date", date);
 		return sqlSession.selectList("chart.getEstimateSaleBydept",map);
 	}
+
+	public List<ChartVo> getMileBydept(String date) {
+		// TODO Auto-generated method stub
+		HashMap<String,String> map= new HashMap<String,String>();
+		map.put("date", date);
+		return sqlSession.selectList("chart.getMileBydept",map);
+	}
+
+	public List<ChartVo> getEstimateMileBydept(String date) {
+		// TODO Auto-generated method stub
+		HashMap<String,String> map= new HashMap<String,String>();
+		map.put("date", date);
+		return sqlSession.selectList("chart.getEstimateDistanceBydept",map);
+	}
 }

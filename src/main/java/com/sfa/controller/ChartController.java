@@ -148,5 +148,30 @@ public class ChartController {
 		return JSONResult.success(list);
 	}
 	
+	@Auth(value = Auth.Role.팀장)
+	@ResponseBody
+	@RequestMapping(value="/mile/dept", method=RequestMethod.POST)
+	public JSONResult getMileBydept (@AuthUser UserVo authUser,@RequestParam(value="date",required=true, defaultValue="")String date)
+	{
+		if ("".equals(date)) {
+			date=((ChangeDate.today()).substring(0, 4));
+		}
+		List<ChartVo> list = chartService.getMileBydept(date);
+		System.out.println(list);
+		return JSONResult.success(list);
+	}
+	
+	@Auth(value = Auth.Role.팀장)
+	@ResponseBody
+	@RequestMapping(value="/mile/dept/estimate", method=RequestMethod.POST)
+	public JSONResult getEstimateMileBydept (@AuthUser UserVo authUser,@RequestParam(value="date",required=true, defaultValue="")String date)
+	{
+		if ("".equals(date)) {
+			date=((ChangeDate.today()).substring(0, 4));
+		}
+		List<ChartVo> list = chartService.getEstimateMileBydept(date);
+		System.out.println(list);
+		return JSONResult.success(list);
+	}
 	
 }

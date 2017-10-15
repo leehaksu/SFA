@@ -23,7 +23,7 @@
 	</select>
 	<select id="getByDate" parameterType="datereportvo" resultType="datereportvo">
 		<![CDATA[
-		select report_no,title,report_sale,b.content as content,achive_rank,approval,opinion,b.date,reg_date,day_sale as goal_sale from day_report as a,day_plan as b where a.date=b.date and a.id=b.id and a.date=#{date} and a.id=#{id};	
+		select report_no,title,report_sale,a.content as content,achive_rank,approval,opinion,b.date,reg_date,day_sale as goal_sale from day_report as a,day_plan as b where a.date=b.date and a.id=b.id and a.date=#{date} and a.id=#{id};	
 		]]>
 	</select>
 	<select id="getByDept" parameterType="datereportvo" resultType="datereportvo">

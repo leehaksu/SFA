@@ -55,4 +55,14 @@ public class ChartService {
 		return chartDao.getEstimateSaleBydept(date);
 	}
 
+	public List<ChartVo> getMileBydept(String date) {
+		// TODO Auto-generated method stub
+		return chartDao.getMileBydept(date);
+	}
+
+	public List<ChartVo> getEstimateMileBydept(String date) {
+		// TODO Auto-generated method stub
+		return chartDao.getEstimateMileBydept(date);
+	}
+
 }
