@@ -22,12 +22,12 @@
 	</delete>
 	<select id="select" parameterType="advicevo" resultType="advicevo">
 	<![CDATA[
-	select advice_no, title,content,date,manager_name,reg_date,customer_code from advice where id=#{id} and date=#{date} ;
+	select advice_no, title,content,date,manager_name,reg_date,a.customer_code,b.name,b.address from advice as a, customer as b where a.customer_code=b.customer_code and id=#{id} and date=#{date};
 	]]>
 	</select>
 		<select id="selectByadviceNo" parameterType="advicevo" resultType="advicevo">
 	<![CDATA[
-	select advice_no, title,content,date,manager_name,reg_date,customer_code from advice where id=#{id} and advice_no=#{advice_no} ;
+	select advice_no, title,content,date,manager_name,reg_date,a.customer_code,b.name,b.address from advice as a, customer as b where a.customer_code=b.customer_code and id=#{id} and advice_no=#{advice_no};
 	]]>
 	</select>
 </mapper>

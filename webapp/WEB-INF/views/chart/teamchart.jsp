@@ -162,13 +162,6 @@
 									backgroundColor : 'rgba(54, 162, 235, 0.2)',
 									borderColor : 'rgba(54, 162, 235, 1)',
 									borderWidth : 1
-								},
-								{
-									label : '예상 매출액',
-									data : [10,20,30,40,50,60,70,80,90,100,110,120],
-									backgroundColor : 'rgba(255, 99, 132, 0.2)',
-									borderColor : 'rgba(255,99,132,1)',
-									borderWidth : 1
 								} ]
 					},
 					options : {
@@ -239,6 +232,16 @@
 			chart.data.datasets[number].data[11]=doc.data.Dec;
 			chart.update();
 		}
+		
+		function updateDate(chart,number,label_array,sale_array)
+		{
+			chart.data.labels=label_array;
+			for(i=0;i<label_array.length;i++)
+		{		
+				chart.data.datasets[number].data[i]=sale_array[i];	
+		}
+			chart.update();	
+		}
 		function subValue(){
 			date = date-1;
 			$("#date").text(date);
@@ -250,6 +253,13 @@
 			date = date+1;
 			$("#date").text(date);
 			getChart(date);
+		}
+		function addData(chart, label, data) {
+		    chart.data.labels.push(label);
+		    chart.data.datasets.forEach((dataset) => {
+		        dataset.data.push(data);
+		    });
+		    chart.update();
 		}
 		
 		function getChart(date){
@@ -309,9 +319,9 @@
 						
 						label_array.push(doc.data[i].dept);
 						sale_array.push(doc.data[i].total_sale)
-					}
-					addData(myChart3,label_array,sale_array);
-				}		
+				}
+				updateDate(myChart3,0,label_array,sale_array);
+								}
 			});
 			
 		}
