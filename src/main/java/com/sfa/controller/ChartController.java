@@ -36,6 +36,7 @@ public class ChartController {
 	public String chart(@AuthUser UserVo authUser,Model model) {
 		String date=((ChangeDate.today()).substring(0, 4));
 		model.addAttribute("date", date);
+		System.out.println(date);
 		return "chart/teamchart";
 	}
 
