@@ -85,7 +85,7 @@ function addAdvice(result){
 		div.setAttribute("id","advice_content"+adviceCount);
 		div.setAttribute("class","advice_content");
 
-		div.innerHTML = document.getElementById('advice_content1').innerHTML;
+		div.innerHTML = document.getElementById('advice_content').innerHTML;
 		document.getElementById('advice_contianer').appendChild(div);
 	}
 }
