@@ -22,9 +22,10 @@
 			</c:import>
 		</div>
 	</div>
+	
 	<main id="page-content-wrapper" role="main">
 		<div class="panel-info" style="clear: both; margin-top : 10px;">
-		<div class="content-header">
+		<div class="content-header panel-heading">
 			<h3 >
 				<strong>팀원 정보 조회</strong>
 			</h3>

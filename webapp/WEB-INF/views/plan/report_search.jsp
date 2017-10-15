@@ -153,10 +153,12 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<main id="page-content-wrapper" role="main">
-	<div class="content-header">
+	<div class="panel-info">
+		<div class="content-header panel-heading">
 		<h3>
 			<strong>보고서 조회</strong>
 		</h3>
+	</div>
 	</div>
 	<article id="reportsearch-content">
 		<div>
