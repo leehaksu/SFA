@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sfa.dto.JSONResult;
 import com.sfa.security.Auth;
 import com.sfa.security.AuthUser;
+import com.sfa.service.AdviceService;
 import com.sfa.service.DatePlanService;
 import com.sfa.service.DateReportService;
 import com.sfa.service.UserService;
 import com.sfa.service.WeekPlanService;
 import com.sfa.util.ChangeDate;
 import com.sfa.util.Push;
+import com.sfa.vo.AdviceVo;
 import com.sfa.vo.DateReportVo;
 import com.sfa.vo.UserVo;
 import com.sfa.vo.WeekVo;
@@ -44,12 +46,15 @@ public class DateReportController {
 	
 	@Autowired
 	private WeekPlanService weekPlanService;
+	
+	@Autowired
+	private AdviceService adviceService;
 
 	@Auth
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public String insert(@RequestParam(value = "id", required = true, defaultValue = "") String id,
 			@RequestParam(value = "date", required = true, defaultValue = "") String date, @AuthUser UserVo authUser,
-			DateReportVo dateReportVo, Model model) {
+			DateReportVo dateReportVo, Model model,AdviceVo adviceVo) {
 
 		if ("".equals(date)) {
 			date = ChangeDate.today();
@@ -64,8 +69,12 @@ public class DateReportController {
 		
 		dateReportVo.setDate(date);
 		Long goal_sale = datePlanService.getGoal_sale(dateReportVo);
+		adviceVo.setDate(date);
+		List<AdviceVo> list = adviceService.select(adviceVo);
 		System.out.println("goal_sale=" + goal_sale);
 		model.addAttribute("goal_sale", goal_sale);
+		model.addAttribute("date", date);
+		model.addAttribute("list",list);
 		return "plan/report_insert";
 	}
 

@@ -45,4 +45,9 @@ public class ChartService {
 		return chartDao.getSaleById(id,date,userVo.getDept());
 	}
 
+	public List<ChartVo> getSaleByDept(String date) {
+		// TODO Auto-generated method stub
+		return chartDao.getSaleByDept(date);
+	}
+
 }

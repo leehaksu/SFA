@@ -55,4 +55,11 @@ public class ChartDao {
 		map.put("dept", dept);
 		return sqlSession.selectList("chart.getSaleById", map);
 	}
+
+	public List<ChartVo> getSaleByDept(String date) {
+		// TODO Auto-generated method stub
+		HashMap<String,String> map= new HashMap<String,String>();
+		map.put("date", date);
+		return sqlSession.selectList("chart.getSaleByDept",map);
+	}
 }

@@ -108,7 +108,7 @@ public class ChartController {
 		}
 	}
 	
-/*	@Auth(value = Auth.Role.팀장)*/
+	@Auth(value = Auth.Role.팀장)
 	@ResponseBody
 	@RequestMapping(value="/sale/id", method=RequestMethod.POST)
 	public JSONResult getSaleById (@AuthUser UserVo authUser,@RequestParam(value="date",required=true, defaultValue="")String date,
@@ -117,8 +117,23 @@ public class ChartController {
 		if ("".equals(date)) {
 			date=((ChangeDate.today()).substring(0, 4));
 		}
-		List<ChartVo> list = chartService.getSaleById("test01", date);
+		List<ChartVo> list = chartService.getSaleById(id, date);
 		System.out.println(list);
 		return JSONResult.success(list);
 	}
+	
+	@Auth(value = Auth.Role.팀장)
+	@ResponseBody
+	@RequestMapping(value="/sale/dept", method=RequestMethod.POST)
+	public JSONResult getSaleBydept (@AuthUser UserVo authUser,@RequestParam(value="date",required=true, defaultValue="")String date)
+	{
+		if ("".equals(date)) {
+			date=((ChangeDate.today()).substring(0, 4));
+		}
+		List<ChartVo> list = chartService.getSaleByDept(date);
+		System.out.println(list);
+		return JSONResult.success(list);
+	}
+	
+	
 }

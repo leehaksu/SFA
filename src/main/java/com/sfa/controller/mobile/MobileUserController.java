@@ -252,10 +252,8 @@ public class MobileUserController {
 		
 		@ResponseBody
 		@RequestMapping(value = "/mypage", method = RequestMethod.POST)
-		public JSONResult mypage(@AuthUser UserVo authUser, Model model, @ModelAttribute UserVo userVo) {
-			if (userVo == null) {
-				return JSONResult.error("정상적인 접근이 아닙니다.");
-			}else if (userVo.getId()==null || userVo.getPasswd()==null)
+		public JSONResult mypage(Model model, @ModelAttribute UserVo userVo) {
+			 if (userVo.getId()==null || userVo.getPasswd()==null)
 			{
 				return JSONResult.error("아이디랑 비밀번호 들어오지 않았습니다.");
 			}
