@@ -49,6 +49,7 @@ public class AdviceController {
 	}
 
 	@Auth
+	@ResponseBody
 	@RequestMapping(value = "/select", method = RequestMethod.POST)
 	public JSONResult selectAdvice(@AuthUser UserVo authUser, @ModelAttribute AdviceVo adviceVo) {
 
@@ -61,6 +62,7 @@ public class AdviceController {
 	}
 
 	@Auth
+	@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public JSONResult updateAdvice(@AuthUser UserVo authUser, @ModelAttribute AdviceVo adviceVo) {
 
@@ -78,6 +80,7 @@ public class AdviceController {
 	}
 
 	@Auth
+	@ResponseBody
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public JSONResult deleteAdvice(@AuthUser UserVo authUser, @ModelAttribute AdviceVo adviceVo) {
 		if (adviceVo == null) {
