@@ -43,3 +43,18 @@ function confisNaN( val ) {
 	else return false;
 }
 
+
+function makefloaraEditor(){
+	$('.date-textarea').froalaEditor(
+			{
+			  toolbarButtons: ['bold', 'italic','paragraphFormat'],
+				paragraphFormat: 
+				{
+				    N: 'Normal',
+				    H1: 'Heading 1',
+				    H2: 'Heading 2',
+					H3: 'Heading 3'
+			  	}
+			});
+}
+

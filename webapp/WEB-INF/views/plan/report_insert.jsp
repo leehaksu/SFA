@@ -23,124 +23,38 @@ var submitdate;
 var clickedAdviceId;
 
 
-function setAchiveRank(){
-	var goalSale = $("#dayreporttable-goal-sale").val();
-	var reportSale = $("#dayreporttable-report-sale").val();
-	var achiveRank =reportSale/goalSale * 100;
-	
-	if(confInfinity(achiveRank))
+function addNewAddviceInfo(advice_no)
+{
+	$.post("/advice/select",
 	{
-		$("#dayreporttable-achive-rank").val(100+"%");
-		$("#achive-rank").val(100);	
-	}else if(confisNaN(achiveRank)){
-		$("#dayreporttable-achive-rank").val("0%");
-		$("#achive-rank").val("");
-	}else	
-	{
-		achiveRank=Math.floor(achiveRank);	
-		$("#dayreporttable-achive-rank").val(achiveRank+"%");
-		$("#achive-rank").val(achiveRank);		
+	   advice_no:advice_no
 	}
+	,function(response,status){
+		console.log("새로 추가된 상담일지 정보");
+		console.log(response);	
+	});
 }
-function setmile(){
-	var startGauge = $("#dayreporttable-startGauge").val();
-	var endGauge = $("#dayreporttable-endGauge").val();
-	console.log(typeof startGauge);
-	console.log(typeof endGauge);
-	console.log(startGauge.length);
-	console.log(endGauge.length);
-	
-	
-	if((startGauge >=0 && startGauge.length != 0) && (endGauge.length != 0 && endGauge >=0 )){
-		if(endGauge-startGauge < 0){
-			$("#dayreporttable-mile").val("잘못된 입력값");
-		}else{
-			$("#dayreporttable-mile").val(endGauge-startGauge); 	
-			$("#mile").val(endGauge-startGauge);	
-		}	
-	}else{
-		$("#dayreporttable-mile").val(""); 
-		$("#mile").val(""); 		
-	}
-	
-}
-
-
-function validateForm() {
-	for(i =0; i < document.forms["dayreport-form"].length; i++){
-		var input = document.forms["dayreport-form"][i];
-		console.log(input);
-		console.log(input.hasAttribute("required"));
-		 if(input.hasAttribute("required")){
-			if(input.value == ""){
-				 alert("필수 입력 항목이 입력되지 않았습니다.");
-				 input.focus();
-				 return false;
-			}
-			if($("#report-content").froalaEditor('html.get').length == 0){
-				alert($("#report-content").froalaEditor('html.get'));
-				alert($("#report-content").froalaEditor('html.get').length);
-				alert("업무 내용이 비어있습니다.");
-				return false;
-			}
-			if($("#dayreporttable-mile").val() == "잘못된 입력값"){
-				alert("계기판 정보가 잘못 입력되었습니다.");
-				return false;
-			}
-		} 
-	}
-	return true;
-}
-
-function reportSubmit(){
-	
-	var dayreportForm = document.getElementById("dayreport-form");
-	dayreportForm.action = "insert"; // action에 해당하는 jsp 경로를 넣어주세요.
-	if(validateForm()){
-		dayreportForm.submit();  	
-	}
-	
-}
-
-function addAdvice(response.result){
-	if(response.result == "success"){
-		adviceCount += 1;
-		var div = document.createElement('div');
-		div.setAttribute("id","advice_content"+adviceCount);
-		div.setAttribute("class","advice_content");
-
-		div.innerHTML = document.getElementById('advice_content1').innerHTML;
-		document.getElementById('advice_contianer').appendChild(div);
-}
-
 
 $(document).ready(function() {
 	
 	$("#dayreporttable-report-sale").focusout(function(){
 		setAchiveRank();
 	});
+	
 	$("#dayreporttable-startGauge, #dayreporttable-endGauge").focusout(function(){
 		setmile();
 	});
-	
 	  
 	  $("#dayreport-date").attr("value", today);
 
 	  $("#advicereporttable-date").attr("value", today);	
-	 //alert(today);
-	  $.get("select?date="+today,
-	    function(response, status){
-	        console.log(response.data);
-	    });
-
-    	 $("#dayreport-date").attr("value", today);
+      $("#dayreport-date").attr("value", today);
 		
     	 adviceCount=1;				
 		$( "#submitDay-datepicker" ).val(today);
 		$( "#submitDay-datepicker" ).datepicker({
 			dateFormat: 'yy-mm-dd', 
 			minDate: 0,
-		    //comment the beforeShow handler if you want to see the ugly overlay
 		    beforeShow: function() {
 		        setTimeout(function(){
 		            $('.ui-datepicker').css('z-index', 99);
@@ -185,21 +99,8 @@ $(document).ready(function() {
 			}
 		});
 		
-		$(function() { $('.date-textarea').froalaEditor(
-				{
-				  toolbarButtons: ['bold', 'italic','paragraphFormat'],
-					paragraphFormat: 
-					{
-					    N: 'Normal',
-					    H1: 'Heading 1',
-					    H2: 'Heading 2',
-						H3: 'Heading 3'
-				  	}
-				});
-		});
+		makefloaraEditor();
 
-		
-	
 		//고객코드,고객명,주소 input태그 focus 될때  modal show
 		$(document).on("focus",'#advicereporttable-customer, #advicereporttable-code, #advicereporttable-address',function() {
 				//init modal_table
@@ -214,7 +115,6 @@ $(document).ready(function() {
 						contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 						success : function(doc) {
 							console.log(doc.data);
-
 							for (index = 0; index < doc.data.length; index++) {
 								$('#modal_table > tbody').append(
 								"<tr><td class='tg-yw4l customer-info'>"
@@ -287,24 +187,17 @@ $(document).ready(function() {
 				date:advice[4].date,
 				title:advice[5].title,
 				content:$("#advice-textarea").froalaEditor('html.get')
-			},
-			function(response,status){
+			},function(response,status){
 					console.log(response);
-					
-					addAdvice(response.result);
-					
-					$.post("/advice/select",{
-						advice_no:response.advice_no
-					},function(response,status){
-						console.log("새로 추가된 상담일지 정보");
-						console.log(response);	
-					});
-				}
-			});
+					var result =response.result;
+					var advice_no =response.advice_no;
+					addAdvice(result);
+					addNewAddviceInfo(advice_no);
+				});
 		     
-			$("#advice_content1").children('#advice_form').each(function() {  
+			/* $("#advice_content1").children('#advice_form').each(function() {  
             	this.reset();  
-         	});  
+         	}); */  
 
 			//var index = $(".advicereporttable-savebutton").index(this);
 			//console.log(index);
@@ -438,15 +331,8 @@ $(document).ready(function() {
 						</div>
 						<textarea id="report-content" name="content" class="date-textarea"></textarea>	
 					</div>
-					<!-- <div class="panel panel-info" style="clear: both;">
-						<div class="panel-heading">
-							<strong>팀장 의견</strong>
-						</div>
-						<div class="panel-body">일 이따구로 할꺼야?</div>
-					</div>
-					 -->
 					 </form>
-				
+					
 					<div id="advice_contianer"
 						style="padding: 5px;">
 						<div class="page-header">
@@ -555,7 +441,7 @@ $(document).ready(function() {
 
 									</div>
 								</div>
-								<div style=" clear:both; border-bottom: 1px solid #eee;"></div>
+								<div style="clear:both; border-bottom: 1px solid #eee;"></div>
 							</form>
 						</div>
 					</div>

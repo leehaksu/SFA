@@ -52,7 +52,6 @@ public class AdviceController {
 	@ResponseBody
 	@RequestMapping(value = "/select", method = RequestMethod.GET)
 	public JSONResult selectAdvice(@AuthUser UserVo authUser, @ModelAttribute AdviceVo adviceVo) {
-
 		if (adviceVo == null) {
 			return JSONResult.error("입력값이 없습니다.");
 		} else {
