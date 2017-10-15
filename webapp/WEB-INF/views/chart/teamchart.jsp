@@ -294,6 +294,26 @@
 					}		
 			});
 			
+			$.ajax({
+				url : '/sfa/chart/sale/dept',
+				type : 'POST',
+				dataType : 'json',
+				data : "date="+date,
+				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+				success : function(doc) {
+					console.log(doc);
+				var label_array = new Array();
+				var sale_array= new Array();
+					for(i=0;i<doc.data.length;i++)
+				{
+						
+						label_array.push(doc.data[i].dept);
+						sale_array.push(doc.data[i].total_sale)
+					}
+					addData(myChart3,label_array,sale_array);
+				}		
+			});
+			
 		}
 		
 		$(document).ready( function() {
