@@ -10,6 +10,7 @@ public class AdviceVo {
 	private String name;//이름
 	private String id;//아이디
 	private String date;//제출일
+	private String address;//주소
 	public Long getAdvice_no() {
 		return advice_no;
 	}
@@ -64,11 +65,16 @@ public class AdviceVo {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	@Override
 	public String toString() {
 		return "AdviceVo [advice_no=" + advice_no + ", title=" + title + ", content=" + content + ", reg_date="
 				+ reg_date + ", manager_name=" + manager_name + ", customer_code=" + customer_code + ", name=" + name
-				+ ", id=" + id + ", date=" + date + "]";
+				+ ", id=" + id + ", date=" + date + ", address=" + address + "]";
 	}
 }
