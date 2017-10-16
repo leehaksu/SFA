@@ -12,8 +12,15 @@
 $(document).ready(function(){
 	$("#searchbutton").on("click",function(){
 		var name=$("#customerName").val();
+		
 		$.get("search/name?name="+name, function(data, status){
-	        //alert("Data: " + data + "\nStatus: " + status);
+	        console.log(data );
+			if( data.result == "error")
+			{
+				alert(data.message);
+			}
+	    }).fail(function() {
+	        alert( "error 발생 다시시도해 주세요" );
 	    });
 	})
 });
