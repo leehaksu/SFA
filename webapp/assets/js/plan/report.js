@@ -86,6 +86,14 @@ function reportUpdate(){
 	}
 }
 
+function opinionUpdate()
+{
+	var dayreportForm = document.getElementById("report-opinion-form");
+	dayreportForm.action="update/opinion";
+	if(validateForm()){
+		dayreportForm.submit();  	
+	}
+	}
 
 function addAdvice(result){
 	if(result == "success"){

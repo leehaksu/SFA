@@ -131,5 +131,13 @@ public class DateReportDao {
 		return sqlSession.selectList("datereport.seletMainDate", map);
 	}
 
+	public int inserOpinion(String opinion, Long report_no) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("report_no", report_no);
+		map.put("opinion", opinion);
+		return sqlSession.insert("datereport.inserOpinion",map);
+	}
+
 
 }
