@@ -80,7 +80,7 @@ function reportSubmit(){
 
 function reportUpdate(){
 	var dayreportForm = document.getElementById("dayreport-form");
-	dayreportForm.action = "update"; // action에 해당하는 jsp 경로를 넣어주세요.
+	dayreportForm.action="update"; // action에 해당하는 jsp 경로를 넣어주세요.
 	if(validateForm()){
 		dayreportForm.submit();  	
 	}
