@@ -11,13 +11,29 @@
 }
 
 
+#advice_contianer{
+	margin-top:30px;
+}
+
+
+.report-content,.reader-content{
+	margin: 0 auto;
+    width: 61%;
+    text-align: center;
+}
 
 #reportmain_content{
 	    width: 100%;
 }
 #advicereporttable-title{
-	text-align: center;
-	width: 500px; margin-right: 6px;
+	    text-align: center;
+    width: 589px;
+    margin-right: 6px;
+}
+
+.advicereporttable-address{
+	    width: 255px;
+    margin-right: 6px;
 }
 
    
@@ -35,4 +51,16 @@
 #adv-content1,#adv-content2,#adv-content3
 {
 	    text-align: center;
+}
+
+label{
+	text-align: center"
+}
+
+
+
+#report-thumnail{
+	"margin-bottom" : "20px";
+	"border": "1px solid gray";
+	"overflow": "hidden";	
 }

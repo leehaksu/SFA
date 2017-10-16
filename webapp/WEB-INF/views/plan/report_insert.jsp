@@ -351,8 +351,7 @@ $(document).ready(function() {
 							</td>
 						</tr>
 					</table>
-					<div class=" panel panel-default form-group"
-						style="width: 100%; text-align: center">
+					<div class=" panel panel-default form-group report-content">
 						<div class="panel-heading">
 							<strong>업무 보고 내용</strong>
 						</div>
@@ -360,17 +359,11 @@ $(document).ready(function() {
 					</div>
 					 </form>
 					
-					<div id="advice_contianer"
-						style="padding: 5px;">
-						<div class="page-header">
-							<h4 style="width: 70%; display: inline-block;">
-								<Strong>상담일지</Strong>
-							</h4>
-						</div>
+					<div id="advice_contianer">
+				
 						<div id="advice_content"class="advice_content">
 							<form id="advice_form">
-								<div class="panel panel-info"
-									style="clear: both; margin-top : 10px;">
+								<div class="panel panel-success">
 									<div class="panel-heading" style="color: #fff; ">
 										<strong>상담카드</strong>
 										<div style="float: right;">
@@ -409,8 +402,7 @@ $(document).ready(function() {
 																&nbsp;</label> <input id="advicereporttable-manager_name"
 																class="form-control advicereporttable-input" type="text"
 																name="manager_name" placeholder="담당자" pattern="^[가-힣a-zA-Z]+$;"
-																required
-																>
+																required>
 														</div>
 													</div>
 												</td>
@@ -424,7 +416,7 @@ $(document).ready(function() {
 															<input id="advicereporttable-address"
 																class="form-control advicereporttable-input" type="text"
 																name="address" placeholder="주소 자동입력 "
-																style="width: 415px; margin-right: 6px;" required
+																 required
 																data-toggle="modal" data-target="#AdviceModal" autocomplete="off">
 														</div>
 														<div style="display: inline-block; margin-top: 20px;">
@@ -432,7 +424,7 @@ $(document).ready(function() {
 															<input id="advicereporttable-date"
 																class="form-control advicereporttable-input" type="text"
 																name="date" placeholder="보고날짜"
-																style="width: 220px; margin-right: 6px;" required
+																 required
 																readonly>
 														</div>
 													</div>
@@ -570,6 +562,7 @@ $(document).ready(function() {
 							</form>
 						</div>
 						</c:forEach>												
+					
 					</div>
 				</div>
 			</div>

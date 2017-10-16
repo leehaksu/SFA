@@ -353,34 +353,66 @@ function init() {
 	   		        "appKey" : "2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"
 	   		    },
 	   		    success: function( data, textStatus, jQxhr ){
-	   		    	console.log(data);
+	   		 	var name= data.searchPoiInfo.pois.poi[0].name;
+	        	var tel= data.searchPoiInfo.pois.poi[0].telNo.split("-");
+	        	var address = data.searchPoiInfo.pois.poi[0].upperAddrName +" "+data.searchPoiInfo.pois.poi[0].middleAddrName+" "+data.searchPoiInfo.pois.poi[0].lowerAddrName;
+	            	console.log(data);
 	   		    	console.log(data.searchPoiInfo.pois.poi[0].frontLat+","+data.searchPoiInfo.pois.poi[0].frontLon);
 	   		    	cLonLat = new Tmap.LonLat(data.searchPoiInfo.pois.poi[0].frontLon,data.searchPoiInfo.pois.poi[0].frontLat);
 	   		    	map.setCenter(cLonLat,zoom);
 	   		    	var markerLayer = new Tmap.Layer.Markers();
 	   		    	map.addLayer(markerLayer);
-	   		    	
-	   		    	for(i=0; i < data.searchPoiInfo.pois.poi.length; i++){
-	   		    		var cLonLat = new Tmap.LonLat(data.searchPoiInfo.pois.poi[i].frontLon,data.searchPoiInfo.pois.poi[i].frontLat);
-	   		    		var label = new Tmap.Label(data.searchPoiInfo.pois.poi[i].name);
-	   		    		 var tempmarker = new Tmap.Markers(cLonLat, icon, label);	
-	   		    		tempmarker.events.register("click", tempmarker, onclickmarkerselect);
-			        	markerLayer.addMarker(tempmarker);		
-	   		    	}
-	   		    	              
-	   		    },
+   		    		var cLonLat = new Tmap.LonLat(data.searchPoiInfo.pois.poi[0].frontLon,data.searchPoiInfo.pois.poi[0].frontLat);
+   		    		var label = new Tmap.Label(data.searchPoiInfo.pois.poi[0].name);
+   		    		var tempmarker = new Tmap.Markers(cLonLat, icon, label);	
+   		    		
+   		    		
+   		    		tempmarker.events.register("click", tempmarker, onclickmarkerselect(name,tel,address));
+		        	markerLayer.addMarker(tempmarker);		
+		        	
+		        	var popup;
+		        	popup = new Tmap.Popup("p1",
+		        							cLonLat,
+		        	                        new Tmap.Size(200, 100),
+		        	                        data.searchPoiInfo.pois.poi[0].name +"<br>"+
+		        	                        "주소지:" + data.searchPoiInfo.pois.poi[0].upperAddrName +" "+data.searchPoiInfo.pois.poi[0].middleAddrName+" "+data.searchPoiInfo.pois.poi[0].lowerAddrName+
+		        	                        "<br>"+"전화번호:"+data.searchPoiInfo.pois.poi[0].telNo+"<br>"
+		        	                        ); 
+		        	map.addPopup(popup);
+		        	popup.hide();
+		        
+		        	/*addcustomerinfo(name,tel,address);
+		        	*/
+		        	tempmarker.events.register("mouseover", popup, onOverMarker);
+		        	tempmarker.events.register("mouseout", popup, onOutMarker);
+		        	function onOverMarker (evt){
+		        	    this.show();
+		        	}
+   		    },
 	              error: function( jqXhr, status, errorThroxwn ){
 	             	 console.log(jqXhr);
 	                  console.log( errorThroxwn + "," + status);
 	                  alert("오류 발생!! 다시 시도해 주세요.");
 	              }
-
 	   		});
  }
+ 
+ function addcustomerinfo(name,tel,address){
+	 $("#customername").val(name);
+	 $("#contact1").val(tel[0]);
+ 	$("#contact2").val(tel[1]);
+ 	$("#contact3").val(tel[2]);
+	$("#customer-address-input").val(address);
+	
+ }
+ function onOutMarker (evt){
+	    this.hide();
+ }
 
- function onclickmarkerselect(e){
-	 var tempLonLat = new Tmap.LonLat(this.lonlat.lon,this.lonlat.lat);
-     alert(this.lonlat.lon+","+this.lonlat.lat);
+ function onclickmarkerselect(name,tel,address){
+	 addcustomerinfo(name,tel,address);
+	 $("#search_customer_map").modal("hide");
+
  }
  
  

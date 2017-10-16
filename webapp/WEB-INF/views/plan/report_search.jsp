@@ -116,7 +116,7 @@ $(document).ready(function() {
 			        }
 		    	   }
 		        
-		        $(".report-thumnail").css({"border": "1px solid gray","overflow": "hidden"});
+		        $(".report-thumnail").css({"margin-bottom" : "20px","border": "1px solid gray","overflow": "hidden"});
 		        $(".report-detail").css({"float": "left", "width": "100%"});
 		        $(".report-state").css({"width": "77px", "float": "left"});
 		        $(".report-list").css({"margin-left": "100px", "width": "auto"});

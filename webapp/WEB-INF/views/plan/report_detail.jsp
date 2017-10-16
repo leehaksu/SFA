@@ -171,14 +171,14 @@
 							
 					</tr>
 				</table>
-				<div class=" panel panel-default form-group"
-					style="width: 100%; text-align: center">
+				<div class=" panel panel-default form-group report-content">
 					<div class="panel-heading">
 						<strong>업무 보고 내용</strong>
 					</div>
 					<textarea id="report-content" name="content" class="date-textarea" data-value=""${dateReportVo.content}"></textarea>
 				</div>
-				<div class="panel panel-info" style="clear: both;">
+				<br>
+				<div class="panel panel-info reader-content" >
 					<div class="panel-heading">
 						<strong>팀장 의견</strong>
 					</div>
@@ -186,14 +186,10 @@
 				</div>
 			</form>
 			<div id="advice_contianer" style="padding: 5px;">
-				<div class="page-header">
-					<h4 style="width: 70%; display: inline-block;">
-						<Strong>상담일지</Strong>
-					</h4>
-				</div>
+				
 				<div id="advice_content1" class="advice_content">
 					<form id="advice_form">
-						<div class="panel panel-info"
+						<div class="panel panel panel-success"
 							style="clear: both; margin-top: 10px;">
 							<div class="panel-heading" style="color: #fff;">
 								<strong>상담카드</strong> <span style="float: right;"> 
