@@ -13,16 +13,40 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		
-		var content ='<c:out value="${dateReportVo.content}"/>'; 
+		$("#dayreporttable-report-sale").focusout(function(){
+			setAchiveRank();
+		});
 		
+		$("#dayreporttable-startGauge, #dayreporttable-endGauge").focusout(function(){
+			setmile();
+		});
+		
+		var content ='<c:out value="${dateReportVo.content}"/>'; 
+	$(".report-pen").on("click",function(){
+		$(".dayreportform-input").removeAttr("readonly");
+		$('.date-textarea').froalaEditor('edit.on');
+		$(".fa-floppy-o").show();
+		$(this).hide();
+	});	
 			
+	$(".report-floppy").on("click",function(){
+		alert("나탐");
+		var form = document.getelementbyid("dayreport-form");
+		 form.action="update";
+		 if(validateForm() == true){
+			 form.submit();	 
+		 }
+	});
+	
+	
+	
 	$('.date-textarea').froalaEditor({
 			toolbarButtons : [ 'bold', 'italic', 'paragraphFormat' ],
 			paragraphFormat : {
 				N : 'Normal',
 				H1 : 'Heading 1',
 				H2 : 'Heading 2',
-				H3 : 'Heading 3'
+// 				H3 : 'Heading 3'
 			}
 		});
 	$('#date-textarea').froalaEditor('html.set', content);
@@ -56,9 +80,12 @@
 			<h3>
 				<strong>일일 보고서</strong> 
 				<span style="float: right;"> 
-				<a href="#" onclick=""> 
-				<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
-				</a> &nbsp; <a href="#" onclick=""> 
+				<a href="#" onclick="reportUpdate()" >
+			 	<i class="fa fa-floppy-o fa-lg" aria-hidden="true" style="display:none;"></i>
+				</a>
+				<a href="#"> 
+				<i class="fa fa-pencil fa-lg report-pen" aria-hidden="true"></i>
+				</a> &nbsp; <a href="delete?report_no=${dateReportVo.report_no}" > 
 				<i class="fa fa-trash fa-lg"aria-hidden="true"></i>
 				</a>
 				</span>
@@ -91,7 +118,7 @@
 							<div style="display: inline-block;">
 								<label class="reporttable-label" for="day">달 성 률(%)
 									&nbsp;</label> <input id="dayreporttable-achive-rank"
-									class="form-control dayreportform-input" type="text"
+									class="form-control dayreportform-readonly" type="text"
 									placeholder="일일 달성률" required readonly value="${dateReportVo.achive_rank}%"> 
 									<input type="hidden" id="achive-rank" value="${dateReportVo.achive_rank}"  name="achive_rank">
 							</div>
@@ -121,8 +148,8 @@
 						<td>
 							<div style="display: inline-block;">
 								<label class="reporttable-label" for="day">주행거리(km)&nbsp;</label>
-									<input id="dayreporttable-mile"
-									class="form-control dayreportform-input" type="text"
+									<input id="dayreporttable-mile" 
+									class="form-control dayreportform-readonly" type="text"
 									name="mile" placeholder="주행거리" required readonly value="${dateReportVo.mile}"> 
 									
 							</div>

@@ -236,6 +236,8 @@ function init() {
 	 }	 
  }
  
+ 
+ 
  function searchRoute(){
  	//클릭한 list의 좌표 업체 별로 passList에 넣어 줄것. 문자열로! 끝은 G,0으로 통일할 것이며, 최대 5개의 경유지만 가능
  	//그러므로 route list의 length가 5개 이상이면 검색이 불가능 하거나 5개 까지만 검색이 되게 해야함.
@@ -337,7 +339,50 @@ function init() {
  	console.log(data);   	
  }
 
+ 
+ 
+ function getPOI(){
+	 var keyword = $("#searchPOI").val();
+	 var icon = new Tmap.Icon('https://developers.skplanetx.com/upload/tmap/marker/pin_b_m_a.png', size, offset);     
+	 var cLonLat;
+	 $.ajax({
+	   		method : "GET",
+	   		    url : "https://apis.skplanetx.com/tmap/pois?version=1&searchKeyword="+keyword,
+	   		    headers : {
+	   		        "Content-Type" : "application/x-www-form-urlencoded",
+	   		        "appKey" : "2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"
+	   		    },
+	   		    success: function( data, textStatus, jQxhr ){
+	   		    	console.log(data);
+	   		    	console.log(data.searchPoiInfo.pois.poi[0].frontLat+","+data.searchPoiInfo.pois.poi[0].frontLon);
+	   		    	cLonLat = new Tmap.LonLat(data.searchPoiInfo.pois.poi[0].frontLon,data.searchPoiInfo.pois.poi[0].frontLat);
+	   		    	map.setCenter(cLonLat,zoom);
+	   		    	var markerLayer = new Tmap.Layer.Markers();
+	   		    	map.addLayer(markerLayer);
+	   		    	
+	   		    	for(i=0; i < data.searchPoiInfo.pois.poi.length; i++){
+	   		    		var cLonLat = new Tmap.LonLat(data.searchPoiInfo.pois.poi[i].frontLon,data.searchPoiInfo.pois.poi[i].frontLat);
+	   		    		var label = new Tmap.Label(data.searchPoiInfo.pois.poi[i].name);
+	   		    		 var tempmarker = new Tmap.Markers(cLonLat, icon, label);	
+	   		    		tempmarker.events.register("click", tempmarker, onclickmarkerselect);
+			        	markerLayer.addMarker(tempmarker);		
+	   		    	}
+	   		    	              
+	   		    },
+	              error: function( jqXhr, status, errorThroxwn ){
+	             	 console.log(jqXhr);
+	                  console.log( errorThroxwn + "," + status);
+	                  alert("오류 발생!! 다시 시도해 주세요.");
+	              }
 
+	   		});
+ }
+
+ function onclickmarkerselect(e){
+	 var tempLonLat = new Tmap.LonLat(this.lonlat.lon,this.lonlat.lat);
+     alert(this.lonlat.lon+","+this.lonlat.lat);
+ }
+ 
  
  function deleteRoute(){
 	

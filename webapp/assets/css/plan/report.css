@@ -1,4 +1,4 @@
-.dayreportform-input ,#submitDay-datepicker
+.dayreportform-input ,#submitDay-datepicker,.dayreportform-readonly
 {
 	width: 150px;  
     margin-right: 6px;  
@@ -11,6 +11,7 @@
 }
 
 
+
 #reportmain_content{
 	    width: 100%;
 }
@@ -18,7 +19,10 @@
 	width: 500px; margin-right: 6px;
 }
 
+   
+
 #dayreporttable{
+	margin: auto;
 	border-collapse: separate;
     border-spacing: 10px 17px;
 }

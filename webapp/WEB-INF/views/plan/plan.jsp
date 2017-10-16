@@ -615,8 +615,8 @@
 					name="first_date">
 			</div>
 			<div>
-				<div style="margin-left: 37px;">
-					<table>
+				<div>
+					<table style="margin: 0 auto;">
 						<tr>
 							<td>
 								<div class="week-user-info">
