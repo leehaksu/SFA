@@ -101,4 +101,9 @@
 	select report_no,title,report_sale,content,achive_rank,approval,opinion,reg_date from day_report where id=#{id} order by reg_date desc limit 5;
 	]]>
 	</select>
+	<update id="inserOpinion" parameterType="MAP">
+	<![CDATA[
+	update datereport set opinion=#{opinion} where report_no=#{report_no};
+	]]>
+	</update>
 </mapper>

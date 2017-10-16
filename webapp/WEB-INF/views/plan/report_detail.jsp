@@ -11,6 +11,7 @@
 <head>
 <c:import url="/WEB-INF/views/common/common.jsp"></c:import>
 <script type="text/javascript">
+	
 	$(document).ready(function() {
 		
 		$("#dayreporttable-report-sale").focusout(function(){
@@ -20,13 +21,21 @@
 		$("#dayreporttable-startGauge, #dayreporttable-endGauge").focusout(function(){
 			setmile();
 		});
-		
-		var content ='<c:out value="${dateReportVo.content}"/>'; 
+		var level ='<c:out value="${authUser.level}"/>';
+		var content ='<c:out value="${dateReportVo.content}"/>';
+		var opnion ='<c:out value="${dateReportVo.opinion}"/>'; 
 	$(".report-pen").on("click",function(){
 		$(".dayreportform-input").removeAttr("readonly");
 		$('.date-textarea').froalaEditor('edit.on');
 		$(".fa-floppy-o").show();
 		$(this).hide();
+		
+		if(level=="팀장")
+		{$(".panel-body").text("");
+		$("#page-header-text").append("<span style='float: right;'><a href='#' onclick='reportUpdate()'>"
+				+"<i class='fa fa-floppy-o fa-lg' aria-hidden='true'></i></a></span>");
+				$(".panel-body").append("<input type='textarea' style='width:100%; resize:none; height: 60px' value='${dateReportVo.opinion}'/>");
+		}
 	});	
 			
 	$(".report-floppy").on("click",function(){
@@ -54,6 +63,7 @@
 	$(".dayreportform-input").attr("readonly", true);
 	$(".advicereporttable-input").attr("readonly", true);
 	$("#submitDay-datepicker").attr("readonly", true);
+	
 });
 
 	function update() {
@@ -177,12 +187,15 @@
 					</div>
 					<textarea id="report-content" name="content" class="date-textarea" data-value=""${dateReportVo.content}"></textarea>
 				</div>
+
+				</form>
+				<form name="dayreport" id="report-opinion-form" method="post">
 				<br>
 				<div class="panel panel-info reader-content" >
 					<div class="panel-heading">
 						<strong>팀장 의견</strong>
 					</div>
-					<div class="panel-body"></div>
+					<div class="panel-body" >${dateReportVo.opinion}</div>
 				</div>
 			</form>
 			<div id="advice_contianer" style="padding: 5px;">

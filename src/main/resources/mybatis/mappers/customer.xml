@@ -14,7 +14,7 @@
 	</select>
 	<select id="selectByName" parameterType="MAP" resultType="customervo">
 	<![CDATA[
-	select customer_code,name,contact,manager_name,manager_grade,manager_contact,manager_email,manager_birth,time,address,positionX,positionY,state from user as a, customer as b where a.id=b.id and dept=#{dept} and name=#{name};
+	select a.customer_code,a.name,a.contact,a.manager_name,a.manager_grade,a.manager_contact,a.manager_email,a.manager_birth,a.time,a.address,a.positionX,a.positionY,a.state from user as a, customer as b where a.id=b.id and dept=(select dept form user where id=#{id}) and name=#{name};
 	]]>
 	</select>
 	<select id="last_select" resultType="customervo">
