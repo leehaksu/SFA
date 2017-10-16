@@ -103,7 +103,7 @@
 						<tbody>
 							<tr>
 								<th>고객명</th>
-								<td><input type="text" class="form-control"
+								<td><input id="customername" type="text" class="form-control"
 									name="customer-name"></td>
 							</tr>
 							<tr>
@@ -174,8 +174,8 @@
 				</div>
 				<div class="modal-body">
 					<div>
-						<input id="searchPOI" type="text" name="position">
-						<button type="button" onclick="getPOI()">검색</button>
+						<input style="width: 85%;" id="searchPOI" class="form-control" type="text" name="position" placeholder="고객명">
+						<button type="button" class="btn btn-info"onclick="getPOI()">검색</button>
 					</div>
 					<br>
 					<div id="map_div"></div>
