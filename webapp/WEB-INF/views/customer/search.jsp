@@ -20,7 +20,7 @@ $(document).ready(function(){
 				alert(data.message);
 			}
 	    }).fail(function() {
-	        alert( "error 발생 다시시도해 주세요" );
+	        alert( "error 발생 다시 시도해 주세요" );
 	    });
 	})
 });
@@ -59,7 +59,8 @@ $(document).ready(function(){
 			</div>
 			<div class="search_mt">
 				<div class="left">
-					<span class="ng-binding">0건</span>
+				<c:set var = "len" value = "${fn:length(list)}" />
+					<span class="ng-binding">${len} 건</span>
 				</div>
 			
 			</div>

@@ -7,8 +7,6 @@
 <html>
 <head>
 <c:import url="/WEB-INF/views/common/common.jsp"></c:import>
-
-
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -45,20 +43,24 @@
 						aria-hidden="true"></i></a>
 				</h5>
 				<table class="table table-striped">
-					<tr>
-						<th class="tg-031e">월요일 목표액</th>
-						<th class="tg-031e">화요일 목표액</th>
-						<th class="tg-031e">수요일 목표액</th>
-						<th class="tg-031e">목요일 목표액</th>
-						<th class="tg-031e">목요일 목표액</th>
+					<tr><th class="tg-031e">월/주차</th>					
+						<th class="tg-031e">제목</th>
+						<th class="tg-031e">주간 목표액</th>
+						<th class="tg-031e">주간 매출액</th>
+						<th class="tg-031e">달성률</th>
+						<th class="tg-031e">작성일</th>
 					</tr>
 					<c:forEach items="${week_list}" var="weeklist" varStatus="status">
+					<c:set var = "month" value = "${weeklist.week_no}" />
+					<c:set var = "string1" value = "${fn:substring(month, 4, 6)}" />
+					<c:set var = "string2" value = "${fn:substring(month, 7, 8)}" />
 					<tr>
-						<td class="tg-031e">${weeklist}</td>
-						<td class="tg-031e">${weeklist}</td>
-						<td class="tg-031e">${weeklist}</td>
-						<td class="tg-031e">${weeklist}</td>
-						<td class="tg-031e">${weeklist}</td>
+						<td class="tg-031e">${string1}월  ${string2}주차</td>
+						<td class="tg-031e">${weeklist.title}</td>
+						<td class="tg-031e">${weeklist.target_figure}</td>
+						<td class="tg-031e">${weeklist.week_sale}</td>
+						<td class="tg-031e">${weeklist.achive_rank}</td>
+						<td class="tg-031e">${weeklist.reg_date}</td>
 					</tr>
 					</c:forEach>
 				</table>
