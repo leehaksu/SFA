@@ -16,6 +16,7 @@
 	    width: 100%;
 }
 #advicereporttable-title{
+	text-align: center;
 	width: 500px; margin-right: 6px;
 }
 
@@ -28,4 +29,10 @@
 }
 .reporttable-label{
 	width: 110px; text-align: center;
+}
+
+
+#adv-content1,#adv-content2,#adv-content3
+{
+	    text-align: center;
 }

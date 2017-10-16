@@ -182,7 +182,7 @@
 					<div class="panel-heading">
 						<strong>팀장 의견</strong>
 					</div>
-					<div class="panel-body">일 이따구로 할꺼야?</div>
+					<div class="panel-body"></div>
 				</div>
 			</form>
 			<div id="advice_contianer" style="padding: 5px;">
@@ -208,7 +208,7 @@
 							<div class="panel-body">
 								<table id="advicereporttable"
 									style="background-color: #fff; width: 100%; border-radius: 5px;">
-									<tr style="margin-top: 5px;">
+									<tr>
 										<td colspan="3" id="adv-content1">
 											<div class="form-group" style="margin-top: 15px;">
 												<div style="display: inline-block;">
