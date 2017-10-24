@@ -55,8 +55,8 @@ function validateForm() {
 				 return false;
 			}
 			if($("#report-content").froalaEditor('html.get').length == 0){
-				alert($("#report-content").froalaEditor('html.get'));
-				alert($("#report-content").froalaEditor('html.get').length);
+				//alert($("#report-content").froalaEditor('html.get'));
+				//alert($("#report-content").froalaEditor('html.get').length);
 				alert("업무 내용이 비어있습니다.");
 				return false;
 			}

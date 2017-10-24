@@ -48,10 +48,6 @@
 }
 
 
-#adv-content1,#adv-content2,#adv-content3
-{
-	    text-align: center;
-}
 
 label{
 	text-align: center"
@@ -60,7 +56,7 @@ label{
 
 
 #report-thumnail{
-	"margin-bottom" : "20px";
-	"border": "1px solid gray";
-	"overflow": "hidden";	
+	border: 1px solid gray;
+    overflow: hidden;
+    min-height: 149px;
 }

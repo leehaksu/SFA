@@ -39,7 +39,7 @@
 	});	
 			
 	$(".report-floppy").on("click",function(){
-		alert("나탐");
+		//alert("나탐");
 		var form = document.getelementbyid("dayreport-form");
 		 form.action="update";
 		 if(validateForm() == true){

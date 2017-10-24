@@ -37,9 +37,6 @@
 	// dayplantable에 클릭한 날짜의 목표액을 주간테이블에서 가져오기 위한 변수
 	var goalmoneyindex;
 
-
-     
-	
 	//moment('2016-06','YYYY-MM').diff('2015-01','month');     //17 시간차
 	$(document).ready( function() {
 		
@@ -135,9 +132,11 @@
 					 
 					//날짜 클릭 이벤트 일일 계획 데이터 ajax
 					setTimeout(function() {
+						console.log("지도데이터 확인");
+						
 						console.log(map);
 						changedayplan(ClickedDay,selectID,authUserID,plandatecheck,map)
-						}, 500);
+						}, 600);
 					
 					dayplanmodalShow();	
 				}
@@ -461,13 +460,13 @@
 												<input type="hidden" id="dayplan-route" name="route" value="">												
 													<span id="mapsearch"><strong>지도 검색</strong> </span>
 													<ul style="display: -webkit-box;">
-														<li><button id="dateplan-searchRoutes" type="button"
+														<li><button id="dateplan-searchRoutes" type="button" class="btn btn-info"
 																onclick="searchRoute()">경로탐색</button>
 														<li>
-														<li><button id="dateplan-deleteRoutes" type="button"
+														<li><button id="dateplan-deleteRoutes" type="button" class="btn btn-info"
 																onclick="deleteRoute()">경로삭제</button>
 														<li>
-														<li><button id="dateplan-searchPosition"
+														<li><button id="dateplan-searchPosition" class="btn btn-info"
 																type="button">위치검색</button>
 														<li>
 													</ul>

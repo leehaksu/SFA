@@ -17,7 +17,7 @@
    	$("#my-positions").autocomplete({
    		source: positions
    	});
-	}
+	}	
 	
 	function initEditor(){
 		$('#date-textarea').froalaEditor(
@@ -68,7 +68,6 @@
 				{"date": ClickedDay,
 			   "id" : selectID},
 			   function(response,status){
-		            alert("Data: " + response + "\nStatus: " + status);
 		            console.log(response);
 		            
 		            if(response.result == "fail" || response.data =="" ){
@@ -163,7 +162,7 @@
 					xhr,
 					status,
 					error) {
-				alert(xhr + " 와 " + status + " 와 " + error);
+				alert("죄송합니다 다시 시도해 주세요");
 			}
 		});
 	}
@@ -171,6 +170,9 @@
 	function resetmap(){
 		$("#map_div").remove();
 		$("#map_content").append("<div id='map_div'></div>");
+		//위치 검색에 업체리스트 삭제	 
+		$("#position-list").empty();
+		
 	}
 	
 	function dayplanout(){
@@ -195,7 +197,7 @@
 		$('#date-textarea').froalaEditor('html.set', '');
 
 		$("#dayplanmodal").attr("class","modal fade");
-	
+
 	}
 	
 	//dayplanModal 모달 닫기
@@ -259,8 +261,8 @@
 			  		 route:route
 			  		},
 			        function(data,status){
-			            alert("Data: " + data + "\nStatus: " + status);
-			            alert(content);
+			           // alert("Data: " + data + "\nStatus: " + status);
+			            //alert(content);
 			            if(content == "")
 			            {
 			            	  $("#side-dayplan-content").text("입력된 계획이 없습니다.");
@@ -307,7 +309,7 @@
 					        },
 					        function(data,status){
 					            console.log("Data: " + data + "\nStatus: " + status);
-					            alert(content);
+					           // alert(content);
 					            if(content == "")
 					            {
 					            	  $("#side-dayplan-content").text("입력된 계획이 없습니다.");

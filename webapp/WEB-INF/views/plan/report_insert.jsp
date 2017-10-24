@@ -40,7 +40,7 @@ function addNewAddviceInfo(advice_no)
 
 
 function setContentAndProtect(listLength){
-	alert("상담일자 갯수: "+listLength);
+	//alert("상담일자 갯수: "+listLength);
 	for(i=1; i < listLength+1; i++){
 		var content = $("#advice-textarea"+i).data("value");
 		$("#advice-textarea"+i).froalaEditor('html.set',content);	

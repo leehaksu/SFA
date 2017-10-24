@@ -128,16 +128,22 @@
     function onclickmarker(e){
     	//경로에 중복이 있는지 체크 
     	if($.inArray(this.labelHtml,routeNames) >= 0){
-    		console.log("경로에 이미 존재하는 경유지 입니다.");
-    		// modal로 확인 취소를 통해 넣을 것인지 말것인지 선택하게 만든다. 
+    		alert("경로에 이미 존재하는 경유지 입니다.");
+    		return ;// modal로 확인 취소를 통해 넣을 것인지 말것인지 선택하게 만든다. 
         }
     	var tempLonLat = new Tmap.LonLat(this.lonlat.lon,this.lonlat.lat).transform(pr_3857,pr_4326);
         
+    
+    	//지점이름으로 POI 검색
+    	getPOIbylabel(this.labelHtml);
+    	
   		 //클릭한 순서대로 지점 이름이 배열에 삽입된다.
   		routeNames.push(this.labelHtml);
   		//클릭한 순서대로 지점 좌표가 배열에 삽입된다.		
       	routeList.push(tempLonLat);
       	//routeList.push(new Tmap.Geometry.Point(this.lonlat.lon,this.lonlat.lat));
+      	
+      	initRoutelist();
 	} 
 
 function init() {	
@@ -150,9 +156,10 @@ function init() {
         map.addLayer(markerLayer);
         var currentlabel =  new Tmap.Label("현재 위치");
         var icon = new Tmap.Icon('https://developers.skplanetx.com/upload/tmap/marker/pin_b_m_a.png', size, offset); 
+        var starticon = new Tmap.Icon("https://www.google.co.kr/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwifm7CVw4jXAhVGH5QKHZ_QAo4QjRwIBw&url=http%3A%2F%2Fm.blog.daum.net%2Fdodoad1004%2F15&psig=AOvVaw2sQYJUf8K044u1CVX922or&ust=1508909220106498", size, offset); 
         
         //console.log("현재위치에 마크");
-        var currentmarker = new Tmap.Markers(cLonLat, icon, currentlabel);		        
+        var currentmarker = new Tmap.Markers(cLonLat, starticon, currentlabel);		        
         markerLayer.addMarker(currentmarker);	
     	$.ajax({
 			url : '/sfa/customer/position/',
@@ -172,6 +179,7 @@ function init() {
 					client_map_info.push(mapinfo);
 					console.log(client_map_info[i]);
 					positions.push(response.data[i].name);		
+					
 					
 					//위치 검색에 업체리스트 삽입
 					$("#position-list").append("<li>"+client_map_info[i].name+"</li>");
@@ -202,7 +210,7 @@ function init() {
 		        } 		
 			},
 			error : function(xhr,status,error) {
-				alert(xhr + " 와 " + status + " 와 " + error);
+				alert("죄송합니다 다시 시도해 주세요.");
 			}
 			
     	});
@@ -232,11 +240,20 @@ function init() {
 	map.addLayer(routeLayer);
 	 }
 	 else{
-		 alert("기존 경로를 부를 수 없습니다.");
+		 //alert("기존 경로를 부를 수 없습니다.");
 	 }	 
  }
  
- 
+ function initRoutelist(){
+	    routes =""; 
+	 	for(i=0; i < routeNames.length; i++){
+			 		routes += routeNames[i] +"->";		
+	 		}
+				routes = routes.substring(0,routes.length-2);
+				$("#datetable-branch").val(routes);
+	 		$("#datetable-branch").attr("title",routes);	    			    		
+	 		$('#datetable-branch').tooltip(); 
+ }
  
  function searchRoute(){
  	//클릭한 list의 좌표 업체 별로 passList에 넣어 줄것. 문자열로! 끝은 G,0으로 통일할 것이며, 최대 5개의 경유지만 가능
@@ -247,7 +264,7 @@ function init() {
 	/*//ajax 변수로 날라갈 route 데이터를 담고 있는 input의 value 초기화
 	 $("#dayplan-route").removeAttr("value");
 	*/
-	 alert(routevalue);
+	 //alert(routevalue);
  	var startX = current_longitude;
     var startY = current_latitude;
  	
@@ -311,14 +328,7 @@ function init() {
 
    		});
 
-     routes =""; 
- 	for(i=0; i < routeNames.length; i++){
-		 		routes += routeNames[i] +"->";		
- 		}
-			routes = routes.substring(0,routes.length-2);
-			$("#datetable-branch").val(routes);
- 		$("#datetable-branch").attr("title",routes);	    			    		
- 		$('#datetable-branch').tooltip(); 
+    	initRoutelist();
  	}
  	else{
  		if(routecheck == true || routevalue != null && routevalue.length != 0 ){
@@ -339,7 +349,45 @@ function init() {
  	console.log(data);   	
  }
 
+ function getparkinglot(keyword){
+
+	 $.ajax({
+		 method : "GET",
+		 url : "http://openapi.seoul.go.kr:8088/756543787173687234324f53656a72/json/GetParkInfo/1/5/"+keyword,
+		 success: function( data, textStatus, jQxhr ){
+			 console.log(data);
+		 },
+		  error: function( jqXhr, status, errorThroxwn ){
+          	 console.log(jqXhr);
+               console.log( errorThroxwn + "," + status);
+               alert("오류 발생!! 다시 시도해 주세요.");
+           }
+	 })
+ }
  
+ 
+
+ function getPOIbylabel(keyword){
+	 alert(keyword);
+	 var icon = new Tmap.Icon('https://developers.skplanetx.com/upload/tmap/marker/pin_b_m_a.png', size, offset);     
+	 $.ajax({
+	   		method : "GET",
+	   		    url : "https://apis.skplanetx.com/tmap/pois?version=1&searchKeyword="+keyword,
+	   		    headers : {
+	   		        "Content-Type" : "application/x-www-form-urlencoded",
+	   		        "appKey" : "2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"
+	   		    },
+	   		    success: function( data, textStatus, jQxhr ){	   				        	
+		        	console.log();
+	   		    	getparkinglot(data.searchPoiInfo.pois.poi[0].lowerAddrName);
+   		    },
+	              error: function( jqXhr, status, errorThroxwn ){
+	             	 console.log(jqXhr);
+	                  console.log( errorThroxwn + "," + status);
+	                  alert("오류 발생!! 다시 시도해 주세요.");
+	              }
+	   		});
+ }
  
  function getPOI(){
 	 var keyword = $("#searchPOI").val();
@@ -388,6 +436,8 @@ function init() {
 		        	function onOverMarker (evt){
 		        	    this.show();
 		        	}
+		        	
+		        	getparkinglot(data.searchPoiInfo.pois.poi[0].lowerAddrName);
    		    },
 	              error: function( jqXhr, status, errorThroxwn ){
 	             	 console.log(jqXhr);
@@ -403,7 +453,6 @@ function init() {
  	$("#contact2").val(tel[1]);
  	$("#contact3").val(tel[2]);
 	$("#customer-address-input").val(address);
-	
  }
  function onOutMarker (evt){
 	    this.hide();

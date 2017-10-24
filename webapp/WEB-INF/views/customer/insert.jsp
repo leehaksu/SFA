@@ -176,6 +176,7 @@
 					<div>
 						<input style="width: 85%;" id="searchPOI" class="form-control" type="text" name="position" placeholder="고객명">
 						<button type="button" class="btn btn-info"onclick="getPOI()">검색</button>
+						<button type="button" class="btn btn-info"onclick="getparkinglot()">주차장 검색</button>
 					</div>
 					<br>
 					<div id="map_div"></div>
