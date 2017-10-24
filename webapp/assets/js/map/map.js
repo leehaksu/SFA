@@ -132,7 +132,9 @@
     		return ;// modal로 확인 취소를 통해 넣을 것인지 말것인지 선택하게 만든다. 
         }
     	var tempLonLat = new Tmap.LonLat(this.lonlat.lon,this.lonlat.lat).transform(pr_3857,pr_4326);
-        
+    	 
+    	//주차장 리스트 초기화
+    	$("#parkinglotlist").empty();
     
     	//지점이름으로 POI 검색
     	getPOIbylabel(this.labelHtml);
@@ -356,6 +358,21 @@ function init() {
 		 url : "http://openapi.seoul.go.kr:8088/756543787173687234324f53656a72/json/GetParkInfo/1/5/"+keyword,
 		 success: function( data, textStatus, jQxhr ){
 			 console.log(data);
+			 console.log(data.GetParkInfo);
+			 console.log(data.GetParkInfo.list_total_count);
+			 console.log(data.GetParkInfo.row[0]);			 
+			 console.log(data.GetParkInfo.row[0].PARKING_NAME);			 
+			 
+			 for(i=0; i<data.GetParkInfo.list_total_count;i++){				 
+				 $("#parkinglotlist").append(
+							"<tr>" +
+							"<td><ul>"+data.GetParkInfo.row[i].PARKING_NAME+"</ul></td>" +
+							"<td><ul>"+data.GetParkInfo.row[i].CAPACITY+"</ul></td>" +
+							"<td><ul>"+ data.GetParkInfo.row[i].RATES +"</ul></td>" +
+							"<td><ul>"+ data.GetParkInfo.row[i].TIME_RATE +"</ul></td>" +
+							"</tr>");
+					
+			 }		 
 		 },
 		  error: function( jqXhr, status, errorThroxwn ){
           	 console.log(jqXhr);
@@ -380,6 +397,7 @@ function init() {
 	   		    success: function( data, textStatus, jQxhr ){	   				        	
 		        	console.log();
 	   		    	getparkinglot(data.searchPoiInfo.pois.poi[0].lowerAddrName);
+	   		    	
    		    },
 	              error: function( jqXhr, status, errorThroxwn ){
 	             	 console.log(jqXhr);
