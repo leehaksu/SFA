@@ -9,6 +9,11 @@ body {
 	border: 1px solid transparent;
 }
 
+#MapSearch_btn{
+margin-left: 39px;
+    width: 113px;
+    margin-bottom: 6px;
+}
 
 
 #wrapper {
@@ -70,6 +75,7 @@ body {
 
 
 .title {
+	margin-top: 20px;
 	padding: 5px;
 	margin-bottom: 10px;
 }
@@ -104,6 +110,7 @@ body {
 	font-size: 14px;
 	padding: 0;
 	list-style: none;
+	display: none;
 }
 
 #sidebar-wrapper .sidebar-nav li {
@@ -329,7 +336,5 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 }
 
  main{
-    margin-left: 2%;
-    width: 98%;
     background-color: RGB(250, 251, 240);
  }  

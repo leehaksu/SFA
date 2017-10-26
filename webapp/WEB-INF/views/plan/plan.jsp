@@ -37,9 +37,6 @@
 	// dayplantable에 클릭한 날짜의 목표액을 주간테이블에서 가져오기 위한 변수
 	var goalmoneyindex;
 
-
-     
-	
 	//moment('2016-06','YYYY-MM').diff('2015-01','month');     //17 시간차
 	$(document).ready( function() {
 		
@@ -135,9 +132,11 @@
 					 
 					//날짜 클릭 이벤트 일일 계획 데이터 ajax
 					setTimeout(function() {
+						console.log("지도데이터 확인");
+						
 						console.log(map);
 						changedayplan(ClickedDay,selectID,authUserID,plandatecheck,map)
-						}, 500);
+						}, 600);
 					
 					dayplanmodalShow();	
 				}
@@ -203,6 +202,8 @@
 					//꼭 id input 보내는 위치를 변경할껏! 기억하셈.
 				}
 			}); */
+			
+			
 			
 		$("#side-dayplan-coworker-button").on("change",function(){
 			//weektable 초기화
@@ -461,13 +462,13 @@
 												<input type="hidden" id="dayplan-route" name="route" value="">												
 													<span id="mapsearch"><strong>지도 검색</strong> </span>
 													<ul style="display: -webkit-box;">
-														<li><button id="dateplan-searchRoutes" type="button"
+														<li><button id="dateplan-searchRoutes" type="button" class="btn btn-info"
 																onclick="searchRoute()">경로탐색</button>
 														<li>
-														<li><button id="dateplan-deleteRoutes" type="button"
+														<li><button id="dateplan-deleteRoutes" type="button" class="btn btn-info"
 																onclick="deleteRoute()">경로삭제</button>
 														<li>
-														<li><button id="dateplan-searchPosition"
+														<li><button id="dateplan-searchPosition" class="btn btn-info"
 																type="button">위치검색</button>
 														<li>
 													</ul>
@@ -501,6 +502,19 @@
 												</div>
 											</td>
 										</tr>
+									</table>
+									<table class="table table-bordered table-hover">
+									<thead>
+											<tr>
+												<th>주차장 리스트</th>
+												<th>주차 가능 대수</th>
+												<th>기본 요금(원)</th>
+												<th>기본 시간(분)</th>																									
+											</tr>
+										</thead>
+										<tbody id="parkinglotlist">
+											
+										</tbody>
 									</table>
 									<table class="table table-striped table-bordered"
 										id="dayplantable-weekplan">
@@ -615,8 +629,8 @@
 					name="first_date">
 			</div>
 			<div>
-				<div style="margin-left: 37px;">
-					<table>
+				<div>
+					<table style="margin: 0 auto;">
 						<tr>
 							<td>
 								<div class="week-user-info">

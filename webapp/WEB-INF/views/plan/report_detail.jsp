@@ -11,18 +11,51 @@
 <head>
 <c:import url="/WEB-INF/views/common/common.jsp"></c:import>
 <script type="text/javascript">
+	
 	$(document).ready(function() {
 		
-		var content ='<c:out value="${dateReportVo.content}"/>'; 
+		$("#dayreporttable-report-sale").focusout(function(){
+			setAchiveRank();
+		});
 		
+		$("#dayreporttable-startGauge, #dayreporttable-endGauge").focusout(function(){
+			setmile();
+		});
+		var level ='<c:out value="${authUser.level}"/>';
+		var content ='<c:out value="${dateReportVo.content}"/>';
+		var opnion ='<c:out value="${dateReportVo.opinion}"/>'; 
+	$(".report-pen").on("click",function(){
+		$(".dayreportform-input").removeAttr("readonly");
+		$('.date-textarea').froalaEditor('edit.on');
+		$(".fa-floppy-o").show();
+		$(this).hide();
+		
+		if(level=="팀장")
+		{$(".panel-body").text("");
+		$("#page-header-text").append("<span style='float: right;'><a href='#' onclick='reportUpdate()'>"
+				+"<i class='fa fa-floppy-o fa-lg' aria-hidden='true'></i></a></span>");
+				$(".panel-body").append("<input type='textarea' style='width:100%; resize:none; height: 60px' value='${dateReportVo.opinion}'/>");
+		}
+	});	
 			
+	$(".report-floppy").on("click",function(){
+		//alert("나탐");
+		var form = document.getelementbyid("dayreport-form");
+		 form.action="update";
+		 if(validateForm() == true){
+			 form.submit();	 
+		 }
+	});
+	
+	
+	
 	$('.date-textarea').froalaEditor({
 			toolbarButtons : [ 'bold', 'italic', 'paragraphFormat' ],
 			paragraphFormat : {
 				N : 'Normal',
 				H1 : 'Heading 1',
 				H2 : 'Heading 2',
-				H3 : 'Heading 3'
+// 				H3 : 'Heading 3'
 			}
 		});
 	$('#date-textarea').froalaEditor('html.set', content);
@@ -30,6 +63,7 @@
 	$(".dayreportform-input").attr("readonly", true);
 	$(".advicereporttable-input").attr("readonly", true);
 	$("#submitDay-datepicker").attr("readonly", true);
+	
 });
 
 	function update() {
@@ -56,9 +90,12 @@
 			<h3>
 				<strong>일일 보고서</strong> 
 				<span style="float: right;"> 
-				<a href="#" onclick=""> 
-				<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
-				</a> &nbsp; <a href="#" onclick=""> 
+				<a href="#" onclick="reportUpdate()" >
+			 	<i class="fa fa-floppy-o fa-lg" aria-hidden="true" style="display:none;"></i>
+				</a>
+				<a href="#"> 
+				<i class="fa fa-pencil fa-lg report-pen" aria-hidden="true"></i>
+				</a> &nbsp; <a href="delete?report_no=${dateReportVo.report_no}" > 
 				<i class="fa fa-trash fa-lg"aria-hidden="true"></i>
 				</a>
 				</span>
@@ -91,7 +128,7 @@
 							<div style="display: inline-block;">
 								<label class="reporttable-label" for="day">달 성 률(%)
 									&nbsp;</label> <input id="dayreporttable-achive-rank"
-									class="form-control dayreportform-input" type="text"
+									class="form-control dayreportform-readonly" type="text"
 									placeholder="일일 달성률" required readonly value="${dateReportVo.achive_rank}%"> 
 									<input type="hidden" id="achive-rank" value="${dateReportVo.achive_rank}"  name="achive_rank">
 							</div>
@@ -121,8 +158,8 @@
 						<td>
 							<div style="display: inline-block;">
 								<label class="reporttable-label" for="day">주행거리(km)&nbsp;</label>
-									<input id="dayreporttable-mile"
-									class="form-control dayreportform-input" type="text"
+									<input id="dayreporttable-mile" 
+									class="form-control dayreportform-readonly" type="text"
 									name="mile" placeholder="주행거리" required readonly value="${dateReportVo.mile}"> 
 									
 							</div>
@@ -144,29 +181,28 @@
 							
 					</tr>
 				</table>
-				<div class=" panel panel-default form-group"
-					style="width: 100%; text-align: center">
+				<div class=" panel panel-default form-group report-content">
 					<div class="panel-heading">
 						<strong>업무 보고 내용</strong>
 					</div>
 					<textarea id="report-content" name="content" class="date-textarea" data-value=""${dateReportVo.content}"></textarea>
 				</div>
-				<div class="panel panel-info" style="clear: both;">
+
+				</form>
+				<form name="dayreport" id="report-opinion-form" method="post">
+				<br>
+				<div class="panel panel-info reader-content" >
 					<div class="panel-heading">
 						<strong>팀장 의견</strong>
 					</div>
-					<div class="panel-body">일 이따구로 할꺼야?</div>
+					<div class="panel-body" >${dateReportVo.opinion}</div>
 				</div>
 			</form>
 			<div id="advice_contianer" style="padding: 5px;">
-				<div class="page-header">
-					<h4 style="width: 70%; display: inline-block;">
-						<Strong>상담일지</Strong>
-					</h4>
-				</div>
+				
 				<div id="advice_content1" class="advice_content">
 					<form id="advice_form">
-						<div class="panel panel-info"
+						<div class="panel panel panel-success"
 							style="clear: both; margin-top: 10px;">
 							<div class="panel-heading" style="color: #fff;">
 								<strong>상담카드</strong> <span style="float: right;"> 
@@ -181,7 +217,7 @@
 							<div class="panel-body">
 								<table id="advicereporttable"
 									style="background-color: #fff; width: 100%; border-radius: 5px;">
-									<tr style="margin-top: 5px;">
+									<tr>
 										<td colspan="3" id="adv-content1">
 											<div class="form-group" style="margin-top: 15px;">
 												<div style="display: inline-block;">

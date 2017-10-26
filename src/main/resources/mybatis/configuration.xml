@@ -13,6 +13,7 @@
 		<typeAlias alias="challengevo" type="com.sfa.vo.ChallengeVo" />
 		<typeAlias alias="affirmationvo" type="com.sfa.vo.AffirmationVo" />
 		<typeAlias alias="chartvo" type="com.sfa.vo.ChartVo" />
+		<typeAlias alias="parkvo" type="com.sfa.vo.ParkVo" />
 	</typeAliases>
 
 	<!-- SQL문를 저장하는 파일 -->
@@ -27,5 +28,6 @@
 		<mapper resource="mybatis/mappers/fileupload.xml" />
 		<mapper resource="mybatis/mappers/affirmation.xml" />
 		<mapper resource="mybatis/mappers/chart.xml" />
+		<mapper resource="mybatis/mappers/park.xml" />
 	</mappers>
 </configuration>

@@ -133,4 +133,9 @@ public class DateReportService {
 		// TODO Auto-generated method stub
 		return dateReportDao.seletMainDate(id);
 	}
+
+	public int insertOpinion(String opinion, Long report_no) {
+		// TODO Auto-generated method stub
+		return dateReportDao.inserOpinion(opinion,report_no);
+	}
 }

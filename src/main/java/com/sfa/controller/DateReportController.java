@@ -43,10 +43,10 @@ public class DateReportController {
 
 	@Autowired
 	private Push push;
-	
+
 	@Autowired
 	private WeekPlanService weekPlanService;
-	
+
 	@Autowired
 	private AdviceService adviceService;
 
@@ -54,7 +54,7 @@ public class DateReportController {
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public String insert(@RequestParam(value = "id", required = true, defaultValue = "") String id,
 			@RequestParam(value = "date", required = true, defaultValue = "") String date, @AuthUser UserVo authUser,
-			DateReportVo dateReportVo, Model model,AdviceVo adviceVo) {
+			DateReportVo dateReportVo, Model model, AdviceVo adviceVo) {
 
 		if ("".equals(date)) {
 			date = ChangeDate.today();
@@ -66,7 +66,7 @@ public class DateReportController {
 			id = authUser.getId();
 			dateReportVo.setId(id);
 		}
-		
+
 		dateReportVo.setDate(date);
 		Long goal_sale = datePlanService.getGoal_sale(dateReportVo);
 		adviceVo.setId(id);
@@ -76,7 +76,7 @@ public class DateReportController {
 		System.out.println("goal_sale=" + goal_sale);
 		model.addAttribute("goal_sale", goal_sale);
 		model.addAttribute("date", date);
-		model.addAttribute("list",list);
+		model.addAttribute("list", list);
 		return "plan/report_insert";
 	}
 
@@ -106,8 +106,7 @@ public class DateReportController {
 							"보고 사항  \n" + "날 짜 : " + dateReportVo.getDate() + "\n" + "달 성 률  :"
 									+ dateReportVo.getAchive_rank() + "\n" + "출발 게이지: " + dateReportVo.getStart_gauge()
 									+ "\n" + "도착 게이지 : " + dateReportVo.getEnd_gauge() + "\n" + "내  용 : "
-									+ dateReportVo.getContent() + "\n"
-									+ "<a herf='localhost:8080/sfa/report'> 내용 확인하러 가기 </a>",
+									+ dateReportVo.getContent() + "\n",
 							authUser.getId());
 				} catch (MessagingException e) {
 					// TODO Auto-generated catch block
@@ -129,7 +128,7 @@ public class DateReportController {
 		}
 		List<DateReportVo> list = dateReprotService.selectWeek(authUser.getId());
 		model.addAttribute("list", list);
-		
+
 		return "plan/report_search";
 	}
 
@@ -211,9 +210,11 @@ public class DateReportController {
 	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(@ModelAttribute DateReportVo dateReportVo, @AuthUser UserVo authUser) {
+
 		if (dateReportVo == null) {
 			return "plan/report";
 		} else {
+			dateReportVo.setId(authUser.getId());
 			int no = dateReprotService.update(dateReportVo);
 
 			if (no == 1) {
@@ -256,7 +257,7 @@ public class DateReportController {
 	}
 
 	@Auth
-	@RequestMapping(value = "/submit",method=RequestMethod.POST)
+	@RequestMapping(value = "/submit", method = RequestMethod.POST)
 	public String submit(@RequestParam(value = "report_no", required = true, defaultValue = "0") Long report_no,
 			@RequestParam(value = "approval", required = true, defaultValue = "0") Long approval,
 			@AuthUser UserVo authUser) {
@@ -272,24 +273,38 @@ public class DateReportController {
 			}
 		}
 	}
-	
+
 	@Auth
 	@ResponseBody
-	@RequestMapping(value = "/check",method=RequestMethod.POST)
-	public JSONResult check(@RequestParam(value="date",required=true, defaultValue="")String date,@AuthUser UserVo authUser)
-	{
-		if("".equals(date))
-		{
+	@RequestMapping(value = "/check", method = RequestMethod.POST)
+	public JSONResult check(@RequestParam(value = "date", required = true, defaultValue = "") String date,
+			@AuthUser UserVo authUser) {
+		if ("".equals(date)) {
 			return JSONResult.error("날짜가 입력되지 않았습니다.");
 		}
-		List<WeekVo> list= weekPlanService.check(authUser.getId(),date);
-		
-		if(list.isEmpty())
-		{
+		List<WeekVo> list = weekPlanService.check(authUser.getId(), date);
+
+		if (list.isEmpty()) {
 			return JSONResult.fail();
-		}else
-		{
+		} else {
 			return JSONResult.success();
 		}
 	}
+
+	@Auth(value = Auth.Role.팀장)
+	@ResponseBody
+	@RequestMapping(value = "/update/opinion", method = RequestMethod.POST)
+	public JSONResult opinion(@RequestParam(value = "opinion", required = true, defaultValue = "") String opinion,
+			@RequestParam(value = "report_no", required = true, defaultValue = "0") Long report_no) {
+		if (report_no == 0) {
+			return JSONResult.error("id값이 넘어오지 않았습니다.");
+		}
+		int no = dateReprotService.insertOpinion(opinion, report_no);
+		if (no == 1) {
+			return JSONResult.success(report_no);
+		} else {
+			return JSONResult.fail();
+		}
+	}
+
 }

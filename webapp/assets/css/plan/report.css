@@ -1,4 +1,4 @@
-.dayreportform-input ,#submitDay-datepicker
+.dayreportform-input ,#submitDay-datepicker,.dayreportform-readonly
 {
 	width: 150px;  
     margin-right: 6px;  
@@ -11,17 +11,52 @@
 }
 
 
+#advice_contianer{
+	margin-top:30px;
+}
+
+
+.report-content,.reader-content{
+	margin: 0 auto;
+    width: 61%;
+    text-align: center;
+}
+
 #reportmain_content{
 	    width: 100%;
 }
 #advicereporttable-title{
-	width: 500px; margin-right: 6px;
+	    text-align: center;
+    width: 589px;
+    margin-right: 6px;
 }
 
+.advicereporttable-address{
+	    width: 255px;
+    margin-right: 6px;
+}
+
+   
+
 #dayreporttable{
+	margin: auto;
 	border-collapse: separate;
     border-spacing: 10px 17px;
 }
 .reporttable-label{
 	width: 110px; text-align: center;
+}
+
+
+
+label{
+	text-align: center"
+}
+
+
+
+#report-thumnail{
+	border: 1px solid gray;
+    overflow: hidden;
+    min-height: 149px;
 }

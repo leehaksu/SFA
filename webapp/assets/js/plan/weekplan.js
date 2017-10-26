@@ -266,7 +266,7 @@ function changeweekplan(dayClick,changeID,defaultID){
 						}
 					});
 					
-					alert("달력 날짜 클릭:"+changeID+","+defaultID);
+					//alert("달력 날짜 클릭:"+changeID+","+defaultID);
 				
 					//weektable 수정여부 
 					if(changeID !=defaultID)
@@ -279,7 +279,7 @@ function changeweekplan(dayClick,changeID,defaultID){
 					
 				},
 				error : function(xhr,status,error) {
-					alert("주간 계획 load 실패!!!");
+					alert("데이터 로드 실패..다시 시도해 주세요");
 					console.log(xhr + " 와 " + status + " 와 " + error);
 				}
 			});

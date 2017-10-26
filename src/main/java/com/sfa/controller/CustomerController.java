@@ -122,7 +122,7 @@ public class CustomerController {
 		if ("".equals(name)) {
 			return JSONResult.error("고객 이름을 넣어주세요");
 		}
-		List<CustomerVo> list = customerService.selectByName(name);
+		List<CustomerVo> list = customerService.selectByName(authUser.getId(),name);
 		if(list==null)
 		{
 			return JSONResult.fail();

@@ -55,8 +55,8 @@ function validateForm() {
 				 return false;
 			}
 			if($("#report-content").froalaEditor('html.get').length == 0){
-				alert($("#report-content").froalaEditor('html.get'));
-				alert($("#report-content").froalaEditor('html.get').length);
+				//alert($("#report-content").froalaEditor('html.get'));
+				//alert($("#report-content").froalaEditor('html.get').length);
 				alert("업무 내용이 비어있습니다.");
 				return false;
 			}
@@ -77,6 +77,23 @@ function reportSubmit(){
 	}
 	
 }
+
+function reportUpdate(){
+	var dayreportForm = document.getElementById("dayreport-form");
+	dayreportForm.action="update"; // action에 해당하는 jsp 경로를 넣어주세요.
+	if(validateForm()){
+		dayreportForm.submit();  	
+	}
+}
+
+function opinionUpdate()
+{
+	var dayreportForm = document.getElementById("report-opinion-form");
+	dayreportForm.action="update/opinion";
+	if(validateForm()){
+		dayreportForm.submit();  	
+	}
+	}
 
 function addAdvice(result){
 	if(result == "success"){

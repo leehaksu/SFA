@@ -45,7 +45,7 @@
 
 	}
 
-	function init() {
+	function initmap() {
 		zoom = 16; // zoom level입니다.  0~19 레벨을 서비스 하고 있습니다. 
 		cLonLat = new Tmap.LonLat(current_longitude, current_latitude);
 
@@ -55,7 +55,8 @@
 			height : '400px',
 			animation : true
 		});
-		map.setCenter(cLonLat, zoom);
+		map.setCenter(cLonLat, zoom);		
+		markerLayer = new Tmap.Layer.Markers( "MarkerLayer" );
 	}
 
 	$(document).ready(function() {
@@ -71,7 +72,7 @@
 </script>
 
 </head>
-<body onload="init()">
+<body onload="initmap()">
 	<nav class="navbar navbar-default">
 		<c:import url="/WEB-INF/views/include/header.jsp">
 			<c:param name="menu" value="main" />
@@ -97,13 +98,12 @@
 		</div>
 		<div id="custominertmain-content">
 			<div class="customer">
-				<h3>고객사 정보</h3>
-				<form>
+				<form >
 					<table class="table customer-table">
 						<tbody>
 							<tr>
 								<th>고객명</th>
-								<td><input type="text" class="form-control"
+								<td><input id="customername" type="text" class="form-control"
 									name="customer-name"></td>
 							</tr>
 							<tr>
@@ -135,7 +135,7 @@
 			</div>
 			<br>
 			<h3>당담자</h3>
-			<form>
+			<form style="height: 300px;">
 				<table class="table customer-table">
 					<tbody>
 						<tr>
@@ -174,14 +174,12 @@
 				</div>
 				<div class="modal-body">
 					<div>
-						<input type="text" name="position">
-						<button type="button">검색</button>
+						<input style="width: 85%;" id="searchPOI" class="form-control" type="text" name="position" placeholder="고객명">
+						<button type="button" class="btn btn-info"onclick="getPOI()">검색</button>
+						<button type="button" class="btn btn-info"onclick="getparkinglot()">주차장 검색</button>
 					</div>
 					<br>
 					<div id="map_div"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">저장</button>
 				</div>
 			</div>
 		</div>

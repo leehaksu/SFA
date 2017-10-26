@@ -132,7 +132,6 @@
 			method="post">
 			<div id="custominertmain-content">
 				<div class="customer">
-					<h3>고객사 정보</h3>
 					<table class="table customer-table">
 						<tbody>
 							<tr>

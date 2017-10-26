@@ -40,8 +40,11 @@ public class CustomerDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("customer.selectbyid", id);
 	}
-	public List<CustomerVo> selectByName(String name) {
+	public List<CustomerVo> selectByName(String name, String id) {
 		// TODO Auto-generated method stub
+		HashMap <String,String> map= new HashMap<String,String>();
+		map.put("name", name);
+		map.put("id", id);
 		return sqlSession.selectList("customer.selectByName",name);
 	}
 	public List<CustomerVo> getPosition(CustomerVo customerVo) {

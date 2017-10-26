@@ -69,6 +69,15 @@
                        labelOutlineWidth: 3 
                   };
 
+	var parkinglist;
+
+	 function onOverMarker (evt){
+		    this.show();
+		}
+	 function onOutMarker (evt){
+		    this.hide();
+	 }
+	
 	function getLocation() {
 		console.log("1번째 실행");
         if (navigator.geolocation) {        
@@ -128,16 +137,24 @@
     function onclickmarker(e){
     	//경로에 중복이 있는지 체크 
     	if($.inArray(this.labelHtml,routeNames) >= 0){
-    		console.log("경로에 이미 존재하는 경유지 입니다.");
-    		// modal로 확인 취소를 통해 넣을 것인지 말것인지 선택하게 만든다. 
+    		alert("경로에 이미 존재하는 경유지 입니다.");
+    		return ;// modal로 확인 취소를 통해 넣을 것인지 말것인지 선택하게 만든다. 
         }
     	var tempLonLat = new Tmap.LonLat(this.lonlat.lon,this.lonlat.lat).transform(pr_3857,pr_4326);
-        
+    	 
+    	//주차장 리스트 초기화
+    	$("#parkinglotlist").empty();
+    
+    	//지점이름으로 POI 검색
+    	getPOIbylabel(this.labelHtml);
+    	
   		 //클릭한 순서대로 지점 이름이 배열에 삽입된다.
   		routeNames.push(this.labelHtml);
   		//클릭한 순서대로 지점 좌표가 배열에 삽입된다.		
       	routeList.push(tempLonLat);
       	//routeList.push(new Tmap.Geometry.Point(this.lonlat.lon,this.lonlat.lat));
+      	
+      	initRoutelist();
 	} 
 
 function init() {	
@@ -151,8 +168,13 @@ function init() {
         var currentlabel =  new Tmap.Label("현재 위치");
         var icon = new Tmap.Icon('https://developers.skplanetx.com/upload/tmap/marker/pin_b_m_a.png', size, offset); 
         
+        var startsize = new Tmap.Size(38,38);
+        var starticon = new Tmap.Icon("http://cfile225.uf.daum.net/image/2445C43651D6680A1354CA", startsize, offset); 
+        
+        parkinglist = [];
+        
         //console.log("현재위치에 마크");
-        var currentmarker = new Tmap.Markers(cLonLat, icon, currentlabel);		        
+        var currentmarker = new Tmap.Markers(cLonLat, starticon, currentlabel);		        
         markerLayer.addMarker(currentmarker);	
     	$.ajax({
 			url : '/sfa/customer/position/',
@@ -172,6 +194,7 @@ function init() {
 					client_map_info.push(mapinfo);
 					console.log(client_map_info[i]);
 					positions.push(response.data[i].name);		
+					
 					
 					//위치 검색에 업체리스트 삽입
 					$("#position-list").append("<li>"+client_map_info[i].name+"</li>");
@@ -202,7 +225,7 @@ function init() {
 		        } 		
 			},
 			error : function(xhr,status,error) {
-				alert(xhr + " 와 " + status + " 와 " + error);
+				alert("죄송합니다 다시 시도해 주세요.");
 			}
 			
     	});
@@ -232,8 +255,18 @@ function init() {
 	map.addLayer(routeLayer);
 	 }
 	 else{
-		 alert("기존 경로를 부를 수 없습니다.");
+		 //alert("기존 경로를 부를 수 없습니다.");
 	 }	 
+ }
+ 
+ function initRoutelist(){
+	    routes =""; 
+	 	for(i=0; i < routeNames.length; i++){
+			 		routes += routeNames[i] +"->";		
+	 		}
+				routes = routes.substring(0,routes.length-2);
+				$("#datetable-branch").val(routes);
+	 		$("#datetable-branch").attr("title",routes);	    			    		
  }
  
  function searchRoute(){
@@ -245,7 +278,7 @@ function init() {
 	/*//ajax 변수로 날라갈 route 데이터를 담고 있는 input의 value 초기화
 	 $("#dayplan-route").removeAttr("value");
 	*/
-	 alert(routevalue);
+	 //alert(routevalue);
  	var startX = current_longitude;
     var startY = current_latitude;
  	
@@ -296,8 +329,6 @@ function init() {
    		        "appKey" : "2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"
    		    },
    		    success: function( data, textStatus, jQxhr ){
-   		    	//console.log(data.features[0].properties.totalDistance/1000);
-   		    	//console.log(typeof data.features[0].properties.totalDistance);
    		    	$("#datetable-distance").val(Math.floor(data.features[0].properties.totalDistance/1000));
    		    	$("#dayplan-route").attr("value",route);
    		    },
@@ -309,14 +340,7 @@ function init() {
 
    		});
 
-     routes =""; 
- 	for(i=0; i < routeNames.length; i++){
-		 		routes += routeNames[i] +"->";		
- 		}
-			routes = routes.substring(0,routes.length-2);
-			$("#datetable-branch").val(routes);
- 		$("#datetable-branch").attr("title",routes);	    			    		
- 		$('#datetable-branch').tooltip(); 
+    	initRoutelist();
  	}
  	else{
  		if(routecheck == true || routevalue != null && routevalue.length != 0 ){
@@ -337,14 +361,200 @@ function init() {
  	console.log(data);   	
  }
 
+ 
 
+ 
+ 
+ function getpositionbyaddr(addr,name){
+	 //console.log(addr);
+	 var url = "https://apis.skplanetx.com/tmap/geo/geocoding?version=1&city_do=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C&gu_gun="+ encodeURI(addr[0]) +"&dong="+ encodeURI(addr[1]) +"&bunji="+ encodeURI(addr[2]) +"&addressFlag=F01";
+	
+	 $.ajax({
+		 method : "GET",
+		 url : url,
+		 headers : {
+		        "Content-Type" : "application/x-www-form-urlencoded charset=utf-8",
+		        "appKey" : "2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"
+		  },
+		 success: function( data, textStatus, jQxhr ){
+			 console.log(data.coordinateInfo.lon+","+data.coordinateInfo.lat);
+			 
+			    var cLonLat = new Tmap.LonLat(data.coordinateInfo.lon,data.coordinateInfo.lat);
+	    		var label = new Tmap.Label(name);
+	    		var parkingicon = new Tmap.Icon("https://www.starfield.co.kr/images/icon/icon_parking.png", size, offset); 
+	    		var tempmarker = new Tmap.Markers(cLonLat, parkingicon, label);
+	    		var markerLayer = new Tmap.Layer.Markers();
+   		    	map.addLayer(markerLayer);
+	    			
+	    		markerLayer.addMarker(tempmarker);
+	    		
+	    		var popup;
+	        	popup = new Tmap.Popup("p1",
+	        							cLonLat,
+	        	                        new Tmap.Size(200, 100),
+	        	                        name.PARKING_NAME +"<br>"
+	        	                        +"주차 가능 대수 :" + name.CAPACITY+"<br>"
+	        	                        +"기본 요금:"+name.RATES+"<br>"
+	        	                        +"기본 시간(분):"+name.TIME_RATE+"<br>"
+	        	                        ); 
+	        	map.addPopup(popup);
+	        	popup.hide();
+	    		
+	        	tempmarker.events.register("mouseover", popup, onOverMarker);
+	        	tempmarker.events.register("mouseout", popup, onOutMarker);
+	        	
+		 },
+		  error: function( jqXhr, status, errorThroxwn ){
+          	 console.log(jqXhr);
+          	 console.log(errorThroxwn);
+             console.log( errorThroxwn + "," + status);
+             //alert("지도에서 찾지 못하였습니다.");
+           }
+	 })
+	 
+ }
+ 
+ function getparkinglot(keyword){
+
+	 $.ajax({
+		 method : "GET",
+		 url : "http://openapi.seoul.go.kr:8088/756543787173687234324f53656a72/json/GetParkInfo/1/5/"+keyword,
+		 success: function( data, textStatus, jQxhr ){
+			 console.log(data);
+			 console.log(data.GetParkInfo);
+			/* console.log(data.GetParkInfo.list_total_count);
+			 console.log(data.GetParkInfo.row[0]);			 
+			 console.log(data.GetParkInfo.row[0].PARKING_NAME);			 
+			*/ 
+			 for(i=0; i<data.GetParkInfo.row.length;i++){				 
+				 $("#parkinglotlist").append(
+							"<tr>" +
+							"<td>"+data.GetParkInfo.row[i].PARKING_NAME+"</td>" +
+							"<td>"+data.GetParkInfo.row[i].CAPACITY+"</td>" +
+							"<td>"+ data.GetParkInfo.row[i].RATES +"</td>" +
+							"<td>"+ data.GetParkInfo.row[i].TIME_RATE +"</td>" +
+							"</tr>");
+				 var addr = data.GetParkInfo.row[i].ADDR.split(" ");					
+				 getpositionbyaddr(addr,data.GetParkInfo.row[i]);
+			 }		 
+			 
+		/*	 $("#parkinglotlist > tr").on("click",function(){
+					$(this).css("background", "gold");
+				});	*/
+		 },
+		  error: function( jqXhr, status, errorThroxwn ){
+          	 console.log(jqXhr);
+               console.log( errorThroxwn + "," + status);
+               alert("오류 발생!! 다시 시도해 주세요.");
+           }
+	 })
+ }
+ 
+ 
+
+ function getPOIbylabel(keyword){
+	 //alert(keyword);
+	 var icon = new Tmap.Icon('https://developers.skplanetx.com/upload/tmap/marker/pin_b_m_a.png', size, offset);     
+	 $.ajax({
+	   		method : "GET",
+	   		    url : "https://apis.skplanetx.com/tmap/pois?version=1&searchKeyword="+keyword,
+	   		    headers : {
+	   		        "Content-Type" : "application/x-www-form-urlencoded",
+	   		        "appKey" : "2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"
+	   		    },
+	   		    success: function( data, textStatus, jQxhr ){	   				        	
+		        	console.log();
+	   		    	getparkinglot(data.searchPoiInfo.pois.poi[0].lowerAddrName);
+	   		    	
+   		    },
+	              error: function( jqXhr, status, errorThroxwn ){
+	             	 console.log(jqXhr);
+	                  console.log( errorThroxwn + "," + status);
+	                  alert("오류 발생!! 다시 시도해 주세요.");
+	              }
+	   		});
+ }
+ 
+ 
+
+ 
+ function getPOI(){
+	 var keyword = $("#searchPOI").val();
+	 var icon = new Tmap.Icon('https://developers.skplanetx.com/upload/tmap/marker/pin_b_m_a.png', size, offset);     
+	 var cLonLat;
+	 $.ajax({
+	   		method : "GET",
+	   		    url : "https://apis.skplanetx.com/tmap/pois?version=1&searchKeyword="+keyword,
+	   		    headers : {
+	   		        "Content-Type" : "application/x-www-form-urlencoded",
+	   		        "appKey" : "2a1b06af-e11d-3276-9d0e-41cb5ccc4d6b"
+	   		    },
+	   		    success: function( data, textStatus, jQxhr ){
+	   		 	var name= data.searchPoiInfo.pois.poi[0].name;
+	        	var tel= data.searchPoiInfo.pois.poi[0].telNo.split("-");
+	        	var address = data.searchPoiInfo.pois.poi[0].upperAddrName +" "+data.searchPoiInfo.pois.poi[0].middleAddrName+" "+data.searchPoiInfo.pois.poi[0].lowerAddrName;
+	            	console.log(data);
+	   		    	console.log(data.searchPoiInfo.pois.poi[0].frontLat+","+data.searchPoiInfo.pois.poi[0].frontLon);
+	   		    	cLonLat = new Tmap.LonLat(data.searchPoiInfo.pois.poi[0].frontLon,data.searchPoiInfo.pois.poi[0].frontLat);
+	   		    	map.setCenter(cLonLat,zoom);
+	   		    	var markerLayer = new Tmap.Layer.Markers();
+	   		    	map.addLayer(markerLayer);
+   		    		var cLonLat = new Tmap.LonLat(data.searchPoiInfo.pois.poi[0].frontLon,data.searchPoiInfo.pois.poi[0].frontLat);
+   		    		var label = new Tmap.Label(data.searchPoiInfo.pois.poi[0].name);
+   		    		var tempmarker = new Tmap.Markers(cLonLat, icon, label);	
+   		    		
+   		    		
+   		    		tempmarker.events.register("click", tempmarker, onclickmarkerselect(name,tel,address));
+		        	markerLayer.addMarker(tempmarker);		
+		        	
+		        	var popup;
+		        	popup = new Tmap.Popup("p1",
+		        							cLonLat,
+		        	                        new Tmap.Size(200, 100),
+		        	                        data.searchPoiInfo.pois.poi[0].name +"<br>"+
+		        	                        "주소지:" + data.searchPoiInfo.pois.poi[0].upperAddrName +" "+data.searchPoiInfo.pois.poi[0].middleAddrName+" "+data.searchPoiInfo.pois.poi[0].lowerAddrName+
+		        	                        "<br>"+"전화번호:"+data.searchPoiInfo.pois.poi[0].telNo+"<br>"
+		        	                        ); 
+		        	map.addPopup(popup);
+		        	popup.hide();
+		        
+		        	//addcustomerinfo(name,tel,address);
+		        	
+		        	tempmarker.events.register("mouseover", popup, onOverMarker);
+		        	tempmarker.events.register("mouseout", popup, onOutMarker);
+		        	
+		        	
+		        	getparkinglot(data.searchPoiInfo.pois.poi[0].lowerAddrName);
+   		    },
+	              error: function( jqXhr, status, errorThroxwn ){
+	             	 console.log(jqXhr);
+	                  console.log( errorThroxwn + "," + status);
+	                  alert("오류 발생!! 다시 시도해 주세요.");
+	              }
+	   		});
+ }
+ 
+ function addcustomerinfo(name,tel,address){
+	 $("#customername").val(name);
+	 $("#contact1").val(tel[0]);
+ 	$("#contact2").val(tel[1]);
+ 	$("#contact3").val(tel[2]);
+	$("#customer-address-input").val(address);
+ }
+
+ function onclickmarkerselect(name,tel,address){
+	 addcustomerinfo(name,tel,address);
+	 //$("#search_customer_map").modal("hide");
+
+ }
+ 
  
  function deleteRoute(){
 	
 	 var routevalue = $("#dayplan-route").val();
 	 //ajax 변수로 날라갈 route 데이터를 담고 있는 input의 value 초기화
 	 $("#dayplan-route").removeAttr("value");
-	
+	 $("#datetable-branch").val("");
  	if((vector_layer != null || routeList.length >0) && routecheck == true){
  		map.removeLayer(routeLayer);
  		routecheck= false;
@@ -360,8 +570,8 @@ function init() {
  	else{
  		if(routevalue != "" || routevalue != null && routevalue.length != 0 ){
  			map.removeLayer(routeLayer);	 		
- 		}else{
- 		alert("선택된 경로가 없거나 잘못된 경로입니다.");
+ 		}else{ 			
+ 		 alert("탐색된 경로가 없거나 잘못된 경로입니다.");
  		}
  	}
  	
