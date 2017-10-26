@@ -88,7 +88,6 @@ public class ChatbotApiController {
 			}else {
 				if (vo.getContent().matches(".*상담일지.*") || vo.getContent().matches(".*상담 일지.*")
 						|| vo.getContent().matches(".*상담.*")) {
-					
 					mes_vo.setText("상담일지를 원하시는군요. 그럼 상담일지 작성하겠습니다. 상담하신 고객코드를 입력하세주세요. 상담한 고객 코드를 입력해주세요 ");
 				} else if (vo.getContent().matches(".*일일계획서.*") || vo.getContent().matches(".*일일 계획서.*")
 						|| vo.getContent().matches(".*계획서.*")) {
