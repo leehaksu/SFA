@@ -30,4 +30,10 @@
 	select a.advice_no, a.title,a.content,a.date,a.manager_name,a.reg_date,a.customer_code,b.name,b.address from advice as a, customer as b where a.customer_code=b.customer_code and a.id=#{id} and a.advice_no=#{advice_no};
 	]]>
 	</select>
+	
+	<update id="updateContent" parameterType="advicevo">
+	<![CDATA[
+	update advice set content=#{content} where id=#{id} and date=#{date};
+	]]>
+	</update>
 </mapper>

@@ -34,5 +34,9 @@ public class AdviceDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("advice.selectByadviceNo", adviceVo);
 	}
+	public int updateContent(AdviceVo adviceVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("advice.updateContent", adviceVo);
+	}
 
 }

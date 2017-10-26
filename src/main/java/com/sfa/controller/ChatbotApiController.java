@@ -76,23 +76,43 @@ public class ChatbotApiController {
 			}
 		} else if (userVo != null) {
 			if (vo.getContent().matches(".*_.*")) {
-				
-				mes_vo.setText("");
-				// 상담일지를 작성하는 부분
-			}  else if (vo.getContent().matches(".*000.*")) {
+				AdviceVo adviceVo = new AdviceVo();
+				adviceVo.setCustomer_code(vo.getContent());
+				adviceVo.setTitle("[카카오봇] 상담일지");
+				adviceVo.setDate(ChangeDate.today());
+				adviceVo.setId(userVo.getId());
+				adviceVo.setContent("[임시저장]");
+				int no= adviceService.insert(adviceVo);
+				if(no==1)
+				{
+					mes_vo.setText("상담일지에 넣을 내용을 적어주세요.앞에 [상담내용]이라고 꼭 적어주세요");	
+				}else
+				{
+					mes_vo.setText("상담일지 customer_code가 정상적으로 입력되지 않았습니다. 다시 입력 바랍니다.");		
+				}
+				// 상담일지를 customer_code 가져옴
+			}else if (vo.getContent().matches(".*[상담내용]*")) {
+				// 일일 계획서
+				AdviceVo adviceVo = new AdviceVo();
+				adviceVo.setDate(ChangeDate.today());
+				adviceVo.setId(userVo.getId());
+				adviceVo.setContent(vo.getContent());
+				int no= adviceService.updateContent(adviceVo);
+				if(no==1)
+				{
+					mes_vo.setText("상담일지가 정상적으로 입려되었습니다. 보고서를 작성하고 싶으면 보고서 작성이라고 해주세요");
+				}else
+				{
+					mes_vo.setText("정상적으로 입력되지 않았습니다. 다시한번 확인 후 입력해 주세요");
+				}
+			}else if (vo.getContent().matches(".*000.*")) {
 				// 일일 보고서 작성하는 부분
 				mes_vo.setText("일일 보고서을 시작하겠습니다.");
-			} else if (vo.getContent().matches(".*-.*")) {
-				// 일일 계획서 작성하는 부분
-				mes_vo.setText("일일 계획서을 시작하겠습니다.");
 			}else {
 				if (vo.getContent().matches(".*상담일지.*") || vo.getContent().matches(".*상담 일지.*")
 						|| vo.getContent().matches(".*상담.*")) {
 					mes_vo.setText("상담일지를 원하시는군요. 그럼 상담일지 작성하겠습니다. 상담하신 고객코드를 입력하세주세요. 상담한 고객 코드를 입력해주세요 ");
-				} else if (vo.getContent().matches(".*일일계획서.*") || vo.getContent().matches(".*일일 계획서.*")
-						|| vo.getContent().matches(".*계획서.*")) {
-					mes_vo.setText("일일 계획서를 원하시는군요. 그럼 일일 계획서 작성하겠습니다. 제목/날짜(형식 1987-05-25)/상담일지내용");
-				} else if (vo.getContent().matches(".*일일보고서.*") || vo.getContent().matches(".*일일 보고서.*")
+				}else if (vo.getContent().matches(".*일일보고서.*") || vo.getContent().matches(".*일일 보고서.*")
 						|| vo.getContent().matches(".*보고서.*")) {
 					mes_vo.setText("일일 보고서를 원하시는군요. 그럼 일일 보고서 작성하겠습니다.천원 단위로 입력해주세요. 제목/날짜(형식 1987-05-25)/매출액/상담일지내용");
 				} else {

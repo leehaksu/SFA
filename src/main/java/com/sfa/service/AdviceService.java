@@ -39,4 +39,10 @@ public class AdviceService {
 		return adviceDao.selectByAdviceNo(adviceVo);
 	}
 
+	public int updateContent(AdviceVo adviceVo) {
+		// TODO Auto-generated method stub
+		return adviceDao.updateContent(adviceVo);
+	}
+
+
 }
