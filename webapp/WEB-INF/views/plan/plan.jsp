@@ -203,6 +203,8 @@
 				}
 			}); */
 			
+			
+			
 		$("#side-dayplan-coworker-button").on("change",function(){
 			//weektable 초기화
 			resetweekplan();
@@ -501,12 +503,12 @@
 											</td>
 										</tr>
 									</table>
-									<table class="table table-striped table-bordered">
+									<table class="table table-bordered table-hover">
 									<thead>
 											<tr>
 												<th>주차장 리스트</th>
 												<th>주차 가능 대수</th>
-												<th>기본 요금</th>
+												<th>기본 요금(원)</th>
 												<th>기본 시간(분)</th>																									
 											</tr>
 										</thead>

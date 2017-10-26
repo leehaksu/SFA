@@ -43,7 +43,7 @@
 		<!-- defaultEncoding -->
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
-	
+
 	<!-- Interceptors -->
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -62,5 +62,7 @@
 			<bean class="com.sfa.security.AuthInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
+
+
 
 </beans>

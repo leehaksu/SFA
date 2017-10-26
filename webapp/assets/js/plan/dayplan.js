@@ -38,8 +38,6 @@
 		$("#dayplan-delete-btn").hide();
 	}
 	
-	
-	
 	//일일 계획서의 모든 입력 block
 	function blockdayplan(){
 		$("#dayplantable-title").attr('disabled',true);
@@ -197,7 +195,6 @@
 		$('#date-textarea').froalaEditor('html.set', '');
 
 		$("#dayplanmodal").attr("class","modal fade");
-
 	}
 	
 	//dayplanModal 모달 닫기
