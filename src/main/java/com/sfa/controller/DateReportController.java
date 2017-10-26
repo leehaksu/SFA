@@ -230,9 +230,9 @@ public class DateReportController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				return "redirect:/report/?result=succeess";
+				return "redirect:/report?result=succeess";
 			} else {
-				return "redirect:/report/?result=fail";
+				return "redirect:/report?result=fail";
 			}
 		}
 	}
